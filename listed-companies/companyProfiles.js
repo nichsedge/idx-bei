@@ -5,7 +5,7 @@ const BASE_URL = 'https://www.idx.co.id/primary';
 
 // API functions
 export const getCompanyProfiles = () => {
-    return fetchData(`${BASE_URL}/ListedCompany/GetCompanyProfiles?emitenType=s&start=0&length=9999`);
+    return fetchData(`${BASE_URL}/ListedCompany/GetCompanyProfiles?start=0&length=9999`);
 };
 
 export const getCompanyProfileDetail = (kodeEmiten) => {
