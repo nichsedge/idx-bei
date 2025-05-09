@@ -7,7 +7,7 @@ import { fetchData } from "../../../utils/template.js";
 export async function getBoards() {
   const baseUrl = "https://www.idx.co.id/primary/Helper/GetBoards";
   const queryParams = new URLSearchParams({
-    language: 'en-us'
+    language: 'id-id'
   }).toString();
   const url = `${baseUrl}?${queryParams}`;
   const referrer = "https://www.idx.co.id/en/market-data/stocks-data/stock-list/";

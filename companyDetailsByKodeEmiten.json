@@ -1,0 +1,3499 @@
+{
+  "AADI": {
+    "ResultCount": 1,
+    "Search": {
+      "KodeEmiten": "AADI",
+      "EmitenType": null,
+      "SortOrder": null,
+      "SortColumn": null,
+      "indexfrom": 1,
+      "pagesize": 1
+    },
+    "Profiles": [
+      {
+        "Alamat": "Cyber 2 Tower Lantai 26\nJl. H.R. Rasuna Said Blok X-5, No.13\nJakarta 12950 - Indonesia",
+        "BAE": "PT. Datindo Entrycom",
+        "DataID": 0,
+        "Divisi": null,
+        "EfekEmiten_EBA": false,
+        "EfekEmiten_ETF": false,
+        "EfekEmiten_Obligasi": false,
+        "EfekEmiten_Saham": true,
+        "EfekEmiten_SPEI": false,
+        "Industri": "Batu Bara",
+        "SubIndustri": "Produksi Batu Bara",
+        "Email": "corsec@adaroindonesia.com",
+        "Fax": "(021) 2553 3066",
+        "id": 0,
+        "JenisEmiten": null,
+        "KegiatanUsahaUtama": "Perkebunan kelapa sawit, karet dan tanaman penghasil getah lain, perusahaan holding, dan konsultasi manajemen lainnya",
+        "KodeDivisi": null,
+        "KodeEmiten": "AADI",
+        "NamaEmiten": "PT Adaro Andalan Indonesia Tbk",
+        "NPKP": "",
+        "NPWP": "02.433.115.9-091.000",
+        "PapanPencatatan": "Utama",
+        "Sektor": "Energi",
+        "SubSektor": "Minyak, Gas & Batu Bara",
+        "TanggalPencatatan": "2024-12-05T00:00:00",
+        "Telepon": "(021) 2553 3065",
+        "Website": "www.adaroindonesia.com",
+        "Status": 0,
+        "Logo": "/Portals/0/StaticData/ListedCompanies/LogoEmiten/AADI.jpg"
+      }
+    ],
+    "Sekretaris": [
+      {
+        "Nama": "Ray Aryaputra",
+        "Telepon": "(021) 2553 3065",
+        "Website": null,
+        "Email": "corsec@adaroindonesia.com",
+        "Fax": "",
+        "HP": ""
+      }
+    ],
+    "Direktur": [
+      {
+        "Nama": "Julius Aslan",
+        "Jabatan": "DIREKTUR UTAMA",
+        "Afiliasi": false
+      },
+      {
+        "Nama": "Priyadi",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": false
+      },
+      {
+        "Nama": "Lie Luckman",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": false
+      },
+      {
+        "Nama": "Susanti",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": false
+      }
+    ],
+    "Komisaris": [
+      {
+        "Nama": "Budi Bowoleksono",
+        "Jabatan": "KOMISARIS UTAMA",
+        "Independen": true
+      },
+      {
+        "Nama": "Primus Dorimulu",
+        "Jabatan": "KOMISARIS",
+        "Independen": false
+      }
+    ],
+    "KomiteAudit": [
+      {
+        "Jabatan": "KETUA",
+        "Nama": "Budi Bowoleksono"
+      },
+      {
+        "Jabatan": "ANGGOTA",
+        "Nama": "Ignatius Robby Sani"
+      },
+      {
+        "Jabatan": "ANGGOTA",
+        "Nama": "Lindawati Gani"
+      }
+    ],
+    "PemegangSaham": [
+      {
+        "Jumlah": 3200142830,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "PT Adaro Strategic Investments",
+        "Pengendali": true,
+        "Persentase": 41.0965
+      },
+      {
+        "Jumlah": 454011607,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "Garibaldi Thohir",
+        "Pengendali": true,
+        "Persentase": 5.8305
+      },
+      {
+        "Jumlah": 1197023942,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "PT Alamtri Resources Indonesia Tbk (sebelumnya bernama PT Adaro Energy Indonesia Tbk)",
+        "Pengendali": false,
+        "Persentase": 15.3723
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Komisaris",
+        "Nama": "Budi Bowoleksono",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 8500,
+        "Kategori": "Komisaris",
+        "Nama": "Primus Dorimulu",
+        "Pengendali": false,
+        "Persentase": 0.0001
+      },
+      {
+        "Jumlah": 2506265,
+        "Kategori": "Direksi",
+        "Nama": "Julius Aslan",
+        "Pengendali": false,
+        "Persentase": 0.0322
+      },
+      {
+        "Jumlah": 207108,
+        "Kategori": "Direksi",
+        "Nama": "Priyadi",
+        "Pengendali": false,
+        "Persentase": 0.0027
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Direksi",
+        "Nama": "Lie Luckman",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 22700,
+        "Kategori": "Direksi",
+        "Nama": "Susanti",
+        "Pengendali": false,
+        "Persentase": 0.0003
+      },
+      {
+        "Jumlah": 1092502271,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "Afiliasi",
+        "Pengendali": false,
+        "Persentase": 14.03
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Pengendali",
+        "Nama": "Pengendali Saham",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Non Pengendali",
+        "Nama": "Non Pengendali Saham",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Treasury",
+        "Nama": "Saham Treasury",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Masyarakat Warkat",
+        "Nama": "Masyarakat Warkat",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 1840466537,
+        "Kategori": "Masyarakat Non Warkat",
+        "Nama": "Masyarakat Non Warkat",
+        "Pengendali": false,
+        "Persentase": 23.6354
+      }
+    ],
+    "AnakPerusahaan": [
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 504,
+        "Lokasi": "Australia",
+        "MataUang": "USD",
+        "Nama": "Adaro Australia Pty Ltd",
+        "Persentase": 90,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2021"
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 504,
+        "Lokasi": "Australia",
+        "MataUang": "USD",
+        "Nama": "Adaro Australia Pty Ltd",
+        "Persentase": 90,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2021"
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 856404,
+        "Lokasi": "Malaysia",
+        "MataUang": "USD",
+        "Nama": "Adaro Capital Limited",
+        "Persentase": 90,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2017"
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 856404,
+        "Lokasi": "Malaysia",
+        "MataUang": "USD",
+        "Nama": "Adaro Capital Limited",
+        "Persentase": 90,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2017"
+      },
+      {
+        "BidangUsaha": "Perdagangan batubara",
+        "JumlahAset": 824918,
+        "Lokasi": "Singapura",
+        "MataUang": "USD",
+        "Nama": "Adaro International (Singapore) Pte Ltd",
+        "Persentase": 90,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2001"
+      },
+      {
+        "BidangUsaha": "Perdagangan batubara",
+        "JumlahAset": 824918,
+        "Lokasi": "Singapura",
+        "MataUang": "USD",
+        "Nama": "Adaro International (Singapore) Pte Ltd",
+        "Persentase": 90,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2001"
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 1801946,
+        "Lokasi": "Mauritius",
+        "MataUang": "USD",
+        "Nama": "Arindo Holdings (Mauritus) Ltd",
+        "Persentase": 90,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2005"
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 1801946,
+        "Lokasi": "Mauritius",
+        "MataUang": "USD",
+        "Nama": "Arindo Holdings (Mauritus) Ltd",
+        "Persentase": 90,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2005"
+      },
+      {
+        "BidangUsaha": "Penanganan dan pengangkutan batubara",
+        "JumlahAset": 265,
+        "Lokasi": "Singapura",
+        "MataUang": "USD",
+        "Nama": "Orchard Maritime Logistics Pte Ltd",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2006"
+      },
+      {
+        "BidangUsaha": "Penanganan dan pengangkutan batubara",
+        "JumlahAset": 265,
+        "Lokasi": "Singapura",
+        "MataUang": "USD",
+        "Nama": "Orchard Maritime Logistics Pte Ltd",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2006"
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 2408625,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Indonesia",
+        "Persentase": 88.47,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1992"
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 2408625,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Indonesia",
+        "Persentase": 88.47,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1992"
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 7288,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Jasa Tirta",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2024"
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 7288,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Jasa Tirta",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2024"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 9355,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Jasabara Indonesia",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2007"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 9355,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Jasabara Indonesia",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2007"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 680970,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Logistics",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2015"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 680970,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Logistics",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2015"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 32104,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Mining Technologies",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2023"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 32104,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Mining Technologies",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2023"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 81204,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Persada Mandiri",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2006"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 81204,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Persada Mandiri",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2006"
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 10174,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Brayan",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 10174,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Brayan",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 10897,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Gresik",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2016"
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 10897,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Gresik",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2016"
+      },
+      {
+        "BidangUsaha": "Aktivitas kantor pusat dan perdagangan",
+        "JumlahAset": 107898,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Mandiri",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2019"
+      },
+      {
+        "BidangUsaha": "Aktivitas kantor pusat dan perdagangan",
+        "JumlahAset": 107898,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Mandiri",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2019"
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 7693,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Mentaya",
+        "Persentase": 89.12,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2018"
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 7693,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Mentaya",
+        "Persentase": 89.12,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2018"
+      },
+      {
+        "BidangUsaha": "Jasa penunjang pertambangan",
+        "JumlahAset": 47119,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Sarana",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2021"
+      },
+      {
+        "BidangUsaha": "Jasa penunjang pertambangan",
+        "JumlahAset": 47119,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Sarana",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2021"
+      },
+      {
+        "BidangUsaha": "Jasa penunjang pengelolaan air",
+        "JumlahAset": 4235,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Wening",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2023"
+      },
+      {
+        "BidangUsaha": "Jasa penunjang pengelolaan air",
+        "JumlahAset": 4235,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Tirta Wening",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2023"
+      },
+      {
+        "BidangUsaha": "Jasa penunjang pertambangan",
+        "JumlahAset": 12697,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Wamco Prima",
+        "Persentase": 59.41,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2019"
+      },
+      {
+        "BidangUsaha": "Jasa penunjang pertambangan",
+        "JumlahAset": 12697,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Adaro Wamco Prima",
+        "Persentase": 59.41,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2019"
+      },
+      {
+        "BidangUsaha": "Peternakan",
+        "JumlahAset": 5575,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Agri Multi Lestari",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2016"
+      },
+      {
+        "BidangUsaha": "Peternakan",
+        "JumlahAset": 5575,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Agri Multi Lestari",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2016"
+      },
+      {
+        "BidangUsaha": "Kehutanan",
+        "JumlahAset": 2866,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Alam Sukses Lestari",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2018"
+      },
+      {
+        "BidangUsaha": "Kehutanan",
+        "JumlahAset": 2866,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Alam Sukses Lestari",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2018"
+      },
+      {
+        "BidangUsaha": "Pembuatan, perbaikan dan perawatan angkutan laut",
+        "JumlahAset": 19486,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Barito Galangan Nusantara",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2019"
+      },
+      {
+        "BidangUsaha": "Pembuatan, perbaikan dan perawatan angkutan laut",
+        "JumlahAset": 19486,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Barito Galangan Nusantara",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2019"
+      },
+      {
+        "BidangUsaha": "Kehutanan",
+        "JumlahAset": 315,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Cakra Wana Lestari",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Kehutanan",
+        "JumlahAset": 315,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Cakra Wana Lestari",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 51337,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Dianlia Setyamukti",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 51337,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Dianlia Setyamukti",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 7291,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Drupadi Tirta Intan",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2016"
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 7291,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Drupadi Tirta Intan",
+        "Persentase": 99.02,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2016"
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 5066,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Grenex Tirta Mandiri",
+        "Persentase": 69.31,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2024"
+      },
+      {
+        "BidangUsaha": "Pengolahan air",
+        "JumlahAset": 5066,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Grenex Tirta Mandiri",
+        "Persentase": 69.31,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2024"
+      },
+      {
+        "BidangUsaha": "Pengangkuta laut",
+        "JumlahAset": 21523,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Harapan Bahtera Internusa",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2004"
+      },
+      {
+        "BidangUsaha": "Pengangkuta laut",
+        "JumlahAset": 21523,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Harapan Bahtera Internusa",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2004"
+      },
+      {
+        "BidangUsaha": "Kawasan industri",
+        "JumlahAset": 9590,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Harapan Insani Millenia",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Kawasan industri",
+        "JumlahAset": 9590,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Harapan Insani Millenia",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Kehutanan",
+        "JumlahAset": 1280,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Hutan Amanah Lestari",
+        "Persentase": 67.94,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2018"
+      },
+      {
+        "BidangUsaha": "Kehutanan",
+        "JumlahAset": 1280,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Hutan Amanah Lestari",
+        "Persentase": 67.94,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2018"
+      },
+      {
+        "BidangUsaha": "Jasa pertambangan",
+        "JumlahAset": 123,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indo Mitra Konstruksi",
+        "Persentase": 64.97,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Jasa pertambangan",
+        "JumlahAset": 123,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indo Mitra Konstruksi",
+        "Persentase": 64.97,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Jasa pengelolaan terminal",
+        "JumlahAset": 53526,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indonesia Bulk Terminal",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1997"
+      },
+      {
+        "BidangUsaha": "Jasa pengelolaan terminal",
+        "JumlahAset": 53526,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indonesia Bulk Terminal",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1997"
+      },
+      {
+        "BidangUsaha": "Jasa pengelolaan terminal",
+        "JumlahAset": 12720,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indonesia Multi Purpose Terminal",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2013"
+      },
+      {
+        "BidangUsaha": "Jasa pengelolaan terminal",
+        "JumlahAset": 12720,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indonesia Multi Purpose Terminal",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2013"
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 42818,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indoprima Niaga Sejahtera",
+        "Persentase": 65,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 42818,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indoprima Niaga Sejahtera",
+        "Persentase": 65,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Jasa pertambangan",
+        "JumlahAset": 24403,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indotama Semesta Manunggal",
+        "Persentase": 64.97,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Jasa pertambangan",
+        "JumlahAset": 24403,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indotama Semesta Manunggal",
+        "Persentase": 64.97,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Kepelabuhan",
+        "JumlahAset": 8143,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indovisi Sentosa Mandiri",
+        "Persentase": 64.97,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Kepelabuhan",
+        "JumlahAset": 8143,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Indovisi Sentosa Mandiri",
+        "Persentase": 64.97,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Penyewaan pembangkit listrik\r\ndan jasa penunjang\r\ntenaga listrik",
+        "JumlahAset": 502579,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Kaltara Power Indonesia",
+        "Persentase": 83.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Penyewaan pembangkit listrik\r\ndan jasa penunjang\r\ntenaga listrik",
+        "JumlahAset": 502579,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Kaltara Power Indonesia",
+        "Persentase": 83.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 141563,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Laskar Semesta Alam",
+        "Persentase": 75.2,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2016"
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 141563,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Laskar Semesta Alam",
+        "Persentase": 75.2,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2016"
+      },
+      {
+        "BidangUsaha": "Kehutanan",
+        "JumlahAset": 14,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Mandiri Wana Lestari",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Kehutanan",
+        "JumlahAset": 14,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Mandiri Wana Lestari",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Pengangkutan laut",
+        "JumlahAset": 485393,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Maritim Barito Perkasa",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2005"
+      },
+      {
+        "BidangUsaha": "Pengangkutan laut",
+        "JumlahAset": 485393,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Maritim Barito Perkasa",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2005"
+      },
+      {
+        "BidangUsaha": "Usaha kehutanan",
+        "JumlahAset": 159,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Mitra Rimba Indoprima",
+        "Persentase": 64.97,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Usaha kehutanan",
+        "JumlahAset": 159,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Mitra Rimba Indoprima",
+        "Persentase": 64.97,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 183966,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Mustika Indah Permai",
+        "Persentase": 75,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2019"
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 183966,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Mustika Indah Permai",
+        "Persentase": 75,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2019"
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 83831,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Paramitha Cipta Sarana",
+        "Persentase": 75,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2024"
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 83831,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Paramitha Cipta Sarana",
+        "Persentase": 75,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2024"
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 23544,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Pari Coal",
+        "Persentase": 64.9,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 23544,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Pari Coal",
+        "Persentase": 64.9,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Kehutanan",
+        "JumlahAset": 15,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Persada Wana Lestari",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Kehutanan",
+        "JumlahAset": 15,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Persada Wana Lestari",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 10366,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Puradika Bongkar Muat Makmur",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2013"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 10366,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Puradika Bongkar Muat Makmur",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2013"
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 336,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Ratah Coal",
+        "Persentase": 99.9,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 336,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Ratah Coal",
+        "Persentase": 99.9,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 17070,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Rehabilitasi Lingkungan Indonesia",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2016"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 17070,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Rehabilitasi Lingkungan Indonesia",
+        "Persentase": 90.59,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2016"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 24947,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Sarana Daya Mandiri",
+        "Persentase": 30.25,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2009"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 24947,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Sarana Daya Mandiri",
+        "Persentase": 30.25,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2009"
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 24967,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Sarana Mekar Pratama",
+        "Persentase": 54.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 24967,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Sarana Mekar Pratama",
+        "Persentase": 54.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 4527,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Sarana Multi Talenta",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "Jasa",
+        "JumlahAset": 4527,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Sarana Multi Talenta",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 152402,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Semesta Centramas",
+        "Persentase": 75,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2014"
+      },
+      {
+        "BidangUsaha": "Pertambangan",
+        "JumlahAset": 152402,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Semesta Centramas",
+        "Persentase": 75,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2014"
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 307324,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Viscaya Investments",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 307324,
+        "Lokasi": "Indonesia",
+        "MataUang": "USD",
+        "Nama": "PT Viscaya Investments",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Tidak aktif",
+        "TahunKomersil": ""
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 1252859,
+        "Lokasi": "Mauritius",
+        "MataUang": "USD",
+        "Nama": "Vindoor Investments (Mauritius) Ltd",
+        "Persentase": 90,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2001"
+      },
+      {
+        "BidangUsaha": "Investasi",
+        "JumlahAset": 1252859,
+        "Lokasi": "Mauritius",
+        "MataUang": "USD",
+        "Nama": "Vindoor Investments (Mauritius) Ltd",
+        "Persentase": 90,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2001"
+      }
+    ],
+    "KAP": [
+      {
+        "AkhirPeriode": "1911-01-01T00:00:00",
+        "KAP1": "",
+        "Nama": "Rintis, Jumadi, Rianto & Rekan",
+        "SigningPartner": "",
+        "TahunBuku": 0,
+        "TanggalTahunBuku": "2023-12-31T00:00:00",
+        "TglOpini": "1911-01-01T00:00:00"
+      },
+      {
+        "AkhirPeriode": "1911-01-01T00:00:00",
+        "KAP1": "",
+        "Nama": "Rintis, Jumadi, Rianto & Rekan",
+        "SigningPartner": "",
+        "TahunBuku": 2024,
+        "TanggalTahunBuku": "1911-01-01T00:00:00",
+        "TglOpini": "2024-11-09T00:00:00"
+      },
+      {
+        "AkhirPeriode": "1911-01-01T00:00:00",
+        "KAP1": "",
+        "Nama": "Rintis, Jumadi, Rianto & Rekan",
+        "SigningPartner": "",
+        "TahunBuku": 0,
+        "TanggalTahunBuku": "2023-12-31T00:00:00",
+        "TglOpini": "1911-01-01T00:00:00"
+      },
+      {
+        "AkhirPeriode": "1911-01-01T00:00:00",
+        "KAP1": "",
+        "Nama": "Rintis, Jumadi, Rianto & Rekan",
+        "SigningPartner": "",
+        "TahunBuku": 2024,
+        "TanggalTahunBuku": "1911-01-01T00:00:00",
+        "TglOpini": "2024-11-09T00:00:00"
+      },
+      {
+        "AkhirPeriode": "1911-01-01T00:00:00",
+        "KAP1": "",
+        "Nama": "Rintis, Jumadi, Rianto & Rekan",
+        "SigningPartner": "",
+        "TahunBuku": 0,
+        "TanggalTahunBuku": "2023-12-31T00:00:00",
+        "TglOpini": "1911-01-01T00:00:00"
+      },
+      {
+        "AkhirPeriode": "1911-01-01T00:00:00",
+        "KAP1": "",
+        "Nama": "Rintis, Jumadi, Rianto & Rekan",
+        "SigningPartner": "",
+        "TahunBuku": 2024,
+        "TanggalTahunBuku": "1911-01-01T00:00:00",
+        "TglOpini": "2024-11-09T00:00:00"
+      },
+      {
+        "AkhirPeriode": "1911-01-01T00:00:00",
+        "KAP1": "",
+        "Nama": "KAP Rintis, Jumadi, Rianto & Rekan",
+        "SigningPartner": "",
+        "TahunBuku": 0,
+        "TanggalTahunBuku": "2024-05-10T00:00:00",
+        "TglOpini": "1911-01-01T00:00:00"
+      },
+      {
+        "AkhirPeriode": "1911-01-01T00:00:00",
+        "KAP1": "",
+        "Nama": "Rintis, Jumadi, Rianto & Rekan",
+        "SigningPartner": "",
+        "TahunBuku": 2024,
+        "TanggalTahunBuku": "1911-01-01T00:00:00",
+        "TglOpini": "2024-11-09T00:00:00"
+      }
+    ],
+    "Dividen": [],
+    "BondsAndSukuk": [],
+    "IssuedBond": []
+  },
+  "AALI": {
+    "ResultCount": 1,
+    "Search": {
+      "KodeEmiten": "AALI",
+      "EmitenType": null,
+      "SortOrder": null,
+      "SortColumn": null,
+      "indexfrom": 1,
+      "pagesize": 1
+    },
+    "Profiles": [
+      {
+        "Alamat": "Jl. Puloayang Raya Kawasan Industri Pulo Gadung, OR, 1, Jatinegara, Cakung, Kota ADM, Jakarta Timur, DKI Jakarta, 13930",
+        "BAE": "PT. Raya Saham Registra",
+        "DataID": 0,
+        "Divisi": null,
+        "EfekEmiten_EBA": false,
+        "EfekEmiten_ETF": false,
+        "EfekEmiten_Obligasi": false,
+        "EfekEmiten_Saham": true,
+        "EfekEmiten_SPEI": false,
+        "Industri": "Produk Makanan Pertanian",
+        "SubIndustri": "Perkebunan & Tanaman Pangan",
+        "Email": "Investor@astra-agro.co.id",
+        "Fax": "461-6655, 461-6677, 461-6688",
+        "id": 0,
+        "JenisEmiten": null,
+        "KegiatanUsahaUtama": "Agriculture Plantation",
+        "KodeDivisi": null,
+        "KodeEmiten": "AALI",
+        "NamaEmiten": "Astra Agro Lestari Tbk",
+        "NPKP": "",
+        "NPWP": "001.334.427.0-054.000",
+        "PapanPencatatan": "Utama",
+        "Sektor": "Barang Konsumen Primer",
+        "SubSektor": "Makanan & Minuman",
+        "TanggalPencatatan": "1997-12-09T00:00:00",
+        "Telepon": "461-65-55",
+        "Website": "http://www.astra-agro.co.id",
+        "Status": 0,
+        "Logo": "/Portals/0/StaticData/ListedCompanies/LogoEmiten/AALI.jpg"
+      }
+    ],
+    "Sekretaris": [
+      {
+        "Nama": "Tingning Sukowignjo",
+        "Telepon": "021-4616555",
+        "Website": null,
+        "Email": "investor@astra-agro.co.id",
+        "Fax": "021-4616685",
+        "HP": ""
+      }
+    ],
+    "Direktur": [
+      {
+        "Nama": "DJAP TET FA",
+        "Jabatan": "PRESIDEN DIREKTUR",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "EKO PRASETYO",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "WIDAYANTO",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "TINGNING SUKOWIGNJO",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "ARIEF CATUR IRAWAN",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "BANDUNG SAHARI",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "VERONICA LUSI HERDIYANTI",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      }
+    ],
+    "Komisaris": [
+      {
+        "Nama": "SANTOSA",
+        "Jabatan": "PRESIDEN KOMISARIS",
+        "Independen": false
+      },
+      {
+        "Nama": "JOHANNES LOMAN",
+        "Jabatan": "KOMISARIS",
+        "Independen": false
+      },
+      {
+        "Nama": "RATNA WARDHANI",
+        "Jabatan": "KOMISARIS",
+        "Independen": true
+      },
+      {
+        "Nama": "ARIDONO SUKMANTO",
+        "Jabatan": "KOMISARIS",
+        "Independen": true
+      }
+    ],
+    "KomiteAudit": [
+      {
+        "Jabatan": "KETUA",
+        "Nama": "Ratna Wardhani"
+      },
+      {
+        "Jabatan": "ANGGOTA",
+        "Nama": "Herawati Prasetyo"
+      },
+      {
+        "Jabatan": "ANGGOTA",
+        "Nama": "Juliani Eliza Syaftari"
+      }
+    ],
+    "PemegangSaham": [
+      {
+        "Jumlah": 340510927,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "PT Astra International Tbk",
+        "Pengendali": true,
+        "Persentase": 17.69
+      },
+      {
+        "Jumlah": 1193171513,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "PT Astra International Tbk",
+        "Pengendali": true,
+        "Persentase": 61.99
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Pengendali",
+        "Nama": "Pengendali Saham",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Non Pengendali",
+        "Nama": "Non Pengendali Saham",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Treasury",
+        "Nama": "Saham Treasury",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 340719727,
+        "Kategori": "Masyarakat Warkat",
+        "Nama": "Masyarakat Warkat",
+        "Pengendali": false,
+        "Persentase": 17.7
+      },
+      {
+        "Jumlah": 50286166,
+        "Kategori": "Masyarakat Non Warkat",
+        "Nama": "Masyarakat Non Warkat",
+        "Pengendali": false,
+        "Persentase": 2.62
+      }
+    ],
+    "AnakPerusahaan": [
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 596853,
+        "Lokasi": "Kalimantan Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Agro Menara Rachmat ",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1998"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 1065236,
+        "Lokasi": "Sulawesi Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Agro Nusa Abadi",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2012"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 477613,
+        "Lokasi": "Kalimantan Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Bhadra Cemerlang",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2010"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 120365,
+        "Lokasi": "Sulawesi Barat",
+        "MataUang": "IDR",
+        "Nama": "PT Bhadra Sukses ",
+        "Persentase": 99.8,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1997"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 1019697,
+        "Lokasi": "Kalimantan Timur",
+        "MataUang": "IDR",
+        "Nama": "PT Borneo Indah Marjaya\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2011"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 44840,
+        "Lokasi": "Kalimantan Selatan",
+        "MataUang": "IDR",
+        "Nama": "PT Cakradenta Agung Pertiwi \r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2000"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 41154,
+        "Lokasi": "Kalimantan Selatan",
+        "MataUang": "IDR",
+        "Nama": "PT Cakung Permata Nusa \r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1999"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 395875,
+        "Lokasi": "Sulawesi Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Cipta Agro Nusantara",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2012"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 126011,
+        "Lokasi": "Kalimantan Timur",
+        "MataUang": "IDR",
+        "Nama": "PT Cipta Narada Lestari\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2011"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 1497107,
+        "Lokasi": "Riau",
+        "MataUang": "IDR",
+        "Nama": "PT Eka Dura Indonesia",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1994"
+      },
+      {
+        "BidangUsaha": "Lainnya",
+        "JumlahAset": 13259,
+        "Lokasi": "Riau",
+        "MataUang": "IDR",
+        "Nama": "PT Eka Dura Perdana \r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1992"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 597184,
+        "Lokasi": "Kalimantan Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Gunung Sejahtera Dua Indah",
+        "Persentase": 95,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1998"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 733640,
+        "Lokasi": "Kalimantan Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Gunung Sejahtera Ibu Pertiwi",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1997"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 686955,
+        "Lokasi": "Kalimantan Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Gunung Sejahtera Puti Pesona",
+        "Persentase": 95,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1999"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 21972,
+        "Lokasi": "Kalimantan Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Gunung Sejahtera Raman Permai\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 254668,
+        "Lokasi": "Kalimantan Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Gunung SejahteraYoli Makmur\r\n",
+        "Persentase": 95,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2001"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 562050,
+        "Lokasi": "Aceh",
+        "MataUang": "IDR",
+        "Nama": "PT Karya Tanah Subur",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1994"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 1745912,
+        "Lokasi": "Kalimantan Timur",
+        "MataUang": "IDR",
+        "Nama": "PT Karyanusa Ekadaya\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2009"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 1330473,
+        "Lokasi": "Riau",
+        "MataUang": "IDR",
+        "Nama": "PT Kimia Tirta Utama ",
+        "Persentase": 75,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1999"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 559956,
+        "Lokasi": "Sulawesi Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Lestari Tani Teladan ",
+        "Persentase": 94.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1998"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 844925,
+        "Lokasi": "Sulawesi Barat",
+        "MataUang": "IDR",
+        "Nama": "PT Letawa",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1995"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 413384,
+        "Lokasi": "Sulawesi Barat",
+        "MataUang": "IDR",
+        "Nama": "PT Mamuang ",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1997"
+      },
+      {
+        "BidangUsaha": "Karet",
+        "JumlahAset": 7547,
+        "Lokasi": "Kalimantan Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Mitra Barito Gemilang\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2019"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 834601,
+        "Lokasi": "Kalimantan Tengah\t",
+        "MataUang": "IDR",
+        "Nama": "PT Nirmala Agro Lestari",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2003"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 535434,
+        "Lokasi": "Kalimantan Timur",
+        "MataUang": "IDR",
+        "Nama": "PT Palma Plantasindo\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2011"
+      },
+      {
+        "BidangUsaha": "Karet",
+        "JumlahAset": 16185,
+        "Lokasi": "Banten",
+        "MataUang": "IDR",
+        "Nama": "PT Pandji Waringin \r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1995"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 628646,
+        "Lokasi": "Sulawesi Barat",
+        "MataUang": "IDR",
+        "Nama": "PT Pasangkayu ",
+        "Persentase": 99.99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1997"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 857666,
+        "Lokasi": "Aceh",
+        "MataUang": "IDR",
+        "Nama": "PT Perkebunan Lembah Bhakti",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1994"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 480394,
+        "Lokasi": "Kalimantan Selatan",
+        "MataUang": "IDR",
+        "Nama": "PT Persada Dinamika Lestari\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2013"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 173292,
+        "Lokasi": "Kalimantan Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Persadabina Nusantaraabadi\r\n",
+        "Persentase": 95,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2002"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 188631,
+        "Lokasi": "Sulawesi Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Rimbunan Alam Sentosa",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2012"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 623698,
+        "Lokasi": "Jambi",
+        "MataUang": "IDR",
+        "Nama": "PT Sari Aditya Loka",
+        "Persentase": 90,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1995"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 977284,
+        "Lokasi": "Riau",
+        "MataUang": "IDR",
+        "Nama": "PT Sari Lembah Subur",
+        "Persentase": 85,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1993"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 648813,
+        "Lokasi": "Riau",
+        "MataUang": "IDR",
+        "Nama": "PT Sawit Asahan Indah ",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1997"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 676632,
+        "Lokasi": "Sulawesi Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Sawit Jaya Abadi",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2012"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 411645,
+        "Lokasi": "Kalimantan Timur",
+        "MataUang": "IDR",
+        "Nama": "PT Subur Abadi Plantations\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2012"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 1461557,
+        "Lokasi": "Kalimantan Selatan",
+        "MataUang": "IDR",
+        "Nama": "PT Subur Agro Makmur\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2013"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 595571,
+        "Lokasi": "Kalimantan Timur",
+        "MataUang": "IDR",
+        "Nama": "PT Sukses Tani Nusasubur\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2000"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 537811,
+        "Lokasi": "Kalimantan Timur",
+        "MataUang": "IDR",
+        "Nama": "PT Sumber Kharisma Persada\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2006"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 627659,
+        "Lokasi": "Kalimantan Tengah",
+        "MataUang": "IDR",
+        "Nama": "PT Suryaindah Nusantarapagi",
+        "Persentase": 95,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2000"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 632786,
+        "Lokasi": "Sulawesi Barat",
+        "MataUang": "IDR",
+        "Nama": "PT Suryaraya Lestari ",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1997"
+      },
+      {
+        "BidangUsaha": "Penyulingan Minyak",
+        "JumlahAset": 98752,
+        "Lokasi": "Sulawesi Barat",
+        "MataUang": "IDR",
+        "Nama": "PT Tanjung Bina Lestari\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2017"
+      },
+      {
+        "BidangUsaha": "Penyulingan Minyak",
+        "JumlahAset": 2590288,
+        "Lokasi": "Sulawesi Barat",
+        "MataUang": "IDR",
+        "Nama": "PT Tanjung Sarana Lestari\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2014"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 2670735,
+        "Lokasi": "Kalimantan Selatan",
+        "MataUang": "IDR",
+        "Nama": "PT Tri Buana Mas\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "2016"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 1369235,
+        "Lokasi": "Riau",
+        "MataUang": "IDR",
+        "Nama": "PT Tunggal Perkasa Plantations",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1987"
+      },
+      {
+        "BidangUsaha": "Kelapa Sawit",
+        "JumlahAset": 914132,
+        "Lokasi": "Kalimantan Timur",
+        "MataUang": "IDR",
+        "Nama": "PT Waru Kaltim Plantation\r\n",
+        "Persentase": 99.99,
+        "Satuan": "JUTAAN",
+        "StatusOperasi": "Aktif",
+        "TahunKomersil": "1995"
+      }
+    ],
+    "KAP": [],
+    "Dividen": [
+      {
+        "Nama": "Astra Agro Lestari Tbk",
+        "Jenis": "dt",
+        "TahunBuku": "2024",
+        "TotalSahamBonus": 0,
+        "CashDividenPerSahamMU": "IDR",
+        "CashDividenPerSaham": 184,
+        "TanggalCum": "2025-05-07T00:00:00",
+        "TanggalExRegulerDanNegosiasi": "2025-05-08T00:00:00",
+        "TanggalDPS": "2025-05-09T16:00:00",
+        "TanggalPembayaran": "2025-05-28T00:00:00",
+        "Rasio1": 0,
+        "Rasio2": 0,
+        "CashDividenTotalMU": "IDR",
+        "CashDividenTotal": 354142653272
+      }
+    ],
+    "BondsAndSukuk": [],
+    "IssuedBond": []
+  },
+  "ABBA": {
+    "ResultCount": 1,
+    "Search": {
+      "KodeEmiten": "ABBA",
+      "EmitenType": null,
+      "SortOrder": null,
+      "SortColumn": null,
+      "indexfrom": 1,
+      "pagesize": 1
+    },
+    "Profiles": [
+      {
+        "Alamat": "Sahid Sudirman Centre Lt. 10, Jl. Jend. Sudirman No. 86, Jakarta 10220",
+        "BAE": "PT. Adimitra Jasa Korpora",
+        "DataID": 0,
+        "Divisi": null,
+        "EfekEmiten_EBA": false,
+        "EfekEmiten_ETF": false,
+        "EfekEmiten_Obligasi": false,
+        "EfekEmiten_Saham": true,
+        "EfekEmiten_SPEI": false,
+        "Industri": "Media",
+        "SubIndustri": "Penerbitan",
+        "Email": "corsec@mahakax.com",
+        "Fax": "(021) 573 9210",
+        "id": 0,
+        "JenisEmiten": null,
+        "KegiatanUsahaUtama": "Media dan Percetakan",
+        "KodeDivisi": null,
+        "KodeEmiten": "ABBA",
+        "NamaEmiten": "Mahaka Media Tbk",
+        "NPKP": "0",
+        "NPWP": "01.609.052.4-054.000",
+        "PapanPencatatan": "Pemantauan Khusus",
+        "Sektor": "Barang Konsumen Non-Primer",
+        "SubSektor": "Media & Hiburan",
+        "TanggalPencatatan": "2002-04-03T00:00:00",
+        "Telepon": "(021) 573 9203",
+        "Website": "www.mahakax.com",
+        "Status": 0,
+        "Logo": "/Portals/0/StaticData/ListedCompanies/LogoEmiten/ABBA.jpg"
+      }
+    ],
+    "Sekretaris": [
+      {
+        "Nama": "S. Pramudityo Anggoro",
+        "Telepon": "021-5739203",
+        "Website": null,
+        "Email": "corsec@mahakamedia.com",
+        "Fax": "021-5739210",
+        "HP": "08161624478"
+      }
+    ],
+    "Direktur": [
+      {
+        "Nama": "Ronny Wilimas Sugiadha",
+        "Jabatan": "DIREKTUR UTAMA",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "Muhammad Fadri Attamimi",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      }
+    ],
+    "Komisaris": [
+      {
+        "Nama": "Rudy Setia Laksmana",
+        "Jabatan": "KOMISARIS UTAMA",
+        "Independen": false
+      },
+      {
+        "Nama": "Martin Suharlie",
+        "Jabatan": "KOMISARIS",
+        "Independen": false
+      },
+      {
+        "Nama": "Aldo Rambie",
+        "Jabatan": "KOMISARIS",
+        "Independen": true
+      }
+    ],
+    "KomiteAudit": [
+      {
+        "Jabatan": "KETUA",
+        "Nama": "Aldo Rambie"
+      },
+      {
+        "Jabatan": "ANGGOTA",
+        "Nama": "Otto Eduard Sitorus"
+      },
+      {
+        "Jabatan": "ANGGOTA",
+        "Nama": "Isenta"
+      }
+    ],
+    "PemegangSaham": [
+      {
+        "Jumlah": 1592831618,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "PT Beyond Media",
+        "Pengendali": true,
+        "Persentase": 40.47
+      },
+      {
+        "Jumlah": 542042122,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "PT Solic Kreasi Baru",
+        "Pengendali": false,
+        "Persentase": 13.77
+      },
+      {
+        "Jumlah": 282886300,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "Mediahuis Ireland Limited",
+        "Pengendali": false,
+        "Persentase": 7.19
+      },
+      {
+        "Jumlah": 388200,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "Mahendra Agakhan T",
+        "Pengendali": false,
+        "Persentase": 0.01
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Pengendali",
+        "Nama": "Pengendali Saham",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Non Pengendali",
+        "Nama": "Non Pengendali Saham",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Treasury",
+        "Nama": "Saham Treasury",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 175350297,
+        "Kategori": "Masyarakat Warkat",
+        "Nama": "Masyarakat Warkat",
+        "Pengendali": false,
+        "Persentase": 4.46
+      },
+      {
+        "Jumlah": 1342394320,
+        "Kategori": "Masyarakat Non Warkat",
+        "Nama": "Masyarakat Non Warkat",
+        "Pengendali": false,
+        "Persentase": 34.1
+      }
+    ],
+    "AnakPerusahaan": [
+      {
+        "BidangUsaha": "PENGIRIMAN BARANG",
+        "JumlahAset": 1000000000,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA CEPAT INDONESIA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGIRIMAN BARANG",
+        "JumlahAset": 1000000000,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA CEPAT INDONESIA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGIRIMAN BARANG",
+        "JumlahAset": 1000000000,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA CEPAT INDONESIA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGIRIMAN BARANG",
+        "JumlahAset": 1000000000,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA CEPAT INDONESIA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGIRIMAN BARANG",
+        "JumlahAset": 1000000000,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA CEPAT INDONESIA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGEMBANGAN SOFTWARE",
+        "JumlahAset": 1268959209,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA CODE DIGITAL",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGEMBANGAN SOFTWARE",
+        "JumlahAset": 1319265632,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA CODE DIGITAL",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGEMBANGAN SOFTWARE",
+        "JumlahAset": 1265959043,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA CODE DIGITAL",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGEMBANGAN SOFTWARE",
+        "JumlahAset": 1235619433,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA CODE DIGITAL",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGEMBANGAN SOFTWARE",
+        "JumlahAset": 1227516061,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA CODE DIGITAL",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PERDAGANGAN PERALATAN KOMUNIKASI",
+        "JumlahAset": 1183732288,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA DAMCORP WABA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PERDAGANGAN PERALATAN KOMUNIKASI",
+        "JumlahAset": 1197875426,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA DAMCORP WABA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PERDAGANGAN PERALATAN KOMUNIKASI",
+        "JumlahAset": 1256972028,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA DAMCORP WABA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PERDAGANGAN PERALATAN KOMUNIKASI",
+        "JumlahAset": 1189794049,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA DAMCORP WABA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PERDAGANGAN PERALATAN KOMUNIKASI",
+        "JumlahAset": 1191210819,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT AKASIA DAMCORP WABA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGEMBANGAN SOFTWARE",
+        "JumlahAset": 2418959811,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT ARCHYTECT TEKNOLOGI INDONESIA",
+        "Persentase": 70,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGEMBANGAN SOFTWARE",
+        "JumlahAset": 3741808126,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT ARCHYTECT TEKNOLOGI INDONESIA",
+        "Persentase": 70,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGEMBANGAN SOFTWARE",
+        "JumlahAset": 3038280911,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT ARCHYTECT TEKNOLOGI INDONESIA",
+        "Persentase": 70,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGEMBANGAN SOFTWARE",
+        "JumlahAset": 2752569316,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT ARCHYTECT TEKNOLOGI INDONESIA",
+        "Persentase": 70,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENGEMBANGAN SOFTWARE",
+        "JumlahAset": 2562238144,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT ARCHYTECT TEKNOLOGI INDONESIA",
+        "Persentase": 70,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENYIARAN TELEVISI",
+        "JumlahAset": 5746289504,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT DANAPATI ABINAYA INVESTAMA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2005"
+      },
+      {
+        "BidangUsaha": "PENYIARAN TELEVISI",
+        "JumlahAset": 6671967935,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT DANAPATI ABINAYA INVESTAMA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2005"
+      },
+      {
+        "BidangUsaha": "PENYIARAN TELEVISI",
+        "JumlahAset": 7258528419,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT DANAPATI ABINAYA INVESTAMA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2005"
+      },
+      {
+        "BidangUsaha": "PENYIARAN TELEVISI",
+        "JumlahAset": 6936588577,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT DANAPATI ABINAYA INVESTAMA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2005"
+      },
+      {
+        "BidangUsaha": "PENYIARAN TELEVISI",
+        "JumlahAset": 6656286101,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT DANAPATI ABINAYA INVESTAMA",
+        "Persentase": 50,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2005"
+      },
+      {
+        "BidangUsaha": "PENGELOLAAN GEDUNG",
+        "JumlahAset": 30555528993,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT GAMMA INVESTA LESTARI",
+        "Persentase": 99.98,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2006"
+      },
+      {
+        "BidangUsaha": "PENGELOLAAN GEDUNG",
+        "JumlahAset": 26843370836,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT GAMMA INVESTA LESTARI",
+        "Persentase": 99.98,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2006"
+      },
+      {
+        "BidangUsaha": "PENGELOLAAN GEDUNG",
+        "JumlahAset": 29812414265,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT GAMMA INVESTA LESTARI",
+        "Persentase": 99.98,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2006"
+      },
+      {
+        "BidangUsaha": "PENGELOLAAN GEDUNG",
+        "JumlahAset": 30826514458,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT GAMMA INVESTA LESTARI",
+        "Persentase": 99.98,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2006"
+      },
+      {
+        "BidangUsaha": "PENGELOLAAN GEDUNG",
+        "JumlahAset": 30745128630,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT GAMMA INVESTA LESTARI",
+        "Persentase": 99.98,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2006"
+      },
+      {
+        "BidangUsaha": "EVENT ORGANIZER",
+        "JumlahAset": 20593960324,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT KALYANAMITRA ADHARA MAHARDHIKA",
+        "Persentase": 80,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2007"
+      },
+      {
+        "BidangUsaha": "EVENT ORGANIZER",
+        "JumlahAset": 20341952647,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT KALYANAMITRA ADHARA MAHARDHIKA",
+        "Persentase": 80,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2007"
+      },
+      {
+        "BidangUsaha": "EVENT ORGANIZER",
+        "JumlahAset": 24416458069,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT KALYANAMITRA ADHARA MAHARDHIKA",
+        "Persentase": 80,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2007"
+      },
+      {
+        "BidangUsaha": "EVENT ORGANIZER",
+        "JumlahAset": 10885794539,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT KALYANAMITRA ADHARA MAHARDHIKA",
+        "Persentase": 80,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2007"
+      },
+      {
+        "BidangUsaha": "EVENT ORGANIZER",
+        "JumlahAset": 23001069105,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT KALYANAMITRA ADHARA MAHARDHIKA",
+        "Persentase": 80,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2007"
+      },
+      {
+        "BidangUsaha": "KONTEN KREATIF AGENSI",
+        "JumlahAset": 4175365304,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT KREATIF INTEL TEKNOLOGI",
+        "Persentase": 97,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "KONTEN KREATIF AGENSI",
+        "JumlahAset": 8232318628,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT KREATIF INTEL TEKNOLOGI",
+        "Persentase": 97,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "KONTEN KREATIF AGENSI",
+        "JumlahAset": 7358735002,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT KREATIF INTEL TEKNOLOGI",
+        "Persentase": 97,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "KONTEN KREATIF AGENSI",
+        "JumlahAset": 4876652278,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT KREATIF INTEL TEKNOLOGI",
+        "Persentase": 97,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "KONTEN KREATIF AGENSI",
+        "JumlahAset": 6162694642,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT KREATIF INTEL TEKNOLOGI",
+        "Persentase": 97,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "PENERBITAN PERS",
+        "JumlahAset": 20788859063,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT REPUBLIKA MEDIA MANDIRI",
+        "Persentase": 95.64,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2004"
+      },
+      {
+        "BidangUsaha": "PENERBITAN PERS",
+        "JumlahAset": 34251437563,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT REPUBLIKA MEDIA MANDIRI",
+        "Persentase": 95.64,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2004"
+      },
+      {
+        "BidangUsaha": "PENERBITAN PERS",
+        "JumlahAset": 43149165666,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT REPUBLIKA MEDIA MANDIRI",
+        "Persentase": 95.64,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2004"
+      },
+      {
+        "BidangUsaha": "PENERBITAN PERS",
+        "JumlahAset": 29651053239,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT REPUBLIKA MEDIA MANDIRI",
+        "Persentase": 91.91,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2004"
+      },
+      {
+        "BidangUsaha": "PENERBITAN PERS",
+        "JumlahAset": 18754519589,
+        "Lokasi": "JAKARTA",
+        "MataUang": "IDR",
+        "Nama": "PT REPUBLIKA MEDIA MANDIRI",
+        "Persentase": 95.64,
+        "Satuan": "PENUH",
+        "StatusOperasi": "AKTIF",
+        "TahunKomersil": "2004"
+      }
+    ],
+    "KAP": [],
+    "Dividen": [],
+    "BondsAndSukuk": [],
+    "IssuedBond": []
+  },
+  "ABDA": {
+    "ResultCount": 1,
+    "Search": {
+      "KodeEmiten": "ABDA",
+      "EmitenType": null,
+      "SortOrder": null,
+      "SortColumn": null,
+      "indexfrom": 1,
+      "pagesize": 1
+    },
+    "Profiles": [
+      {
+        "Alamat": "Plaza Asia Lt. 27 Jl. Jend. Sudirman Kav. 59 Jakarta Selatan ",
+        "BAE": "PT. Raya Saham Registra",
+        "DataID": 0,
+        "Divisi": null,
+        "EfekEmiten_EBA": false,
+        "EfekEmiten_ETF": false,
+        "EfekEmiten_Obligasi": false,
+        "EfekEmiten_Saham": true,
+        "EfekEmiten_SPEI": false,
+        "Industri": "Asuransi",
+        "SubIndustri": "Asuransi Umum",
+        "Email": "contactus@oona-insurance.co.id",
+        "Fax": "5140 1698 ",
+        "id": 0,
+        "JenisEmiten": null,
+        "KegiatanUsahaUtama": "Asuransi Umum",
+        "KodeDivisi": null,
+        "KodeEmiten": "ABDA",
+        "NamaEmiten": "Asuransi Bina Dana Arta Tbk",
+        "NPKP": "",
+        "NPWP": "01.362.014.1-054.000 ",
+        "PapanPencatatan": "Pemantauan Khusus",
+        "Sektor": "Keuangan",
+        "SubSektor": "Asuransi",
+        "TanggalPencatatan": "1989-07-06T00:00:00",
+        "Telepon": "5140 1688",
+        "Website": "www.myoona.id",
+        "Status": 0,
+        "Logo": "/Portals/0/StaticData/ListedCompanies/LogoEmiten/ABDA.jpg"
+      }
+    ],
+    "Sekretaris": [
+      {
+        "Nama": "Fausia Isti Tanoso",
+        "Telepon": "021-51401688",
+        "Website": null,
+        "Email": "fausia.tanoso@oona-insurance.co.id",
+        "Fax": "021-51401698",
+        "HP": ""
+      }
+    ],
+    "Direktur": [
+      {
+        "Nama": "Julien Pierre Combaret",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "Liani Chandra",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "Fenni Sutanto",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "Vincent Citizen Soegianto",
+        "Jabatan": "DIREKTUR UTAMA",
+        "Afiliasi": true
+      }
+    ],
+    "Komisaris": [
+      {
+        "Nama": "Abhishek Bhatia",
+        "Jabatan": "KOMISARIS UTAMA",
+        "Independen": false
+      },
+      {
+        "Nama": "Kevin Soedyatmiko",
+        "Jabatan": "KOMISARIS",
+        "Independen": false
+      },
+      {
+        "Nama": "Herwan Ng",
+        "Jabatan": "KOMISARIS",
+        "Independen": true
+      },
+      {
+        "Nama": "Francisco Noriega Malave",
+        "Jabatan": "KOMISARIS",
+        "Independen": true
+      }
+    ],
+    "KomiteAudit": [
+      {
+        "Jabatan": "KETUA",
+        "Nama": "Herwan Ng"
+      },
+      {
+        "Jabatan": "ANGGOTA",
+        "Nama": "Francisco Noriega Malave"
+      },
+      {
+        "Jabatan": "ANGGOTA",
+        "Nama": "Kusuwandi Tamin"
+      }
+    ],
+    "PemegangSaham": [
+      {
+        "Jumlah": 2200,
+        "Kategori": "Direksi",
+        "Nama": "V. CITIZEN SOEGIANTO",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 538567304,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "OONA INDONESIA PTE. LTD.",
+        "Pengendali": true,
+        "Persentase": 86.75
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Pengendali",
+        "Nama": "Pengendali Saham",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Non Pengendali",
+        "Nama": "Non Pengendali Saham",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Treasury",
+        "Nama": "Saham Treasury",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 1037610,
+        "Kategori": "Masyarakat Warkat",
+        "Nama": "Masyarakat Warkat",
+        "Pengendali": false,
+        "Persentase": 0.17
+      },
+      {
+        "Jumlah": 81199566,
+        "Kategori": "Masyarakat Non Warkat",
+        "Nama": "Masyarakat Non Warkat",
+        "Pengendali": false,
+        "Persentase": 13.08
+      }
+    ],
+    "AnakPerusahaan": [
+      {
+        "BidangUsaha": "Reparasi Kendaraan",
+        "JumlahAset": 4601819,
+        "Lokasi": "Tangerang",
+        "MataUang": "IDR",
+        "Nama": "PT Altra Raya",
+        "Persentase": 99,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Beroperasi",
+        "TahunKomersil": "2014"
+      },
+      {
+        "BidangUsaha": "Asuransi",
+        "JumlahAset": 2758783285,
+        "Lokasi": "Jakarta",
+        "MataUang": "IDR",
+        "Nama": "PT Asuransi Bina Dana Arta Tbk",
+        "Persentase": 100,
+        "Satuan": "RIBUAN",
+        "StatusOperasi": "Beroperasi",
+        "TahunKomersil": "1982"
+      }
+    ],
+    "KAP": [],
+    "Dividen": [
+      {
+        "Nama": "Asuransi Bina Dana Arta Tbk",
+        "Jenis": "dt",
+        "TahunBuku": "2021",
+        "TotalSahamBonus": 0,
+        "CashDividenPerSahamMU": "IDR",
+        "CashDividenPerSaham": 82,
+        "TanggalCum": "2022-06-06T00:00:00",
+        "TanggalExRegulerDanNegosiasi": "2022-06-07T00:00:00",
+        "TanggalDPS": "2022-06-08T16:00:00",
+        "TanggalPembayaran": "2022-06-24T00:00:00",
+        "Rasio1": 0,
+        "Rasio2": 0,
+        "CashDividenTotalMU": "IDR",
+        "CashDividenTotal": 50599996946
+      }
+    ],
+    "BondsAndSukuk": [],
+    "IssuedBond": []
+  },
+  "ABMM": {
+    "ResultCount": 1,
+    "Search": {
+      "KodeEmiten": "ABMM",
+      "EmitenType": null,
+      "SortOrder": null,
+      "SortColumn": null,
+      "indexfrom": 1,
+      "pagesize": 1
+    },
+    "Profiles": [
+      {
+        "Alamat": "Gedung TMT 1 Lantai 18 Jl. Cilandak KKO No. 1 Jakarta 12560",
+        "BAE": "PT. Datindo Entrycom",
+        "DataID": 0,
+        "Divisi": null,
+        "EfekEmiten_EBA": false,
+        "EfekEmiten_ETF": false,
+        "EfekEmiten_Obligasi": false,
+        "EfekEmiten_Saham": true,
+        "EfekEmiten_SPEI": false,
+        "Industri": "Batu Bara",
+        "SubIndustri": "Produksi Batu Bara",
+        "Email": "corporate.secretary@abm-investama.co.id",
+        "Fax": "021-29976768",
+        "id": 0,
+        "JenisEmiten": null,
+        "KegiatanUsahaUtama": "Aktivitas konsultasi manajemen dan lainnya serta aktivitas penyewaan dan sewa guna tanpa hak opsi mesin pertambangan dan energi serta peralatannya ",
+        "KodeDivisi": null,
+        "KodeEmiten": "ABMM",
+        "NamaEmiten": "ABM Investama Tbk",
+        "NPKP": "PEM-01535/WPJ.04/KP.1003/2008",
+        "NPWP": "02.504.191.4-054.000",
+        "PapanPencatatan": "Utama",
+        "Sektor": "Energi",
+        "SubSektor": "Minyak, Gas & Batu Bara",
+        "TanggalPencatatan": "2011-12-06T00:00:00",
+        "Telepon": "021-29976767",
+        "Website": "www.abm-investama.com",
+        "Status": 0,
+        "Logo": "/Portals/0/StaticData/ListedCompanies/LogoEmiten/ABMM.jpg"
+      }
+    ],
+    "Sekretaris": [
+      {
+        "Nama": "Hans Christian Manoe",
+        "Telepon": "\t021-29976767",
+        "Website": null,
+        "Email": "\tcorporate.secretary@abm-investama.com",
+        "Fax": "\t021-29976768",
+        "HP": ""
+      }
+    ],
+    "Direktur": [
+      {
+        "Nama": "Achmad Ananda Djajanegara",
+        "Jabatan": "DIREKTUR UTAMA",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "Haris Mustarto",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "Feriwan Sinatra",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      },
+      {
+        "Nama": "Hans Christian Manoe",
+        "Jabatan": "DIREKTUR",
+        "Afiliasi": true
+      }
+    ],
+    "Komisaris": [
+      {
+        "Nama": "Rachmat Mulyana Hamami",
+        "Jabatan": "KOMISARIS UTAMA",
+        "Independen": false
+      },
+      {
+        "Nama": "Mivida Hamami",
+        "Jabatan": "KOMISARIS",
+        "Independen": false
+      },
+      {
+        "Nama": "Arief Tarunakarya Surowidjojo",
+        "Jabatan": "KOMISARIS",
+        "Independen": true
+      },
+      {
+        "Nama": "Manggi Taruna Habir",
+        "Jabatan": "KOMISARIS",
+        "Independen": true
+      }
+    ],
+    "KomiteAudit": [
+      {
+        "Jabatan": "KETUA",
+        "Nama": "Manggi Taruna Habir"
+      },
+      {
+        "Jabatan": "ANGGOTA",
+        "Nama": "Ferry A.J. Alis"
+      },
+      {
+        "Jabatan": "ANGGOTA",
+        "Nama": "Agus Yulianto"
+      }
+    ],
+    "PemegangSaham": [
+      {
+        "Jumlah": 0,
+        "Kategori": "Komisaris",
+        "Nama": "Arief Tarunakarya Surowidjojo",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 1474573133,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "PT. Tiara Marga Trakindo",
+        "Pengendali": true,
+        "Persentase": 53.55
+      },
+      {
+        "Jumlah": 702349867,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "Valle Verde Pte Ltd",
+        "Pengendali": true,
+        "Persentase": 25.51
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "Masyarakat",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 1283500,
+        "Kategori": "Direksi",
+        "Nama": "Achmad Ananda Djajanegara",
+        "Pengendali": false,
+        "Persentase": 0.0466
+      },
+      {
+        "Jumlah": 133500,
+        "Kategori": "Komisaris",
+        "Nama": "Mivida Hamami",
+        "Pengendali": false,
+        "Persentase": 0.0048
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Direksi",
+        "Nama": "Haris Mustarto",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 6120500,
+        "Kategori": "Komisaris",
+        "Nama": "Rachmat Mulyana Hamami",
+        "Pengendali": false,
+        "Persentase": 0.2223
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Komisaris",
+        "Nama": "Manggi Taruna Habir",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 150841100,
+        "Kategori": "Lebih dari 5%",
+        "Nama": "Drs Lo Kheng Hong",
+        "Pengendali": false,
+        "Persentase": 5.479
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Direksi",
+        "Nama": "Feriwan Sinatra",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Direksi",
+        "Nama": "Hans Christian Manoe ",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Pengendali",
+        "Nama": "Pengendali Saham",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Non Pengendali",
+        "Nama": "Non Pengendali Saham",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Saham Treasury",
+        "Nama": "Saham Treasury",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 0,
+        "Kategori": "Masyarakat Warkat",
+        "Nama": "Masyarakat Warkat",
+        "Pengendali": false,
+        "Persentase": 0
+      },
+      {
+        "Jumlah": 417863400,
+        "Kategori": "Masyarakat Non Warkat",
+        "Nama": "Masyarakat Non Warkat",
+        "Pengendali": false,
+        "Persentase": 15.178
+      }
+    ],
+    "AnakPerusahaan": [
+      {
+        "BidangUsaha": "Perdagangan/Trading",
+        "JumlahAset": 20434574,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Agata Nugraha Nastari (\"'ANN\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "2020"
+      },
+      {
+        "BidangUsaha": "Transportasi laut/Sea transportation",
+        "JumlahAset": 7691460,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Alfa Trans Raya (\"ATR\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "2007"
+      },
+      {
+        "BidangUsaha": "Industri pembangkit listrik energi yang terbarukan/Renewable energy IPP",
+        "JumlahAset": 982154,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Andara Candria Energi (\"ACE\")",
+        "Persentase": 99.12,
+        "Satuan": "PENUH",
+        "StatusOperasi": "-",
+        "TahunKomersil": "0"
+      },
+      {
+        "BidangUsaha": "Industri pembangkit listrik energi thermal/Thermal energy IPP",
+        "JumlahAset": 1931782,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Anzara Janitra Nusantara (\"AJN\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "-",
+        "TahunKomersil": "0"
+      },
+      {
+        "BidangUsaha": "Transportasi laut domestik/Domestic sea transportation",
+        "JumlahAset": 35991893,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Baruna Dirga Dharma (\"BDD\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "2011"
+      },
+      {
+        "BidangUsaha": "Jasa logistik/Logistic services",
+        "JumlahAset": 166678311,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Cipta Krida Bahari (\"CKB\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "1997"
+      },
+      {
+        "BidangUsaha": "Kontraktor Pertambangan/Mining contractor",
+        "JumlahAset": 1030928612,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Cipta Kridatama (\"CK\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "1999"
+      },
+      {
+        "BidangUsaha": "Bongkar muat barang dan pelayanan kepelabuhan laut/Stevedoring and sea port services",
+        "JumlahAset": 7884619,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Dianta Daya Embara (\"DDE\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "2017"
+      },
+      {
+        "BidangUsaha": "Industri pembangkit listrik energi yang terbarukan/Renewable energy IPP",
+        "JumlahAset": 3192534,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Nagata Bio Energi (\"NBE\")",
+        "Persentase": 98.42,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "2020"
+      },
+      {
+        "BidangUsaha": "Industri pembangkit listrik energi yang terbarukan/Renewable energy IPP",
+        "JumlahAset": 5856,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Nagata Biogas Dwienergi (\"NBD\")",
+        "Persentase": 98.32,
+        "Satuan": "PENUH",
+        "StatusOperasi": "-",
+        "TahunKomersil": "0"
+      },
+      {
+        "BidangUsaha": "Industri pembangkit listrik energi yang terbarukan/Renewable energy IPP",
+        "JumlahAset": 3491981,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Nagata Dinamika (\"ND\")",
+        "Persentase": 99.51,
+        "Satuan": "PENUH",
+        "StatusOperasi": "-",
+        "TahunKomersil": "0"
+      },
+      {
+        "BidangUsaha": "Industri pembangkit listrik energi yang terbarukan/Renewable energy IPP",
+        "JumlahAset": 30009,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Nagata Dinamika Hidro Buakayu Ulu (\"NDHBU\")",
+        "Persentase": 98.51,
+        "Satuan": "PENUH",
+        "StatusOperasi": "-",
+        "TahunKomersil": "0"
+      },
+      {
+        "BidangUsaha": "Industri pembangkit listrik energi yang terbarukan/Renewable energy IPP",
+        "JumlahAset": 37045588,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Nagata Dinamika Hidro Pongko (\"NDHP\")",
+        "Persentase": 98.51,
+        "Satuan": "PENUH",
+        "StatusOperasi": "-",
+        "TahunKomersil": "0"
+      },
+      {
+        "BidangUsaha": "Pengembangan dan pertambangan sumberdaya, terutama batubara/Development and mining resources principally coal",
+        "JumlahAset": 3003316,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Nirmala Coal Nusantara (\"NCN\")",
+        "Persentase": 70,
+        "Satuan": "PENUH",
+        "StatusOperasi": "-",
+        "TahunKomersil": "2017"
+      },
+      {
+        "BidangUsaha": "Pelayanan jasa kapal/Ship operational services",
+        "JumlahAset": 21550303,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Pelabuhan Buana Reja (\"PBR\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "2018"
+      },
+      {
+        "BidangUsaha": "Jasa dan perdagangan umum/Services and General trading",
+        "JumlahAset": 81901896,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Prima Wiguna Parama (\"PWP\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "2017"
+      },
+      {
+        "BidangUsaha": "Industri pembangkit listrik energi yang terbarukan/Renewable energy IPP",
+        "JumlahAset": 381356,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Punggawa Nagata Dinamika Hidro (\"PNDH\")",
+        "Persentase": 83.59,
+        "Satuan": "PENUH",
+        "StatusOperasi": "-",
+        "TahunKomersil": "0"
+      },
+      {
+        "BidangUsaha": "Perdagangan/Trading",
+        "JumlahAset": 527710102,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Radhika Jananta Raya (\"RJR\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "2022"
+      },
+      {
+        "BidangUsaha": "Perdagangan/Trading",
+        "JumlahAset": 760817867,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Reswara Minergi Hartama (\"Reswara\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "2010"
+      },
+      {
+        "BidangUsaha": "Perencanaan rekayasa mesin, pengembangan, dan pembuatan perlengkapan penunjang alat- alat berat dan alat angkut bahan/Engineering, development and manufacture of heavy equipment attachment and materials handling products",
+        "JumlahAset": 90217946,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Sanggar Sarana Baja (\"SSB')",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "1977"
+      },
+      {
+        "BidangUsaha": "Pengembangan dan pertambangan sumberdaya, terutama batubara/Development and mining resources principally coal",
+        "JumlahAset": 56667334,
+        "Lokasi": "Jakarta",
+        "MataUang": "USD",
+        "Nama": "PT Tunas Inti Abadi (\"TIA\")",
+        "Persentase": 99.99,
+        "Satuan": "PENUH",
+        "StatusOperasi": "Operasi",
+        "TahunKomersil": "2009"
+      }
+    ],
+    "KAP": [],
+    "Dividen": [
+      {
+        "Nama": "ABM Investama Tbk",
+        "Jenis": "dt",
+        "TahunBuku": "2024",
+        "TotalSahamBonus": 0,
+        "CashDividenPerSahamMU": "IDR",
+        "CashDividenPerSaham": 153,
+        "TanggalCum": "2025-05-06T00:00:00",
+        "TanggalExRegulerDanNegosiasi": "2025-05-07T00:00:00",
+        "TanggalDPS": "2025-05-08T16:00:00",
+        "TanggalPembayaran": "2025-05-28T00:00:00",
+        "Rasio1": 0,
+        "Rasio2": 0,
+        "CashDividenTotalMU": "IDR",
+        "CashDividenTotal": 421234245000
+      }
+    ],
+    "BondsAndSukuk": [],
+    "IssuedBond": []
+  }
+}

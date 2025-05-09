@@ -15,7 +15,7 @@ export async function getSecuritiesStock(code = '', sector = '', board = '') {
     code,
     sector,
     board,
-    language: 'en-us'
+    language: 'id-id'
   }).toString();
   const url = `${baseUrl}?${queryParams}`;
   const referrer = "https://www.idx.co.id/en/market-data/stocks-data/stock-list/";

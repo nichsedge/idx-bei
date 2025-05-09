@@ -6,7 +6,7 @@ async function fetchData(url, referrer) {
   const response = await fetch(url, {
     headers: {
       "accept": "application/json, text/plain, */*",
-      "accept-language": "en-US,en;q=0.9",
+      "accept-language": "id-id,en;q=0.9",
       // "priority": "u=1, i",
       // "sec-ch-ua": "\"Not)A;Brand\";v=\"99\", \"Google Chrome\";v=\"127\", \"Chromium\";v=\"127\"",
       // "sec-ch-ua-mobile": "?0",
