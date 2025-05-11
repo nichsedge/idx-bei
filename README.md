@@ -1,5 +1,7 @@
 # idx-bei
 
+![alt text](image-1.png)
+
 ## Overview
 **idx-bei** is a Node.js application designed to facilitate the easy download of data from the Indonesia Stock Exchange (IDX) / Bursa Efek Indonesia (BEI). This tool allows users to list available API endpoints from the IDX website and export the retrieved data in either JSON or CSV formats.
 
