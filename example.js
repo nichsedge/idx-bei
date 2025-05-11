@@ -12,16 +12,16 @@ configureRateLimit(3, 2000); // 3 requests per 2 seconds
 
 async function fetchAndSaveCompanyData() {
   try {
-    const allCompanies = JSON.parse(fs.readFileSync('allCompanies.json', 'utf-8'));
+    const allCompanies = JSON.parse(fs.readFileSync('data/allCompanies.json', 'utf-8'));
 
     // console.log('Fetching company profiles...');
     // const allCompanies = await getCompanyProfiles();
-    // fs.writeFileSync('allCompanies.json', JSON.stringify(allCompanies, null, 2));
+    // fs.writeFileSync('data/allCompanies.json', JSON.stringify(allCompanies, null, 2));
     // console.log(`Found ${allCompanies.recordsTotal} companies`);
 
     // Load existing data if it exists
     let kodeEmitenJson = {};
-    const filePath = 'companyDetailsByKodeEmiten.json';
+    const filePath = 'data/companyDetailsByKodeEmiten.json';
 
     if (fs.existsSync(filePath)) {
       const fileContent = fs.readFileSync(filePath, 'utf-8');
