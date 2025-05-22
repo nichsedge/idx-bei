@@ -4,9 +4,11 @@ import fs from 'fs';
 const BASE_URL = "https://www.idx.co.id/primary/DigitalStatistic/GetApiDataPaginated";
 const QUERY_PARAMS = {
   urlName: "LINK_FINANCIAL_DATA_RATIO",
-  periodYear: 2025,
-  periodMonth: 3,
-  periodType: "monthly",
+  periodQuarter: 4,
+  periodYear: 2024,
+  type: "yearly",
+  // periodMonth: 4,
+  // periodType: "monthly",
   isPrint: false,
   cumulative: false,
   pageSize: 100,
