@@ -5,7 +5,6 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "duckdb>=1.2.2",
     "matplotlib>=3.10.3",
     "neo4j>=5.28.1",
     "psycopg2>=2.9.10",
