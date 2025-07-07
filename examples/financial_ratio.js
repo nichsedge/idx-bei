@@ -30,7 +30,7 @@ const HEADERS = {
 };
 
 // Create data directory if it doesn't exist
-const DATA_DIR = './data';
+const DATA_DIR = '../data';
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }

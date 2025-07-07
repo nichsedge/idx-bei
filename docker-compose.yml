@@ -1,44 +1,4 @@
-services:
-  neo4j:
-    image: neo4j:latest
-    volumes:
-        - /$HOME/neo4j/logs:/logs
-        - /$HOME/neo4j/config:/config
-        - /$HOME/neo4j/data:/data
-        - /$HOME/neo4j/plugins:/plugins
-    environment:
-        - NEO4J_AUTH=neo4j/password
-    ports:
-      - "7474:7474"
-      - "7687:7687"
-    restart: unless-stopped
-
-  postgres:
-    image: postgres:latest
-    container_name: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: unless-stopped
-
-  # metabase:
-  #   image: metabase/metabase
-  #   container_name: metabase_app
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     MB_DB_TYPE: postgres
-  #     MB_DB_DBNAME: postgres
-  #     MB_DB_PORT: 5432
-  #     MB_DB_USER: postgres
-  #     MB_DB_PASS: postgres
-  #     MB_DB_HOST: postgres
-  #   depends_on:
-  #     - postgres
-
-volumes:
-  postgres_data:
+include:
+  - docker-compose/neo4j.yml
+  # - docker-compose/postgres.yml
+  # - docker-compose/metabase.yml
