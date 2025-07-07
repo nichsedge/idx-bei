@@ -31,7 +31,27 @@ The primary purpose of this tool is educational. It provides a straightforward w
 
 ## Usage
 
-- TODO
+To use the IDX/BEI data downloader, you can run the example scripts provided in the `examples` directory. These scripts demonstrate how to fetch and save different types of data from the IDX website.
+
+### Fetching Company Profiles
+
+This example fetches a list of all companies and then iterates through them to get detailed profile information for each. The data is saved incrementally to `data/companyDetailsByKodeEmiten.json`.
+
+To run this example:
+```bash
+node examples/fetch-company-profiles.js
+```
+
+### Fetching Broker Search Data
+
+This example fetches broker search data and saves it to `data/brokerSearch.json`.
+
+To run this example:
+```bash
+node examples/fetch-broker-search.js
+```
+
+You can modify these examples or create your own scripts to download the specific data you need by importing and using the functions from the various modules in the project.
 
 ## Notes
 - **Educational Use Only**: This tool is intended for educational purposes. Please review IDX's Terms of Service and Conditions for any restrictions on data usage.
