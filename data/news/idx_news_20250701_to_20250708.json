@@ -1,0 +1,405 @@
+{
+  "total": 20,
+  "data": [
+    {
+      "Id": 11259,
+      "ItemId": "98488570-4a5b-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-07T22:50:39",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Pencatatan Perdana Saham PT Asia Pramulia Tbk (ASPR) di Bursa Efek Indonesia",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "ASPR",
+      "IsHeadline": false,
+      "Summary": "Pencatatan Perdana Saham PT Asia Pramulia Tbk (ASPR) di Bursa Efek Indonesia",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11259",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11257,
+      "ItemId": "d1282716-495b-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-07T22:41:30",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "New Listing of PT Pancaran Samudera Transport Tbk (PSAT) on Indonesia Stock Exchange",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "PSAT",
+      "IsHeadline": false,
+      "Summary": "New Listing of PT Pancaran Samudera Transport Tbk (PSAT) on Indonesia Stock Exchange",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11257",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11251,
+      "ItemId": "0282c5e3-8259-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-07T13:00:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 and Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 on 7 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "CUAN",
+      "IsHeadline": false,
+      "Summary": "Listing of Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 and Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 on 7 July 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11251",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11247,
+      "ItemId": "fe2d6bee-7959-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-07T09:30:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 on 7 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "ASDF",
+      "IsHeadline": false,
+      "Summary": "Listing of Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 on 7 July 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11247",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11249,
+      "ItemId": "a5e491f6-7f59-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-07T09:30:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 on 7 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "SGRO",
+      "IsHeadline": false,
+      "Summary": "Listing of Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 on 7 July 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11249",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11245,
+      "ItemId": "81a3ed33-6d59-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-07T09:10:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan II KB Bank Tahap I Tahun 2025 and Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 on 7 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "BBKP",
+      "IsHeadline": false,
+      "Summary": "On 7 July 2025, Obligasi Berkelanjutan II KB Bank Tahap I Tahun 2025 and Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 issued by PT Bank KB Bukopin Tbk were listed on the Indonesia Stock Exchange (IDX).",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11245",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11261,
+      "ItemId": "059bbc50-ae5b-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-07T09:02:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Sukuk Ijarah Berkelanjutan I Samudera Indonesia Tahap II Tahun 2025 on 7 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "SMDR",
+      "IsHeadline": false,
+      "Summary": "On 7 July 2025, Sukuk Ijarah Berkelanjutan I Samudera Indonesia Tahap II Tahun 2025 issued by PT Samudera Indonesia Tbk was listed on Indonesia Stock Exchange (IDX).",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11261",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11241,
+      "ItemId": "ead01561-d358-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-07T09:01:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 on 7 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "BMTP",
+      "IsHeadline": false,
+      "Summary": "On 7 July 2025, Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 issued by PT Bank Mandiri Taspen was listed on the Indonesia Stock Exchange (IDX).",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11241",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11239,
+      "ItemId": "a631f6c4-ce58-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-07T09:00:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 on 7 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "BBNI",
+      "IsHeadline": false,
+      "Summary": "Pencatatan Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 pada tanggal 7 Juli 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11239",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11243,
+      "ItemId": "c4836a0e-6059-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-07T08:59:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan IV Bank Victoria Tahap I Tahun 2025 on 7 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "BVIC",
+      "IsHeadline": false,
+      "Summary": "Listing of Obligasi Berkelanjutan IV Bank Victoria Tahap I Tahun 2025 on 7 July 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11243",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11237,
+      "ItemId": "061abe79-bd58-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-04T16:51:37",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 on 4 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "BWPT,Eagle",
+      "IsHeadline": false,
+      "Summary": "Listing of Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 on 4 July 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11237",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11235,
+      "ItemId": "39288bd2-8758-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-04T10:27:02",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 on 4 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "IMFI",
+      "IsHeadline": false,
+      "Summary": "Pencatatan Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 tanggal 4 Juli 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11235",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11237,
+      "ItemId": "061abe79-bd58-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-04T16:51:37",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 on 4 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "BWPT,Eagle",
+      "IsHeadline": false,
+      "Summary": "Listing of Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 on 4 July 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11237",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11235,
+      "ItemId": "39288bd2-8758-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-04T10:27:02",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 on 4 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "IMFI",
+      "IsHeadline": false,
+      "Summary": "Pencatatan Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 tanggal 4 Juli 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11235",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11227,
+      "ItemId": "9fc5b350-e757-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-04T09:00:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 on 4 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "OCBC",
+      "IsHeadline": false,
+      "Summary": "On 4 July 2025, the Sustainable Bond IV OCBC Phase I Year 2025 issued by PT Bank OCBC NISP Tbk was listed on the Indonesia Stock Exchange (IDX).",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11227",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11233,
+      "ItemId": "d30b6537-1758-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-03T16:00:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 on 3 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "TRIM",
+      "IsHeadline": false,
+      "Summary": "Listing of Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 on 3 July 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11233",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11231,
+      "ItemId": "d09afbe4-1258-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-03T13:00:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 on 3 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "DART",
+      "IsHeadline": false,
+      "Summary": "Listing of Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 on 3 July 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11231",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11229,
+      "ItemId": "e220c489-f157-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-03T12:00:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Obligasi Berkelanjutan V SMART Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan I SMART Tahap I Tahun 2025 on 3 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "SMART",
+      "IsHeadline": false,
+      "Summary": "Pencatatan Obligasi Berkelanjutan V SMART Tahap I Tahun 2025 dan Sukuk Ijarah Berkelanjutan I SMART Tahap I Tahun 2025 pada tanggal 3 Juli 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11229",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11225,
+      "ItemId": "7f63616b-d057-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-03T09:00:00",
+      "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 on 3 July 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "BJBS",
+      "IsHeadline": false,
+      "Summary": "Pada 3 Juli 2025, Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 yang diterbitkan oleh PT Bank Syariah Indonesia Tbk mulai dicatatkan di Bursa Efek Indonesia (BEI).",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11225",
+          "Method": "GET"
+        }
+      ]
+    },
+    {
+      "Id": 11223,
+      "ItemId": "e4209b4b-c057-f011-b138-0050569d3b40",
+      "PublishedDate": "2025-07-03T09:00:00",
+      "ImageUrl": "/media/wu0bkmjx/sukuk-wakalah-bsbs.jpg",
+      "Locale": "en-us",
+      "Title": "Listing of Subordinated Sukuk Wakalah bi al-Istitsmar I Bank BJB Syariah 2025",
+      "PathBase": null,
+      "PathFile": null,
+      "Tags": "BJBS,Sukuk",
+      "IsHeadline": true,
+      "Summary": "Listing of Subordinated Sukuk Wakalah bi al-Istitsmar I Bank BJB Syariah 2025",
+      "Links": [
+        {
+          "Rel": "self",
+          "Href": "/api/api/publication/news/11223",
+          "Method": "GET"
+        }
+      ]
+    }
+  ]
+}
