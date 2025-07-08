@@ -1,13 +1,5 @@
 {
   "total": 20,
-  "successful_details": 20,
-  "failed_details": 0,
-  "processed_at": "2025-07-08T07:03:27.249Z",
-  "retry_stats": {
-    "attempted_retries": 1,
-    "successful_retries": 1,
-    "still_failed": 0
-  },
   "data": [
     {
       "Id": 11259,
@@ -21,27 +13,7 @@
       "Tags": "ASPR",
       "IsHeadline": false,
       "Summary": "Pencatatan Perdana Saham PT Asia Pramulia Tbk (ASPR) di Bursa Efek Indonesia",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11259",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11259,
-        "ItemId": "98488570-4a5b-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-07T22:50:39",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Pencatatan Perdana Saham PT Asia Pramulia Tbk (ASPR) di Bursa Efek Indonesia",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "ASPR",
-        "IsHeadline": false,
-        "Summary": "Pencatatan Perdana Saham PT Asia Pramulia Tbk (ASPR) di Bursa Efek Indonesia",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p>Pada Selasa, 8 Juli 2025, pembukaan perdagangan Bursa Efek Indonesia (BEI) dilakukan oleh PPT Asia Pramulia Tbk (ASPR) dalam rangka pencatatan perdana saham di Papan Pengembangan BEI. ASPR menjadi perusahaan ke-16 yang tercatat di BEI pada tahun 2025.</p>\n<p>ASPR bergerak dalam bidang produksi dan pemasaran kemasan plastik rigid untuk berbagai sektor industri dengan pendekatan B2B, serta mendistribusikan produk melalui jaringan distributor resmi ke berbagai kota besar di Indonesia. Harga penawaran saham ASPR adalah senilai Rp124,00 per lembar dengan jumlah saham yang dicatatkan sebanyak 2.712.000.000 lembar saham, sehingga kapitalisasi pasarnya adalah senilai Rp336.288.000.000,00.</p>\n<p>(<a rel=\"noopener\" href=\"/media/bfcmk3ve/nli-250708_aspr_d.pdf\" target=\"_blank\" title=\"NLI 250708 ASPR D\"><strong>Informasi selengkapnya</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p>Pada Selasa, 8 Juli 2025, pembukaan perdagangan Bursa Efek Indonesia (BEI) dilakukan oleh PPT Asia Pramulia Tbk (ASPR) dalam rangka pencatatan perdana saham di Papan Pengembangan BEI. ASPR menjadi perusahaan ke-16 yang tercatat di BEI pada tahun 2025.</p>\n<p>ASPR bergerak dalam bidang produksi dan pemasaran kemasan plastik rigid untuk berbagai sektor industri dengan pendekatan B2B, serta mendistribusikan produk melalui jaringan distributor resmi ke berbagai kota besar di Indonesia. Harga penawaran saham ASPR adalah senilai Rp124,00 per lembar dengan jumlah saham yang dicatatkan sebanyak 2.712.000.000 lembar saham, sehingga kapitalisasi pasarnya adalah senilai Rp336.288.000.000,00.</p>\n<p>(<a rel=\"noopener\" href=\"/media/bfcmk3ve/nli-250708_aspr_d.pdf\" target=\"_blank\" title=\"NLI 250708 ASPR D\"><strong>Informasi selengkapnya</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11257,
@@ -55,27 +27,7 @@
       "Tags": "PSAT",
       "IsHeadline": false,
       "Summary": "New Listing of PT Pancaran Samudera Transport Tbk (PSAT) on Indonesia Stock Exchange",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11257",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11257,
-        "ItemId": "d1282716-495b-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-07T22:41:30",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "New Listing of PT Pancaran Samudera Transport Tbk (PSAT) on Indonesia Stock Exchange",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "PSAT",
-        "IsHeadline": false,
-        "Summary": "New Listing of PT Pancaran Samudera Transport Tbk (PSAT) on Indonesia Stock Exchange",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p>On Tuesday, 8 July 2025, PT Pancaran Samudera Transport Tbk (PSAT) opens the day's trading of Indonesia Stock Exchange (IDX) to signify the new listing of PSAT on the IDX's Main Board. PSAT is the 15th company listed on the IDX in 2025.</p>\n<p>PSAT operates in the domestic sea transportation sector, specifically for goods such as coal, nickel, fertilizer, as well as general cargo like split stone and steel plates. The IPO price of PSAT is Rp900,00 per share with a total of 1,482,353,000 shares listed, so that its market capitalization is Rp1,334,117,700,000.00.</p>\n<p>(<a rel=\"noopener\" href=\"/media/jbdhg0ol/nli-250708_psat_m.pdf\" target=\"_blank\" title=\"NLI 250708 PSAT M\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p>On Tuesday, 8 July 2025, PT Pancaran Samudera Transport Tbk (PSAT) opens the day's trading of Indonesia Stock Exchange (IDX) to signify the new listing of PSAT on the IDX's Main Board. PSAT is the 15th company listed on the IDX in 2025.</p>\n<p>PSAT operates in the domestic sea transportation sector, specifically for goods such as coal, nickel, fertilizer, as well as general cargo like split stone and steel plates. The IPO price of PSAT is Rp900,00 per share with a total of 1,482,353,000 shares listed, so that its market capitalization is Rp1,334,117,700,000.00.</p>\n<p>(<a rel=\"noopener\" href=\"/media/jbdhg0ol/nli-250708_psat_m.pdf\" target=\"_blank\" title=\"NLI 250708 PSAT M\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11251,
@@ -89,27 +41,7 @@
       "Tags": "CUAN",
       "IsHeadline": false,
       "Summary": "Listing of Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 and Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 on 7 July 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11251",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11251,
-        "ItemId": "0282c5e3-8259-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-07T13:00:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 and Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 on 7 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "CUAN",
-        "IsHeadline": false,
-        "Summary": "Listing of Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 and Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 on 7 July 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"246\" data-end=\"489\">On 7 July 2025, Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 and Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 issued by PT Petrindo Jaya Kreasi Tbk were listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"246\" data-end=\"489\">Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"246\" data-end=\"489\">Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 Series A (CUAN01ACN1) with a nominal value of Rp97,500,000,000.00, an annual coupon rate of 6.75%, and a tenor of 367 days from the issuance date;</li>\n<li data-start=\"246\" data-end=\"489\">Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 Series B (CUAN01BCN1) with a nominal value of Rp552,500,000,000.00, an annual coupon rate of 9.00%, and a tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"987\" data-end=\"1553\">Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"987\" data-end=\"1553\">Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 Series A (SWCUAN01ACN1) with a nominal value of Rp52,500,000,000.00, a profit-sharing rate equivalent to 6.75% per annum, and a tenor of 3 years from the issuance date;</li>\n<li data-start=\"987\" data-end=\"1553\">Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 Series B (SWCUAN01BCN1) with a nominal value of Rp297,500,000,000.00, a profit-sharing rate equivalent to 9.00% per annum, and a tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"1555\" data-end=\"1870\">The rating result from PT Pemeringkat Efek Indonesia (PEFINDO) for Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 and Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 is idA (Single A) and idAsy (Single A Syariah), respectively, with PT Bank Permata Tbk acting as the Trustee.</p>\n<p data-start=\"1872\" data-end=\"2009\">In total, there have been 85 bond and sukuk issuances from 52 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"2011\" data-end=\"2462\">With this listing, the total bonds and sukuk listed on IDX now amount to 640 issuances with a total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 139 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"246\" data-end=\"489\">On 7 July 2025, Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 and Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 issued by PT Petrindo Jaya Kreasi Tbk were listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"246\" data-end=\"489\">Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"246\" data-end=\"489\">Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 Series A (CUAN01ACN1) with a nominal value of Rp97,500,000,000.00, an annual coupon rate of 6.75%, and a tenor of 367 days from the issuance date;</li>\n<li data-start=\"246\" data-end=\"489\">Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 Series B (CUAN01BCN1) with a nominal value of Rp552,500,000,000.00, an annual coupon rate of 9.00%, and a tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"987\" data-end=\"1553\">Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"987\" data-end=\"1553\">Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 Series A (SWCUAN01ACN1) with a nominal value of Rp52,500,000,000.00, a profit-sharing rate equivalent to 6.75% per annum, and a tenor of 3 years from the issuance date;</li>\n<li data-start=\"987\" data-end=\"1553\">Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 Series B (SWCUAN01BCN1) with a nominal value of Rp297,500,000,000.00, a profit-sharing rate equivalent to 9.00% per annum, and a tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"1555\" data-end=\"1870\">The rating result from PT Pemeringkat Efek Indonesia (PEFINDO) for Obligasi Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 and Sukuk Wakalah Berkelanjutan I Petrindo Jaya Kreasi Tahap I Tahun 2025 is idA (Single A) and idAsy (Single A Syariah), respectively, with PT Bank Permata Tbk acting as the Trustee.</p>\n<p data-start=\"1872\" data-end=\"2009\">In total, there have been 85 bond and sukuk issuances from 52 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"2011\" data-end=\"2462\">With this listing, the total bonds and sukuk listed on IDX now amount to 640 issuances with a total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 139 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11247,
@@ -123,27 +55,7 @@
       "Tags": "ASDF",
       "IsHeadline": false,
       "Summary": "Listing of Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 on 7 July 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11247",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11247,
-        "ItemId": "fe2d6bee-7959-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-07T09:30:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 on 7 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "ASDF",
-        "IsHeadline": false,
-        "Summary": "Listing of Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 on 7 July 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"179\" data-end=\"344\">On 7 July 2025, Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 issued by PT Astra Sedaya Finance was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"346\" data-end=\"847\">Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"346\" data-end=\"847\">Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 Series A (ASDF07ACN1) with a nominal value of Rp489,980,000,000.00, an annual coupon rate of 6.15%, and a tenor of 370 days from the issuance date;</li>\n<li data-start=\"346\" data-end=\"847\">Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 Series B (ASDF07BCN1) with a nominal value of Rp510,000,000,000.00, an annual coupon rate of 6.65%, and a tenor of 3 years from the issuance date.</li>\n</ul>\n<p data-start=\"849\" data-end=\"1069\">The rating result from PT Pemeringkat Efek Indonesia (PEFINDO) for Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 is idAAA (Triple A), with PT Bank Rakyat Indonesia (Persero) Tbk acting as the Trustee.</p>\n<p data-start=\"1071\" data-end=\"1208\">In total, there have been 83 bond and sukuk issuances from 51 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1210\" data-end=\"1661\">With this listing, the total bonds and sukuk listed on IDX now amount to 638 issuances with a total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p data-start=\"1210\" data-end=\"1661\">(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"179\" data-end=\"344\">On 7 July 2025, Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 issued by PT Astra Sedaya Finance was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"346\" data-end=\"847\">Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"346\" data-end=\"847\">Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 Series A (ASDF07ACN1) with a nominal value of Rp489,980,000,000.00, an annual coupon rate of 6.15%, and a tenor of 370 days from the issuance date;</li>\n<li data-start=\"346\" data-end=\"847\">Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 Series B (ASDF07BCN1) with a nominal value of Rp510,000,000,000.00, an annual coupon rate of 6.65%, and a tenor of 3 years from the issuance date.</li>\n</ul>\n<p data-start=\"849\" data-end=\"1069\">The rating result from PT Pemeringkat Efek Indonesia (PEFINDO) for Obligasi Berkelanjutan VII Astra Sedaya Finance Tahap I Tahun 2025 is idAAA (Triple A), with PT Bank Rakyat Indonesia (Persero) Tbk acting as the Trustee.</p>\n<p data-start=\"1071\" data-end=\"1208\">In total, there have been 83 bond and sukuk issuances from 51 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1210\" data-end=\"1661\">With this listing, the total bonds and sukuk listed on IDX now amount to 638 issuances with a total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p data-start=\"1210\" data-end=\"1661\">(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11249,
@@ -157,27 +69,7 @@
       "Tags": "SGRO",
       "IsHeadline": false,
       "Summary": "Listing of Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 on 7 July 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11249",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11249,
-        "ItemId": "a5e491f6-7f59-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-07T09:30:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 on 7 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "SGRO",
-        "IsHeadline": false,
-        "Summary": "Listing of Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 on 7 July 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"219\" data-end=\"445\">On 7 July 2025, Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 issued by PT Sampoerna Agro Tbk were listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"447\" data-end=\"924\">Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"447\" data-end=\"924\">Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 Series A (SGRO02ACN1) with a nominal value of Rp14,480,000,000.00, an annual coupon rate of 7.60%, and a tenor of 3 years from the issuance date;</li>\n<li data-start=\"447\" data-end=\"924\">Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 Series B (SGRO02BCN1) with a nominal value of Rp60,520,000,000.00, an annual coupon rate of 8.25%, and a tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"926\" data-end=\"1473\">Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"926\" data-end=\"1473\">Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 Series A (SISGRO02ACN1) with a nominal value of Rp6,155,000,000.00, a profit-sharing rate equivalent to 7.60% per annum, and a tenor of 3 years from the issuance date;</li>\n<li data-start=\"926\" data-end=\"1473\">Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 Series B (SISGRO02BCN1) with a nominal value of Rp118,845,000,000.00, a profit-sharing rate equivalent to 8.25% per annum, and a tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"1475\" data-end=\"1779\">The rating result from PT Pemeringkat Efek Indonesia (PEFINDO) for Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 is idA (Single A) and idAsy (Single A Syariah), respectively, with PT Bank Permata Tbk acting as the Trustee.</p>\n<p data-start=\"1781\" data-end=\"1918\">In total, there have been 83 bond and sukuk issuances from 51 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1920\" data-end=\"2371\">With this listing, the total bonds and sukuk listed on IDX now amount to 638 issuances with a total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/ien/news/announcement\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"219\" data-end=\"445\">On 7 July 2025, Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 issued by PT Sampoerna Agro Tbk were listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"447\" data-end=\"924\">Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"447\" data-end=\"924\">Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 Series A (SGRO02ACN1) with a nominal value of Rp14,480,000,000.00, an annual coupon rate of 7.60%, and a tenor of 3 years from the issuance date;</li>\n<li data-start=\"447\" data-end=\"924\">Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 Series B (SGRO02BCN1) with a nominal value of Rp60,520,000,000.00, an annual coupon rate of 8.25%, and a tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"926\" data-end=\"1473\">Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"926\" data-end=\"1473\">Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 Series A (SISGRO02ACN1) with a nominal value of Rp6,155,000,000.00, a profit-sharing rate equivalent to 7.60% per annum, and a tenor of 3 years from the issuance date;</li>\n<li data-start=\"926\" data-end=\"1473\">Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 Series B (SISGRO02BCN1) with a nominal value of Rp118,845,000,000.00, a profit-sharing rate equivalent to 8.25% per annum, and a tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"1475\" data-end=\"1779\">The rating result from PT Pemeringkat Efek Indonesia (PEFINDO) for Obligasi Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan II Sampoerna Agro Tahap I Tahun 2025 is idA (Single A) and idAsy (Single A Syariah), respectively, with PT Bank Permata Tbk acting as the Trustee.</p>\n<p data-start=\"1781\" data-end=\"1918\">In total, there have been 83 bond and sukuk issuances from 51 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1920\" data-end=\"2371\">With this listing, the total bonds and sukuk listed on IDX now amount to 638 issuances with a total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/ien/news/announcement\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11245,
@@ -191,27 +83,7 @@
       "Tags": "BBKP",
       "IsHeadline": false,
       "Summary": "On 7 July 2025, Obligasi Berkelanjutan II KB Bank Tahap I Tahun 2025 and Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 issued by PT Bank KB Bukopin Tbk were listed on the Indonesia Stock Exchange (IDX).",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11245",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11245,
-        "ItemId": "81a3ed33-6d59-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-07T09:10:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berkelanjutan II KB Bank Tahap I Tahun 2025 and Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 on 7 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "BBKP",
-        "IsHeadline": false,
-        "Summary": "On 7 July 2025, Obligasi Berkelanjutan II KB Bank Tahap I Tahun 2025 and Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 issued by PT Bank KB Bukopin Tbk were listed on the Indonesia Stock Exchange (IDX).",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<div class=\"flex basis-auto flex-col -mb-(--composer-overlap-px) [--composer-overlap-px:55px] grow overflow-hidden\">\n<div class=\"relative h-full\">\n<div class=\"flex h-full flex-col overflow-y-auto [scrollbar-gutter:stable_both-edges] @[84rem]/thread:pt-(--header-height)\">\n<div class=\"@thread-xl/thread:pt-header-height flex flex-col text-sm pb-25\">\n<div class=\"text-base my-auto mx-auto py-5 [--thread-content-margin:--spacing(4)] @[37rem]:[--thread-content-margin:--spacing(6)] @[72rem]:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\">\n<div class=\"[--thread-content-max-width:32rem] @[34rem]:[--thread-content-max-width:40rem] @[64rem]:[--thread-content-max-width:48rem] mx-auto flex max-w-(--thread-content-max-width) flex-1 text-base gap-4 md:gap-5 lg:gap-6 group/turn-messages focus-visible:outline-hidden\">\n<div class=\"group/conversation-turn relative flex w-full min-w-0 flex-col agent-turn\">\n<div class=\"relative flex-col gap-1 md:gap-3\">\n<div class=\"flex max-w-full flex-col grow\">\n<div class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-5\" data-message-author-role=\"assistant\" data-message-id=\"7b75b118-5766-41d6-b772-5776c2c73e9d\" data-message-model-slug=\"gpt-4o\">\n<div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[3px]\">\n<div class=\"markdown prose dark:prose-invert w-full break-words light\">\n<p data-start=\"241\" data-end=\"459\">On 7 July 2025, Obligasi Berkelanjutan II KB Bank Tahap I Tahun 2025 and Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 issued by PT Bank KB Bukopin Tbk were listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"461\" data-end=\"660\">Obligasi Berkelanjutan II KB Bank Tahap I Tahun 2025 (BBKP02CN1) was listed with a nominal value of Rp136,010,000,000.00, an annual coupon rate of 6.80%, and a tenor of 3 years from the issuance date.</p>\n<p>Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li>Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 Series A (BBKP04ASBCN1) with a nominal value of Rp50,000,000,000.00, an annual coupon rate of 7.25%, and a tenor of 5 years from the issuance date;</li>\n<li data-start=\"662\" data-end=\"1162\">Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 Series B (BBKP04BSBCN1) with a nominal value of Rp198,000,000,000.00, an annual coupon rate of 7.70%, and a tenor of 7 years from the issuance date.</li>\n</ul>\n<p data-start=\"1164\" data-end=\"1457\">The rating result from Fitch Ratings Indonesia for Obligasi Berkelanjutan II KB Bank Tahap I Tahun 2025 and Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 is AAidn (Double A) and AAAidn (Triple A), respectively, with PT Bank Rakyat Indonesia (Persero) Tbk acting as the Trustee.</p>\n<p data-start=\"1459\" data-end=\"1596\">In total, there have been 82 bond and sukuk issuances from 52 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1598\" data-end=\"2049\">With this listing, the total bonds and sukuk listed on IDX now amount to 637 issuances with a total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p data-start=\"1598\" data-end=\"2049\">(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<div class=\"flex basis-auto flex-col -mb-(--composer-overlap-px) [--composer-overlap-px:55px] grow overflow-hidden\">\n<div class=\"relative h-full\">\n<div class=\"flex h-full flex-col overflow-y-auto [scrollbar-gutter:stable_both-edges] @[84rem]/thread:pt-(--header-height)\">\n<div class=\"@thread-xl/thread:pt-header-height flex flex-col text-sm pb-25\">\n<div class=\"text-base my-auto mx-auto py-5 [--thread-content-margin:--spacing(4)] @[37rem]:[--thread-content-margin:--spacing(6)] @[72rem]:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\">\n<div class=\"[--thread-content-max-width:32rem] @[34rem]:[--thread-content-max-width:40rem] @[64rem]:[--thread-content-max-width:48rem] mx-auto flex max-w-(--thread-content-max-width) flex-1 text-base gap-4 md:gap-5 lg:gap-6 group/turn-messages focus-visible:outline-hidden\">\n<div class=\"group/conversation-turn relative flex w-full min-w-0 flex-col agent-turn\">\n<div class=\"relative flex-col gap-1 md:gap-3\">\n<div class=\"flex max-w-full flex-col grow\">\n<div class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-5\" data-message-author-role=\"assistant\" data-message-id=\"7b75b118-5766-41d6-b772-5776c2c73e9d\" data-message-model-slug=\"gpt-4o\">\n<div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[3px]\">\n<div class=\"markdown prose dark:prose-invert w-full break-words light\">\n<p data-start=\"241\" data-end=\"459\">On 7 July 2025, Obligasi Berkelanjutan II KB Bank Tahap I Tahun 2025 and Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 issued by PT Bank KB Bukopin Tbk were listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"461\" data-end=\"660\">Obligasi Berkelanjutan II KB Bank Tahap I Tahun 2025 (BBKP02CN1) was listed with a nominal value of Rp136,010,000,000.00, an annual coupon rate of 6.80%, and a tenor of 3 years from the issuance date.</p>\n<p>Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li>Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 Series A (BBKP04ASBCN1) with a nominal value of Rp50,000,000,000.00, an annual coupon rate of 7.25%, and a tenor of 5 years from the issuance date;</li>\n<li data-start=\"662\" data-end=\"1162\">Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 Series B (BBKP04BSBCN1) with a nominal value of Rp198,000,000,000.00, an annual coupon rate of 7.70%, and a tenor of 7 years from the issuance date.</li>\n</ul>\n<p data-start=\"1164\" data-end=\"1457\">The rating result from Fitch Ratings Indonesia for Obligasi Berkelanjutan II KB Bank Tahap I Tahun 2025 and Obligasi Subordinasi Berkelanjutan IV KB Bank Tahap I Tahun 2025 is AAidn (Double A) and AAAidn (Triple A), respectively, with PT Bank Rakyat Indonesia (Persero) Tbk acting as the Trustee.</p>\n<p data-start=\"1459\" data-end=\"1596\">In total, there have been 82 bond and sukuk issuances from 52 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1598\" data-end=\"2049\">With this listing, the total bonds and sukuk listed on IDX now amount to 637 issuances with a total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p data-start=\"1598\" data-end=\"2049\">(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</body>\n</html>"
     },
     {
       "Id": 11261,
@@ -225,27 +97,7 @@
       "Tags": "SMDR",
       "IsHeadline": false,
       "Summary": "On 7 July 2025, Sukuk Ijarah Berkelanjutan I Samudera Indonesia Tahap II Tahun 2025 issued by PT Samudera Indonesia Tbk was listed on Indonesia Stock Exchange (IDX).",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11261",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11261,
-        "ItemId": "059bbc50-ae5b-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-07T09:02:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Sukuk Ijarah Berkelanjutan I Samudera Indonesia Tahap II Tahun 2025 on 7 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "SMDR",
-        "IsHeadline": false,
-        "Summary": "On 7 July 2025, Sukuk Ijarah Berkelanjutan I Samudera Indonesia Tahap II Tahun 2025 issued by PT Samudera Indonesia Tbk was listed on Indonesia Stock Exchange (IDX).",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"184\" data-end=\"356\">On 7 July 2025, Sukuk Ijarah Berkelanjutan I Samudera Indonesia Tahap II Tahun 2025 issued by PT Samudera Indonesia Tbk was listed on Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"358\" data-end=\"599\">Sukuk Ijarah Berkelanjutan I Samudera Indonesia Tahap II Tahun 2025 (SISMDR01CN2) has a nominal value of Rp500,000,000.00 with an indicative profit-sharing rate equivalent to 8.85% per annum, and a tenor of 5 years from the issuance date.</p>\n<p data-start=\"601\" data-end=\"836\">The rating result from PT Pemeringkat Efek Indonesia (“Pefindo”) for Sukuk Ijarah Berkelanjutan I Samudera Indonesia Tahap II Tahun 2025 is idA+ (sy) (Single A Plus Syariah), with PT Bank Syariah Indonesia Tbk acting as the Trustee.</p>\n<p data-start=\"838\" data-end=\"975\">In total, there have been 78 bond and sukuk issuances from 47 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"977\" data-end=\"1428\">With this listing, the total bonds and sukuk listed on IDX now amount to 633 issuances with a total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/en/news/announcement\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"184\" data-end=\"356\">On 7 July 2025, Sukuk Ijarah Berkelanjutan I Samudera Indonesia Tahap II Tahun 2025 issued by PT Samudera Indonesia Tbk was listed on Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"358\" data-end=\"599\">Sukuk Ijarah Berkelanjutan I Samudera Indonesia Tahap II Tahun 2025 (SISMDR01CN2) has a nominal value of Rp500,000,000.00 with an indicative profit-sharing rate equivalent to 8.85% per annum, and a tenor of 5 years from the issuance date.</p>\n<p data-start=\"601\" data-end=\"836\">The rating result from PT Pemeringkat Efek Indonesia (“Pefindo”) for Sukuk Ijarah Berkelanjutan I Samudera Indonesia Tahap II Tahun 2025 is idA+ (sy) (Single A Plus Syariah), with PT Bank Syariah Indonesia Tbk acting as the Trustee.</p>\n<p data-start=\"838\" data-end=\"975\">In total, there have been 78 bond and sukuk issuances from 47 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"977\" data-end=\"1428\">With this listing, the total bonds and sukuk listed on IDX now amount to 633 issuances with a total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/en/news/announcement\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11241,
@@ -259,27 +111,7 @@
       "Tags": "BMTP",
       "IsHeadline": false,
       "Summary": "On 7 July 2025, Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 issued by PT Bank Mandiri Taspen was listed on the Indonesia Stock Exchange (IDX).",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11241",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11241,
-        "ItemId": "ead01561-d358-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-07T09:01:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 on 7 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "BMTP",
-        "IsHeadline": false,
-        "Summary": "On 7 July 2025, Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 issued by PT Bank Mandiri Taspen was listed on the Indonesia Stock Exchange (IDX).",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"189\" data-end=\"347\">On 7 July 2025, Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 issued by PT Bank Mandiri Taspen was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"189\" data-end=\"347\">Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"189\" data-end=\"347\">Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 Series A (BMTP02ACN1) with a nominal value of Rp800,000,000,000.00, annual coupon rate of 6.65%, and tenor of 3 years from the issuance date;</li>\n<li data-start=\"189\" data-end=\"347\">Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 Series B (BMTP02BCN1) with a nominal value of Rp700,000,000,000.00, annual coupon rate of 6.80%, and tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"848\" data-end=\"1056\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 is idAAA (Triple A), with PT Bank Rakyat Indonesia Tbk acting as the Trustee.</p>\n<p data-start=\"1058\" data-end=\"1195\">In total, there have been 80 bond and sukuk issuances from 50 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1197\" data-end=\"1646\">With this listing, the total bonds and sukuk listed on IDX now amount to 635 issuances with total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"189\" data-end=\"347\">On 7 July 2025, Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 issued by PT Bank Mandiri Taspen was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"189\" data-end=\"347\">Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"189\" data-end=\"347\">Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 Series A (BMTP02ACN1) with a nominal value of Rp800,000,000,000.00, annual coupon rate of 6.65%, and tenor of 3 years from the issuance date;</li>\n<li data-start=\"189\" data-end=\"347\">Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 Series B (BMTP02BCN1) with a nominal value of Rp700,000,000,000.00, annual coupon rate of 6.80%, and tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"848\" data-end=\"1056\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for Obligasi Berkelanjutan II Bank Mandiri Taspen Tahap I Tahun 2025 is idAAA (Triple A), with PT Bank Rakyat Indonesia Tbk acting as the Trustee.</p>\n<p data-start=\"1058\" data-end=\"1195\">In total, there have been 80 bond and sukuk issuances from 50 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1197\" data-end=\"1646\">With this listing, the total bonds and sukuk listed on IDX now amount to 635 issuances with total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11239,
@@ -293,27 +125,7 @@
       "Tags": "BBNI",
       "IsHeadline": false,
       "Summary": "Pencatatan Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 pada tanggal 7 Juli 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11239",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11239,
-        "ItemId": "a631f6c4-ce58-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-07T09:00:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 on 7 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "BBNI",
-        "IsHeadline": false,
-        "Summary": "Pencatatan Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 pada tanggal 7 Juli 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"202\" data-end=\"391\">On 7 July 2025, Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 issued by PT Bank Negara Indonesia (Persero) Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"202\" data-end=\"391\">Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"202\" data-end=\"391\">Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 Series A (BBNI01ASLCN1) with a nominal value of Rp3,500,000,000,000.00, annual yield equivalent to 6.60%, and tenor of 3 years from the issuance date;</li>\n<li data-start=\"202\" data-end=\"391\">Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 Series B (BBNI01BSLCN1) with a nominal value of Rp1,500,000,000,000.00, annual yield equivalent to 6.65%, and tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"942\" data-end=\"1165\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 is idAAA (Triple A), with PT Bank Rakyat Indonesia Tbk acting as the Trustee.</p>\n<p data-start=\"1167\" data-end=\"1304\">In total, there have been 79 bond and sukuk issuances from 49 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1306\" data-end=\"1755\">With this listing, the total bonds and sukuk listed on IDX now amount to 634 issuances with total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"202\" data-end=\"391\">On 7 July 2025, Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 issued by PT Bank Negara Indonesia (Persero) Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"202\" data-end=\"391\">Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"202\" data-end=\"391\">Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 Series A (BBNI01ASLCN1) with a nominal value of Rp3,500,000,000,000.00, annual yield equivalent to 6.60%, and tenor of 3 years from the issuance date;</li>\n<li data-start=\"202\" data-end=\"391\">Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 Series B (BBNI01BSLCN1) with a nominal value of Rp1,500,000,000,000.00, annual yield equivalent to 6.65%, and tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"942\" data-end=\"1165\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for Obligasi Berlandaskan Keberlanjutan (Sustainability Bond) Berkelanjutan I Bank BNI Tahap I Tahun 2025 is idAAA (Triple A), with PT Bank Rakyat Indonesia Tbk acting as the Trustee.</p>\n<p data-start=\"1167\" data-end=\"1304\">In total, there have been 79 bond and sukuk issuances from 49 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1306\" data-end=\"1755\">With this listing, the total bonds and sukuk listed on IDX now amount to 634 issuances with total nominal outstanding of Rp492.05 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11243,
@@ -327,27 +139,7 @@
       "Tags": "BVIC",
       "IsHeadline": false,
       "Summary": "Listing of Obligasi Berkelanjutan IV Bank Victoria Tahap I Tahun 2025 on 7 July 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11243",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11243,
-        "ItemId": "c4836a0e-6059-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-07T08:59:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berkelanjutan IV Bank Victoria Tahap I Tahun 2025 on 7 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "BVIC",
-        "IsHeadline": false,
-        "Summary": "Listing of Obligasi Berkelanjutan IV Bank Victoria Tahap I Tahun 2025 on 7 July 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"170\" data-end=\"338\">On 7 July 2025, Obligasi Berkelanjutan IV Bank Victoria Tahap I Tahun 2025 issued by PT Bank Victoria International Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"340\" data-end=\"521\">Obligasi Berkelanjutan IV Bank Victoria Tahap I Tahun 2025 (BVIC04CN1) has a nominal value of Rp750,000,000,000.00, an annual coupon rate of 9.00%, and a tenor of 3 years from the issuance date.</p>\n<p data-start=\"523\" data-end=\"720\">The rating result from PT Pemeringkat Efek Indonesia (“Pefindo”) for Obligasi Berkelanjutan IV Bank Victoria Tahap I Tahun 2025 is idA- (Single A Minus), with PT Bank Mega Tbk acting as the Trustee.</p>\n<p data-start=\"722\" data-end=\"859\">In total, there have been 75 bond and sukuk issuances from 46 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"861\" data-end=\"1312\">With this listing, the total bonds and sukuk listed on IDX now amount to 630 issuances with a total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p data-start=\"861\" data-end=\"1312\">(<a rel=\"noopener\" href=\"https://www.idx.co.id/en/news/announcement\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"170\" data-end=\"338\">On 7 July 2025, Obligasi Berkelanjutan IV Bank Victoria Tahap I Tahun 2025 issued by PT Bank Victoria International Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"340\" data-end=\"521\">Obligasi Berkelanjutan IV Bank Victoria Tahap I Tahun 2025 (BVIC04CN1) has a nominal value of Rp750,000,000,000.00, an annual coupon rate of 9.00%, and a tenor of 3 years from the issuance date.</p>\n<p data-start=\"523\" data-end=\"720\">The rating result from PT Pemeringkat Efek Indonesia (“Pefindo”) for Obligasi Berkelanjutan IV Bank Victoria Tahap I Tahun 2025 is idA- (Single A Minus), with PT Bank Mega Tbk acting as the Trustee.</p>\n<p data-start=\"722\" data-end=\"859\">In total, there have been 75 bond and sukuk issuances from 46 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"861\" data-end=\"1312\">With this listing, the total bonds and sukuk listed on IDX now amount to 630 issuances with a total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p data-start=\"861\" data-end=\"1312\">(<a rel=\"noopener\" href=\"https://www.idx.co.id/en/news/announcement\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11237,
@@ -361,27 +153,7 @@
       "Tags": "BWPT,Eagle",
       "IsHeadline": false,
       "Summary": "Listing of Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 on 4 July 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11237",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11237,
-        "ItemId": "061abe79-bd58-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-04T16:51:37",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 on 4 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "BWPT,Eagle",
-        "IsHeadline": false,
-        "Summary": "Listing of Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 on 4 July 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"184\" data-end=\"357\">On 4 July 2025, Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 issued by PT Eagle High Plantations Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 Series A (SMBWPT01ACN1) with a nominal value of Rp37,290,000,000.00, annual profit-sharing rate equivalent to 9.75%, and tenor of 370 days from the issuance date;</li>\n<li data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 Series B (SMBWPT01BCN1) with a nominal value of Rp24,885,000,000.00, annual profit-sharing rate equivalent to 11.00%, and tenor of 3 years from the issuance date.</li>\n</ul>\n<p data-start=\"929\" data-end=\"1166\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for the Sustainable Sukuk Mudharabah I Eagle High Plantations Phase I Year 2025 is idA(sy), with PT Bank Pembangunan Daerah Jawa Barat dan Banten Tbk acting as the Trustee.</p>\n<p data-start=\"1168\" data-end=\"1305\">In total, there have been 74 bond and sukuk issuances from 46 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1307\" data-end=\"1756\">With this listing, the total bonds and sukuk listed on IDX now amount to 629 issuances with total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"184\" data-end=\"357\">On 4 July 2025, Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 issued by PT Eagle High Plantations Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 Series A (SMBWPT01ACN1) with a nominal value of Rp37,290,000,000.00, annual profit-sharing rate equivalent to 9.75%, and tenor of 370 days from the issuance date;</li>\n<li data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 Series B (SMBWPT01BCN1) with a nominal value of Rp24,885,000,000.00, annual profit-sharing rate equivalent to 11.00%, and tenor of 3 years from the issuance date.</li>\n</ul>\n<p data-start=\"929\" data-end=\"1166\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for the Sustainable Sukuk Mudharabah I Eagle High Plantations Phase I Year 2025 is idA(sy), with PT Bank Pembangunan Daerah Jawa Barat dan Banten Tbk acting as the Trustee.</p>\n<p data-start=\"1168\" data-end=\"1305\">In total, there have been 74 bond and sukuk issuances from 46 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1307\" data-end=\"1756\">With this listing, the total bonds and sukuk listed on IDX now amount to 629 issuances with total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11235,
@@ -395,27 +167,7 @@
       "Tags": "IMFI",
       "IsHeadline": false,
       "Summary": "Pencatatan Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 tanggal 4 Juli 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11235",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11235,
-        "ItemId": "39288bd2-8758-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-04T10:27:02",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 on 4 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "IMFI",
-        "IsHeadline": false,
-        "Summary": "Pencatatan Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 tanggal 4 Juli 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"182\" data-end=\"366\">On 4 July 2025, the Sustainable Bond VI Indomobil Finance with Fixed Coupon Phase I Year 2025 issued by PT Indomobil Finance Indonesia was listed on the Indonesia Stock Exchange (IDX). </p>\n<p data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 consists of:</p>\n<ul>\n<li data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 Series A (IMFI06ACN1) with a nominal value of Rp520,000,000,000.00, annual coupon rate of 6.45%, and tenor of 370 calendar days from the issuance date;</li>\n<li data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 Series B (IMFI06BCN1) with a nominal value of Rp80,000,000,000.00, annual coupon rate of 6.85%, and tenor of 3 years from the issuance date;</li>\n<li data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 Series C (IMFI06CCN1) with a nominal value of Rp400,000,000,000.00, annual coupon rate of 7.10%, and tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"1123\" data-end=\"1339\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 is idAA- (Double A Minus), with PT Bank Mega Tbk acting as the Trustee.</p>\n<p data-start=\"1341\" data-end=\"1476\">In total, there have been 73 bond and sukuk issuances from 46 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1478\" data-end=\"1927\">With this listing, the total bonds and sukuk listed on IDX now amount to 628 issuances with a total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p data-start=\"1478\" data-end=\"1927\">(<a rel=\"noopener\" href=\"https://www.idx.co.id/en/news/announcement\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"182\" data-end=\"366\">On 4 July 2025, the Sustainable Bond VI Indomobil Finance with Fixed Coupon Phase I Year 2025 issued by PT Indomobil Finance Indonesia was listed on the Indonesia Stock Exchange (IDX). </p>\n<p data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 consists of:</p>\n<ul>\n<li data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 Series A (IMFI06ACN1) with a nominal value of Rp520,000,000,000.00, annual coupon rate of 6.45%, and tenor of 370 calendar days from the issuance date;</li>\n<li data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 Series B (IMFI06BCN1) with a nominal value of Rp80,000,000,000.00, annual coupon rate of 6.85%, and tenor of 3 years from the issuance date;</li>\n<li data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 Series C (IMFI06CCN1) with a nominal value of Rp400,000,000,000.00, annual coupon rate of 7.10%, and tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"1123\" data-end=\"1339\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 is idAA- (Double A Minus), with PT Bank Mega Tbk acting as the Trustee.</p>\n<p data-start=\"1341\" data-end=\"1476\">In total, there have been 73 bond and sukuk issuances from 46 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1478\" data-end=\"1927\">With this listing, the total bonds and sukuk listed on IDX now amount to 628 issuances with a total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p data-start=\"1478\" data-end=\"1927\">(<a rel=\"noopener\" href=\"https://www.idx.co.id/en/news/announcement\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11237,
@@ -429,27 +181,7 @@
       "Tags": "BWPT,Eagle",
       "IsHeadline": false,
       "Summary": "Listing of Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 on 4 July 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11237",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11237,
-        "ItemId": "061abe79-bd58-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-04T16:51:37",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 on 4 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "BWPT,Eagle",
-        "IsHeadline": false,
-        "Summary": "Listing of Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 on 4 July 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"184\" data-end=\"357\">On 4 July 2025, Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 issued by PT Eagle High Plantations Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 Series A (SMBWPT01ACN1) with a nominal value of Rp37,290,000,000.00, annual profit-sharing rate equivalent to 9.75%, and tenor of 370 days from the issuance date;</li>\n<li data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 Series B (SMBWPT01BCN1) with a nominal value of Rp24,885,000,000.00, annual profit-sharing rate equivalent to 11.00%, and tenor of 3 years from the issuance date.</li>\n</ul>\n<p data-start=\"929\" data-end=\"1166\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for the Sustainable Sukuk Mudharabah I Eagle High Plantations Phase I Year 2025 is idA(sy), with PT Bank Pembangunan Daerah Jawa Barat dan Banten Tbk acting as the Trustee.</p>\n<p data-start=\"1168\" data-end=\"1305\">In total, there have been 74 bond and sukuk issuances from 46 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1307\" data-end=\"1756\">With this listing, the total bonds and sukuk listed on IDX now amount to 629 issuances with total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"184\" data-end=\"357\">On 4 July 2025, Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 issued by PT Eagle High Plantations Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 Series A (SMBWPT01ACN1) with a nominal value of Rp37,290,000,000.00, annual profit-sharing rate equivalent to 9.75%, and tenor of 370 days from the issuance date;</li>\n<li data-start=\"359\" data-end=\"927\">Sukuk Mudharabah Berkelanjutan I Eagle High Plantations Tahap I Tahun 2025 Series B (SMBWPT01BCN1) with a nominal value of Rp24,885,000,000.00, annual profit-sharing rate equivalent to 11.00%, and tenor of 3 years from the issuance date.</li>\n</ul>\n<p data-start=\"929\" data-end=\"1166\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for the Sustainable Sukuk Mudharabah I Eagle High Plantations Phase I Year 2025 is idA(sy), with PT Bank Pembangunan Daerah Jawa Barat dan Banten Tbk acting as the Trustee.</p>\n<p data-start=\"1168\" data-end=\"1305\">In total, there have been 74 bond and sukuk issuances from 46 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1307\" data-end=\"1756\">With this listing, the total bonds and sukuk listed on IDX now amount to 629 issuances with total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 193 series with a total nominal value of Rp6,337.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11235,
@@ -463,13 +195,7 @@
       "Tags": "IMFI",
       "IsHeadline": false,
       "Summary": "Pencatatan Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 tanggal 4 Juli 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11235",
-          "Method": "GET"
-        }
-      ]
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"182\" data-end=\"366\">On 4 July 2025, the Sustainable Bond VI Indomobil Finance with Fixed Coupon Phase I Year 2025 issued by PT Indomobil Finance Indonesia was listed on the Indonesia Stock Exchange (IDX). </p>\n<p data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 consists of:</p>\n<ul>\n<li data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 Series A (IMFI06ACN1) with a nominal value of Rp520,000,000,000.00, annual coupon rate of 6.45%, and tenor of 370 calendar days from the issuance date;</li>\n<li data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 Series B (IMFI06BCN1) with a nominal value of Rp80,000,000,000.00, annual coupon rate of 6.85%, and tenor of 3 years from the issuance date;</li>\n<li data-start=\"182\" data-end=\"366\">Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 Series C (IMFI06CCN1) with a nominal value of Rp400,000,000,000.00, annual coupon rate of 7.10%, and tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"1123\" data-end=\"1339\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for Obligasi Berkelanjutan VI Indomobil Finance Dengan Tingkat Bunga Tetap Tahap I 2025 is idAA- (Double A Minus), with PT Bank Mega Tbk acting as the Trustee.</p>\n<p data-start=\"1341\" data-end=\"1476\">In total, there have been 73 bond and sukuk issuances from 46 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1478\" data-end=\"1927\">With this listing, the total bonds and sukuk listed on IDX now amount to 628 issuances with a total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 138 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p data-start=\"1478\" data-end=\"1927\">(<a rel=\"noopener\" href=\"https://www.idx.co.id/en/news/announcement\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11227,
@@ -483,27 +209,7 @@
       "Tags": "OCBC",
       "IsHeadline": false,
       "Summary": "On 4 July 2025, the Sustainable Bond IV OCBC Phase I Year 2025 issued by PT Bank OCBC NISP Tbk was listed on the Indonesia Stock Exchange (IDX).",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11227",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11227,
-        "ItemId": "9fc5b350-e757-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-04T09:00:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 on 4 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "OCBC",
-        "IsHeadline": false,
-        "Summary": "On 4 July 2025, the Sustainable Bond IV OCBC Phase I Year 2025 issued by PT Bank OCBC NISP Tbk was listed on the Indonesia Stock Exchange (IDX).",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"186\" data-end=\"332\">On 4 July 2025, the Sustainable Bond IV OCBC Phase I Year 2025 issued by PT Bank OCBC NISP Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"334\" data-end=\"972\">Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"334\" data-end=\"972\">Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 Series A (NISP04ACN1) with a nominal value of Rp748,565,000,000.00, annual coupon rate of 6.25%, and tenor of 370 calendar days from the issuance date;</li>\n<li data-start=\"334\" data-end=\"972\">Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 Series B (NISP04BCN1) with a nominal value of Rp537,930,000,000.00, annual coupon rate of 6.45%, and tenor of 3 years from the issuance date;</li>\n<li data-start=\"334\" data-end=\"972\">Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 C (NISP04CCN1) with a nominal value of Rp213,505,000,000.00, annual coupon rate of 6.55%, and tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"974\" data-end=\"1145\">The rating result from PT Fitch Ratings Indonesia for Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 is AAA(idn) (Triple A), with PT Bank Mega Tbk acting as the Trustee.</p>\n<p data-start=\"1147\" data-end=\"1286\">In total, there have been 67 bond and sukuk issuances from 42 issuers listed throughout 2025 with an aggregate value of Rp79.28 trillion.</p>\n<p data-start=\"1288\" data-end=\"1738\">With this listing, the total bonds and sukuk listed on IDX now amount to 622 issuances with total nominal outstanding of Rp491.63 trillion and USD111.9828 million, issued by 137 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, 7 Asset-Backed Securities (ABS) issuances with a total value of Rp2.22 trillion are also listed on IDX.</p>\n<p data-start=\"1288\" data-end=\"1738\">(<a rel=\"noopener\" href=\"https://www.idx.co.id/en/news/announcement/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n<p> </p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"186\" data-end=\"332\">On 4 July 2025, the Sustainable Bond IV OCBC Phase I Year 2025 issued by PT Bank OCBC NISP Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"334\" data-end=\"972\">Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"334\" data-end=\"972\">Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 Series A (NISP04ACN1) with a nominal value of Rp748,565,000,000.00, annual coupon rate of 6.25%, and tenor of 370 calendar days from the issuance date;</li>\n<li data-start=\"334\" data-end=\"972\">Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 Series B (NISP04BCN1) with a nominal value of Rp537,930,000,000.00, annual coupon rate of 6.45%, and tenor of 3 years from the issuance date;</li>\n<li data-start=\"334\" data-end=\"972\">Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 C (NISP04CCN1) with a nominal value of Rp213,505,000,000.00, annual coupon rate of 6.55%, and tenor of 5 years from the issuance date.</li>\n</ul>\n<p data-start=\"974\" data-end=\"1145\">The rating result from PT Fitch Ratings Indonesia for Obligasi Berkelanjutan IV OCBC Tahap I Tahun 2025 is AAA(idn) (Triple A), with PT Bank Mega Tbk acting as the Trustee.</p>\n<p data-start=\"1147\" data-end=\"1286\">In total, there have been 67 bond and sukuk issuances from 42 issuers listed throughout 2025 with an aggregate value of Rp79.28 trillion.</p>\n<p data-start=\"1288\" data-end=\"1738\">With this listing, the total bonds and sukuk listed on IDX now amount to 622 issuances with total nominal outstanding of Rp491.63 trillion and USD111.9828 million, issued by 137 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, 7 Asset-Backed Securities (ABS) issuances with a total value of Rp2.22 trillion are also listed on IDX.</p>\n<p data-start=\"1288\" data-end=\"1738\">(<a rel=\"noopener\" href=\"https://www.idx.co.id/en/news/announcement/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n<p> </p>\n</body>\n</html>"
     },
     {
       "Id": 11233,
@@ -517,27 +223,7 @@
       "Tags": "TRIM",
       "IsHeadline": false,
       "Summary": "Listing of Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 on 3 July 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11233",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11233,
-        "ItemId": "d30b6537-1758-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-03T16:00:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 on 3 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "TRIM",
-        "IsHeadline": false,
-        "Summary": "Listing of Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 on 3 July 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"208\" data-end=\"392\">On 3 July 2025, Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 issued by PT Trimegah Sekuritas Indonesia Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"394\" data-end=\"919\">Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"394\" data-end=\"919\">Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 Series A (TRIM02ACN1) with a nominal value of Rp150,540,000,000.00, annual coupon rate of 7.20%, and a tenor of 370 calendar days from the issuance date;</li>\n<li data-start=\"394\" data-end=\"919\">Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 Series B (TRIM02BCN1) with a nominal value of Rp549,460,000,000.00, annual coupon rate of 8.80%, and a tenor of 3 years from the issuance date.</li>\n</ul>\n<p data-start=\"921\" data-end=\"1160\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for the Sustainable Bond II Trimegah Sekuritas Indonesia Phase I Year 2025 is idA (Single A), with PT Bank Pembangunan Daerah Jawa Barat dan Banten Tbk acting as the Trustee.</p>\n<p data-start=\"1162\" data-end=\"1299\">In total, there have been 71 bond and sukuk issuances from 44 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1301\" data-end=\"1750\">With this listing, the total bonds and sukuk listed on IDX now amount to 626 issuances with total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 137 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/berita\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"208\" data-end=\"392\">On 3 July 2025, Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 issued by PT Trimegah Sekuritas Indonesia Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"394\" data-end=\"919\">Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"394\" data-end=\"919\">Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 Series A (TRIM02ACN1) with a nominal value of Rp150,540,000,000.00, annual coupon rate of 7.20%, and a tenor of 370 calendar days from the issuance date;</li>\n<li data-start=\"394\" data-end=\"919\">Obligasi Berkelanjutan II Trimegah Sekuritas Indonesia Tahap I Tahun 2025 Series B (TRIM02BCN1) with a nominal value of Rp549,460,000,000.00, annual coupon rate of 8.80%, and a tenor of 3 years from the issuance date.</li>\n</ul>\n<p data-start=\"921\" data-end=\"1160\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for the Sustainable Bond II Trimegah Sekuritas Indonesia Phase I Year 2025 is idA (Single A), with PT Bank Pembangunan Daerah Jawa Barat dan Banten Tbk acting as the Trustee.</p>\n<p data-start=\"1162\" data-end=\"1299\">In total, there have been 71 bond and sukuk issuances from 44 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1301\" data-end=\"1750\">With this listing, the total bonds and sukuk listed on IDX now amount to 626 issuances with total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 137 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/berita\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11231,
@@ -551,27 +237,7 @@
       "Tags": "DART",
       "IsHeadline": false,
       "Summary": "Listing of Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 on 3 July 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11231",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11231,
-        "ItemId": "d09afbe4-1258-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-03T13:00:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 on 3 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "DART",
-        "IsHeadline": false,
-        "Summary": "Listing of Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 on 3 July 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"266\" data-end=\"432\">On 3 July 2025, Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 issued by PT Duta Anggada Realty Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"434\" data-end=\"932\">Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"434\" data-end=\"932\">Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 Series A (DART04ACN1) with a nominal value of Rp50,000,000,000.00, annual coupon rate of 9.90%, and a tenor of 370 calendar days from the issuance date;</li>\n<li data-start=\"434\" data-end=\"932\">Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 Series B (DART04BCN1) with a nominal value of Rp250,000,000,000.00, annual coupon rate of 10.50%, and a tenor of 3 years from the issuance date.</li>\n</ul>\n<p data-start=\"934\" data-end=\"1141\">The rating result from PT Kredit Rating Indonesia (KRI) for Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 is irA- (Single A Minus), with PT Bank Syariah Indonesia Tbk acting as the Trustee.</p>\n<p data-start=\"1143\" data-end=\"1280\">In total, there have been 70 bond and sukuk issuances from 44 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1282\" data-end=\"1729\">With this listing, the total bonds and sukuk listed on IDX now amount to 625 issuances with total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 137 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"266\" data-end=\"432\">On 3 July 2025, Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 issued by PT Duta Anggada Realty Tbk was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"434\" data-end=\"932\">Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"434\" data-end=\"932\">Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 Series A (DART04ACN1) with a nominal value of Rp50,000,000,000.00, annual coupon rate of 9.90%, and a tenor of 370 calendar days from the issuance date;</li>\n<li data-start=\"434\" data-end=\"932\">Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 Series B (DART04BCN1) with a nominal value of Rp250,000,000,000.00, annual coupon rate of 10.50%, and a tenor of 3 years from the issuance date.</li>\n</ul>\n<p data-start=\"934\" data-end=\"1141\">The rating result from PT Kredit Rating Indonesia (KRI) for Obligasi Berkelanjutan IV Duta Anggada Realty Tahap I Tahun 2025 is irA- (Single A Minus), with PT Bank Syariah Indonesia Tbk acting as the Trustee.</p>\n<p data-start=\"1143\" data-end=\"1280\">In total, there have been 70 bond and sukuk issuances from 44 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1282\" data-end=\"1729\">With this listing, the total bonds and sukuk listed on IDX now amount to 625 issuances with total nominal outstanding of Rp491.63 trillion and USD111.98 million, issued by 137 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11229,
@@ -585,27 +251,7 @@
       "Tags": "SMART",
       "IsHeadline": false,
       "Summary": "Pencatatan Obligasi Berkelanjutan V SMART Tahap I Tahun 2025 dan Sukuk Ijarah Berkelanjutan I SMART Tahap I Tahun 2025 pada tanggal 3 Juli 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11229",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11229,
-        "ItemId": "e220c489-f157-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-03T12:00:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Obligasi Berkelanjutan V SMART Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan I SMART Tahap I Tahun 2025 on 3 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "SMART",
-        "IsHeadline": false,
-        "Summary": "Pencatatan Obligasi Berkelanjutan V SMART Tahap I Tahun 2025 dan Sukuk Ijarah Berkelanjutan I SMART Tahap I Tahun 2025 pada tanggal 3 Juli 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"248\" data-end=\"475\">On 3 July 2025, Obligasi Berkelanjutan V SMART Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan I SMART Tahap I Tahun 2025 by PT Sinar Mas Agro Resources and Technology Tbk were listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"477\" data-end=\"862\">Obligasi Berkelanjutan V SMART Tahap I Tahun 2025 with a nominal value of Rp500,000,000,000.00, annual coupon rate of 7.50%, and a tenor of 5 years from the issuance date.</p>\n<p data-start=\"477\" data-end=\"862\">Sukuk Ijarah Berkelanjutan I SMART Tahap I Tahun 2025 value of Rp500,000,000,000.00, annual profit-sharing equivalent to 7.50%, and a tenor of 5 years from the issuance date.</p>\n<p data-start=\"864\" data-end=\"1157\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for the Obligasi Berkelanjutan V SMART Tahap I Tahun 2025 is idAA- (Double A Minus), while the Sukuk Ijarah Berkelanjutan I SMART Tahap I Tahun 2025 is rated idAA-(sy) (Double A Minus Syariah), with PT Bank Mega Tbk acting as the Trustee.</p>\n<p data-start=\"1159\" data-end=\"1296\">In total, there have been 67 bond and sukuk issuances from 42 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1298\" data-end=\"1747\">With this listing, the total bonds and sukuk listed on IDX now amount to 622 issuances with total nominal outstanding of Rp491.63 trillion and USD111.9828 million, issued by 137 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"248\" data-end=\"475\">On 3 July 2025, Obligasi Berkelanjutan V SMART Tahap I Tahun 2025 and Sukuk Ijarah Berkelanjutan I SMART Tahap I Tahun 2025 by PT Sinar Mas Agro Resources and Technology Tbk were listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"477\" data-end=\"862\">Obligasi Berkelanjutan V SMART Tahap I Tahun 2025 with a nominal value of Rp500,000,000,000.00, annual coupon rate of 7.50%, and a tenor of 5 years from the issuance date.</p>\n<p data-start=\"477\" data-end=\"862\">Sukuk Ijarah Berkelanjutan I SMART Tahap I Tahun 2025 value of Rp500,000,000,000.00, annual profit-sharing equivalent to 7.50%, and a tenor of 5 years from the issuance date.</p>\n<p data-start=\"864\" data-end=\"1157\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for the Obligasi Berkelanjutan V SMART Tahap I Tahun 2025 is idAA- (Double A Minus), while the Sukuk Ijarah Berkelanjutan I SMART Tahap I Tahun 2025 is rated idAA-(sy) (Double A Minus Syariah), with PT Bank Mega Tbk acting as the Trustee.</p>\n<p data-start=\"1159\" data-end=\"1296\">In total, there have been 67 bond and sukuk issuances from 42 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1298\" data-end=\"1747\">With this listing, the total bonds and sukuk listed on IDX now amount to 622 issuances with total nominal outstanding of Rp491.63 trillion and USD111.9828 million, issued by 137 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman/\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11225,
@@ -619,27 +265,7 @@
       "Tags": "BJBS",
       "IsHeadline": false,
       "Summary": "Pada 3 Juli 2025, Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 yang diterbitkan oleh PT Bank Syariah Indonesia Tbk mulai dicatatkan di Bursa Efek Indonesia (BEI).",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11225",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11225,
-        "ItemId": "7f63616b-d057-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-03T09:00:00",
-        "ImageUrl": "/media/1557/logo-bursa-efek-indonesia-final.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 on 3 July 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "BJBS",
-        "IsHeadline": false,
-        "Summary": "Pada 3 Juli 2025, Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 yang diterbitkan oleh PT Bank Syariah Indonesia Tbk mulai dicatatkan di Bursa Efek Indonesia (BEI).",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"220\" data-end=\"393\">On 3 July 2025, Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 issued by PT Bank BJB Syariah was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"395\" data-end=\"910\">Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"395\" data-end=\"910\">Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 Series A (SWBJBS01ASB) with a nominal value of Rp240,000,000,000.00, annual yield of 8.70%, and tenor of 5 years from the issuance date;</li>\n<li data-start=\"395\" data-end=\"910\">Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 Series B (SWBJBS01BSB) with a nominal value of Rp60,000,000,000.00, annual yield of 9.00%, and tenor of 7 years from the issuance date.</li>\n</ul>\n<p data-start=\"912\" data-end=\"1145\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 is idA(sy) (Single A Syariah), with PT Bank Syariah Indonesia Tbk acting as the Trustee.</p>\n<p data-start=\"1147\" data-end=\"1284\">In total, there have been 67 bond and sukuk issuances from 42 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1286\" data-end=\"1737\">With this listing, the total bonds and sukuk listed on IDX now amount to 622 issuances with total nominal outstanding of Rp491.63 trillion and USD111.9828 million, issued by 137 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"220\" data-end=\"393\">On 3 July 2025, Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 issued by PT Bank BJB Syariah was listed on the Indonesia Stock Exchange (IDX).</p>\n<p data-start=\"395\" data-end=\"910\">Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 consists of:</p>\n<ul>\n<li data-start=\"395\" data-end=\"910\">Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 Series A (SWBJBS01ASB) with a nominal value of Rp240,000,000,000.00, annual yield of 8.70%, and tenor of 5 years from the issuance date;</li>\n<li data-start=\"395\" data-end=\"910\">Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 Series B (SWBJBS01BSB) with a nominal value of Rp60,000,000,000.00, annual yield of 9.00%, and tenor of 7 years from the issuance date.</li>\n</ul>\n<p data-start=\"912\" data-end=\"1145\">The rating result from PT Pemeringkat Efek Indonesia (Pefindo) for Sukuk Wakalah bi al-Istitsmar Subordinasi I bank bjb syariah Tahun 2025 is idA(sy) (Single A Syariah), with PT Bank Syariah Indonesia Tbk acting as the Trustee.</p>\n<p data-start=\"1147\" data-end=\"1284\">In total, there have been 67 bond and sukuk issuances from 42 issuers listed throughout 2025 with a combined value of Rp79.28 trillion.</p>\n<p data-start=\"1286\" data-end=\"1737\">With this listing, the total bonds and sukuk listed on IDX now amount to 622 issuances with total nominal outstanding of Rp491.63 trillion and USD111.9828 million, issued by 137 issuers. Government Securities (SBN) listed on IDX currently comprise 192 series with a total nominal value of Rp6,305.96 trillion and USD502.10 million. In addition, there are 7 Asset-Backed Securities (ABS) issuances listed on IDX with a total value of Rp2.22 trillion.</p>\n<p>(<a rel=\"noopener\" href=\"https://www.idx.co.id/id/berita/pengumuman\" target=\"_blank\"><strong>More information</strong></a>)</p>\n</body>\n</html>"
     },
     {
       "Id": 11223,
@@ -653,27 +279,7 @@
       "Tags": "BJBS,Sukuk",
       "IsHeadline": true,
       "Summary": "Listing of Subordinated Sukuk Wakalah bi al-Istitsmar I Bank BJB Syariah 2025",
-      "Links": [
-        {
-          "Rel": "self",
-          "Href": "/api/api/publication/news/11223",
-          "Method": "GET"
-        }
-      ],
-      "detail": {
-        "Id": 11223,
-        "ItemId": "e4209b4b-c057-f011-b138-0050569d3b40",
-        "PublishedDate": "2025-07-03T09:00:00",
-        "ImageUrl": "/media/wu0bkmjx/sukuk-wakalah-bsbs.jpg",
-        "Locale": "en-us",
-        "Title": "Listing of Subordinated Sukuk Wakalah bi al-Istitsmar I Bank BJB Syariah 2025",
-        "PathBase": null,
-        "PathFile": null,
-        "Tags": "BJBS,Sukuk",
-        "IsHeadline": true,
-        "Summary": "Listing of Subordinated Sukuk Wakalah bi al-Istitsmar I Bank BJB Syariah 2025",
-        "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"216\" data-end=\"628\">On Thursday, 3 July 2025, trading hours of Indonesia Stock Exchange (IDX) was opened to mark the initial listing of the Subordinated Sukuk Wakalah bi al-Istitsmar I Bank BJB Syariah 2025. The sukuk issued by Bank BJB Syariah is divided into two series:<br data-start=\"471\" data-end=\"474\" />• Series A: IDR 240 billion, 5-year tenor, with a yield of 8.70% per annum.<br data-start=\"549\" data-end=\"552\" />• Series B: IDR 60 billion, 7-year tenor, with a yield of 9.00% per annum.</p>\n<p data-start=\"630\" data-end=\"947\">The issuer holds a corporate rating of idAA-, while the subordinated sukuk instrument is rated idA(sy) by PEFINDO, featuring a write-down mechanism without compensation. This instrument employs the Wakalah bi al-Istitsmar contract, which has been declared compliant with sharia principles by the Sharia Expert Team.</p>\n<p style=\"text-align: justify;\">(<a rel=\"noopener\" href=\"https://www.youtube.com/watch?v=Xo93j4pYVxY\" target=\"_blank\" data-anchor=\"?v=Xo93j4pYVxY\"><strong>For further information</strong></a>)</p>\n</body>\n</html>"
-      }
+      "Contents": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p data-start=\"216\" data-end=\"628\">On Thursday, 3 July 2025, trading hours of Indonesia Stock Exchange (IDX) was opened to mark the initial listing of the Subordinated Sukuk Wakalah bi al-Istitsmar I Bank BJB Syariah 2025. The sukuk issued by Bank BJB Syariah is divided into two series:<br data-start=\"471\" data-end=\"474\" />• Series A: IDR 240 billion, 5-year tenor, with a yield of 8.70% per annum.<br data-start=\"549\" data-end=\"552\" />• Series B: IDR 60 billion, 7-year tenor, with a yield of 9.00% per annum.</p>\n<p data-start=\"630\" data-end=\"947\">The issuer holds a corporate rating of idAA-, while the subordinated sukuk instrument is rated idA(sy) by PEFINDO, featuring a write-down mechanism without compensation. This instrument employs the Wakalah bi al-Istitsmar contract, which has been declared compliant with sharia principles by the Sharia Expert Team.</p>\n<p style=\"text-align: justify;\">(<a rel=\"noopener\" href=\"https://www.youtube.com/watch?v=Xo93j4pYVxY\" target=\"_blank\" data-anchor=\"?v=Xo93j4pYVxY\"><strong>For further information</strong></a>)</p>\n</body>\n</html>"
     }
   ]
 }

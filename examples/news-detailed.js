@@ -80,16 +80,10 @@ async function fetchAllNewsDetails() {
       const detail = await fetchNewsDetail(newsId, i, newsItems.length);
 
       if (detail) {
-        // Merge original item with detailed information
-        const mergedItem = {
-          ...newsItem,
-          detail: detail
-        };
-        detailedNews.push(mergedItem);
+        // Just push the detail directly
+        detailedNews.push(detail);
         successCount++;
       } else {
-        // Keep original item even if detail fetch failed
-        detailedNews.push(newsItem);
         errorCount++;
       }
 
@@ -99,13 +93,10 @@ async function fetchAllNewsDetails() {
       }
     }
 
-    // Save merged data
+    // Save just the data with details added
     const outputPath = path.join(OUTPUT_DIR, OUTPUT_FILE);
     const finalData = {
       total: detailedNews.length,
-      successful_details: successCount,
-      failed_details: errorCount,
-      processed_at: new Date().toISOString(),
       data: detailedNews
     };
 
@@ -138,8 +129,18 @@ async function retryFailedDetails() {
     const previousData = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
     const newsItems = previousData.data || [];
 
-    // Find items without detail or with failed details
-    const failedItems = newsItems.filter(item => !item.detail || item.detail === null);
+    // Find items that are missing (only have original data, no detail fetched)
+    const failedItems = [];
+    const originalInput = JSON.parse(fs.readFileSync(INPUT_FILE, 'utf8'));
+    const originalIds = originalInput.data.map(item => item.ItemId);
+    const fetchedIds = newsItems.map(item => item.ItemId || item.Id);
+    
+    // Find IDs that weren't successfully fetched
+    const missingIds = originalIds.filter(id => !fetchedIds.includes(id));
+    
+    for (const id of missingIds) {
+      failedItems.push({ ItemId: id });
+    }
     
     console.log(`Found ${failedItems.length} failed items to retry out of ${newsItems.length} total`);
 
@@ -168,15 +169,9 @@ async function retryFailedDetails() {
       const detail = await fetchNewsDetail(newsId, i, failedItems.length);
 
       if (detail) {
-        // Find and update the item in the original array
-        const originalIndex = newsItems.findIndex(item => item.ItemId === newsId);
-        if (originalIndex !== -1) {
-          newsItems[originalIndex] = {
-            ...newsItems[originalIndex],
-            detail: detail
-          };
-          successCount++;
-        }
+        // Just add the detail to the list
+        newsItems.push(detail);
+        successCount++;
       } else {
         stillFailedCount++;
       }
@@ -187,21 +182,9 @@ async function retryFailedDetails() {
       }
     }
 
-    // Update statistics
-    const totalSuccessful = previousData.successful_details + successCount;
-    const totalFailed = previousData.failed_details - successCount + stillFailedCount;
-
-    // Save updated data
+    // Save updated data - just the clean data structure
     const finalData = {
       total: newsItems.length,
-      successful_details: totalSuccessful,
-      failed_details: totalFailed,
-      processed_at: new Date().toISOString(),
-      retry_stats: {
-        attempted_retries: failedItems.length,
-        successful_retries: successCount,
-        still_failed: stillFailedCount
-      },
       data: newsItems
     };
 
