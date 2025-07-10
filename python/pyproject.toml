@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "arelle-release>=2.37.33",
     "matplotlib>=3.10.3",
     "neo4j>=5.28.1",
     "psycopg2>=2.9.10",
