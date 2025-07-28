@@ -20,7 +20,7 @@ The primary purpose of this tool is educational. It provides a straightforward w
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/ichsanulamal/idx-bei.git
+   git clone https://github.com/nichsedge/idx-bei.git
    cd idx-bei
    ```
 
