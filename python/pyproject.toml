@@ -3,12 +3,12 @@ name = "python"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "arelle-release>=2.37.33",
     "matplotlib>=3.10.3",
     "neo4j>=5.28.1",
-    "psycopg2>=2.9.10",
+    "psycopg2-binary",
     "scikit-learn>=1.6.1",
     "seaborn>=0.13.2",
     "sqlalchemy>=2.0.41",
