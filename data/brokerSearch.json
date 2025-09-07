@@ -1,12 +1,12 @@
 {
   "draw": 0,
-  "recordsTotal": 93,
-  "recordsFiltered": 93,
+  "recordsTotal": 92,
+  "recordsFiltered": 92,
   "data": [
     {
       "Code": "XC",
       "Name": "AJAIB SEKURITAS ASIA",
-      "License": "Manajer Investasi, Penjamin Emisi Efek, Perantara Pedagang Efek"
+      "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
     },
     {
       "Code": "PP",
@@ -152,11 +152,6 @@
       "Code": "GW",
       "Name": "HSBC SEKURITAS INDONESIA",
       "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
-    },
-    {
-      "Code": "SC",
-      "Name": "IMG SEKURITAS",
-      "License": "Perantara Pedagang Efek"
     },
     {
       "Code": "RB",

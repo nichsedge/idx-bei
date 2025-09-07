@@ -1,10 +1,18 @@
-import fs from 'fs';
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // === Configuration ===
 const BASE_URL = "https://www.idx.co.id/primary/NewsAnnouncement/GetNewsSearch";
 const START_DATE = "20250701";
 const END_DATE = "20250708";
-const DATA_DIR = "../data/news"; // Save news data separately
+const DATA_DIR = path.join(__dirname, "../data/news"); // Save news data separately
+const OUTPUT_FILE_NAME = `idx_news_${START_DATE}_to_${END_DATE}.json`;
+const OUTPUT_FILE_PATH = path.join(DATA_DIR, OUTPUT_FILE_NAME);
 
 const HEADERS = {
   "accept": "application/json, text/plain, */*",
@@ -19,19 +27,29 @@ const HEADERS = {
   "referer": `https://www.idx.co.id/en/news/news?ds=${START_DATE}&de=${END_DATE}&qs=&p=1`
 };
 
-// Ensure data directory exists
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-}
+const PAGE_SIZE = 12;
+const DELAY_MS = 1000; // Delay between page fetches
+const RATE_LIMIT_RETRY_DELAY_MS = 30000; // Delay if rate limit hit (30 seconds)
 
 // === Helper Functions ===
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+async function ensureDataDirectory() {
+  try {
+    await fs.mkdir(DATA_DIR, { recursive: true });
+  } catch (error) {
+    if (error.code !== 'EEXIST') {
+      console.error('Error creating data directory:', error);
+      process.exit(1);
+    }
+  }
+}
 
 function buildUrl(pageNumber) {
   const params = new URLSearchParams({
     locale: "en-us",
     pageNumber,
-    pageSize: 12,
+    pageSize: PAGE_SIZE,
     dateFrom: START_DATE,
     dateTo: END_DATE,
     keyword: ""
@@ -41,6 +59,8 @@ function buildUrl(pageNumber) {
 
 // === Main Scraper ===
 async function fetchAllNewsPages() {
+  await ensureDataDirectory();
+
   let pageNumber = 1;
   let hasMoreData = true;
   const allNews = [];
@@ -63,13 +83,12 @@ async function fetchAllNewsPages() {
       }
 
       const data = await response.json();
-      console.log(data)
 
       if (data?.Items?.length > 0) {
         allNews.push(...data.Items);
         console.log(`Fetched ${data.Items.length} articles from page ${pageNumber}`);
         pageNumber++;
-        await delay(1000); // Delay between pages
+        await delay(DELAY_MS); // Delay between pages
       } else {
         hasMoreData = false;
         console.log("No more news data.");
@@ -79,8 +98,8 @@ async function fetchAllNewsPages() {
       console.error(`Error on page ${pageNumber}:`, error.message);
 
       if (error.message.includes('429')) {
-        console.log("Rate limit hit. Retrying after 30 seconds...");
-        await delay(30000);
+        console.log(`Rate limit hit. Retrying after ${RATE_LIMIT_RETRY_DELAY_MS / 1000} seconds...`);
+        await delay(RATE_LIMIT_RETRY_DELAY_MS);
       } else {
         hasMoreData = false;
       }
@@ -88,11 +107,10 @@ async function fetchAllNewsPages() {
   }
 
   // Save final data
-  const outputPath = `${DATA_DIR}/idx_news_${START_DATE}_to_${END_DATE}.json`;
-  fs.writeFileSync(outputPath, JSON.stringify({ total: allNews.length, data: allNews }, null, 2));
+  await fs.writeFile(OUTPUT_FILE_PATH, JSON.stringify({ total: allNews.length, data: allNews }, null, 2));
 
   console.log(`News scraping complete. Total articles: ${allNews.length}`);
-  console.log(`Data saved to: ${outputPath}`);
+  console.log(`Data saved to: ${OUTPUT_FILE_PATH}`);
 }
 
 // Run

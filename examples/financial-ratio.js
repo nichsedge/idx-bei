@@ -1,4 +1,10 @@
-import fs from 'fs';
+import fs from 'fs/promises'; // Use promise-based fs
+import path from 'path'; // Import path module for robust path handling
+import { fileURLToPath } from 'url'; // For __dirname equivalent in ES modules
+
+// __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configuration
 const BASE_URL = "https://www.idx.co.id/primary/DigitalStatistic/GetApiDataPaginated";
@@ -29,10 +35,20 @@ const HEADERS = {
   "referer": "https://www.idx.co.id/id/data-pasar/laporan-statistik/digital-statistic/monthly/financial-report-and-ratio-of-listed-companies/financial-data-and-ratio"
 };
 
+const DATA_DIR = path.join(__dirname, '../data');
+const DELAY_MS = 1000; // Delay between page fetches
+const RATE_LIMIT_RETRY_DELAY_MS = 30000; // Delay if rate limit hit (30 seconds)
+
 // Create data directory if it doesn't exist
-const DATA_DIR = '../data';
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
+async function ensureDataDirectory() {
+  try {
+    await fs.mkdir(DATA_DIR, { recursive: true });
+  } catch (error) {
+    if (error.code !== 'EEXIST') { // Ignore directory already exists error
+      console.error('Error creating data directory:', error);
+      process.exit(1); // Exit if directory cannot be created
+    }
+  }
 }
 
 // Combine URL with query parameters
@@ -49,6 +65,8 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 // Main function to fetch all pages
 async function fetchAllPages() {
+  await ensureDataDirectory(); // Ensure data directory exists before fetching
+
   let pageNumber = 1;
   let hasMoreData = true;
   const allData = [];
@@ -71,20 +89,14 @@ async function fetchAllPages() {
       
       const data = await response.json();
       
-      // Save individual page data
-      // fs.writeFileSync(
-      //   `${DATA_DIR}/financial_ratio_page_${pageNumber}.json`, 
-      //   JSON.stringify(data, null, 2)
-      // );
-      
       // Check if we have more data to fetch
       if (data.data && data.data.length > 0) {
         allData.push(...data.data);
         console.log(`Retrieved ${data.data.length} records from page ${pageNumber}`);
         pageNumber++;
         
-        // Add delay to respect rate limits (adjust as needed)
-        await delay(1000);
+        // Add delay to respect rate limits
+        await delay(DELAY_MS);
       } else {
         hasMoreData = false;
         console.log('No more data available.');
@@ -93,8 +105,8 @@ async function fetchAllPages() {
       console.error(`Error on page ${pageNumber}:`, error.message);
       
       if (error.message.includes('429')) {
-        console.log('Rate limit hit. Waiting for 30 seconds before retrying...');
-        await delay(30000); // Wait 30 seconds if rate limited
+        console.log(`Rate limit hit. Waiting for ${RATE_LIMIT_RETRY_DELAY_MS / 1000} seconds before retrying...`);
+        await delay(RATE_LIMIT_RETRY_DELAY_MS);
       } else {
         hasMoreData = false;
       }
@@ -102,8 +114,8 @@ async function fetchAllPages() {
   }
   
   // Save combined data
-  fs.writeFileSync(
-    `${DATA_DIR}/financial_ratio.json`, 
+  await fs.writeFile(
+    path.join(DATA_DIR, 'financial_ratio.json'), 
     JSON.stringify({ totalRecords: allData.length, data: allData }, null, 2)
   );
   

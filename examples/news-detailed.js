@@ -1,39 +1,76 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+// __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // === Configuration ===
-const INPUT_FILE = "../data/news/idx_news_20250701_to_20250708.json";
-const OUTPUT_DIR = "../data/news";
-const OUTPUT_FILE = "idx_news_detailed_20250701_to_20250708.json";
+const INPUT_FILE_NAME = "idx_news_20250701_to_20250708.json";
+const OUTPUT_FILE_NAME = "idx_news_detailed_20250701_to_20250708.json";
+const DATA_DIR = path.join(__dirname, '../data/news');
+const INPUT_FILE_PATH = path.join(DATA_DIR, INPUT_FILE_NAME);
+const OUTPUT_FILE_PATH = path.join(DATA_DIR, OUTPUT_FILE_NAME);
 
-// Ensure output directory exists
-if (!fs.existsSync(OUTPUT_DIR)) {
-  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-}
+const NEWS_DETAIL_API_BASE_URL = "https://www.idx.co.id/primary/NewsAnnouncement/GetNewsDetailWithLocale";
+const REQUEST_HEADERS = {
+  "accept": "application/json, text/plain, */*",
+  "sec-ch-ua": "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\"",
+  "sec-ch-ua-mobile": "?0",
+  "sec-ch-ua-platform": "\"Linux\""
+};
+const REQUEST_REFERRER = "https://www.idx.co.id/en/news";
+const DELAY_MS = 1000; // 1 second delay between requests
 
 // === Helper Functions ===
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+async function ensureDataDirectory() {
+  try {
+    await fs.mkdir(DATA_DIR, { recursive: true });
+  } catch (error) {
+    if (error.code !== 'EEXIST') {
+      console.error('Error creating data directory:', error);
+      process.exit(1);
+    }
+  }
+}
+
+async function readJsonFile(filePath) {
+  try {
+    const fileContent = await fs.readFile(filePath, 'utf8');
+    return JSON.parse(fileContent);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return null; // File not found
+    }
+    throw error;
+  }
+}
+
+async function writeJsonFile(filePath, data) {
+  await fs.writeFile(filePath, JSON.stringify(data, null, 2));
+}
 
 async function fetchNewsDetail(newsId, index, total) {
   try {
     console.log(`Fetching detail ${index + 1}/${total} for news ID: ${newsId}`);
     
-    const data = await fetch(`https://www.idx.co.id/primary/NewsAnnouncement/GetNewsDetailWithLocale?locale=en-us&newsId=${newsId}`, {
-      "headers": {
-        "accept": "application/json, text/plain, */*",
-        "sec-ch-ua": "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"Linux\""
-      },
-      "referrer": "https://www.idx.co.id/en/news",
-      "body": null,
-      "method": "GET",
-      "mode": "cors",
-      "credentials": "omit"
+    const url = `${NEWS_DETAIL_API_BASE_URL}?locale=en-us&newsId=${newsId}`;
+    const response = await fetch(url, {
+      headers: REQUEST_HEADERS,
+      referrer: REQUEST_REFERRER,
+      method: "GET",
+      mode: "cors",
+      credentials: "omit"
     });
 
-    const res = await data.json();
-    return res;
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    return await response.json();
 
   } catch (error) {
     console.error(`Error fetching detail for ${newsId}:`, error.message);
@@ -43,17 +80,17 @@ async function fetchNewsDetail(newsId, index, total) {
 
 // === Main Function ===
 async function fetchAllNewsDetails() {
+  await ensureDataDirectory();
+
   try {
-    // Read the input file
-    console.log(`Reading input file: ${INPUT_FILE}`);
+    console.log(`Reading input file: ${INPUT_FILE_PATH}`);
+    const inputData = await readJsonFile(INPUT_FILE_PATH);
     
-    if (!fs.existsSync(INPUT_FILE)) {
-      throw new Error(`Input file not found: ${INPUT_FILE}`);
+    if (!inputData) {
+      throw new Error(`Input file not found: ${INPUT_FILE_PATH}`);
     }
 
-    const inputData = JSON.parse(fs.readFileSync(INPUT_FILE, 'utf8'));
     const newsItems = inputData.data || [];
-
     console.log(`Found ${newsItems.length} news items to process`);
 
     if (newsItems.length === 0) {
@@ -65,7 +102,6 @@ async function fetchAllNewsDetails() {
     let successCount = 0;
     let errorCount = 0;
 
-    // Process each news item
     for (let i = 0; i < newsItems.length; i++) {
       const newsItem = newsItems[i];
       const newsId = newsItem.ItemId;
@@ -76,37 +112,32 @@ async function fetchAllNewsDetails() {
         continue;
       }
 
-      // Fetch detailed information
       const detail = await fetchNewsDetail(newsId, i, newsItems.length);
 
       if (detail) {
-        // Just push the detail directly
         detailedNews.push(detail);
         successCount++;
       } else {
         errorCount++;
       }
 
-      // Add delay between requests to avoid rate limiting
       if (i < newsItems.length - 1) {
-        await delay(1000); // 1 second delay between requests
+        await delay(DELAY_MS);
       }
     }
 
-    // Save just the data with details added
-    const outputPath = path.join(OUTPUT_DIR, OUTPUT_FILE);
     const finalData = {
       total: detailedNews.length,
       data: detailedNews
     };
 
-    fs.writeFileSync(outputPath, JSON.stringify(finalData, null, 2));
+    await writeJsonFile(OUTPUT_FILE_PATH, finalData);
 
     console.log(`\n=== Summary ===`);
     console.log(`Total news items processed: ${newsItems.length}`);
     console.log(`Successfully fetched details: ${successCount}`);
     console.log(`Failed to fetch details: ${errorCount}`);
-    console.log(`Output saved to: ${outputPath}`);
+    console.log(`Output saved to: ${OUTPUT_FILE_PATH}`);
 
   } catch (error) {
     console.error("Fatal error:", error.message);
@@ -116,35 +147,32 @@ async function fetchAllNewsDetails() {
 
 // === Retry Failed Function ===
 async function retryFailedDetails() {
+  await ensureDataDirectory();
+
   try {
-    const outputPath = path.join(OUTPUT_DIR, OUTPUT_FILE);
+    console.log(`Reading previous results from: ${OUTPUT_FILE_PATH}`);
+    let previousData = await readJsonFile(OUTPUT_FILE_PATH);
     
-    console.log(`Reading previous results from: ${outputPath}`);
-    
-    if (!fs.existsSync(outputPath)) {
+    if (!previousData) {
       console.log("No previous results found. Running full fetch instead...");
       return await fetchAllNewsDetails();
     }
 
-    const previousData = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
-    const newsItems = previousData.data || [];
+    let newsItems = previousData.data || [];
 
-    // Find items that are missing (only have original data, no detail fetched)
-    const failedItems = [];
-    const originalInput = JSON.parse(fs.readFileSync(INPUT_FILE, 'utf8'));
-    const originalIds = originalInput.data.map(item => item.ItemId);
-    const fetchedIds = newsItems.map(item => item.ItemId || item.Id);
-    
-    // Find IDs that weren't successfully fetched
-    const missingIds = originalIds.filter(id => !fetchedIds.includes(id));
-    
-    for (const id of missingIds) {
-      failedItems.push({ ItemId: id });
+    const originalInput = await readJsonFile(INPUT_FILE_PATH);
+    if (!originalInput) {
+      throw new Error(`Original input file not found: ${INPUT_FILE_PATH}`);
     }
-    
-    console.log(`Found ${failedItems.length} failed items to retry out of ${newsItems.length} total`);
 
-    if (failedItems.length === 0) {
+    const originalIds = new Set(originalInput.data.map(item => item.ItemId));
+    const fetchedIds = new Set(newsItems.map(item => item.ItemId || item.Id));
+    
+    const missingIds = Array.from(originalIds).filter(id => !fetchedIds.has(id));
+    
+    console.log(`Found ${missingIds.length} failed items to retry out of ${originalIds.size} total original items.`);
+
+    if (missingIds.length === 0) {
       console.log("No failed items to retry!");
       return;
     }
@@ -152,51 +180,37 @@ async function retryFailedDetails() {
     let successCount = 0;
     let stillFailedCount = 0;
 
-    // Retry failed items
-    for (let i = 0; i < failedItems.length; i++) {
-      const newsItem = failedItems[i];
-      const newsId = newsItem.ItemId;
+    for (let i = 0; i < missingIds.length; i++) {
+      const newsId = missingIds[i];
 
-      if (!newsId) {
-        console.warn(`No ItemId found for failed item at index ${i}`);
-        stillFailedCount++;
-        continue;
-      }
+      console.log(`Retrying ${i + 1}/${missingIds.length} - News ID: ${newsId}`);
 
-      console.log(`Retrying ${i + 1}/${failedItems.length} - News ID: ${newsId}`);
-
-      // Fetch detailed information
-      const detail = await fetchNewsDetail(newsId, i, failedItems.length);
+      const detail = await fetchNewsDetail(newsId, i, missingIds.length);
 
       if (detail) {
-        // Just add the detail to the list
         newsItems.push(detail);
         successCount++;
       } else {
         stillFailedCount++;
       }
 
-      // Add delay between requests
-      if (i < failedItems.length - 1) {
-        await delay(1000);
+      if (i < missingIds.length - 1) {
+        await delay(DELAY_MS);
       }
     }
 
-    // Save updated data - just the clean data structure
     const finalData = {
       total: newsItems.length,
       data: newsItems
     };
 
-    fs.writeFileSync(outputPath, JSON.stringify(finalData, null, 2));
+    await writeJsonFile(OUTPUT_FILE_PATH, finalData);
 
     console.log(`\n=== Retry Summary ===`);
-    console.log(`Items attempted to retry: ${failedItems.length}`);
+    console.log(`Items attempted to retry: ${missingIds.length}`);
     console.log(`Successfully retried: ${successCount}`);
     console.log(`Still failed: ${stillFailedCount}`);
-    console.log(`Total successful details: ${totalSuccessful}`);
-    console.log(`Total failed details: ${totalFailed}`);
-    console.log(`Updated data saved to: ${outputPath}`);
+    console.log(`Updated data saved to: ${OUTPUT_FILE_PATH}`);
 
   } catch (error) {
     console.error("Fatal error during retry:", error.message);

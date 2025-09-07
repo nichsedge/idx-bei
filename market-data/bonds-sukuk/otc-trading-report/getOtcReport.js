@@ -1,8 +1,11 @@
-import { fetchData } from "../../../utils/template.js";
+"use strict";
+
+import { fetchData } from "../../../fetchUtil.js";
 
 /**
  * Retrieves the OTC trading report for today.
  * @returns {Promise<string>} - A JSON string of the OTC trading report data for today.
+ * @throws {Error} If the request fails.
  */
 export async function getOtcReport() {
   const baseUrl = "https://www.idx.co.id/secondary/get/otc/lastreport/todayreport";
@@ -15,7 +18,9 @@ export async function getOtcReport() {
   const referrer = "https://www.idx.co.id/en/market-data/bonds-sukuk/otc-trading-report/";
 
   try {
-    const response = await fetchData(url, referrer);
+    const cacheOptions = { useCache: true, ttl: 5 * 60 * 1000 }; // 5 minutes
+    const retryOptions = { maxRetries: 3, baseDelay: 1000 };
+    const response = await fetchData(url, { headers: { referrer } }, cacheOptions, retryOptions);
     return JSON.stringify(response, null, 2);
   } catch (error) {
     console.error("Error fetching OTC trading report:", error.message);
