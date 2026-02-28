@@ -247,7 +247,7 @@ def ingest_all_stock_summaries(data_path="../data/companySummaryByKodeEmiten.jso
 
 if __name__ == "__main__":
     # Example usage:
-    # delete_all_data()
-    # ingest_all_stock_profiles()
+    delete_all_data()
+    ingest_all_stock_profiles()
     # ingest_all_stock_summaries()
     pass

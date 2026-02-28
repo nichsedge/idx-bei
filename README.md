@@ -44,7 +44,7 @@ uv sync
 Use Docker Compose to spin up a Neo4j instance:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 Neo4j will be available at:
 - Web UI: http://localhost:7474

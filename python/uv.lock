@@ -330,6 +330,49 @@ wheels = [
 ]
 
 [[package]]
+name = "idx-bei"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "arelle-release" },
+    { name = "curl-cffi" },
+    { name = "matplotlib" },
+    { name = "neo4j" },
+    { name = "psycopg2" },
+    { name = "scikit-learn" },
+    { name = "seaborn" },
+    { name = "sqlalchemy" },
+    { name = "tqdm" },
+    { name = "yfinance" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "ipykernel" },
+    { name = "nbformat" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "arelle-release", specifier = ">=2.37.33" },
+    { name = "curl-cffi", specifier = ">=0.7.4" },
+    { name = "matplotlib", specifier = ">=3.10.3" },
+    { name = "neo4j", specifier = ">=5.28.1" },
+    { name = "psycopg2" },
+    { name = "scikit-learn", specifier = ">=1.6.1" },
+    { name = "seaborn", specifier = ">=0.13.2" },
+    { name = "sqlalchemy", specifier = ">=2.0.41" },
+    { name = "tqdm", specifier = ">=4.67.1" },
+    { name = "yfinance", specifier = ">=0.2.59" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "ipykernel", specifier = ">=6.29.5" },
+    { name = "nbformat", specifier = ">=5.10.4" },
+]
+
+[[package]]
 name = "ipykernel"
 version = "6.29.5"
 source = { registry = "https://pypi.org/simple" }
@@ -858,49 +901,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/bb/22/f1129e69d94ffff626bdb5c835506b3a5b4f3d070f17ea295e12c2c6f60f/pyparsing-3.2.3.tar.gz", hash = "sha256:b9c13f1ab8b3b542f72e28f634bad4de758ab3ce4546e4301970ad6fa77c38be", size = 1088608, upload-time = "2025-03-25T05:01:28.114Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/05/e7/df2285f3d08fee213f2d041540fa4fc9ca6c2d44cf36d3a035bf2a8d2bcc/pyparsing-3.2.3-py3-none-any.whl", hash = "sha256:a749938e02d6fd0b59b356ca504a24982314bb090c383e3cf201c95ef7e2bfcf", size = 111120, upload-time = "2025-03-25T05:01:24.908Z" },
-]
-
-[[package]]
-name = "python"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "arelle-release" },
-    { name = "curl-cffi" },
-    { name = "matplotlib" },
-    { name = "neo4j" },
-    { name = "psycopg2" },
-    { name = "scikit-learn" },
-    { name = "seaborn" },
-    { name = "sqlalchemy" },
-    { name = "tqdm" },
-    { name = "yfinance" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "ipykernel" },
-    { name = "nbformat" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "arelle-release", specifier = ">=2.37.33" },
-    { name = "curl-cffi", specifier = ">=0.7.4" },
-    { name = "matplotlib", specifier = ">=3.10.3" },
-    { name = "neo4j", specifier = ">=5.28.1" },
-    { name = "psycopg2" },
-    { name = "scikit-learn", specifier = ">=1.6.1" },
-    { name = "seaborn", specifier = ">=0.13.2" },
-    { name = "sqlalchemy", specifier = ">=2.0.41" },
-    { name = "tqdm", specifier = ">=4.67.1" },
-    { name = "yfinance", specifier = ">=0.2.59" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "ipykernel", specifier = ">=6.29.5" },
-    { name = "nbformat", specifier = ">=5.10.4" },
 ]
 
 [[package]]
