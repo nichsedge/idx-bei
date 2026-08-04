@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Money & Network Alpha Finder</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Vis-Network for Graph Visualization -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-dark: #070a13;
+            --panel-bg: rgba(13, 20, 38, 0.7);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent-blue: #3b82f6;
+            --accent-blue-glow: rgba(59, 130, 246, 0.35);
+            --accent-green: #10b981;
+            --accent-green-glow: rgba(16, 185, 129, 0.35);
+            --accent-orange: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --accent-red: #ef4444;
+            --accent-gold: #fbbf24;
+            --transition-speed: 0.25s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        header {
+            background: rgba(7, 10, 19, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--panel-border);
+            padding: 1.25rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-container i {
+            font-size: 1.75rem;
+            color: var(--accent-blue);
+            text-shadow: 0 0 12px var(--accent-blue-glow);
+        }
+
+        .logo-container h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 0%, #9bc2ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-container span {
+            font-size: 0.75rem;
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            font-weight: 500;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.6rem 1.1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .nav-btn.active {
+            color: #ffffff;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
+        }
+
+        .main-container {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1600px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Tabs Panels */
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Glassmorphic Cards */
+        .glass-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Market Stats Row */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-icon.blue { background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); border: 1px solid rgba(59, 130, 246, 0.2); }
+        .stat-icon.green { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .stat-icon.purple { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); border: 1px solid rgba(139, 92, 246, 0.2); }
+        .stat-icon.orange { background: rgba(245, 158, 11, 0.15); color: var(--accent-orange); border: 1px solid rgba(245, 158, 11, 0.2); }
+
+        .stat-info h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-info p {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* Filter Controls */
+        .filter-bar {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(13, 20, 38, 0.8);
+            border: 1px solid var(--panel-border);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 10px var(--accent-blue-glow);
+        }
+
+        select.form-control {
+            padding-left: 1rem;
+            cursor: pointer;
+        }
+
+        /* Custom Table Design */
+        .table-container {
+            overflow-x: auto;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            padding: 1rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            border-bottom: 1px solid var(--panel-border);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.95rem;
+            vertical-align: middle;
+            color: var(--text-primary);
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+        }
+
+        .ticker-badge {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .company-name-cell {
+            font-weight: 500;
+        }
+
+        .score-badge {
+            font-weight: 700;
+            padding: 0.35rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-badge.high { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .score-badge.medium { background: rgba(245, 158, 11, 0.15); color: var(--accent-orange); border: 1px solid rgba(245, 158, 11, 0.3); }
+        .score-badge.low { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        .numeric {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+
+        /* Layout with Main View and Detail Drawer */
+        .workspace {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .workspace-main {
+            flex: 2;
+            min-width: 0;
+        }
+
+        .workspace-detail {
+            flex: 1;
+            position: sticky;
+            top: 6rem;
+            max-height: calc(100vh - 8rem);
+            overflow-y: auto;
+            display: none; /* Shown dynamically when item clicked */
+        }
+
+        .workspace-detail.active {
+            display: block;
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Detail Card Header */
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 1.25rem;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        .close-btn:hover {
+            color: var(--text-primary);
+        }
+
+        /* Detail Breakdown Metrics */
+        .metrics-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-mini-card {
+            background: rgba(13, 20, 38, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        .metric-mini-card span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-mini-card p {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .metric-mini-card p.positive { color: var(--accent-green); }
+        .metric-mini-card p.warning { color: var(--accent-orange); }
+        .metric-mini-card p.negative { color: var(--accent-red); }
+
+        /* Score breakdowns */
+        .score-breakdown {
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.015);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .score-breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .score-breakdown-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .progress-bar-container {
+            width: 120px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .progress-bar.financial { background: var(--accent-blue); }
+        .progress-bar.valuation { background: var(--accent-orange); }
+        .progress-bar.network { background: var(--accent-purple); }
+
+        /* Vis.js network container */
+        .network-graph-container {
+            width: 100%;
+            height: 380px;
+            background: rgba(7, 10, 19, 0.9);
+            border: 1px solid var(--panel-border);
+            border-radius: 12px;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .graph-legend {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(7, 10, 19, 0.85);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.7rem;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.company { background: #3b82f6; }
+        .legend-dot.insider { background: #10b981; }
+        .legend-dot.subsidiary { background: #8b5cf6; }
+
+        /* Accordion lists inside detail card */
+        .accordion-section {
+            margin-top: 1.5rem;
+        }
+
+        .accordion-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-content {
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .accordion-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .sub-role {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        /* Insiders View */
+        .insiders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .insider-card {
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .insider-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-green);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.08);
+        }
+
+        .insider-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .insider-card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .insider-value {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-green);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .insider-holdings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .insider-holding-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        /* Conglomerates View */
+        .conglom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .conglom-card {
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        .conglom-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.75rem;
+        }
+
+        .conglom-header h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .conglom-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.75rem;
+        }
+
+        /* Methodology */
+        .methodology-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .methodology-section {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .methodology-section h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 0.75rem;
+        }
+
+        .methodology-section h2 i {
+            color: var(--accent-blue);
+        }
+
+        .methodology-section p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .factor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .factor-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            padding: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .factor-score {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+            font-weight: 700;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+        
+        .factor-score.valuation {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-orange);
+        }
+
+        .factor-score.network {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent-purple);
+        }
+
+        .factor-details h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .factor-details ul {
+            margin-top: 0.5rem;
+            padding-left: 1.25rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .factor-details li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Error Banner */
+        .error-banner {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: var(--text-primary);
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+            text-align: center;
+            max-width: 600px;
+            margin: 4rem auto;
+        }
+
+        .error-banner i {
+            font-size: 2.5rem;
+            color: var(--accent-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .error-banner code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            margin-top: auto;
+            border-top: 1px solid var(--panel-border);
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        /* Scrollbar styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <i class="fa-solid fa-circle-nodes"></i>
+            <h1>Smart Money & Network Alpha Finder</h1>
+            <span>IDX/BEI Edition</span>
+        </div>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('screener')">
+                <i class="fa-solid fa-filter-list"></i> Stock Screener
+            </button>
+            <button class="nav-btn" onclick="switchTab('insiders')">
+                <i class="fa-solid fa-user-tie"></i> Super Insiders
+            </button>
+            <button class="nav-btn" onclick="switchTab('conglomerates')">
+                <i class="fa-solid fa-sitemap"></i> Conglomerates
+            </button>
+            <button class="nav-btn" onclick="switchTab('methodology')">
+                <i class="fa-solid fa-book-bookmark"></i> Methodology
+            </button>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <!-- Error Banner if Data Missing -->
+        <div id="errorBanner" class="error-banner">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h2>Dashboard Data Missing or Empty</h2>
+            <p>We couldn't load the processed analysis file at <code>data/network_alpha_data.json</code>.</p>
+            <p>Please run the python pipeline script from your terminal to generate the data:</p>
+            <p><code>uv run python/analyze_network_alpha.py</code></p>
+        </div>
+
+        <div id="dashboardContent" style="display: none;">
+            
+            <!-- SCREENER TAB -->
+            <div id="screenerTab" class="tab-panel active">
+                
+                <!-- Stats Row -->
+                <div class="stats-grid">
+                    <div class="glass-card stat-card">
+                        <div class="stat-icon blue"><i class="fa-solid fa-building"></i></div>
+                        <div class="stat-info">
+                            <h3>Total Screened</h3>
+                            <p id="statTotalCompanies">0</p>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <div class="stat-icon green"><i class="fa-solid fa-chart-line-up"></i></div>
+                        <div class="stat-info">
+                            <h3>Avg Profit Margin</h3>
+                            <p id="statAvgNpm">0.0%</p>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <div class="stat-icon purple"><i class="fa-solid fa-circle-nodes"></i></div>
+                        <div class="stat-info">
+                            <h3>Overlapping Board Nodes</h3>
+                            <p id="statTotalBridges">0</p>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <div class="stat-icon orange"><i class="fa-solid fa-gem"></i></div>
+                        <div class="stat-info">
+                            <h3>Top Rated Stock</h3>
+                            <p id="statTopStock">N/A</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workspace">
+                    
+                    <!-- Screener Table Column -->
+                    <div class="workspace-main glass-card">
+                        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-bolt" style="color: var(--accent-gold);"></i> Smart Money Synergy Screener
+                        </h2>
+                        
+                        <div class="filter-bar">
+                            <div class="input-group">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="searchBar" class="form-control" placeholder="Search by ticker or name..." onkeyup="filterScreenerTable()">
+                            </div>
+                            <div>
+                                <select id="sectorFilter" class="form-control" onchange="filterScreenerTable()">
+                                    <option value="">All Sectors</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select id="scoreFilter" class="form-control" onchange="filterScreenerTable()">
+                                    <option value="">All Scores</option>
+                                    <option value="high">High (>70 SMSS)</option>
+                                    <option value="medium">Medium (45-70 SMSS)</option>
+                                    <option value="low">Low (<45 SMSS)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select id="valuationFilter" class="form-control" onchange="filterScreenerTable()">
+                                    <option value="">All Valuations</option>
+                                    <option value="undervalued">Undervalued (PBV < 1.0)</option>
+                                    <option value="pe15">Reasonable PE (PE < 15)</option>
+                                    <option value="profitable">High Profit (ROE > 15%)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="table-container">
+                            <table id="screenerTable">
+                                <thead>
+                                    <tr>
+                                        <th>Ticker</th>
+                                        <th>Company Name</th>
+                                        <th>Sector</th>
+                                        <th>ROE</th>
+                                        <th>PE</th>
+                                        <th>PBV</th>
+                                        <th>D/E</th>
+                                        <th>SMSS Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="screenerTableBody">
+                                    <!-- Dynamic rows loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Company Detail Drawer Column -->
+                    <div id="detailDrawer" class="workspace-detail glass-card">
+                        <div class="detail-header">
+                            <div>
+                                <span class="ticker-badge" id="detailTicker">AADI</span>
+                                <h2 id="detailName" style="font-size: 1.25rem; font-weight: 700; margin-top: 0.5rem;">PT Adaro Andalan Indonesia Tbk</h2>
+                                <p id="detailSector" style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.15rem;">Energy / Coal</p>
+                            </div>
+                            <button class="close-btn" onclick="closeDetailDrawer()"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+
+                        <!-- 3 Mini cards for top financials -->
+                        <div class="metrics-summary-grid">
+                            <div class="metric-mini-card">
+                                <span>ROE</span>
+                                <p id="detailRoe">0.0%</p>
+                            </div>
+                            <div class="metric-mini-card">
+                                <span>P/E Ratio</span>
+                                <p id="detailPe">0.0</p>
+                            </div>
+                            <div class="metric-mini-card">
+                                <span>Price / Book</span>
+                                <p id="detailPbv">0.0</p>
+                            </div>
+                        </div>
+
+                        <!-- Score breakdown -->
+                        <div class="score-breakdown">
+                            <h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; display: flex; justify-content: space-between;">
+                                <span>SMSS Score Breakdown</span>
+                                <span id="detailTotalScore" style="color: var(--accent-gold); font-weight: 800;">85 / 100</span>
+                            </h3>
+                            
+                            <div class="score-breakdown-row">
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Financial Health (40)</span>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 0.85rem; font-family: monospace;" id="detailScoreFinancial">35</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar financial" id="detailBarFinancial" style="width: 85%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="score-breakdown-row">
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Valuation Discount (30)</span>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 0.85rem; font-family: monospace;" id="detailScoreValuation">25</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar valuation" id="detailBarValuation" style="width: 83%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="score-breakdown-row">
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Network Leverage (30)</span>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 0.85rem; font-family: monospace;" id="detailScoreNetwork">25</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar network" id="detailBarNetwork" style="width: 83%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vis.js network graph -->
+                        <h3 style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1.5rem;">
+                            Corporate Relationship Graph
+                        </h3>
+                        <div class="network-graph-container" id="networkGraph">
+                            <div class="graph-legend">
+                                <div class="legend-item"><span class="legend-dot company"></span> Company</div>
+                                <div class="legend-item"><span class="legend-dot insider"></span> Insider</div>
+                                <div class="legend-item"><span class="legend-dot subsidiary"></span> Subsidiary</div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion for board members and shareholders -->
+                        <div class="accordion-section">
+                            <div class="accordion-header">
+                                <span>Board & Executive Roster</span>
+                                <span id="detailBoardCount" style="font-size: 0.8rem; background: rgba(255, 255, 255, 0.05); padding: 0.1rem 0.4rem; border-radius: 4px;">0</span>
+                            </div>
+                            <div class="accordion-content" id="detailBoardList">
+                                <!-- Dynamic roster items -->
+                            </div>
+                        </div>
+
+                        <div class="accordion-section">
+                            <div class="accordion-header">
+                                <span>Top Registered Shareholders</span>
+                                <span id="detailShareholdersCount" style="font-size: 0.8rem; background: rgba(255, 255, 255, 0.05); padding: 0.1rem 0.4rem; border-radius: 4px;">0</span>
+                            </div>
+                            <div class="accordion-content" id="detailShareholdersList">
+                                <!-- Dynamic shareholder items -->
+                            </div>
+                        </div>
+
+                        <div class="accordion-section" id="detailSubsidiariesSection">
+                            <div class="accordion-header">
+                                <span>Corporate Subsidiaries</span>
+                                <span id="detailSubsidiariesCount" style="font-size: 0.8rem; background: rgba(255, 255, 255, 0.05); padding: 0.1rem 0.4rem; border-radius: 4px;">0</span>
+                            </div>
+                            <div class="accordion-content" id="detailSubsidiariesList">
+                                <!-- Dynamic subsidiary items -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- INSIDERS TAB -->
+            <div id="insidersTab" class="tab-panel">
+                <div class="glass-card" style="margin-bottom: 2rem;">
+                    <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-user-shield" style="color: var(--accent-green);"></i> Super Insider Tracker (Retail Tycoons)
+                    </h2>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); max-width: 900px;">
+                        This list identifies individual high-net-worth investors (excluding corporate proxies, government agencies, and bank nominees) 
+                        holding significant stakes in multiple listed companies. We estimate their portfolio values based on company equity valuations.
+                    </p>
+                </div>
+
+                <div class="insiders-grid" id="insidersGrid">
+                    <!-- Dynamic insider cards loaded here -->
+                </div>
+            </div>
+
+            <!-- CONGLOMERATES TAB -->
+            <div id="conglomeratesTab" class="tab-panel">
+                <div class="glass-card" style="margin-bottom: 2rem;">
+                    <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-diagram-nested" style="color: var(--accent-purple);"></i> Corporate Conglomerates & Ownership Clusters
+                    </h2>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); max-width: 900px;">
+                        Conglomerates represent networks of multiple public companies sharing a single ultimate controlling corporate shareholder. 
+                        We measure the aggregate financial strength of the group by taking assets and median profitability.
+                    </p>
+                </div>
+
+                <div class="conglom-grid" id="conglomGrid">
+                    <!-- Dynamic conglomerate cards loaded here -->
+                </div>
+            </div>
+
+            <!-- METHODOLOGY TAB -->
+            <div id="methodologyTab" class="tab-panel">
+                <div class="methodology-container">
+                    <div class="methodology-section">
+                        <h2><i class="fa-solid fa-calculator"></i> Smart Money Synergy Score (SMSS)</h2>
+                        <p>
+                            The SMSS is a quantitative rating out of 100 points developed to identify high-probability, undervalued companies 
+                            supported by strong corporate governance, interlocking board networks, and legendary investor alignments.
+                        </p>
+                        <p>
+                            Traditional stock screening processes look at financial statistics in isolation. In emerging stock exchanges like the IDX, 
+                            who runs the company, who sits on the board, and which tycoon owns the float are often as critical as current earnings.
+                        </p>
+                    </div>
+
+                    <div class="methodology-section">
+                        <h2><i class="fa-solid fa-list-check"></i> Score Weights and Criteria</h2>
+                        <div class="factor-list">
+                            <div class="factor-item">
+                                <div class="factor-score">40</div>
+                                <div class="factor-details">
+                                    <h4>Financial Quality & Solvency (Max 40 points)</h4>
+                                    <p>Screens for fundamental strength, high margins, and conservative leverage:</p>
+                                    <ul>
+                                        <li><strong>Return on Equity (ROE)</strong>: ROE &ge; 20% (+15 pts), &ge; 15% (+10 pts), &ge; 10% (+5 pts). ROE &lt; 0% deducts 10 pts.</li>
+                                        <li><strong>Debt-to-Equity (D/E) Ratio</strong>: Conservative debt level. D/E &le; 0.5 (+15 pts), &le; 1.0 (+10 pts), &le; 2.0 (+5 pts).</li>
+                                        <li><strong>Net Profit Margin (NPM)</strong>: High pricing power. NPM &ge; 20% (+10 pts), &ge; 10% (+7 pts), &ge; 5% (+3 pts).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="factor-item">
+                                <div class="factor-score valuation">30</div>
+                                <div class="factor-details">
+                                    <h4>Valuation Discounts (Max 30 points)</h4>
+                                    <p>Ensures that you are buying quality at a reasonable price, avoiding overpriced growth traps:</p>
+                                    <ul>
+                                        <li><strong>Price-to-Earnings (P/E) Ratio</strong>: Positive P/E &lt; 10 (+15 pts), 10 to 15 (+10 pts), 15 to 25 (+5 pts).</li>
+                                        <li><strong>Price-to-Book (P/B) Ratio</strong>: Asset discount. PBV &lt; 1.0 (+15 pts), 1.0 to 1.5 (+10 pts), 1.5 to 3.0 (+5 pts).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="factor-item">
+                                <div class="factor-score network">30</div>
+                                <div class="factor-details">
+                                    <h4>Network Leverage & Insiders (Max 30 points)</h4>
+                                    <p>Measures corporate governance quality, network synergy, and insider alignment:</p>
+                                    <ul>
+                                        <li><strong>Blue-Chip Bridge (+12 points)</strong>: Added if a company shares at least one director or commissioner with a Blue Chip company (like BBCA, ASII, TLKM). Serves as a proxy for talent pool and board pedigree.</li>
+                                        <li><strong>Super-Insider Conviction (+10 points)</strong>: Added if an individual retail tycoon (e.g. Lo Kheng Hong) holds &ge; 1.0% stake. Retail billionaires usually perform intensive research and verify management integrity before investing.</li>
+                                        <li><strong>Conglomerate Synergy (+8 points)</strong>: Added if a company is controlled by an active conglomerate group whose member firms have a median ROE &ge; 15% (showing strong operational management at group level).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Smart Money & Network Alpha Finder &copy; 2026. Made for IDX-BEI investment research. Always perform your own due diligence.</p>
+    </footer>
+
+    <script>
+        // Global variables for dashboard data
+        let dashboardData = {
+            companies: [],
+            super_insiders: [],
+            conglomerates: []
+        };
+        let activeTab = 'screener';
+        let visNetworkInstance = null;
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            loadDashboardData();
+        });
+
+        // Load data from JSON file
+        function loadDashboardData() {
+            fetch('data/network_alpha_data.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('File not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    dashboardData = data;
+                    
+                    // Show dashboard content and hide error banner
+                    document.getElementById('dashboardContent').style.display = 'block';
+                    document.getElementById('errorBanner').style.display = 'none';
+                    
+                    // Render screener stats and table
+                    initScreenerTab();
+                    
+                    // Render other tabs
+                    initInsidersTab();
+                    initConglomeratesTab();
+                })
+                .catch(error => {
+                    console.error("Error loading dashboard dataset:", error);
+                    document.getElementById('dashboardContent').style.display = 'none';
+                    document.getElementById('errorBanner').style.display = 'flex';
+                });
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Hide all tab panels
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            // Remove active class from nav buttons
+            document.querySelectorAll('nav .nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Activate select panel and button
+            document.getElementById(tabId + 'Tab').classList.add('active');
+            
+            // Find nav button
+            const navButtons = document.querySelectorAll('nav .nav-btn');
+            navButtons.forEach(btn => {
+                if (btn.innerText.toLowerCase().includes(tabId === 'screener' ? 'screener' : tabId === 'insiders' ? 'insiders' : tabId === 'conglomerates' ? 'conglomerates' : 'methodology')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            activeTab = tabId;
+        }
+
+        // --- SCREENER LOGIC ---
+        function initScreenerTab() {
+            // Update stats
+            document.getElementById('statTotalCompanies').innerText = dashboardData.companies.length;
+            
+            // Calculate Average NPM
+            let npms = dashboardData.companies.map(c => c.npm).filter(n => n > 0);
+            let avgNpm = npms.length ? (npms.reduce((a, b) => a + b, 0) / npms.length).toFixed(1) + '%' : '0.0%';
+            document.getElementById('statAvgNpm').innerText = avgNpm;
+
+            // Calculate total directorship/commissioner bridges
+            let bridgeCount = 0;
+            dashboardData.companies.forEach(c => {
+                bridgeCount += c.shared_directors ? c.shared_directors.length : 0;
+            });
+            document.getElementById('statTotalBridges').innerText = bridgeCount;
+
+            // Top stock
+            if (dashboardData.companies.length > 0) {
+                document.getElementById('statTopStock').innerText = `${dashboardData.companies[0].code} (${dashboardData.companies[0].score.total.toFixed(0)} pts)`;
+            }
+
+            // Fill Sector Filter dropdown
+            const sectors = [...new Set(dashboardData.companies.map(c => c.sector).filter(Boolean))].sort();
+            const sectorFilter = document.getElementById('sectorFilter');
+            sectorFilter.innerHTML = '<option value="">All Sectors</option>';
+            sectors.forEach(s => {
+                sectorFilter.innerHTML += `<option value="${s}">${s}</option>`;
+            });
+
+            // Populate Table
+            renderScreenerTable(dashboardData.companies);
+        }
+
+        function renderScreenerTable(companies) {
+            const tableBody = document.getElementById('screenerTableBody');
+            tableBody.innerHTML = '';
+
+            companies.forEach(c => {
+                const tr = document.createElement('tr');
+                tr.onclick = () => showCompanyDetails(c.code);
+                
+                // Score class
+                let scoreClass = 'low';
+                if (c.score.total >= 70) scoreClass = 'high';
+                else if (c.score.total >= 45) scoreClass = 'medium';
+
+                tr.innerHTML = `
+                    <td><span class="ticker-badge">${c.code}</span></td>
+                    <td class="company-name-cell">${c.name}</td>
+                    <td style="color: var(--text-secondary); font-size: 0.85rem;">${c.sector}</td>
+                    <td class="numeric ${c.roe >= 15 ? 'positive' : c.roe < 0 ? 'negative' : ''}">${c.roe ? c.roe.toFixed(1) + '%' : '-'}</td>
+                    <td class="numeric">${c.per ? c.per.toFixed(1) : '-'}</td>
+                    <td class="numeric">${c.price_bv ? c.price_bv.toFixed(2) : '-'}</td>
+                    <td class="numeric">${c.de_ratio ? c.de_ratio.toFixed(2) : '-'}</td>
+                    <td><span class="score-badge ${scoreClass}">${c.score.total.toFixed(0)}</span></td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function filterScreenerTable() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const sector = document.getElementById('sectorFilter').value;
+            const scoreFilter = document.getElementById('scoreFilter').value;
+            const valuationFilter = document.getElementById('valuationFilter').value;
+
+            let filtered = dashboardData.companies.filter(c => {
+                // Name / Ticker match
+                const matchSearch = c.code.toLowerCase().includes(query) || c.name.toLowerCase().includes(query);
+                // Sector match
+                const matchSector = sector === '' || c.sector === sector;
+                // Score match
+                let matchScore = true;
+                if (scoreFilter === 'high') matchScore = c.score.total >= 70;
+                else if (scoreFilter === 'medium') matchScore = c.score.total >= 45 && c.score.total < 70;
+                else if (scoreFilter === 'low') matchScore = c.score.total < 45;
+                // Valuation/Quality match
+                let matchVal = true;
+                if (valuationFilter === 'undervalued') matchVal = c.price_bv > 0 && c.price_bv < 1.0;
+                else if (valuationFilter === 'pe15') matchVal = c.per > 0 && c.per < 15.0;
+                else if (valuationFilter === 'profitable') matchVal = c.roe >= 15.0;
+
+                return matchSearch && matchSector && matchScore && matchVal;
+            });
+
+            renderScreenerTable(filtered);
+        }
+
+        // --- COMPANY DETAIL LOGIC ---
+        function showCompanyDetails(code) {
+            const c = dashboardData.companies.find(comp => comp.code === code);
+            if (!c) return;
+
+            // Set detail drawer active
+            document.getElementById('detailDrawer').classList.add('active');
+
+            // Set Header and quick details
+            document.getElementById('detailTicker').innerText = c.code;
+            document.getElementById('detailName').innerText = c.name;
+            document.getElementById('detailSector').innerText = `${c.sector} / ${c.sub_sector || c.industry}`;
+            document.getElementById('detailRoe').innerText = c.roe ? c.roe.toFixed(1) + '%' : '-';
+            document.getElementById('detailPe').innerText = c.per ? c.per.toFixed(1) : '-';
+            document.getElementById('detailPbv').innerText = c.price_bv ? c.price_bv.toFixed(2) : '-';
+
+            // Add conditional colors for mini metrics
+            toggleMetricColor('detailRoe', c.roe, 15, 0);
+            toggleMetricColor('detailPe', c.per, 0, 25, true); // Low PE is good
+            toggleMetricColor('detailPbv', c.price_bv, 0, 1.5, true); // Low PBV is good
+
+            // Score breakdown
+            document.getElementById('detailTotalScore').innerText = `${c.score.total.toFixed(0)} / 100`;
+            document.getElementById('detailScoreFinancial').innerText = c.score.financial.toFixed(0);
+            document.getElementById('detailScoreValuation').innerText = c.score.valuation.toFixed(0);
+            document.getElementById('detailScoreNetwork').innerText = c.score.network.toFixed(0);
+
+            document.getElementById('detailBarFinancial').style.width = `${(c.score.financial / 40) * 100}%`;
+            document.getElementById('detailBarValuation').style.width = `${(c.score.valuation / 30) * 100}%`;
+            document.getElementById('detailBarNetwork').style.width = `${(c.score.network / 30) * 100}%`;
+
+            // Populate Board List
+            const boardList = document.getElementById('detailBoardList');
+            boardList.innerHTML = '';
+            document.getElementById('detailBoardCount').innerText = c.board_members.length;
+            c.board_members.forEach(b => {
+                boardList.innerHTML += `
+                    <div class="accordion-item">
+                        <span style="font-weight: 500;">${b.name}</span>
+                        <span class="sub-role" style="background: ${b.role === 'Director' ? 'rgba(59, 130, 246, 0.15)' : 'rgba(245, 158, 11, 0.15)'}; color: ${b.role === 'Director' ? 'var(--accent-blue)' : 'var(--accent-orange)'};">
+                            ${b.title || b.role}
+                        </span>
+                    </div>
+                `;
+            });
+
+            // Populate Shareholders List
+            const shList = document.getElementById('detailShareholdersList');
+            shList.innerHTML = '';
+            document.getElementById('detailShareholdersCount').innerText = c.shareholders.length;
+            c.shareholders.forEach(s => {
+                shList.innerHTML += `
+                    <div class="accordion-item">
+                        <span style="font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px;">${s.name}</span>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            ${s.is_controller ? '<span style="font-size: 0.65rem; color: var(--accent-gold); border: 1px solid rgba(251, 191, 36, 0.3); padding: 0.05rem 0.25rem; border-radius: 3px;">Controller</span>' : ''}
+                            <span class="numeric" style="font-weight:600;">${s.percentage.toFixed(2)}%</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Populate Subsidiaries List
+            const subsList = document.getElementById('detailSubsidiariesList');
+            subsList.innerHTML = '';
+            document.getElementById('detailSubsidiariesCount').innerText = c.subsidiaries.length;
+            if (c.subsidiaries.length > 0) {
+                document.getElementById('detailSubsidiariesSection').style.display = 'block';
+                c.subsidiaries.forEach(sub => {
+                    subsList.innerHTML += `
+                        <div class="accordion-item">
+                            <span style="font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px;">${sub.name}</span>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 0.7rem; color: var(--text-secondary); font-style: italic;">${sub.bidang_usaha || 'Subsidiary'}</span>
+                                <span class="numeric" style="font-weight:600;">${sub.percentage.toFixed(1)}%</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                document.getElementById('detailSubsidiariesSection').style.display = 'none';
+            }
+
+            // Draw Vis.js network graph
+            drawCompanyNetworkGraph(c);
+        }
+
+        function closeDetailDrawer() {
+            document.getElementById('detailDrawer').classList.remove('active');
+        }
+
+        function toggleMetricColor(elementId, value, highVal, lowVal, inverse = false) {
+            const el = document.getElementById(elementId);
+            el.className = ''; // Reset class
+            
+            if (value === null || value === undefined || value === 0) return;
+            
+            if (!inverse) {
+                if (value >= highVal) el.classList.add('positive');
+                else if (value < lowVal) el.classList.add('negative');
+            } else {
+                // For PE, lower positive values are good, negative values are bad
+                if (value > 0 && value <= 12) el.classList.add('positive');
+                else if (value > 25 || value <= 0) el.classList.add('negative');
+            }
+        }
+
+        // Draw interactive network graph
+        function drawCompanyNetworkGraph(company) {
+            const container = document.getElementById('networkGraph');
+            
+            // Build vis network nodes and edges
+            let nodes = [];
+            let edges = [];
+            
+            // 1. Center Company Node
+            nodes.push({
+                id: company.code,
+                label: company.code,
+                title: company.name,
+                shape: 'dot',
+                size: 25,
+                color: {
+                    background: '#3b82f6',
+                    border: '#ffffff',
+                    highlight: { background: '#60a5fa', border: '#ffffff' }
+                },
+                shadow: { enabled: true, color: 'rgba(59, 130, 246, 0.4)', size: 10 }
+            });
+
+            // Limit elements to prevent cluttered display
+            const maxElements = 15;
+            
+            // 2. Add Board Members
+            const boardToShow = company.board_members.slice(0, 6);
+            boardToShow.forEach(b => {
+                const nodeId = `board_${b.name}`;
+                // Avoid duplicates
+                if (!nodes.find(n => n.id === nodeId)) {
+                    nodes.push({
+                        id: nodeId,
+                        label: b.name.split(' ').slice(0, 2).join(' '), // Keep names short
+                        title: `${b.name} (${b.title || b.role})`,
+                        shape: 'dot',
+                        size: 15,
+                        color: {
+                            background: '#10b981',
+                            border: '#070a13',
+                            highlight: { background: '#34d399', border: '#ffffff' }
+                        }
+                    });
+                }
+                
+                edges.push({
+                    from: nodeId,
+                    to: company.code,
+                    label: b.role === 'Director' ? 'Dir' : 'Comm',
+                    color: { color: 'rgba(16, 185, 129, 0.4)', highlight: '#10b981' },
+                    font: { size: 9, color: 'var(--text-secondary)', strokeWidth: 0 },
+                    width: 1.5
+                });
+            });
+
+            // 3. Add Major Shareholders
+            const shToShow = company.shareholders.slice(0, 4);
+            shToShow.forEach(s => {
+                const nodeId = `sh_${s.name}`;
+                const isCorp = isCorporateName(s.name);
+                
+                if (!nodes.find(n => n.id === nodeId)) {
+                    nodes.push({
+                        id: nodeId,
+                        label: s.name.split(' ').slice(0, 2).join(' '),
+                        title: s.name,
+                        shape: 'dot',
+                        size: isCorp ? 18 : 14,
+                        color: {
+                            background: isCorp ? '#8b5cf6' : '#f59e0b',
+                            border: '#070a13',
+                            highlight: { background: isCorp ? '#a78bfa' : '#fbbf24', border: '#ffffff' }
+                        }
+                    });
+                }
+                
+                edges.push({
+                    from: nodeId,
+                    to: company.code,
+                    label: `${s.percentage.toFixed(0)}%`,
+                    color: { color: isCorp ? 'rgba(139, 92, 246, 0.4)' : 'rgba(245, 158, 11, 0.4)', highlight: '#fbbf24' },
+                    font: { size: 9, color: 'var(--text-secondary)', strokeWidth: 0 },
+                    width: 2
+                });
+            });
+
+            // 4. Add Subsidiaries
+            const subsToShow = company.subsidiaries.slice(0, 3);
+            subsToShow.forEach(sub => {
+                const nodeId = `sub_${sub.name}`;
+                if (!nodes.find(n => n.id === nodeId)) {
+                    nodes.push({
+                        id: nodeId,
+                        label: sub.name.split(' ').slice(0, 2).join(' '),
+                        title: `${sub.name} (Subsidiary: ${sub.bidang_usaha})`,
+                        shape: 'dot',
+                        size: 14,
+                        color: {
+                            background: '#ec4899',
+                            border: '#070a13',
+                            highlight: { background: '#f472b6', border: '#ffffff' }
+                        }
+                    });
+                }
+                
+                edges.push({
+                    from: company.code,
+                    to: nodeId,
+                    label: `${sub.percentage.toFixed(0)}%`,
+                    color: { color: 'rgba(236, 72, 153, 0.4)', highlight: '#ec4899' },
+                    font: { size: 9, color: 'var(--text-secondary)', strokeWidth: 0 },
+                    width: 1.5
+                });
+            });
+
+            // Check if any board member bridges to another listed company (cross connections)
+            company.shared_directors.forEach(sd => {
+                const nodeId = `board_${sd.insider_name}`;
+                sd.connected_to.forEach(otherCode => {
+                    // Check if other company is in our database, to link to it
+                    const otherComp = dashboardData.companies.find(comp => comp.code === otherCode);
+                    if (otherComp) {
+                        // Add company node if not present
+                        if (!nodes.find(n => n.id === otherCode)) {
+                            nodes.push({
+                                id: otherCode,
+                                label: otherCode,
+                                title: otherComp.name,
+                                shape: 'dot',
+                                size: 20,
+                                color: {
+                                    background: 'rgba(59, 130, 246, 0.4)',
+                                    border: 'rgba(255,255,255,0.2)'
+                                }
+                            });
+                        }
+                        
+                        // Add edge from director to other company
+                        edges.push({
+                            from: nodeId,
+                            to: otherCode,
+                            color: { color: 'rgba(255, 255, 255, 0.15)', highlight: '#3b82f6' },
+                            width: 1,
+                            style: 'dash'
+                        });
+                    }
+                });
+            });
+
+            // Vis.js data structure
+            const graphData = {
+                nodes: new vis.DataSet(nodes),
+                edges: new vis.DataSet(edges)
+            };
+
+            // Physics configurations
+            const options = {
+                physics: {
+                    solver: 'forceAtlas2Based',
+                    forceAtlas2Based: {
+                        gravitationalConstant: -50,
+                        centralGravity: 0.01,
+                        springLength: 80,
+                        springConstant: 0.08
+                    },
+                    stabilization: { iterations: 150, updateInterval: 25 }
+                },
+                interaction: {
+                    hover: true,
+                    tooltipDelay: 200
+                },
+                nodes: {
+                    font: { size: 10, color: '#f3f4f6', face: 'Outfit' }
+                }
+            };
+
+            // Create Network instance
+            if (visNetworkInstance) {
+                visNetworkInstance.destroy();
+            }
+            visNetworkInstance = new vis.Network(container, graphData, options);
+
+            // Add click listener to switch focus to other companies in the graph
+            visNetworkInstance.on("click", function(params) {
+                if (params.nodes.length > 0) {
+                    const clickedId = params.nodes[0];
+                    // If it is a company code (4 character uppercase)
+                    if (clickedId.length === 4 && clickedId === clickedId.toUpperCase()) {
+                        showCompanyDetails(clickedId);
+                        // Highlight selected row in table
+                        highlightScreenerTableRow(clickedId);
+                    }
+                }
+            });
+        }
+
+        function highlightScreenerTableRow(code) {
+            const rows = document.querySelectorAll('#screenerTableBody tr');
+            rows.forEach(r => {
+                const badge = r.querySelector('.ticker-badge');
+                if (badge && badge.innerText === code) {
+                    r.style.background = 'rgba(59, 130, 246, 0.08)';
+                    r.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    r.style.background = '';
+                }
+            });
+        }
+
+        function isCorporateName(name) {
+            if (!name) return false;
+            const nameUpper = name.toUpperCase();
+            const keywords = [
+                "PT", "LTD", "LIMITED", "INC", "TBK", "MASYARAKAT", "SAHAM", "PENGENDALI", 
+                "REPUBLIK", "FUND", "TRUST", "NOMINEES", "BANK", "ASSET", "CORP", "CO",
+                "INVESTMENT", "HOLDINGS", "CAPITAL", "SECURITIES"
+            ];
+            return keywords.some(keyword => nameUpper.includes(keyword));
+        }
+
+        // --- INSIDERS LOGIC ---
+        function initInsidersTab() {
+            const container = document.getElementById('insidersGrid');
+            container.innerHTML = '';
+
+            // Render top 15 insiders
+            const topInsiders = dashboardData.super_insiders.slice(0, 15);
+            
+            topInsiders.forEach(ins => {
+                const card = document.createElement('div');
+                card.className = 'glass-card insider-card';
+                card.onclick = () => {
+                    // Switch to screener tab and show the first holding details
+                    if (ins.holdings.length > 0) {
+                        switchTab('screener');
+                        showCompanyDetails(ins.holdings[0].code);
+                        highlightScreenerTableRow(ins.holdings[0].code);
+                    }
+                };
+
+                // Format holdings list
+                let holdingsHtml = '';
+                ins.holdings.forEach(h => {
+                    holdingsHtml += `
+                        <div class="insider-holding-item">
+                            <span><span class="ticker-badge" style="font-size:0.75rem; padding: 0.1rem 0.3rem;">${h.code}</span> stake</span>
+                            <span class="numeric" style="font-weight:600;">${h.percentage.toFixed(2)}% (${formatCurrency(h.value)})</span>
+                        </div>
+                    `;
+                });
+
+                // Format roles
+                let rolesHtml = '';
+                if (ins.connected_roles && ins.connected_roles.length > 0) {
+                    rolesHtml = `<div style="margin-top:0.75rem; display:flex; gap:6px; flex-wrap:wrap;">`;
+                    ins.connected_roles.forEach(r => {
+                        rolesHtml += `<span class="sub-role" style="font-size:0.7rem; background:rgba(16, 185, 129, 0.1); color:var(--accent-green); border:1px solid rgba(16, 185, 129, 0.2);">${r.code}: ${r.title}</span>`;
+                    });
+                    rolesHtml += `</div>`;
+                }
+
+                card.innerHTML = `
+                    <div class="insider-card-header">
+                        <div>
+                            <h3>${ins.name}</h3>
+                            <span style="font-size:0.75rem; color:var(--text-secondary);"><i class="fa-solid fa-briefcase"></i> Board Seats: ${ins.connected_roles.length}</span>
+                        </div>
+                        <span class="insider-value">${formatCurrency(ins.total_value)}</span>
+                    </div>
+                    <div class="insider-holdings-list">
+                        <h4 style="font-size: 0.8rem; text-transform:uppercase; color:var(--text-secondary); margin-bottom: 0.25rem;">Stakes Owned</h4>
+                        ${holdingsHtml}
+                    </div>
+                    ${rolesHtml}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- CONGLOMERATES LOGIC ---
+        function initConglomeratesTab() {
+            const container = document.getElementById('conglomGrid');
+            container.innerHTML = '';
+
+            dashboardData.conglomerates.forEach(con => {
+                const card = document.createElement('div');
+                card.className = 'glass-card conglom-card';
+                
+                // Render company badges
+                let companyBadges = '';
+                con.companies.forEach(code => {
+                    companyBadges += `<span class="ticker-badge" style="font-size:0.75rem; padding:0.15rem 0.35rem; cursor:pointer;" onclick="switchTab('screener'); showCompanyDetails('${code}'); highlightScreenerTableRow('${code}');">${code}</span>`;
+                });
+
+                card.innerHTML = `
+                    <div class="conglom-header">
+                        <div>
+                            <h3>${con.controller_name}</h3>
+                            <span style="font-size:0.75rem; color:var(--text-secondary);"><i class="fa-solid fa-cubes"></i> Companies: ${con.companies.length}</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                        <div style="display:flex; justify-content:space-between; font-size:0.9rem;">
+                            <span style="color:var(--text-secondary);">Total Group Assets</span>
+                            <span class="numeric" style="font-weight:700;">${formatCurrency(con.total_assets)}</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.9rem;">
+                            <span style="color:var(--text-secondary);">Average Profitability (ROE)</span>
+                            <span class="numeric ${con.average_roe >= 15 ? 'positive' : ''}" style="font-weight:700;">${con.average_roe.toFixed(1)}%</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.9rem;">
+                            <span style="color:var(--text-secondary);">Average Price / Book</span>
+                            <span class="numeric" style="font-weight:700;">${con.average_pbv.toFixed(2)}x</span>
+                        </div>
+                        
+                        <div style="margin-top:0.5rem;">
+                            <h4 style="font-size: 0.8rem; text-transform:uppercase; color:var(--text-secondary); margin-bottom: 0.5rem;">Group Tickers</h4>
+                            <div class="conglom-badges">
+                                ${companyBadges}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Helper currency formatter
+        function formatCurrency(val) {
+            // Values are stored in billions (Miliar) IDR or millions in raw ratios
+            // For general rendering, we assume value unit scale is Millions/Billions.
+            // Let's format it cleanly as Miliar (Billion) or Triliun (Trillion) IDR
+            if (val === 0) return '0.0 IDR';
+            
+            if (val >= 1000.0) {
+                return `Rp ${(val / 1000.0).toFixed(2)} T`; // Triliun
+            } else {
+                return `Rp ${val.toFixed(1)} B`; // Miliar
+            }
+        }
+    </script>
+</body>
+</html>

@@ -65,7 +65,21 @@ uv run scrape_financial_ratio.py
 uv run scrape_broker_search.py
 ```
 
-### 5. Graph Ingestion & Analysis
+### 6. Smart Money & Network Alpha Finder
+We have built an integrated analysis pipeline that merges corporate relationship networks (board members, controlling owners) with value investing financial ratios (ROE, P/E, P/B, Debt/Equity) to rank companies using a **Smart Money Synergy Score (SMSS)**.
+
+To compile the dataset and run the dashboard:
+1. Run the Python pipeline to perform the network-financial calculations:
+   ```bash
+   cd python
+   uv run analyze_network_alpha.py
+   ```
+   *Note: The script will connect to PostgreSQL and Neo4j if they are active, but has automatic fallbacks to local data files if database services are offline.*
+
+2. Open the visual dashboard:
+   Open the [index.html](file:///home/al/Projects/idx-bei/index.html) file directly in your web browser (e.g. double-click or use `xdg-open index.html`). The interface is self-contained and loads the processed JSON data.
+
+### 7. Graph Ingestion & Analysis
 Open the Jupyter notebook for Neo4j ingestion and network analysis:
 
 ```bash
