@@ -763,6 +763,12 @@ def run_analysis_pipeline():
         with open(OUTPUT_FILE, 'w') as f:
             json.dump(output_data, f, indent=2)
         logger.info(f"Successfully generated analysis dashboard dataset at {OUTPUT_FILE}")
+
+        # Save JS fallback file for direct file:// browser opening
+        js_file = os.path.splitext(OUTPUT_FILE)[0] + '.js'
+        with open(js_file, 'w', encoding='utf-8') as f:
+            f.write("window.NETWORK_ALPHA_DATA = " + json.dumps(output_data, indent=2) + ";")
+        logger.info(f"Successfully generated JS fallback dataset at {js_file}")
     except Exception as e:
         logger.error(f"Failed to save dashboard dataset: {e}")
 

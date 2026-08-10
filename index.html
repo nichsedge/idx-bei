@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Vis-Network for Graph Visualization -->
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <!-- Fallback dataset for direct file:// browser loading -->
+    <script type="text/javascript" src="data/network_alpha_data.js"></script>
     
     <style>
         :root {
@@ -886,14 +888,14 @@
                             <table id="screenerTable">
                                 <thead>
                                     <tr>
-                                        <th>Ticker</th>
-                                        <th>Company Name</th>
-                                        <th>Sector</th>
-                                        <th>ROE</th>
-                                        <th>PE</th>
-                                        <th>PBV</th>
-                                        <th>D/E</th>
-                                        <th>SMSS Score</th>
+                                        <th onclick="sortScreenerTable('code')" style="cursor: pointer; user-select: none;">Ticker <i id="sort_icon_code" class="fa-solid fa-sort" style="font-size: 0.75rem; margin-left: 4px; opacity: 0.5;"></i></th>
+                                        <th onclick="sortScreenerTable('name')" style="cursor: pointer; user-select: none;">Company Name <i id="sort_icon_name" class="fa-solid fa-sort" style="font-size: 0.75rem; margin-left: 4px; opacity: 0.5;"></i></th>
+                                        <th onclick="sortScreenerTable('sector')" style="cursor: pointer; user-select: none;">Sector <i id="sort_icon_sector" class="fa-solid fa-sort" style="font-size: 0.75rem; margin-left: 4px; opacity: 0.5;"></i></th>
+                                        <th onclick="sortScreenerTable('roe')" style="cursor: pointer; user-select: none;">ROE <i id="sort_icon_roe" class="fa-solid fa-sort" style="font-size: 0.75rem; margin-left: 4px; opacity: 0.5;"></i></th>
+                                        <th onclick="sortScreenerTable('per')" style="cursor: pointer; user-select: none;">PE <i id="sort_icon_per" class="fa-solid fa-sort" style="font-size: 0.75rem; margin-left: 4px; opacity: 0.5;"></i></th>
+                                        <th onclick="sortScreenerTable('price_bv')" style="cursor: pointer; user-select: none;">PBV <i id="sort_icon_price_bv" class="fa-solid fa-sort" style="font-size: 0.75rem; margin-left: 4px; opacity: 0.5;"></i></th>
+                                        <th onclick="sortScreenerTable('de_ratio')" style="cursor: pointer; user-select: none;">D/E <i id="sort_icon_de_ratio" class="fa-solid fa-sort" style="font-size: 0.75rem; margin-left: 4px; opacity: 0.5;"></i></th>
+                                        <th onclick="sortScreenerTable('score')" style="cursor: pointer; user-select: none;">SMSS Score <i id="sort_icon_score" class="fa-solid fa-sort-down" style="font-size: 0.75rem; margin-left: 4px; color: var(--accent-gold);"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody id="screenerTableBody">
@@ -1131,8 +1133,28 @@
             loadDashboardData();
         });
 
-        // Load data from JSON file
+        function renderDashboard(data) {
+            dashboardData = data;
+            
+            // Show dashboard content and hide error banner
+            document.getElementById('dashboardContent').style.display = 'block';
+            document.getElementById('errorBanner').style.display = 'none';
+            
+            // Render screener stats and table
+            initScreenerTab();
+            
+            // Render other tabs
+            initInsidersTab();
+            initConglomeratesTab();
+        }
+
+        // Load data from JS variable or JSON file
         function loadDashboardData() {
+            if (window.NETWORK_ALPHA_DATA) {
+                renderDashboard(window.NETWORK_ALPHA_DATA);
+                return;
+            }
+
             fetch('data/network_alpha_data.json')
                 .then(response => {
                     if (!response.ok) {
@@ -1141,18 +1163,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    dashboardData = data;
-                    
-                    // Show dashboard content and hide error banner
-                    document.getElementById('dashboardContent').style.display = 'block';
-                    document.getElementById('errorBanner').style.display = 'none';
-                    
-                    // Render screener stats and table
-                    initScreenerTab();
-                    
-                    // Render other tabs
-                    initInsidersTab();
-                    initConglomeratesTab();
+                    renderDashboard(data);
                 })
                 .catch(error => {
                     console.error("Error loading dashboard dataset:", error);
@@ -1247,6 +1258,37 @@
             });
         }
 
+        let currentSortKey = 'score';
+        let currentSortOrder = 'desc';
+
+        function sortScreenerTable(key) {
+            if (currentSortKey === key) {
+                currentSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSortKey = key;
+                currentSortOrder = (key === 'code' || key === 'name' || key === 'sector') ? 'asc' : 'desc';
+            }
+
+            // Reset all sort icons
+            ['code', 'name', 'sector', 'roe', 'per', 'price_bv', 'de_ratio', 'score'].forEach(k => {
+                const icon = document.getElementById(`sort_icon_${k}`);
+                if (icon) {
+                    icon.className = 'fa-solid fa-sort';
+                    icon.style.opacity = '0.5';
+                    icon.style.color = '';
+                }
+            });
+
+            const activeIcon = document.getElementById(`sort_icon_${key}`);
+            if (activeIcon) {
+                activeIcon.className = currentSortOrder === 'asc' ? 'fa-solid fa-sort-up' : 'fa-solid fa-sort-down';
+                activeIcon.style.opacity = '1.0';
+                activeIcon.style.color = 'var(--accent-gold)';
+            }
+
+            filterScreenerTable();
+        }
+
         function filterScreenerTable() {
             const query = document.getElementById('searchBar').value.toLowerCase();
             const sector = document.getElementById('sectorFilter').value;
@@ -1270,6 +1312,33 @@
                 else if (valuationFilter === 'profitable') matchVal = c.roe >= 15.0;
 
                 return matchSearch && matchSector && matchScore && matchVal;
+            });
+
+            // Dynamic Sorting
+            filtered.sort((a, b) => {
+                let valA, valB;
+                if (currentSortKey === 'score') {
+                    valA = a.score ? a.score.total : 0;
+                    valB = b.score ? b.score.total : 0;
+                } else if (currentSortKey === 'code') {
+                    valA = a.code || '';
+                    valB = b.code || '';
+                } else if (currentSortKey === 'name') {
+                    valA = a.name || '';
+                    valB = b.name || '';
+                } else if (currentSortKey === 'sector') {
+                    valA = a.sector || '';
+                    valB = b.sector || '';
+                } else {
+                    valA = a[currentSortKey] !== undefined && a[currentSortKey] !== null ? a[currentSortKey] : (currentSortOrder === 'asc' ? Infinity : -Infinity);
+                    valB = b[currentSortKey] !== undefined && b[currentSortKey] !== null ? b[currentSortKey] : (currentSortOrder === 'asc' ? Infinity : -Infinity);
+                }
+
+                if (typeof valA === 'string') {
+                    return currentSortOrder === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                } else {
+                    return currentSortOrder === 'asc' ? valA - valB : valB - valA;
+                }
             });
 
             renderScreenerTable(filtered);
