@@ -1,7 +1,7 @@
 [project]
 name = "idx-bei"
-version = "0.1.0"
-description = "IDX-BEI Data Analysis Toolkit"
+version = "0.2.0"
+description = "IDX-BEI Quantitative Data & Analysis Toolkit"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.13"
@@ -17,10 +17,22 @@ dependencies = [
     "yfinance>=0.2.59",
     "curl_cffi>=0.7.4",
     "python-dotenv>=1.0.1",
+    "pyarrow>=18.0.0",
 ]
 
 [dependency-groups]
 dev = [
     "ipykernel>=6.29.5",
     "nbformat>=5.10.4",
+    "pytest>=9.1.1",
 ]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]

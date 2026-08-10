@@ -11,15 +11,31 @@ ENV/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+*.egg-info/
 
 # --- Data ---
-# We generally ignore large data files, but keep the directory
+# Scraped datasets (large, regeneratable)
 data/allCompanies.json
 data/brokerSearch.json
 data/companyDetailsByKodeEmiten.json
+data/companyDetailsByKodeEmitenTop50TradingValue.json
 data/companySummaryByKodeEmiten.json
 data/financial_ratio.json
+data/corporateActions.json
+data/network_alpha_data.json
+data/stock_summary_*.json
+data/broker_summary_*.json
+data/index_summary.json
 data/news/
+
+# Time-series & Parquet (large, regeneratable)
+data/timeseries/
+data/parquet/
+
+# Internal scraper state
+data/.schema_snapshots.json
+data/.scrape_stats.json
+data/.raw_archive/
 
 # --- Project Specific ---
 .claude/
@@ -34,7 +50,6 @@ CLAUDE.md
 *.swo
 
 # --- Docker ---
-# If you want to ignore local database data
 neo4j_data/
 postgres_data/
 

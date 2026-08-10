@@ -1,7 +1,7 @@
 {
   "draw": 0,
-  "recordsTotal": 92,
-  "recordsFiltered": 92,
+  "recordsTotal": 90,
+  "recordsFiltered": 90,
   "data": [
     {
       "Code": "XC",
@@ -149,11 +149,6 @@
       "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
     },
     {
-      "Code": "GW",
-      "Name": "HSBC SEKURITAS INDONESIA",
-      "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
-    },
-    {
       "Code": "RB",
       "Name": "INA SEKURITAS INDONESIA",
       "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
@@ -202,6 +197,11 @@
       "Code": "DU",
       "Name": "KAF SEKURITAS INDONESIA",
       "License": "Perantara Pedagang Efek"
+    },
+    {
+      "Code": "AI",
+      "Name": "KAY HIAN SEKURITAS",
+      "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
     },
     {
       "Code": "CP",
@@ -294,11 +294,6 @@
       "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
     },
     {
-      "Code": "AD",
-      "Name": "OSO SEKURITAS INDONESIA",
-      "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
-    },
-    {
       "Code": "AP",
       "Name": "PACIFIC SEKURITAS INDONESIA",
       "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
@@ -384,6 +379,11 @@
       "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
     },
     {
+      "Code": "AD",
+      "Name": "SUKADANA PRIMA SEKURITAS",
+      "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
+    },
+    {
       "Code": "SS",
       "Name": "SUPRA SEKURITAS INDONESIA",
       "License": "Perantara Pedagang Efek"
@@ -411,11 +411,6 @@
     {
       "Code": "AK",
       "Name": "UBS SEKURITAS INDONESIA",
-      "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
-    },
-    {
-      "Code": "AI",
-      "Name": "UOB KAY HIAN SEKURITAS",
       "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
     },
     {
@@ -452,11 +447,6 @@
       "Code": "FS",
       "Name": "YUANTA SEKURITAS INDONESIA",
       "License": "Penjamin Emisi Efek, Perantara Pedagang Efek"
-    },
-    {
-      "Code": "IP",
-      "Name": "YUGEN BERTUMBUH SEKURITAS",
-      "License": "Manajer Investasi, Penjamin Emisi Efek, Perantara Pedagang Efek"
     },
     {
       "Code": "RS",
