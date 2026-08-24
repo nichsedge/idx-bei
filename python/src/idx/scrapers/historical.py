@@ -9,12 +9,12 @@ Usage:
     backfill_stock_summary("20260101", "20260807")
 """
 
-import os
-import time
 import datetime
 import json
+import os
+
 from idx.core.client import IDXClient
-from idx.core.utils import DATA_DIR, get_logger, ensure_data_dir
+from idx.core.utils import DATA_DIR, ensure_data_dir, get_logger
 
 log = get_logger("idx.scrapers.historical")
 
@@ -49,7 +49,7 @@ def _load_existing_records(filepath):
     if not os.path.exists(filepath):
         return {}
     try:
-        with open(filepath, "r", encoding="utf-8") as f:
+        with open(filepath, encoding="utf-8") as f:
             records = json.load(f)
         if isinstance(records, list):
             index = {}
@@ -60,7 +60,7 @@ def _load_existing_records(filepath):
                 index[key].append(rec)
             return index
         return {}
-    except (json.JSONDecodeError, IOError):
+    except (OSError, json.JSONDecodeError):
         return {}
 
 

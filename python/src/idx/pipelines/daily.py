@@ -12,13 +12,14 @@ Usage:
     # 45 16 * * 1-5 cd /path/to/python && uv run python -m idx.pipelines.daily >> /var/log/idx-daily.log 2>&1
 """
 
+import datetime
+import json
+import logging
 import os
 import sys
-import json
-import datetime
-import logging
+
 from idx.core.client import IDXClient
-from idx.core.utils import DATA_DIR, get_logger, ensure_data_dir
+from idx.core.utils import DATA_DIR, get_logger
 
 log = get_logger("idx.pipelines.daily")
 
@@ -40,7 +41,7 @@ def _load_timeseries(filepath):
     if not os.path.exists(filepath):
         return {}, []
     try:
-        with open(filepath, "r", encoding="utf-8") as f:
+        with open(filepath, encoding="utf-8") as f:
             records = json.load(f)
         index = {}
         for rec in records:
@@ -49,7 +50,7 @@ def _load_timeseries(filepath):
                 index[key] = []
             index[key].append(rec)
         return index, records
-    except (json.JSONDecodeError, IOError):
+    except (OSError, json.JSONDecodeError):
         return {}, []
 
 

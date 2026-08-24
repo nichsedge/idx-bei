@@ -4,14 +4,15 @@ Financial ratios and statistics scraper module.
 
 import os
 import time
+
 from idx.core.client import IDXClient
 from idx.core.utils import (
     DATA_DIR,
+    check_count_anomaly,
+    check_schema_drift,
     get_logger,
     save_json,
     validate_schema,
-    check_schema_drift,
-    check_count_anomaly,
 )
 
 log = get_logger("idx.scrapers.financial")
@@ -59,11 +60,11 @@ def fetch_financial_ratios(year=2024, quarter=4, client=None, page_size=100):
             records = data["data"]
             all_records.extend(records)
             log.info("Retrieved %d records from page %d. Total: %d", len(records), page_number, len(all_records))
-            
+
             if page_number == 1:
                 validate_schema(data, "financial_ratio_page")
                 check_schema_drift("financial_ratio_page", data)
-                
+
             page_number += 1
             time.sleep(1.0)
         else:

@@ -15,18 +15,22 @@ Usage:
   uv run python cli.py all
 """
 
-import sys
 import logging
+import sys
 
-from idx.scrapers.company import fetch_company_profiles
-from idx.scrapers.financial import fetch_financial_ratios
-from idx.scrapers.corporate import fetch_corporate_actions
-from idx.scrapers.members import fetch_broker_search
-from idx.scrapers.trading import fetch_stock_summary, fetch_broker_summary, fetch_index_summary
-from idx.scrapers.news import fetch_news_search, fetch_all_announcements
-from idx.scrapers.historical import backfill_stock_summary, backfill_broker_summary, backfill_index_summary
-from idx.pipelines.parquet import export_all as export_all_parquet
 from idx.pipelines.daily import ingest_daily
+from idx.pipelines.parquet import export_all as export_all_parquet
+from idx.scrapers.company import fetch_company_profiles
+from idx.scrapers.corporate import fetch_corporate_actions
+from idx.scrapers.financial import fetch_financial_ratios
+from idx.scrapers.historical import (
+    backfill_broker_summary,
+    backfill_index_summary,
+    backfill_stock_summary,
+)
+from idx.scrapers.members import fetch_broker_search
+from idx.scrapers.news import fetch_all_announcements, fetch_news_search
+from idx.scrapers.trading import fetch_broker_summary, fetch_index_summary, fetch_stock_summary
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 

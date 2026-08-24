@@ -10,12 +10,14 @@ Usage:
     export_all()
 """
 
-import os
 import json
+import os
+
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
-from idx.core.utils import DATA_DIR, get_logger, ensure_data_dir
+
+from idx.core.utils import DATA_DIR, get_logger
 
 log = get_logger("idx.pipelines.parquet")
 
@@ -32,7 +34,7 @@ def _load_json(filepath):
     if not os.path.exists(filepath):
         log.warning("File not found: %s", filepath)
         return None
-    with open(filepath, "r", encoding="utf-8") as f:
+    with open(filepath, encoding="utf-8") as f:
         return json.load(f)
 
 

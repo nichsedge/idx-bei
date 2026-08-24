@@ -25,6 +25,7 @@ dev = [
     "ipykernel>=6.29.5",
     "nbformat>=5.10.4",
     "pytest>=9.1.1",
+    "ruff>=0.8.0",
 ]
 
 [build-system]
@@ -36,3 +37,24 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort (import sorting)
+    "B",   # flake8-bugbear (common bug patterns)
+    "UP",  # pyupgrade (modernize syntax)
+]
+ignore = [
+    "E501", # line length handled by formatter; notebooks/scripts vary
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests may adjust sys.path before importing modules under test
+"tests/*" = ["E402"]

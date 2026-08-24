@@ -10,7 +10,9 @@ sys.modules["dotenv"] = MagicMock()
 import unittest
 from io import StringIO
 from unittest.mock import patch
+
 import neo4j_ingest
+
 
 class TestNeo4jIngest(unittest.TestCase):
     def test_ingest_all_stock_profiles_file_not_found(self):

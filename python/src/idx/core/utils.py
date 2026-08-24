@@ -2,10 +2,10 @@
 Shared utilities for IDX scrapers: Schema Validation, Drift Detection, Anomaly Tracking, and Archiving.
 """
 
-import os
 import json
-import time
 import logging
+import os
+import time
 
 LOG_FORMAT = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 
@@ -37,10 +37,10 @@ def load_json(file_path, default=None):
         default = {}
     if os.path.exists(file_path):
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, encoding='utf-8') as f:
                 content = f.read()
                 return json.loads(content) if content else default
-        except (json.JSONDecodeError, IOError) as exc:
+        except (OSError, json.JSONDecodeError) as exc:
             _log.warning("Error loading %s – using default. %s", file_path, exc)
             return default
     return default
@@ -54,7 +54,7 @@ def save_json(file_path, data):
             json.dump(data, f, indent=2)
         os.replace(tmp_path, file_path)
         _log.info("Saved %s", os.path.basename(file_path))
-    except IOError as exc:
+    except OSError as exc:
         _log.error("Error saving %s: %s", file_path, exc)
 
 SCHEMAS = {
@@ -210,7 +210,7 @@ def archive_raw_response(endpoint_name, raw_text):
         with open(path, 'w', encoding='utf-8') as f:
             f.write(raw_text)
         _log.info("[ARCHIVE] Saved raw response → %s", os.path.basename(path))
-    except IOError as exc:
+    except OSError as exc:
         _log.error("[ARCHIVE] Failed to save: %s", exc)
     return path
 

@@ -2,9 +2,10 @@
 IDX HTTP Client with exponential backoff, rate limiting, and browser impersonation.
 """
 
-import time
 import json
 import logging
+import time
+
 from curl_cffi import requests
 
 log = logging.getLogger("idx.core.client")
@@ -29,7 +30,7 @@ class IDXClient:
     def get(self, endpoint, params=None, impersonate="chrome", timeout=30):
         """Executes a GET request with automatic retry on 429/50x and rate limit delays."""
         url = endpoint if endpoint.startswith("http") else f"{self.base_url}{endpoint}"
-        
+
         retries = 0
         while retries <= self.max_retries:
             try:
@@ -41,7 +42,7 @@ class IDXClient:
                     impersonate=impersonate,
                     timeout=timeout
                 )
-                
+
                 status_code = response.status_code
 
                 if status_code == 200:

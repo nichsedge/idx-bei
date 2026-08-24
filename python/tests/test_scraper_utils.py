@@ -7,16 +7,15 @@ import pytest
 
 import idx.core.utils as utils
 from idx.core.utils import (
-    validate_schema,
-    check_schema_drift,
-    check_count_anomaly,
-    check_records_total_consistency,
-    SchemaDriftError,
-    _fingerprint,
     SCHEMA_SNAPSHOT_FILE,
     SCRAPE_STATS_FILE,
+    SchemaDriftError,
+    _fingerprint,
+    check_count_anomaly,
+    check_records_total_consistency,
+    check_schema_drift,
+    validate_schema,
 )
-
 
 # ---------------------------------------------------------------------------
 # validate_schema

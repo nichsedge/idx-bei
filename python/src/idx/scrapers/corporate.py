@@ -4,14 +4,15 @@ Corporate Actions scraper module covering all 15 corporate action types.
 
 import os
 import time
+
 from idx.core.client import IDXClient
 from idx.core.utils import (
     DATA_DIR,
+    check_count_anomaly,
+    check_schema_drift,
     get_logger,
     save_json,
     validate_schema,
-    check_schema_drift,
-    check_count_anomaly,
 )
 
 log = get_logger("idx.scrapers.corporate")

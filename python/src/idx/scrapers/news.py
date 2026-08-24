@@ -4,9 +4,9 @@ News & Announcements scraper module.
 
 from idx.core.client import IDXClient
 from idx.core.utils import (
+    check_schema_drift,
     get_logger,
     validate_schema,
-    check_schema_drift,
 )
 
 log = get_logger("idx.scrapers.news")
