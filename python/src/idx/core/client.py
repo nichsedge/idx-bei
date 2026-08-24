@@ -4,11 +4,19 @@ IDX HTTP Client with exponential backoff, rate limiting, and browser impersonati
 
 import json
 import logging
+import random
 import time
 
 from curl_cffi import requests
 
 log = logging.getLogger("idx.core.client")
+
+
+def _backoff_with_jitter(retries, base=2.0, linear=0.5, jitter_frac=0.25):
+    """Exponential backoff with random jitter to avoid thundering-herd retries."""
+    nominal = (base ** retries) + (linear * retries)
+    return nominal * (1.0 + random.uniform(0, jitter_frac))
+
 
 DEFAULT_BASE_URL = "https://www.idx.co.id/primary"
 
@@ -17,6 +25,14 @@ DEFAULT_HEADERS = {
     "accept-language": "en-US,en;q=0.9",
     "referer": "https://www.idx.co.id/"
 }
+
+class IDXRequestError(Exception):
+    """Raised when a request ultimately fails (max retries exceeded or non-retryable HTTP error)."""
+
+    def __init__(self, message, status_code=None):
+        super().__init__(message)
+        self.status_code = status_code
+
 
 class IDXClient:
     """HTTP Client for IDX APIs with built-in retries, rate limiting, and browser impersonation."""
@@ -50,7 +66,7 @@ class IDXClient:
                     return response
 
                 elif status_code in (429, 500, 502, 503, 504):
-                    backoff = (2 ** retries) + (0.5 * retries)
+                    backoff = _backoff_with_jitter(retries)
                     log.warning("HTTP %d for %s – retrying in %.1fs...", status_code, url, backoff)
                     time.sleep(backoff)
                     retries += 1
@@ -59,7 +75,7 @@ class IDXClient:
                     return response
 
             except Exception as exc:
-                backoff = (2 ** retries) + 1.0
+                backoff = _backoff_with_jitter(retries, base=1.0)
                 log.warning("Request error for %s: %s – retrying in %.1fs...", url, exc, backoff)
                 time.sleep(backoff)
                 retries += 1
@@ -67,12 +83,35 @@ class IDXClient:
         log.error("Max retries exceeded for %s", url)
         return None
 
-    def get_json(self, endpoint, params=None):
-        """Executes a GET request and parses response JSON safely."""
+    def get_json(self, endpoint, params=None, raise_on_error=False):
+        """Executes a GET request and parses response JSON safely.
+
+        Args:
+            endpoint: API path or absolute URL
+            params:   Query parameters
+            raise_on_error: If True, raises IDXRequestError on HTTP failure or
+                invalid JSON instead of returning None. Useful for callers that
+                need to distinguish "not found" from "decode failure".
+
+        Returns:
+            Parsed JSON, or None on failure when raise_on_error is False.
+        """
         response = self.get(endpoint, params=params)
-        if response and response.status_code == 200:
-            try:
-                return response.json()
-            except json.JSONDecodeError as exc:
-                log.error("Failed to decode JSON from %s: %s", endpoint, exc)
-        return None
+        if response is None:
+            message = f"Max retries exceeded for {endpoint}"
+            if raise_on_error:
+                raise IDXRequestError(message)
+            return None
+        if response.status_code != 200:
+            message = f"HTTP {response.status_code} for {endpoint}"
+            if raise_on_error:
+                raise IDXRequestError(message, status_code=response.status_code)
+            return None
+        try:
+            return response.json()
+        except json.JSONDecodeError as exc:
+            message = f"Failed to decode JSON from {endpoint}: {exc}"
+            if raise_on_error:
+                raise IDXRequestError(message, status_code=200) from exc
+            log.error("%s", message)
+            return None
