@@ -2,7 +2,7 @@
 
 Toolkit for scraping, storing, and analyzing data from the Indonesia Stock Exchange (IDX / Bursa Efek Indonesia). Covers market data, company fundamentals, corporate actions, and broker flows — with time-series storage, Parquet export, and graph analysis pipelines.
 
-![Neo4j Network Analysis](neo4j-network-analysis.png)
+![Neo4j Network Analysis](docs/assets/neo4j-network-analysis.png)
 
 ## Quick Start
 
@@ -58,7 +58,7 @@ idx-bei/
 │   ├── timeseries/                # Historical OHLCV, broker, index JSON
 │   └── parquet/                   # Columnar exports for fast analytics
 ├── docker-compose/                # Neo4j & PostgreSQL service configs
-└── index.html                     # Smart Money Synergy Score dashboard
+└── dashboard/index.html           # Smart Money Synergy Score dashboard
 ```
 
 ## Tech Stack
