@@ -18,6 +18,9 @@ Usage:
 import argparse
 import logging
 
+import pandas as pd
+
+from idx.core.query import available_datasets, query_dataset
 from idx.pipelines.daily import ingest_daily
 from idx.pipelines.parquet import export_all as export_all_parquet
 from idx.scrapers.company import fetch_company_profiles
@@ -75,6 +78,14 @@ def build_parser():
 
     sub.add_parser("parquet", help="Export all datasets to Parquet format")
 
+    p_query = sub.add_parser("query", help="SQL query over partitioned time-series (DuckDB)")
+    p_query.add_argument("dataset", help=f"Dataset to query ({', '.join(available_datasets()) or 'stock_summary|broker_summary|index_summary'})")
+    p_query.add_argument("--start", default=None, metavar="YYYY-MM-DD", help="Inclusive start date")
+    p_query.add_argument("--end", default=None, metavar="YYYY-MM-DD", help="Inclusive end date")
+    p_query.add_argument("--where", default=None, help="SQL predicate, e.g. \"StockCode = 'BBCA'\"")
+    p_query.add_argument("--columns", default="*", help="Column list (default: *)")
+    p_query.add_argument("--limit", type=int, default=20, help="Max rows to display (default: 20)")
+
     p_daily = sub.add_parser("daily", help="Run daily ingestion (today or specific YYYYMMDD)")
     p_daily.add_argument(
         "date", nargs="?", default=None, metavar="YYYYMMDD", help="Optional date override"
@@ -118,6 +129,13 @@ def main(argv=None):
                 print(f"  {name}: {info['rows']} rows → {info.get('size_mb', '?')} MB")
             else:
                 print(f"  {name}: {info}")
+    elif cmd == "query":
+        df = query_dataset(args.dataset, start=args.start, end=args.end,
+                           where=args.where, columns=args.columns, limit=args.limit)
+        print(f"{len(df)} rows (limit {args.limit})")
+        if len(df) > 0:
+            with pd.option_context("display.max_columns", None, "display.width", 200):
+                print(df.to_string(index=False))
     elif cmd == "daily":
         print(f"=== Daily Ingestion ({args.date or 'today'}) ===")
         ingest_daily(date=args.date)
