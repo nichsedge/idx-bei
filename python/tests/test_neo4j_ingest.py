@@ -1,11 +1,16 @@
 import sys
 from unittest.mock import MagicMock
 
-# Mock dependencies that are not installed in the environment
-# This allows us to test the logic in neo4j_ingest.py without having to install all dependencies
-sys.modules["pandas"] = MagicMock()
-sys.modules["neo4j"] = MagicMock()
-sys.modules["dotenv"] = MagicMock()
+# Mock dependencies only if unavailable – unconditional global mocks here would
+# leak into other tests (e.g. a MagicMock pandas breaks pyarrow.to_pandas).
+try:
+    import neo4j  # noqa: F401
+except ImportError:
+    sys.modules["neo4j"] = MagicMock()
+try:
+    import dotenv  # noqa: F401
+except ImportError:
+    sys.modules["dotenv"] = MagicMock()
 
 import unittest
 from io import StringIO

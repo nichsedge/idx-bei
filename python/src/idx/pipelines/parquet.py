@@ -1,8 +1,9 @@
 """
 Parquet export pipeline.
 
-Converts JSON datasets (both snapshots and time-series) into columnar Parquet
-format for fast analytical queries with pandas/polars.
+Consolidates the partitioned time-series store (one Parquet file per date) and
+snapshot JSON datasets into single columnar Parquet files with derived columns,
+for fast analytical queries with pandas/polars.
 
 Usage:
     from idx.pipelines.parquet import export_stock_timeseries, export_all
@@ -17,6 +18,7 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from idx.core import timeseries as ts
 from idx.core.utils import DATA_DIR, get_logger
 
 log = get_logger("idx.pipelines.parquet")
@@ -76,28 +78,23 @@ STOCK_DTYPES = {
 }
 
 
-def export_stock_timeseries(source=None, output=None):
-    """Converts stock summary time-series JSON → Parquet.
+def export_stock_timeseries(output=None):
+    """Consolidates stock-summary date partitions → single Parquet file.
 
     Args:
-        source: Path to JSON file. Defaults to data/timeseries/stock_summary.json
         output: Path to output Parquet file. Defaults to data/parquet/stock_summary.parquet
 
     Returns:
         dict with rows, columns, file, size_mb
     """
     _ensure_parquet_dir()
-    if source is None:
-        source = os.path.join(TIMESERIES_DIR, "stock_summary.json")
     if output is None:
         output = os.path.join(PARQUET_DIR, "stock_summary.parquet")
 
-    data = _load_json(source)
-    if data is None or len(data) == 0:
+    df = ts.read_dataset("stock_summary")
+    if len(df) == 0:
         log.warning("No stock summary data to export")
         return None
-
-    df = pd.DataFrame(data)
 
     # Select and order columns (gracefully handle missing ones)
     available = [c for c in STOCK_COLUMNS if c in df.columns]
@@ -143,20 +140,16 @@ def export_stock_timeseries(source=None, output=None):
 
 # ── Broker Summary Time-Series ────────────────────────────────────────────────
 
-def export_broker_timeseries(source=None, output=None):
-    """Converts broker summary time-series JSON → Parquet."""
+def export_broker_timeseries(output=None):
+    """Consolidates broker-summary date partitions → single Parquet file."""
     _ensure_parquet_dir()
-    if source is None:
-        source = os.path.join(TIMESERIES_DIR, "broker_summary.json")
     if output is None:
         output = os.path.join(PARQUET_DIR, "broker_summary.parquet")
 
-    data = _load_json(source)
-    if data is None or len(data) == 0:
+    df = ts.read_dataset("broker_summary")
+    if len(df) == 0:
         log.warning("No broker summary data to export")
         return None
-
-    df = pd.DataFrame(data)
 
     if "Date" in df.columns:
         df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
@@ -178,20 +171,16 @@ def export_broker_timeseries(source=None, output=None):
 
 # ── Index Summary Time-Series ─────────────────────────────────────────────────
 
-def export_index_timeseries(source=None, output=None):
-    """Converts index summary time-series JSON → Parquet."""
+def export_index_timeseries(output=None):
+    """Consolidates index-summary date partitions → single Parquet file."""
     _ensure_parquet_dir()
-    if source is None:
-        source = os.path.join(TIMESERIES_DIR, "index_summary.json")
     if output is None:
         output = os.path.join(PARQUET_DIR, "index_summary.parquet")
 
-    data = _load_json(source)
-    if data is None or len(data) == 0:
+    df = ts.read_dataset("index_summary")
+    if len(df) == 0:
         log.warning("No index summary data to export")
         return None
-
-    df = pd.DataFrame(data)
 
     if "Date" in df.columns:
         df["Date"] = pd.to_datetime(df["Date"], errors="coerce")

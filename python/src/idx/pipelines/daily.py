@@ -2,7 +2,7 @@
 Daily scheduled ingestion pipeline.
 
 Designed to run via cron at market close (~16:30 WIB) to append today's
-trading data to the time-series store and refresh the Parquet files.
+trading data to the partitioned Parquet time-series store.
 
 Usage:
     # Full daily run (OHLCV + broker + index + parquet export):
@@ -13,17 +13,14 @@ Usage:
 """
 
 import datetime
-import json
 import logging
-import os
 import sys
 
+from idx.core import timeseries as ts
 from idx.core.client import IDXClient
-from idx.core.utils import DATA_DIR, get_logger
+from idx.core.utils import get_logger
 
 log = get_logger("idx.pipelines.daily")
-
-TIMESERIES_DIR = os.path.join(DATA_DIR, "timeseries")
 
 
 def _today_str():
@@ -31,52 +28,36 @@ def _today_str():
     return datetime.datetime.now().strftime("%Y%m%d")
 
 
-def _today_iso():
-    """Returns today's date as YYYY-MM-DD string."""
-    return datetime.datetime.now().strftime("%Y-%m-%d")
+def _ingest_dataset(client, dataset, endpoint, date, date_iso):
+    """Fetches one trading-summary dataset for a date and writes its partition.
 
+    Returns:
+        dict with 'status' and record counts.
+    """
+    have = ts.existing_dates(dataset)
+    if date_iso in have:
+        log.info("%s for %s already exists, skipping", dataset, date_iso)
+        return {"status": "skipped"}
 
-def _load_timeseries(filepath):
-    """Loads existing time-series JSON. Returns (date_index, raw_list)."""
-    if not os.path.exists(filepath):
-        return {}, []
-    try:
-        with open(filepath, encoding="utf-8") as f:
-            records = json.load(f)
-        index = {}
-        for rec in records:
-            key = rec.get("Date", "")[:10]
-            if key not in index:
-                index[key] = []
-            index[key].append(rec)
-        return index, records
-    except (OSError, json.JSONDecodeError):
-        return {}, []
+    data = client.get_json(endpoint, params={"date": date, "start": 0, "length": 9999})
+    records = data.get("data") if isinstance(data, dict) else None
 
+    if not isinstance(records, list) or len(records) == 0:
+        log.warning("%s: no data for %s (non-trading day?)", dataset, date_iso)
+        return {"status": "no_data"}
 
-def _append_and_save(filepath, date_index, date_key, new_records):
-    """Appends new_records for date_key and persists."""
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
-    date_index[date_key] = new_records
-
-    all_records = []
-    for dk in sorted(date_index.keys()):
-        all_records.extend(date_index[dk])
-
-    tmp = filepath + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(all_records, f, indent=2)
-    os.replace(tmp, filepath)
-    return len(all_records)
+    ts.write_partition(dataset, date_iso, records)
+    log.info("%s: %d records ingested for %s", dataset, len(records), date_iso)
+    return {"status": "ok", "records": len(records)}
 
 
 def ingest_daily(date=None, client=None, export_parquet=True):
-    """Fetches today's stock/broker/index summaries and appends to time-series store.
+    """Fetches stock/broker/index summaries for a date and appends to the time-series store.
 
     Args:
         date:            Override date in YYYYMMDD format (for backfill/testing)
         client:          Optional IDXClient instance
-        export_parquet:  If True, re-export Parquet files after ingestion
+        export_parquet:  If True, re-export consolidated Parquet files after ingestion
 
     Returns:
         Summary dict with ingestion results
@@ -93,75 +74,37 @@ def ingest_daily(date=None, client=None, export_parquet=True):
     log.info("Daily ingestion started for %s", date_iso)
     log.info("=" * 60)
 
-    # ── Stock Summary (OHLCV + Foreign Flow) ──────────────────────────────
-    stock_file = os.path.join(TIMESERIES_DIR, "stock_summary.json")
-    stock_index, _ = _load_timeseries(stock_file)
+    # One-time migration from legacy monolithic JSON (no-op if already done)
+    migrated = ts.migrate_all()
+    if any(m["migrated_dates"] for m in migrated.values()):
+        results["legacy_migration"] = {k: m["migrated_dates"] for k, m in migrated.items()}
 
-    if date_iso in stock_index:
-        log.info("Stock summary for %s already exists (%d records), skipping",
-                 date_iso, len(stock_index[date_iso]))
-        results["stock_summary"] = {"status": "skipped", "records": len(stock_index[date_iso])}
-    else:
-        data = client.get_json("/TradingSummary/GetStockSummary",
-                               params={"date": date, "start": 0, "length": 9999})
-        if data and isinstance(data.get("data"), list) and len(data["data"]) > 0:
-            n = _append_and_save(stock_file, stock_index, date_iso, data["data"])
-            log.info("Stock summary: %d stocks ingested (total: %d records)",
-                     len(data["data"]), n)
-            results["stock_summary"] = {"status": "ok", "records": len(data["data"]), "total": n}
-        else:
-            log.warning("Stock summary: no data for %s (non-trading day?)", date_iso)
-            results["stock_summary"] = {"status": "no_data"}
+    datasets = [
+        ("stock_summary", "/TradingSummary/GetStockSummary"),
+        ("broker_summary", "/TradingSummary/GetBrokerSummary"),
+        ("index_summary", "/TradingSummary/GetIndexSummary"),
+    ]
+    for dataset, endpoint in datasets:
+        try:
+            results[dataset] = _ingest_dataset(client, dataset, endpoint, date, date_iso)
+        except Exception as exc:
+            log.error("%s ingestion failed: %s", dataset, exc)
+            results[dataset] = {"status": "error", "message": str(exc)}
 
-    # ── Broker Summary ────────────────────────────────────────────────────
-    broker_file = os.path.join(TIMESERIES_DIR, "broker_summary.json")
-    broker_index, _ = _load_timeseries(broker_file)
-
-    if date_iso in broker_index:
-        log.info("Broker summary for %s already exists, skipping", date_iso)
-        results["broker_summary"] = {"status": "skipped"}
-    else:
-        data = client.get_json("/TradingSummary/GetBrokerSummary",
-                               params={"date": date, "start": 0, "length": 9999})
-        if data and isinstance(data.get("data"), list) and len(data["data"]) > 0:
-            n = _append_and_save(broker_file, broker_index, date_iso, data["data"])
-            log.info("Broker summary: %d brokers ingested (total: %d records)",
-                     len(data["data"]), n)
-            results["broker_summary"] = {"status": "ok", "records": len(data["data"]), "total": n}
-        else:
-            results["broker_summary"] = {"status": "no_data"}
-
-    # ── Index Summary ─────────────────────────────────────────────────────
-    index_file = os.path.join(TIMESERIES_DIR, "index_summary.json")
-    idx_index, _ = _load_timeseries(index_file)
-
-    if date_iso in idx_index:
-        log.info("Index summary for %s already exists, skipping", date_iso)
-        results["index_summary"] = {"status": "skipped"}
-    else:
-        data = client.get_json("/TradingSummary/GetIndexSummary",
-                               params={"date": date, "start": 0, "length": 9999})
-        if data and isinstance(data.get("data"), list) and len(data["data"]) > 0:
-            n = _append_and_save(index_file, idx_index, date_iso, data["data"])
-            log.info("Index summary: %d indices ingested (total: %d records)",
-                     len(data["data"]), n)
-            results["index_summary"] = {"status": "ok", "records": len(data["data"]), "total": n}
-        else:
-            results["index_summary"] = {"status": "no_data"}
-
-    # ── Parquet Export ────────────────────────────────────────────────────
+    # ── Consolidated Parquet Export ────────────────────────────────────────
     if export_parquet:
         try:
             from idx.pipelines.parquet import export_all
-            parquet_results = export_all()
-            results["parquet_export"] = parquet_results
+            results["parquet_export"] = export_all()
             log.info("Parquet export complete")
         except Exception as exc:
             log.error("Parquet export failed: %s", exc)
             results["parquet_export"] = {"status": "error", "message": str(exc)}
 
     log.info("=" * 60)
-    log.info("Daily ingestion complete: %s", {k: v.get("status", "?") for k, v in results.items()})
+    log.info("Daily ingestion complete: %s",
+             {k: (v.get("status", "?") if isinstance(v, dict) else "ok")
+              for k, v in results.items()})
     log.info("=" * 60)
 
     return results

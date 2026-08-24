@@ -2,7 +2,7 @@
 Historical data backfill scraper.
 
 Fetches stock summaries, broker summaries, and index summaries over a date range,
-building time-series datasets for quantitative analysis and backtesting.
+building partitioned Parquet time-series datasets for quantitative analysis.
 
 Usage:
     from idx.scrapers.historical import backfill_stock_summary
@@ -10,15 +10,12 @@ Usage:
 """
 
 import datetime
-import json
-import os
 
+from idx.core import timeseries as ts
 from idx.core.client import IDXClient
-from idx.core.utils import DATA_DIR, ensure_data_dir, get_logger
+from idx.core.utils import get_logger
 
 log = get_logger("idx.scrapers.historical")
-
-TIMESERIES_DIR = os.path.join(DATA_DIR, "timeseries")
 
 
 def _parse_date(d):
@@ -33,8 +30,7 @@ def _trading_days(start, end):
     """Generates weekday dates between start and end (inclusive).
 
     IDX trades Mon-Fri. National holidays are NOT filtered here — the API
-    simply returns an empty data list for non-trading days, which we skip
-    during persistence.
+    simply returns an empty data list for non-trading days, which we skip.
     """
     current = _parse_date(start)
     end_dt = _parse_date(end)
@@ -44,205 +40,90 @@ def _trading_days(start, end):
         current += datetime.timedelta(days=1)
 
 
-def _load_existing_records(filepath):
-    """Loads existing JSON array from a timeseries file, returns dict keyed by date string."""
-    if not os.path.exists(filepath):
-        return {}
-    try:
-        with open(filepath, encoding="utf-8") as f:
-            records = json.load(f)
-        if isinstance(records, list):
-            index = {}
-            for rec in records:
-                key = rec.get("Date", "")[:10]  # 'YYYY-MM-DD'
-                if key not in index:
-                    index[key] = []
-                index[key].append(rec)
-            return index
-        return {}
-    except (OSError, json.JSONDecodeError):
-        return {}
-
-
-def _save_timeseries(filepath, date_index):
-    """Flattens date_index back to a sorted list and saves."""
-    ensure_data_dir()
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
-    all_records = []
-    for date_key in sorted(date_index.keys()):
-        all_records.extend(date_index[date_key])
-
-    tmp = filepath + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(all_records, f, indent=2)
-    os.replace(tmp, filepath)
-    return len(all_records)
-
-
-def backfill_stock_summary(start_date, end_date, client=None, save_every=5):
+def backfill_stock_summary(start_date, end_date, client=None):
     """Fetches OHLCV + foreign flow for every trading day in [start_date, end_date].
 
-    Data is appended to data/timeseries/stock_summary.json incrementally.
-    Already-fetched dates are skipped automatically (idempotent).
+    Data is written as one Parquet partition per date under
+    data/timeseries/stock_summary/. Already-fetched dates are skipped (idempotent).
 
     Args:
         start_date: 'YYYYMMDD' or 'YYYY-MM-DD'
         end_date:   'YYYYMMDD' or 'YYYY-MM-DD'
         client:     Optional IDXClient instance
-        save_every: Persist to disk every N dates (safeguard against crashes)
 
     Returns:
-        dict with 'dates_fetched', 'dates_skipped', 'total_records', 'file'
+        dict with 'dates_fetched', 'dates_skipped', 'total_records'
+    """
+    return _backfill_dataset(
+        "stock_summary", "/TradingSummary/GetStockSummary", start_date, end_date, client,
+    )
+
+
+def backfill_broker_summary(start_date, end_date, client=None):
+    """Fetches broker transaction summaries for every trading day in [start_date, end_date]."""
+    return _backfill_dataset(
+        "broker_summary", "/TradingSummary/GetBrokerSummary", start_date, end_date, client,
+    )
+
+
+def backfill_index_summary(start_date, end_date, client=None):
+    """Fetches index summaries (IHSG, LQ45, sectoral) for every trading day in range."""
+    return _backfill_dataset(
+        "index_summary", "/TradingSummary/GetIndexSummary", start_date, end_date, client,
+    )
+
+
+def _backfill_dataset(dataset, endpoint, start_date, end_date, client=None):
+    """Generic backfill loop: fetch per trading day and write one partition per date.
+
+    Each date is persisted immediately after fetching — a crash mid-backfill
+    loses at most one day of work, and re-runs resume where they stopped.
     """
     if client is None:
         client = IDXClient()
 
-    filepath = os.path.join(TIMESERIES_DIR, "stock_summary.json")
-    date_index = _load_existing_records(filepath)
-    existing_dates = set(date_index.keys())
-
+    have = ts.existing_dates(dataset)
     dates = list(_trading_days(start_date, end_date))
     fetched = 0
     skipped = 0
     errors = 0
+    total = 0
 
-    log.info("Backfill stock summary: %d trading days (%s → %s), %d already cached",
-             len(dates), dates[0] if dates else "?", dates[-1] if dates else "?",
-             len(existing_dates))
+    log.info("Backfill %s: %d trading days (%s → %s), %d already cached",
+             dataset, len(dates), dates[0] if dates else "?",
+             dates[-1] if dates else "?", len(have))
 
     for i, dt in enumerate(dates):
         date_str = dt.strftime("%Y-%m-%d")
         date_api = dt.strftime("%Y%m%d")
 
-        if date_str in existing_dates:
+        if date_str in have:
             skipped += 1
             continue
 
-        endpoint = "/TradingSummary/GetStockSummary"
-        params = {"date": date_api, "start": 0, "length": 9999}
-
         try:
-            data = client.get_json(endpoint, params=params)
+            data = client.get_json(endpoint, params={"date": date_api, "start": 0, "length": 9999})
         except Exception as exc:
-            log.warning("Error fetching %s: %s", date_api, exc)
+            log.warning("Error fetching %s for %s: %s", dataset, date_api, exc)
             errors += 1
             continue
 
-        if data and isinstance(data.get("data"), list) and len(data["data"]) > 0:
-            records = data["data"]
-            date_index[date_str] = records
+        records = data.get("data") if isinstance(data, dict) else None
+        if isinstance(records, list) and len(records) > 0:
+            ts.write_partition(dataset, date_str, records)
             fetched += 1
-            log.info("[%d/%d] %s: %d stocks", i + 1, len(dates), date_str, len(records))
+            total += len(records)
+            log.info("[%d/%d] %s: %d records", i + 1, len(dates), date_str, len(records))
         else:
             skipped += 1
             log.debug("[%d/%d] %s: no data (holiday?)", i + 1, len(dates), date_str)
-            continue
 
-        # Periodic save
-        if fetched > 0 and fetched % save_every == 0:
-            total = _save_timeseries(filepath, date_index)
-            log.info("Checkpoint saved: %d total records across %d dates", total, len(date_index))
-
-    # Final save
-    total = _save_timeseries(filepath, date_index)
-    log.info("Backfill complete: fetched=%d, skipped=%d, errors=%d, total_records=%d",
-             fetched, skipped, errors, total)
-
+    log.info("Backfill %s done: fetched=%d, skipped=%d, errors=%d, total_records=%d",
+             dataset, fetched, skipped, errors, total)
     return {
+        "dataset": dataset,
         "dates_fetched": fetched,
         "dates_skipped": skipped,
         "errors": errors,
         "total_records": total,
-        "file": filepath,
     }
-
-
-def backfill_broker_summary(start_date, end_date, client=None, save_every=5):
-    """Fetches broker transaction summaries for every trading day in [start_date, end_date].
-
-    Data is appended to data/timeseries/broker_summary.json incrementally.
-    """
-    if client is None:
-        client = IDXClient()
-
-    filepath = os.path.join(TIMESERIES_DIR, "broker_summary.json")
-    date_index = _load_existing_records(filepath)
-    existing_dates = set(date_index.keys())
-
-    dates = list(_trading_days(start_date, end_date))
-    fetched = 0
-    skipped = 0
-
-    log.info("Backfill broker summary: %d trading days, %d cached",
-             len(dates), len(existing_dates))
-
-    for i, dt in enumerate(dates):
-        date_str = dt.strftime("%Y-%m-%d")
-        date_api = dt.strftime("%Y%m%d")
-
-        if date_str in existing_dates:
-            skipped += 1
-            continue
-
-        data = client.get_json("/TradingSummary/GetBrokerSummary",
-                               params={"date": date_api, "start": 0, "length": 9999})
-
-        if data and isinstance(data.get("data"), list) and len(data["data"]) > 0:
-            date_index[date_str] = data["data"]
-            fetched += 1
-            log.info("[%d/%d] %s: %d brokers", i + 1, len(dates), date_str, len(data["data"]))
-        else:
-            skipped += 1
-            continue
-
-        if fetched > 0 and fetched % save_every == 0:
-            _save_timeseries(filepath, date_index)
-
-    total = _save_timeseries(filepath, date_index)
-    log.info("Broker summary backfill done: fetched=%d, skipped=%d, total=%d",
-             fetched, skipped, total)
-    return {"dates_fetched": fetched, "dates_skipped": skipped, "total_records": total, "file": filepath}
-
-
-def backfill_index_summary(start_date, end_date, client=None, save_every=5):
-    """Fetches index summaries (IHSG, LQ45, sectoral) for every trading day."""
-    if client is None:
-        client = IDXClient()
-
-    filepath = os.path.join(TIMESERIES_DIR, "index_summary.json")
-    date_index = _load_existing_records(filepath)
-    existing_dates = set(date_index.keys())
-
-    dates = list(_trading_days(start_date, end_date))
-    fetched = 0
-    skipped = 0
-
-    log.info("Backfill index summary: %d trading days, %d cached",
-             len(dates), len(existing_dates))
-
-    for i, dt in enumerate(dates):
-        date_str = dt.strftime("%Y-%m-%d")
-        date_api = dt.strftime("%Y%m%d")
-
-        if date_str in existing_dates:
-            skipped += 1
-            continue
-
-        data = client.get_json("/TradingSummary/GetIndexSummary",
-                               params={"date": date_api, "start": 0, "length": 9999})
-
-        if data and isinstance(data.get("data"), list) and len(data["data"]) > 0:
-            date_index[date_str] = data["data"]
-            fetched += 1
-            log.info("[%d/%d] %s: %d indices", i + 1, len(dates), date_str, len(data["data"]))
-        else:
-            skipped += 1
-            continue
-
-        if fetched > 0 and fetched % save_every == 0:
-            _save_timeseries(filepath, date_index)
-
-    total = _save_timeseries(filepath, date_index)
-    log.info("Index summary backfill done: fetched=%d, skipped=%d, total=%d",
-             fetched, skipped, total)
-    return {"dates_fetched": fetched, "dates_skipped": skipped, "total_records": total, "file": filepath}

@@ -2,8 +2,12 @@ import os
 import sys
 from unittest.mock import MagicMock
 
-# Mock curl_cffi before importing scrape_financial_ratio
-sys.modules["curl_cffi"] = MagicMock()
+# Mock curl_cffi only if unavailable – a global MagicMock here would leak into
+# other tests' imports (e.g. break pyarrow/pandas) when the real package exists.
+try:
+    import curl_cffi  # noqa: F401
+except ImportError:
+    sys.modules["curl_cffi"] = MagicMock()
 
 # Add the parent directory to sys.path to import the module being tested
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
