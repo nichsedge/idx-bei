@@ -15,8 +15,8 @@ Usage:
   uv run python cli.py all
 """
 
+import argparse
 import logging
-import sys
 
 from idx.pipelines.daily import ingest_daily
 from idx.pipelines.parquet import export_all as export_all_parquet
@@ -34,48 +34,52 @@ from idx.scrapers.trading import fetch_broker_summary, fetch_index_summary, fetc
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 
-def print_help():
-    print("""
-IDX BEI Toolkit - Unified CLI
+SNAPSHOT_SCRAPERS = {
+    "company": ("Scrape all listed company profiles", lambda: fetch_company_profiles()),
+    "financial": ("Scrape financial ratios and fundamental statistics", lambda: fetch_financial_ratios()),
+    "corporate": ("Scrape corporate actions across all 15 types", lambda: fetch_corporate_actions()),
+    "brokers": ("Scrape exchange members & broker search directory", lambda: fetch_broker_search()),
+}
 
-Scrapers:
-  company        Scrape all listed company profiles
-  financial      Scrape financial ratios and fundamental statistics
-  corporate      Scrape corporate actions across all 15 types
-  brokers        Scrape exchange members & broker search directory
-  trading        Scrape stock summary (OHLCV), index summary & broker flow
-  news           Scrape market news & headlines
-  announcements  Scrape company announcements & PDF filings
 
-Historical & Pipelines:
-  backfill       Historical OHLCV backfill over a date range
-                   --start YYYYMMDD  --end YYYYMMDD  [--type stock|broker|index|all]
-  parquet        Export all datasets to Parquet format
-  daily          Run daily ingestion (today or specific YYYYMMDD)
+def build_parser():
+    parser = argparse.ArgumentParser(
+        prog="cli.py",
+        description="IDX BEI Toolkit - Unified CLI for scrapers and analysis pipelines",
+    )
+    sub = parser.add_subparsers(dest="command", required=True)
 
-Meta:
-  all            Run all snapshot scrapers sequentially
-""")
+    # Snapshot scrapers with no arguments
+    for name, (help_text, _) in SNAPSHOT_SCRAPERS.items():
+        sub.add_parser(name, help=help_text)
 
-def main():
-    if len(sys.argv) < 2:
-        print_help()
-        return
+    sub.add_parser("trading", help="Scrape stock summary (OHLCV), index summary & broker flow")
+    sub.add_parser("news", help="Scrape market news & headlines")
+    sub.add_parser("announcements", help="Scrape company announcements & PDF filings")
 
-    cmd = sys.argv[1].lower()
+    p_backfill = sub.add_parser("backfill", help="Historical OHLCV backfill over a date range")
+    p_backfill.add_argument("--start", required=True, metavar="YYYYMMDD", help="Start date")
+    p_backfill.add_argument("--end", required=True, metavar="YYYYMMDD", help="End date")
+    p_backfill.add_argument("--type", choices=["stock", "broker", "index", "all"], default="all",
+                            help="Which summaries to backfill (default: all)")
 
-    if cmd == "company":
-        print("--- Scraping Company Profiles ---")
-        fetch_company_profiles()
-    elif cmd == "financial":
-        print("--- Scraping Financial Ratios ---")
-        fetch_financial_ratios()
-    elif cmd == "corporate":
-        print("--- Scraping Corporate Actions ---")
-        fetch_corporate_actions()
-    elif cmd == "brokers":
-        print("--- Scraping Broker Search Directory ---")
-        fetch_broker_search()
+    sub.add_parser("parquet", help="Export all datasets to Parquet format")
+
+    p_daily = sub.add_parser("daily", help="Run daily ingestion (today or specific YYYYMMDD)")
+    p_daily.add_argument("date", nargs="?", default=None, metavar="YYYYMMDD",
+                         help="Optional date override")
+
+    sub.add_parser("all", help="Run all snapshot scrapers sequentially")
+    return parser
+
+
+def main(argv=None):
+    args = build_parser().parse_args(argv)
+    cmd = args.command
+
+    if cmd in SNAPSHOT_SCRAPERS:
+        print(f"--- {cmd.capitalize()}: Scraping ---")
+        SNAPSHOT_SCRAPERS[cmd][1]()
     elif cmd == "trading":
         print("--- Scraping Trading Summaries ---")
         fetch_stock_summary()
@@ -88,35 +92,13 @@ def main():
         print("--- Scraping Company Announcements ---")
         fetch_all_announcements()
     elif cmd == "backfill":
-        start_date = None
-        end_date = None
-        backfill_type = "all"
-        i = 2
-        while i < len(sys.argv):
-            if sys.argv[i] == "--start" and i + 1 < len(sys.argv):
-                start_date = sys.argv[i + 1]
-                i += 2
-            elif sys.argv[i] == "--end" and i + 1 < len(sys.argv):
-                end_date = sys.argv[i + 1]
-                i += 2
-            elif sys.argv[i] == "--type" and i + 1 < len(sys.argv):
-                backfill_type = sys.argv[i + 1]
-                i += 2
-            else:
-                i += 1
-
-        if not start_date or not end_date:
-            print("Error: --start and --end are required for backfill")
-            print("  Usage: cli.py backfill --start 20260101 --end 20260807")
-            return
-
-        print(f"=== Historical Backfill: {start_date} → {end_date} (type={backfill_type}) ===")
-        if backfill_type in ("stock", "all"):
-            backfill_stock_summary(start_date, end_date)
-        if backfill_type in ("broker", "all"):
-            backfill_broker_summary(start_date, end_date)
-        if backfill_type in ("index", "all"):
-            backfill_index_summary(start_date, end_date)
+        print(f"=== Historical Backfill: {args.start} → {args.end} (type={args.type}) ===")
+        if args.type in ("stock", "all"):
+            backfill_stock_summary(args.start, args.end)
+        if args.type in ("broker", "all"):
+            backfill_broker_summary(args.start, args.end)
+        if args.type in ("index", "all"):
+            backfill_index_summary(args.start, args.end)
     elif cmd == "parquet":
         print("=== Exporting All Datasets to Parquet ===")
         results = export_all_parquet()
@@ -126,9 +108,8 @@ def main():
             else:
                 print(f"  {name}: {info}")
     elif cmd == "daily":
-        date_arg = sys.argv[2] if len(sys.argv) > 2 else None
-        print(f"=== Daily Ingestion ({date_arg or 'today'}) ===")
-        ingest_daily(date=date_arg)
+        print(f"=== Daily Ingestion ({args.date or 'today'}) ===")
+        ingest_daily(date=args.date)
     elif cmd == "all":
         print("=== Running All Snapshot Scrapers ===")
         fetch_company_profiles()
@@ -140,9 +121,7 @@ def main():
         fetch_index_summary()
         fetch_news_search()
         fetch_all_announcements()
-    else:
-        print(f"Unknown command: '{cmd}'")
-        print_help()
+
 
 if __name__ == "__main__":
     main()
