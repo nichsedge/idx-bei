@@ -9,6 +9,7 @@ import time
 
 LOG_FORMAT = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 
+
 def get_logger(name):
     """Returns a logger configured with a consistent format."""
     logger = logging.getLogger(name)
@@ -19,6 +20,7 @@ def get_logger(name):
         logger.setLevel(logging.INFO)
     return logger
 
+
 _log = get_logger("idx.core.utils")
 
 # Absolute path resolving to repository's data/ directory
@@ -27,9 +29,11 @@ SCHEMA_SNAPSHOT_FILE = os.path.join(DATA_DIR, ".schema_snapshots.json")
 SCRAPE_STATS_FILE = os.path.join(DATA_DIR, ".scrape_stats.json")
 RAW_ARCHIVE_DIR = os.path.join(DATA_DIR, ".raw_archive")
 
+
 def ensure_data_dir():
     """Ensures the data directory exists."""
     os.makedirs(DATA_DIR, exist_ok=True)
+
 
 def load_json(file_path, default=None):
     """Loads JSON data from a file or returns default."""
@@ -37,7 +41,7 @@ def load_json(file_path, default=None):
         default = {}
     if os.path.exists(file_path):
         try:
-            with open(file_path, encoding='utf-8') as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
                 return json.loads(content) if content else default
         except (OSError, json.JSONDecodeError) as exc:
@@ -45,17 +49,19 @@ def load_json(file_path, default=None):
             return default
     return default
 
+
 def save_json(file_path, data):
     """Saves data to a JSON file atomically."""
     ensure_data_dir()
     tmp_path = file_path + ".tmp"
     try:
-        with open(tmp_path, 'w', encoding='utf-8') as f:
+        with open(tmp_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
         os.replace(tmp_path, file_path)
         _log.info("Saved %s", os.path.basename(file_path))
     except OSError as exc:
         _log.error("Error saving %s: %s", file_path, exc)
+
 
 SCHEMAS = {
     "company_profiles_list": {
@@ -68,9 +74,19 @@ SCHEMAS = {
     "financial_ratio_page": {
         "required_keys": {"data"},
         "data_item_keys": {
-            "code", "stockName", "sector", "subSector",
-            "assets", "liabilities", "equity", "sales",
-            "eps", "per", "roa", "roe", "npm",
+            "code",
+            "stockName",
+            "sector",
+            "subSector",
+            "assets",
+            "liabilities",
+            "equity",
+            "sales",
+            "eps",
+            "per",
+            "roa",
+            "roe",
+            "npm",
         },
     },
     "broker_search": {
@@ -80,8 +96,17 @@ SCHEMAS = {
     "stock_summary": {
         "required_keys": {"draw", "recordsTotal", "recordsFiltered", "data"},
         "data_item_keys": {
-            "StockCode", "StockName", "OpenPrice", "High", "Low", "Close",
-            "Volume", "Value", "Frequency", "ForeignBuy", "ForeignSell",
+            "StockCode",
+            "StockName",
+            "OpenPrice",
+            "High",
+            "Low",
+            "Close",
+            "Volume",
+            "Value",
+            "Frequency",
+            "ForeignBuy",
+            "ForeignSell",
         },
     },
     "broker_summary": {
@@ -104,8 +129,10 @@ SCHEMAS = {
     },
 }
 
+
 class SchemaDriftError(Exception):
     """Raised when an API response violates expected schema."""
+
 
 def validate_schema(data, schema_name, *, strict=False):
     """Checks data against declared SCHEMAS."""
@@ -135,19 +162,22 @@ def validate_schema(data, schema_name, *, strict=False):
 
     return warnings
 
+
 def _fingerprint(obj, *, depth=0, max_depth=3):
     """Recursively extracts type skeleton."""
     if depth > max_depth:
         return type(obj).__name__
 
     if isinstance(obj, dict):
-        return {k: _fingerprint(v, depth=depth + 1, max_depth=max_depth)
-                for k, v in sorted(obj.items())}
+        return {
+            k: _fingerprint(v, depth=depth + 1, max_depth=max_depth) for k, v in sorted(obj.items())
+        }
     elif isinstance(obj, list):
         if obj:
             return [_fingerprint(obj[0], depth=depth + 1, max_depth=max_depth)]
         return ["empty"]
     return type(obj).__name__
+
 
 def check_schema_drift(endpoint_name, data):
     """Compares response fingerprint against stored snapshot."""
@@ -170,6 +200,7 @@ def check_schema_drift(endpoint_name, data):
 
     return False
 
+
 def check_count_anomaly(endpoint_name, current_count, *, threshold_pct=0.15):
     """Warns if current_count deviates from stored baseline by > threshold_pct."""
     ensure_data_dir()
@@ -183,13 +214,19 @@ def check_count_anomaly(endpoint_name, current_count, *, threshold_pct=0.15):
         if abs(pct_change) > threshold_pct:
             _log.warning(
                 "[COUNT ANOMALY] '%s': was %d, now %d (%+.1f%% change)",
-                endpoint_name, prev_count, current_count, pct_change * 100,
+                endpoint_name,
+                prev_count,
+                current_count,
+                pct_change * 100,
             )
             anomaly = True
         else:
             _log.info(
                 "[COUNT OK] '%s': %d records (%+.1f%% vs previous %d)",
-                endpoint_name, current_count, pct_change * 100, prev_count,
+                endpoint_name,
+                current_count,
+                pct_change * 100,
+                prev_count,
             )
     else:
         _log.info("[COUNT] '%s': baseline set to %d", endpoint_name, current_count)
@@ -201,24 +238,28 @@ def check_count_anomaly(endpoint_name, current_count, *, threshold_pct=0.15):
     save_json(SCRAPE_STATS_FILE, history)
     return anomaly
 
+
 def archive_raw_response(endpoint_name, raw_text):
     """Persists raw HTTP text for post-mortem debugging."""
     os.makedirs(RAW_ARCHIVE_DIR, exist_ok=True)
     ts = time.strftime("%Y%m%d_%H%M%S")
     path = os.path.join(RAW_ARCHIVE_DIR, f"{endpoint_name}_{ts}.json")
     try:
-        with open(path, 'w', encoding='utf-8') as f:
+        with open(path, "w", encoding="utf-8") as f:
             f.write(raw_text)
         _log.info("[ARCHIVE] Saved raw response → %s", os.path.basename(path))
     except OSError as exc:
         _log.error("[ARCHIVE] Failed to save: %s", exc)
     return path
 
+
 def check_records_total_consistency(data, label=""):
     """Checks recordsTotal against len(data)."""
     records_total = data.get("recordsTotal")
     actual = len(data.get("data", []))
     if records_total is not None and records_total != actual:
-        _log.warning("[RECORDS MISMATCH] %s: recordsTotal=%d but len(data)=%d", label, records_total, actual)
+        _log.warning(
+            "[RECORDS MISMATCH] %s: recordsTotal=%d but len(data)=%d", label, records_total, actual
+        )
         return False
     return True

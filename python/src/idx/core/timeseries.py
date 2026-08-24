@@ -53,7 +53,7 @@ def existing_dates(dataset, base_dir=None):
     dates = {}
     for path in glob.glob(pattern):
         basename = os.path.basename(path)  # date=YYYY-MM-DD.parquet
-        dates[basename[len("date="):-len(".parquet")]] = path
+        dates[basename[len("date=") : -len(".parquet")]] = path
     return dates
 
 
@@ -98,8 +98,7 @@ def read_dataset(dataset, start=None, end=None, base_dir=None):
     """
     dates = existing_dates(dataset, base_dir)
     selected = sorted(
-        d for d, _ in dates.items()
-        if (start is None or d >= start) and (end is None or d <= end)
+        d for d, _ in dates.items() if (start is None or d >= start) and (end is None or d <= end)
     )
 
     if not selected:
@@ -107,8 +106,11 @@ def read_dataset(dataset, start=None, end=None, base_dir=None):
 
     tables = [pq.read_table(dates[d]) for d in selected]
     df = pa.concat_tables(tables).to_pandas()
-    df.sort_values(["Date"] + [c for c in df.columns if c.endswith(("Code", "Firm"))],
-                   inplace=True, ignore_index=True)
+    df.sort_values(
+        ["Date"] + [c for c in df.columns if c.endswith(("Code", "Firm"))],
+        inplace=True,
+        ignore_index=True,
+    )
     return df
 
 

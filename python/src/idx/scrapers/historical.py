@@ -55,21 +55,33 @@ def backfill_stock_summary(start_date, end_date, client=None):
         dict with 'dates_fetched', 'dates_skipped', 'total_records'
     """
     return _backfill_dataset(
-        "stock_summary", "/TradingSummary/GetStockSummary", start_date, end_date, client,
+        "stock_summary",
+        "/TradingSummary/GetStockSummary",
+        start_date,
+        end_date,
+        client,
     )
 
 
 def backfill_broker_summary(start_date, end_date, client=None):
     """Fetches broker transaction summaries for every trading day in [start_date, end_date]."""
     return _backfill_dataset(
-        "broker_summary", "/TradingSummary/GetBrokerSummary", start_date, end_date, client,
+        "broker_summary",
+        "/TradingSummary/GetBrokerSummary",
+        start_date,
+        end_date,
+        client,
     )
 
 
 def backfill_index_summary(start_date, end_date, client=None):
     """Fetches index summaries (IHSG, LQ45, sectoral) for every trading day in range."""
     return _backfill_dataset(
-        "index_summary", "/TradingSummary/GetIndexSummary", start_date, end_date, client,
+        "index_summary",
+        "/TradingSummary/GetIndexSummary",
+        start_date,
+        end_date,
+        client,
     )
 
 
@@ -89,9 +101,14 @@ def _backfill_dataset(dataset, endpoint, start_date, end_date, client=None):
     errors = 0
     total = 0
 
-    log.info("Backfill %s: %d trading days (%s → %s), %d already cached",
-             dataset, len(dates), dates[0] if dates else "?",
-             dates[-1] if dates else "?", len(have))
+    log.info(
+        "Backfill %s: %d trading days (%s → %s), %d already cached",
+        dataset,
+        len(dates),
+        dates[0] if dates else "?",
+        dates[-1] if dates else "?",
+        len(have),
+    )
 
     for i, dt in enumerate(dates):
         date_str = dt.strftime("%Y-%m-%d")
@@ -118,8 +135,14 @@ def _backfill_dataset(dataset, endpoint, start_date, end_date, client=None):
             skipped += 1
             log.debug("[%d/%d] %s: no data (holiday?)", i + 1, len(dates), date_str)
 
-    log.info("Backfill %s done: fetched=%d, skipped=%d, errors=%d, total_records=%d",
-             dataset, fetched, skipped, errors, total)
+    log.info(
+        "Backfill %s done: fetched=%d, skipped=%d, errors=%d, total_records=%d",
+        dataset,
+        fetched,
+        skipped,
+        errors,
+        total,
+    )
     return {
         "dataset": dataset,
         "dates_fetched": fetched,

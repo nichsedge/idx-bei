@@ -21,6 +21,7 @@ from idx.core.utils import (
 # validate_schema
 # ---------------------------------------------------------------------------
 
+
 class TestValidateSchema:
     """Tests for required-key validation against registered schemas."""
 
@@ -109,6 +110,7 @@ class TestValidateSchema:
 # _fingerprint
 # ---------------------------------------------------------------------------
 
+
 class TestFingerprint:
     """Tests for the structural fingerprinting helper."""
 
@@ -129,6 +131,7 @@ class TestFingerprint:
 # ---------------------------------------------------------------------------
 # check_schema_drift
 # ---------------------------------------------------------------------------
+
 
 class TestCheckSchemaDrift:
     """Tests for snapshot-based structural drift detection."""
@@ -163,6 +166,7 @@ class TestCheckSchemaDrift:
 # ---------------------------------------------------------------------------
 # check_count_anomaly
 # ---------------------------------------------------------------------------
+
 
 class TestCheckCountAnomaly:
     """Tests for record-count anomaly detection."""
@@ -200,8 +204,8 @@ class TestCheckCountAnomaly:
 # check_records_total_consistency
 # ---------------------------------------------------------------------------
 
-class TestRecordsTotalConsistency:
 
+class TestRecordsTotalConsistency:
     def test_matching_counts(self):
         data = {"recordsTotal": 3, "data": [1, 2, 3]}
         assert check_records_total_consistency(data, "test") is True

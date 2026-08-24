@@ -36,8 +36,14 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(na
 
 SNAPSHOT_SCRAPERS = {
     "company": ("Scrape all listed company profiles", lambda: fetch_company_profiles()),
-    "financial": ("Scrape financial ratios and fundamental statistics", lambda: fetch_financial_ratios()),
-    "corporate": ("Scrape corporate actions across all 15 types", lambda: fetch_corporate_actions()),
+    "financial": (
+        "Scrape financial ratios and fundamental statistics",
+        lambda: fetch_financial_ratios(),
+    ),
+    "corporate": (
+        "Scrape corporate actions across all 15 types",
+        lambda: fetch_corporate_actions(),
+    ),
     "brokers": ("Scrape exchange members & broker search directory", lambda: fetch_broker_search()),
 }
 
@@ -60,14 +66,19 @@ def build_parser():
     p_backfill = sub.add_parser("backfill", help="Historical OHLCV backfill over a date range")
     p_backfill.add_argument("--start", required=True, metavar="YYYYMMDD", help="Start date")
     p_backfill.add_argument("--end", required=True, metavar="YYYYMMDD", help="End date")
-    p_backfill.add_argument("--type", choices=["stock", "broker", "index", "all"], default="all",
-                            help="Which summaries to backfill (default: all)")
+    p_backfill.add_argument(
+        "--type",
+        choices=["stock", "broker", "index", "all"],
+        default="all",
+        help="Which summaries to backfill (default: all)",
+    )
 
     sub.add_parser("parquet", help="Export all datasets to Parquet format")
 
     p_daily = sub.add_parser("daily", help="Run daily ingestion (today or specific YYYYMMDD)")
-    p_daily.add_argument("date", nargs="?", default=None, metavar="YYYYMMDD",
-                         help="Optional date override")
+    p_daily.add_argument(
+        "date", nargs="?", default=None, metavar="YYYYMMDD", help="Optional date override"
+    )
 
     sub.add_parser("all", help="Run all snapshot scrapers sequentially")
     return parser

@@ -26,7 +26,7 @@ class TestNeo4jIngest(unittest.TestCase):
         dummy_path = "non_existent_file_12345.json"
 
         # Capture stdout to verify the error message
-        with patch('sys.stdout', new=StringIO()) as fake_out:
+        with patch("sys.stdout", new=StringIO()) as fake_out:
             # The function should catch FileNotFoundError and return None
             result = neo4j_ingest.ingest_all_stock_profiles(data_path=dummy_path)
 
@@ -40,13 +40,14 @@ class TestNeo4jIngest(unittest.TestCase):
         dummy_path = "non_existent_file_12345.json"
 
         # Capture stdout to verify the error message
-        with patch('sys.stdout', new=StringIO()) as fake_out:
+        with patch("sys.stdout", new=StringIO()) as fake_out:
             # The function should catch FileNotFoundError and return None
             result = neo4j_ingest.ingest_all_stock_summaries(data_path=dummy_path)
 
             output = fake_out.getvalue().strip()
             self.assertIn(f"Error: Data file not found at {dummy_path}", output)
             self.assertIsNone(result)
+
 
 if __name__ == "__main__":
     unittest.main()

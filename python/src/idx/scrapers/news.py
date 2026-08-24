@@ -11,6 +11,7 @@ from idx.core.utils import (
 
 log = get_logger("idx.scrapers.news")
 
+
 def fetch_news_search(page_number=1, page_size=100, locale="id-id", client=None):
     """Fetches news and market headlines."""
     if client is None:
@@ -28,18 +29,14 @@ def fetch_news_search(page_number=1, page_size=100, locale="id-id", client=None)
         return data
     return None
 
+
 def fetch_all_announcements(keywords="", page_number=1, page_size=100, lang="id", client=None):
     """Fetches company disclosures and PDF filings."""
     if client is None:
         client = IDXClient()
 
     endpoint = "/NewsAnnouncement/GetAllAnnouncement"
-    params = {
-        "keywords": keywords,
-        "pageNumber": page_number,
-        "pageSize": page_size,
-        "lang": lang
-    }
+    params = {"keywords": keywords, "pageNumber": page_number, "pageSize": page_size, "lang": lang}
 
     log.info("Fetching company announcements (keywords='%s', page=%d)...", keywords, page_number)
     data = client.get_json(endpoint, params=params)

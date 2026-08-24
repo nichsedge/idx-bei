@@ -43,13 +43,29 @@ def _load_json(filepath):
 # ── Stock Summary (OHLCV) Time-Series ─────────────────────────────────────────
 
 STOCK_COLUMNS = [
-    "Date", "StockCode", "StockName",
-    "Previous", "OpenPrice", "High", "Low", "Close", "Change",
-    "Volume", "Value", "Frequency",
-    "ForeignBuy", "ForeignSell",
-    "Bid", "BidVolume", "Offer", "OfferVolume",
-    "ListedShares", "TradebleShares",
-    "NonRegularVolume", "NonRegularValue", "NonRegularFrequency",
+    "Date",
+    "StockCode",
+    "StockName",
+    "Previous",
+    "OpenPrice",
+    "High",
+    "Low",
+    "Close",
+    "Change",
+    "Volume",
+    "Value",
+    "Frequency",
+    "ForeignBuy",
+    "ForeignSell",
+    "Bid",
+    "BidVolume",
+    "Offer",
+    "OfferVolume",
+    "ListedShares",
+    "TradebleShares",
+    "NonRegularVolume",
+    "NonRegularValue",
+    "NonRegularFrequency",
 ]
 
 STOCK_DTYPES = {
@@ -127,8 +143,12 @@ def export_stock_timeseries(output=None):
     pq.write_table(table, output, compression="snappy")
 
     size_mb = os.path.getsize(output) / (1024 * 1024)
-    log.info("Exported stock_summary.parquet: %d rows × %d cols (%.2f MB)",
-             len(df), len(df.columns), size_mb)
+    log.info(
+        "Exported stock_summary.parquet: %d rows × %d cols (%.2f MB)",
+        len(df),
+        len(df.columns),
+        size_mb,
+    )
 
     return {
         "rows": len(df),
@@ -139,6 +159,7 @@ def export_stock_timeseries(output=None):
 
 
 # ── Broker Summary Time-Series ────────────────────────────────────────────────
+
 
 def export_broker_timeseries(output=None):
     """Consolidates broker-summary date partitions → single Parquet file."""
@@ -164,12 +185,22 @@ def export_broker_timeseries(output=None):
     pq.write_table(table, output, compression="snappy")
 
     size_mb = os.path.getsize(output) / (1024 * 1024)
-    log.info("Exported broker_summary.parquet: %d rows × %d cols (%.2f MB)",
-             len(df), len(df.columns), size_mb)
-    return {"rows": len(df), "columns": len(df.columns), "file": output, "size_mb": round(size_mb, 2)}
+    log.info(
+        "Exported broker_summary.parquet: %d rows × %d cols (%.2f MB)",
+        len(df),
+        len(df.columns),
+        size_mb,
+    )
+    return {
+        "rows": len(df),
+        "columns": len(df.columns),
+        "file": output,
+        "size_mb": round(size_mb, 2),
+    }
 
 
 # ── Index Summary Time-Series ─────────────────────────────────────────────────
+
 
 def export_index_timeseries(output=None):
     """Consolidates index-summary date partitions → single Parquet file."""
@@ -185,8 +216,17 @@ def export_index_timeseries(output=None):
     if "Date" in df.columns:
         df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
 
-    numeric_cols = ["Previous", "Highest", "Lowest", "Close", "Change",
-                    "Volume", "Value", "Frequency", "MarketCapital"]
+    numeric_cols = [
+        "Previous",
+        "Highest",
+        "Lowest",
+        "Close",
+        "Change",
+        "Volume",
+        "Value",
+        "Frequency",
+        "MarketCapital",
+    ]
     for col in numeric_cols:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
@@ -201,12 +241,22 @@ def export_index_timeseries(output=None):
     pq.write_table(table, output, compression="snappy")
 
     size_mb = os.path.getsize(output) / (1024 * 1024)
-    log.info("Exported index_summary.parquet: %d rows × %d cols (%.2f MB)",
-             len(df), len(df.columns), size_mb)
-    return {"rows": len(df), "columns": len(df.columns), "file": output, "size_mb": round(size_mb, 2)}
+    log.info(
+        "Exported index_summary.parquet: %d rows × %d cols (%.2f MB)",
+        len(df),
+        len(df.columns),
+        size_mb,
+    )
+    return {
+        "rows": len(df),
+        "columns": len(df.columns),
+        "file": output,
+        "size_mb": round(size_mb, 2),
+    }
 
 
 # ── Snapshot Exports ──────────────────────────────────────────────────────────
+
 
 def export_financial_ratios(source=None, output=None):
     """Converts financial ratios snapshot JSON → Parquet."""
@@ -235,9 +285,23 @@ def export_financial_ratios(source=None, output=None):
     df = pd.DataFrame(records)
 
     numeric_cols = [
-        "assets", "liabilities", "equity", "sales", "operatingProfit",
-        "netIncome", "eps", "per", "pbv", "roa", "roe", "npm", "opm",
-        "der", "currentRatio", "marketCap", "dividendYield",
+        "assets",
+        "liabilities",
+        "equity",
+        "sales",
+        "operatingProfit",
+        "netIncome",
+        "eps",
+        "per",
+        "pbv",
+        "roa",
+        "roe",
+        "npm",
+        "opm",
+        "der",
+        "currentRatio",
+        "marketCap",
+        "dividendYield",
     ]
     for col in numeric_cols:
         if col in df.columns:
@@ -249,9 +313,18 @@ def export_financial_ratios(source=None, output=None):
     pq.write_table(table, output, compression="snappy")
 
     size_mb = os.path.getsize(output) / (1024 * 1024)
-    log.info("Exported financial_ratios.parquet: %d rows × %d cols (%.2f MB)",
-             len(df), len(df.columns), size_mb)
-    return {"rows": len(df), "columns": len(df.columns), "file": output, "size_mb": round(size_mb, 2)}
+    log.info(
+        "Exported financial_ratios.parquet: %d rows × %d cols (%.2f MB)",
+        len(df),
+        len(df.columns),
+        size_mb,
+    )
+    return {
+        "rows": len(df),
+        "columns": len(df.columns),
+        "file": output,
+        "size_mb": round(size_mb, 2),
+    }
 
 
 def export_corporate_actions(source=None, output=None):
@@ -286,12 +359,22 @@ def export_corporate_actions(source=None, output=None):
     pq.write_table(table, output, compression="snappy")
 
     size_mb = os.path.getsize(output) / (1024 * 1024)
-    log.info("Exported corporate_actions.parquet: %d rows × %d cols (%.2f MB)",
-             len(df), len(df.columns), size_mb)
-    return {"rows": len(df), "columns": len(df.columns), "file": output, "size_mb": round(size_mb, 2)}
+    log.info(
+        "Exported corporate_actions.parquet: %d rows × %d cols (%.2f MB)",
+        len(df),
+        len(df.columns),
+        size_mb,
+    )
+    return {
+        "rows": len(df),
+        "columns": len(df.columns),
+        "file": output,
+        "size_mb": round(size_mb, 2),
+    }
 
 
 # ── Export All ────────────────────────────────────────────────────────────────
+
 
 def export_all():
     """Runs all parquet exports. Returns summary dict."""
@@ -311,5 +394,7 @@ def export_all():
             log.error("Failed to export %s: %s", name, exc)
             results[name] = {"status": "error", "message": str(exc)}
 
-    log.info("Export all complete: %s", {k: v.get("rows", v.get("status")) for k, v in results.items()})
+    log.info(
+        "Export all complete: %s", {k: v.get("rows", v.get("status")) for k, v in results.items()}
+    )
     return results

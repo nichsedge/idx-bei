@@ -14,19 +14,28 @@ def base_dir(tmp_path):
 
 
 def _write_two_partitions(base_dir):
-    ts.write_partition("stock_summary", "2026-01-05",
-                       [{"Date": "2026-01-05T00:00:00", "StockCode": "BBCA", "Close": 9000},
-                        {"Date": "2026-01-05T00:00:00", "StockCode": "BBRI", "Close": 4200}],
-                       base_dir)
-    ts.write_partition("stock_summary", "2026-01-06",
-                       [{"Date": "2026-01-06T00:00:00", "StockCode": "BBCA", "Close": 9100}],
-                       base_dir)
+    ts.write_partition(
+        "stock_summary",
+        "2026-01-05",
+        [
+            {"Date": "2026-01-05T00:00:00", "StockCode": "BBCA", "Close": 9000},
+            {"Date": "2026-01-05T00:00:00", "StockCode": "BBRI", "Close": 4200},
+        ],
+        base_dir,
+    )
+    ts.write_partition(
+        "stock_summary",
+        "2026-01-06",
+        [{"Date": "2026-01-06T00:00:00", "StockCode": "BBCA", "Close": 9100}],
+        base_dir,
+    )
 
 
 class TestWritePartition:
     def test_creates_partition_file(self, base_dir):
-        path = ts.write_partition("stock_summary", "2026-01-05",
-                                  [{"Date": "2026-01-05", "StockCode": "BBCA"}], base_dir)
+        path = ts.write_partition(
+            "stock_summary", "2026-01-05", [{"Date": "2026-01-05", "StockCode": "BBCA"}], base_dir
+        )
         assert os.path.exists(path)
 
     def test_rejects_empty_records(self, base_dir):
@@ -57,8 +66,9 @@ class TestReadDataset:
 
     def test_date_filter(self, base_dir):
         _write_two_partitions(base_dir)
-        df = ts.read_dataset("stock_summary", start="2026-01-06", end="2026-01-06",
-                             base_dir=base_dir)
+        df = ts.read_dataset(
+            "stock_summary", start="2026-01-06", end="2026-01-06", base_dir=base_dir
+        )
         assert len(df) == 1
         assert df.iloc[0]["StockCode"] == "BBCA"
 

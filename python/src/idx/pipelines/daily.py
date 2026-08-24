@@ -95,6 +95,7 @@ def ingest_daily(date=None, client=None, export_parquet=True):
     if export_parquet:
         try:
             from idx.pipelines.parquet import export_all
+
             results["parquet_export"] = export_all()
             log.info("Parquet export complete")
         except Exception as exc:
@@ -102,16 +103,19 @@ def ingest_daily(date=None, client=None, export_parquet=True):
             results["parquet_export"] = {"status": "error", "message": str(exc)}
 
     log.info("=" * 60)
-    log.info("Daily ingestion complete: %s",
-             {k: (v.get("status", "?") if isinstance(v, dict) else "ok")
-              for k, v in results.items()})
+    log.info(
+        "Daily ingestion complete: %s",
+        {k: (v.get("status", "?") if isinstance(v, dict) else "ok") for k, v in results.items()},
+    )
     log.info("=" * 60)
 
     return results
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+    )
 
     # Accept optional date argument: python -m idx.pipelines.daily 20260807
     date_arg = sys.argv[1] if len(sys.argv) > 1 else None

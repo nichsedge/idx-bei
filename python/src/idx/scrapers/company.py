@@ -12,6 +12,7 @@ from idx.core.utils import (
 
 log = get_logger("idx.scrapers.company")
 
+
 def fetch_company_profiles(client=None, start=0, length=9999):
     """Fetches full list of listed company profiles."""
     if client is None:
@@ -29,6 +30,7 @@ def fetch_company_profiles(client=None, start=0, length=9999):
         check_records_total_consistency(data, label="company_profiles_list")
         return data
     return None
+
 
 def fetch_company_detail(kode_emiten, client=None, language="id-id"):
     """Fetches details for a single company ticker."""

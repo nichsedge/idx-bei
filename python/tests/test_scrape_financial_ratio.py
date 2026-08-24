@@ -10,7 +10,7 @@ except ImportError:
     sys.modules["curl_cffi"] = MagicMock()
 
 # Add the parent directory to sys.path to import the module being tested
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from urllib.parse import parse_qs, urlparse
 
@@ -33,7 +33,8 @@ def test_build_url_page_one():
         assert query_params[key][0] == str(value)
 
     # Check if pageNumber is correctly set
-    assert query_params['pageNumber'][0] == '1'
+    assert query_params["pageNumber"][0] == "1"
+
 
 def test_build_url_different_page():
     """Test build_url with a different page_number"""
@@ -43,4 +44,4 @@ def test_build_url_different_page():
     parsed_url = urlparse(url)
     query_params = parse_qs(parsed_url.query, keep_blank_values=True)
 
-    assert query_params['pageNumber'][0] == str(page_num)
+    assert query_params["pageNumber"][0] == str(page_num)

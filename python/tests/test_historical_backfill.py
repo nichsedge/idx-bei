@@ -35,18 +35,31 @@ class TestBackfillDataset:
     def test_fetches_trading_days_only(self, ts_dir):
         # Mon 2026-01-05 .. Fri 2026-01-09; Sat/Sun excluded
         result = historical._backfill_dataset(
-            "stock_summary", "/TradingSummary/GetStockSummary",
-            "20260105", "20260111", client=FakeClient())
+            "stock_summary",
+            "/TradingSummary/GetStockSummary",
+            "20260105",
+            "20260111",
+            client=FakeClient(),
+        )
         assert result["dates_fetched"] == 5
         assert result["errors"] == 0
         assert set(ts.existing_dates("stock_summary")) == {
-            "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09"}
+            "2026-01-05",
+            "2026-01-06",
+            "2026-01-07",
+            "2026-01-08",
+            "2026-01-09",
+        }
 
     def test_skips_holidays_without_partition(self, ts_dir):
         client = FakeClient(empty_dates=["20260106"])
         result = historical._backfill_dataset(
-            "stock_summary", "/TradingSummary/GetStockSummary",
-            "20260105", "20260107", client=client)
+            "stock_summary",
+            "/TradingSummary/GetStockSummary",
+            "20260105",
+            "20260107",
+            client=client,
+        )
         assert result["dates_fetched"] == 2
         assert result["dates_skipped"] == 1
         assert "2026-01-06" not in ts.existing_dates("stock_summary")
@@ -54,20 +67,32 @@ class TestBackfillDataset:
     def test_counts_errors_and_continues(self, ts_dir):
         client = FakeClient(fail_dates=["20260106"])
         result = historical._backfill_dataset(
-            "stock_summary", "/TradingSummary/GetStockSummary",
-            "20260105", "20260107", client=client)
+            "stock_summary",
+            "/TradingSummary/GetStockSummary",
+            "20260105",
+            "20260107",
+            client=client,
+        )
         assert result["dates_fetched"] == 2
         assert result["errors"] == 1
         assert len(ts.existing_dates("stock_summary")) == 2
 
     def test_idempotent_rerun_skips_cached(self, ts_dir):
         historical._backfill_dataset(
-            "stock_summary", "/TradingSummary/GetStockSummary",
-            "20260105", "20260106", client=FakeClient())
+            "stock_summary",
+            "/TradingSummary/GetStockSummary",
+            "20260105",
+            "20260106",
+            client=FakeClient(),
+        )
         client = FakeClient()
         result = historical._backfill_dataset(
-            "stock_summary", "/TradingSummary/GetStockSummary",
-            "20260105", "20260106", client=client)
+            "stock_summary",
+            "/TradingSummary/GetStockSummary",
+            "20260105",
+            "20260106",
+            client=client,
+        )
         assert result["dates_fetched"] == 0
         assert result["dates_skipped"] == 2
         assert client.requested == []  # nothing re-fetched

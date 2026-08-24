@@ -28,10 +28,11 @@ QUERY_PARAMS = {
     "cumulative": "false",
     "pageSize": 100,
     "orderBy": "",
-    "search": ""
+    "search": "",
 }
 
 OUTPUT_FILE = os.path.join(DATA_DIR, "financial_ratio.json")
+
 
 def fetch_financial_ratios(year=2024, quarter=4, client=None, page_size=100):
     """Fetches paginated financial data and ratios across all companies."""
@@ -59,7 +60,12 @@ def fetch_financial_ratios(year=2024, quarter=4, client=None, page_size=100):
         if data and data.get("data") and len(data["data"]) > 0:
             records = data["data"]
             all_records.extend(records)
-            log.info("Retrieved %d records from page %d. Total: %d", len(records), page_number, len(all_records))
+            log.info(
+                "Retrieved %d records from page %d. Total: %d",
+                len(records),
+                page_number,
+                len(all_records),
+            )
 
             if page_number == 1:
                 validate_schema(data, "financial_ratio_page")

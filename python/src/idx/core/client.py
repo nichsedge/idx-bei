@@ -14,7 +14,7 @@ log = logging.getLogger("idx.core.client")
 
 def _backoff_with_jitter(retries, base=2.0, linear=0.5, jitter_frac=0.25):
     """Exponential backoff with random jitter to avoid thundering-herd retries."""
-    nominal = (base ** retries) + (linear * retries)
+    nominal = (base**retries) + (linear * retries)
     return nominal * (1.0 + random.uniform(0, jitter_frac))
 
 
@@ -23,8 +23,9 @@ DEFAULT_BASE_URL = "https://www.idx.co.id/primary"
 DEFAULT_HEADERS = {
     "accept": "application/json, text/plain, */*",
     "accept-language": "en-US,en;q=0.9",
-    "referer": "https://www.idx.co.id/"
+    "referer": "https://www.idx.co.id/",
 }
+
 
 class IDXRequestError(Exception):
     """Raised when a request ultimately fails (max retries exceeded or non-retryable HTTP error)."""
@@ -50,13 +51,19 @@ class IDXClient:
         retries = 0
         while retries <= self.max_retries:
             try:
-                log.debug("GET %s | params=%s (attempt %d/%d)", url, params, retries + 1, self.max_retries + 1)
+                log.debug(
+                    "GET %s | params=%s (attempt %d/%d)",
+                    url,
+                    params,
+                    retries + 1,
+                    self.max_retries + 1,
+                )
                 response = requests.get(
                     url,
                     params=params,
                     headers=self.headers,
                     impersonate=impersonate,
-                    timeout=timeout
+                    timeout=timeout,
                 )
 
                 status_code = response.status_code

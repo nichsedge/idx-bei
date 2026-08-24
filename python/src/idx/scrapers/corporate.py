@@ -34,8 +34,9 @@ CA_TYPES = [
     "kurangModal",
     "konversiSaham",
     "companyListing",
-    "partialDelisting"
+    "partialDelisting",
 ]
+
 
 def fetch_corporate_actions(ca_types=None, client=None):
     """Fetches corporate action records for all or specified ca_types."""
@@ -51,13 +52,7 @@ def fetch_corporate_actions(ca_types=None, client=None):
     log.info("Fetching corporate actions for %d categories...", len(ca_types))
 
     for ca_type in ca_types:
-        params = {
-            "caType": ca_type,
-            "dateFrom": "",
-            "dateTo": "",
-            "start": 0,
-            "length": 9999
-        }
+        params = {"caType": ca_type, "dateFrom": "", "dateTo": "", "start": 0, "length": 9999}
         data = client.get_json(endpoint, params=params)
 
         if data and isinstance(data.get("data"), list):

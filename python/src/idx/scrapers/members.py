@@ -18,6 +18,7 @@ log = get_logger("idx.scrapers.members")
 
 OUTPUT_FILE = os.path.join(DATA_DIR, "brokerSearch.json")
 
+
 def fetch_broker_search(client=None, option=0, license_type="", start=0, length=9999):
     """Fetches exchange member broker search directory."""
     if client is None:
