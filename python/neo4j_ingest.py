@@ -6,6 +6,9 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load environment variables from .env
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.abspath(os.path.join(BASE_DIR, "../data"))
+
 # Neo4j connection config
 NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://localhost:7687")
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
@@ -136,8 +139,10 @@ def ingest_stock_profiles(tx, batch):
     """, batch=batch)
 
 
-def ingest_all_stock_profiles(data_path="../data/companyDetailsByKodeEmiten.json", batch_size=500):
+def ingest_all_stock_profiles(data_path=None, batch_size=500):
     """Loads stock profiles from JSON and ingests them into Neo4j using batching."""
+    if data_path is None:
+        data_path = os.path.join(DATA_DIR, "companyDetailsByKodeEmiten.json")
     try:
         with open(data_path, "r", encoding="utf-8") as f:
             stocks_profile = json.load(f)
@@ -287,8 +292,10 @@ def insert_trade_data(uri, user, password, data):
         session.execute_write(lambda tx: tx.run(CYPHER_TRADE_QUERY, batch=data))
     driver.close()
 
-def ingest_all_stock_summaries(data_path="../data/companySummaryByKodeEmiten.json"):
+def ingest_all_stock_summaries(data_path=None):
     """Loads stock summaries from JSON and ingests them into Neo4j."""
+    if data_path is None:
+        data_path = os.path.join(DATA_DIR, "companySummaryByKodeEmiten.json")
     try:
         with open(data_path, "r", encoding="utf-8") as f:
             stocks_summary = json.load(f)['data']

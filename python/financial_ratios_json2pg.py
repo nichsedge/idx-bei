@@ -30,6 +30,9 @@ PG_CONFIG = {
     'password': os.getenv('POSTGRES_PASSWORD')
 }
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_DATA_DIR = os.path.abspath(os.path.join(BASE_DIR, "../data"))
+
 # Database and table name
 DB_NAME = PG_CONFIG['database']
 TABLE_NAME = 'financial_ratios'
@@ -46,7 +49,7 @@ def create_connection():
         logger.error(f"Error connecting to PostgreSQL: {e}")
         raise
 
-def process_json_files(data_directory="../data"):
+def process_json_files(data_directory=DEFAULT_DATA_DIR):
     """Process all JSON files in the specified directory"""
     try:
         # Get all JSON files matching pattern

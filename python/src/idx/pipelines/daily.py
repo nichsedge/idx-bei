@@ -6,10 +6,10 @@ trading data to the partitioned Parquet time-series store.
 
 Usage:
     # Full daily run (OHLCV + broker + index + parquet export):
-    uv run python -m idx.pipelines.daily
+    uv run idx daily
 
     # Crontab entry (16:45 WIB every weekday):
-    # 45 16 * * 1-5 cd /path/to/python && uv run python -m idx.pipelines.daily >> /var/log/idx-daily.log 2>&1
+    # 45 16 * * 1-5 uv run idx daily >> /var/log/idx-daily.log 2>&1
 """
 
 import datetime

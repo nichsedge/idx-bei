@@ -34,6 +34,20 @@ QUERY_PARAMS = {
 OUTPUT_FILE = os.path.join(DATA_DIR, "financial_ratio.json")
 
 
+def build_url(page_number, year=2024, quarter=4, page_size=100):
+    """Builds full URL with query parameters for financial ratio API."""
+    from urllib.parse import urlencode
+
+    params = {
+        **QUERY_PARAMS,
+        "periodQuarter": quarter,
+        "periodYear": year,
+        "pageSize": page_size,
+        "pageNumber": page_number,
+    }
+    return f"{BASE_URL}?{urlencode(params)}"
+
+
 def fetch_financial_ratios(year=2024, quarter=4, client=None, page_size=100):
     """Fetches paginated financial data and ratios across all companies."""
     if client is None:
@@ -84,4 +98,42 @@ def fetch_financial_ratios(year=2024, quarter=4, client=None, page_size=100):
         return result
 
     log.warning("No financial ratio records collected.")
+    return None
+
+
+def fetch_historical_financial_ratios(
+    years=(2022, 2023, 2024),
+    quarters=(4,),
+    client=None,
+    delay=1.0,
+):
+    """Fetches financial ratios across multiple historical periods and consolidates them.
+
+    Args:
+        years: sequence of years to scrape (e.g. [2022, 2023, 2024]).
+        quarters: sequence of quarters (e.g. [1, 2, 3, 4] or [4] for annuals).
+        client: optional IDXClient instance.
+        delay: delay in seconds between period fetches.
+
+    Returns:
+        dict with totalRecords and list of combined records.
+    """
+    if client is None:
+        client = IDXClient()
+
+    all_historical = []
+    for y in years:
+        for q in quarters:
+            log.info("--- Scraping Financial Ratios for %d-Q%d ---", y, q)
+            res = fetch_financial_ratios(year=y, quarter=q, client=client)
+            if res and res.get("data"):
+                all_historical.extend(res["data"])
+            time.sleep(delay)
+
+    if all_historical:
+        combined_result = {"totalRecords": len(all_historical), "data": all_historical}
+        save_json(OUTPUT_FILE, combined_result)
+        log.info("Historical financial ratios consolidated: %d total records.", len(all_historical))
+        return combined_result
+
     return None
