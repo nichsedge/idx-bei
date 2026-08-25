@@ -21,6 +21,9 @@ dependencies = [
     "duckdb>=1.5.5",
 ]
 
+[project.scripts]
+idx = "idx.cli:main"
+
 [dependency-groups]
 dev = [
     "ipykernel>=6.29.5",

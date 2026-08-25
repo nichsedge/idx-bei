@@ -1,0 +1,25 @@
+[project]
+name = "idx-bei-root"
+version = "0.2.0"
+description = "IDX-BEI Quantitative Data & Analysis Toolkit"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "idx-bei",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.8.0",
+]
+
+[tool.uv.sources]
+idx-bei = { workspace = true }
+
+[tool.uv.workspace]
+members = ["python"]
+
+[tool.pytest.ini_options]
+pythonpath = ["python/src", "python"]
+

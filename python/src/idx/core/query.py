@@ -33,8 +33,9 @@ def _dataset_glob(dataset, base_dir=None):
     return pattern
 
 
-def query_dataset(dataset, start=None, end=None, where=None, columns="*", limit=None,
-                  base_dir=None):
+def query_dataset(
+    dataset, start=None, end=None, where=None, columns="*", limit=None, base_dir=None
+):
     """Queries one time-series dataset with optional filters.
 
     Args:

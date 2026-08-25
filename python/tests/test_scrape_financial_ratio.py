@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 from urllib.parse import parse_qs, urlparse
 
-from scrape_financial_ratio import BASE_URL, QUERY_PARAMS, build_url
+from idx.scrapers.financial import BASE_URL, QUERY_PARAMS, build_url
 
 
 def test_build_url_page_one():

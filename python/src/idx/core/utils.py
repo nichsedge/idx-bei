@@ -18,6 +18,9 @@ def get_logger(name):
         handler.setFormatter(logging.Formatter(LOG_FORMAT))
         logger.addHandler(handler)
         logger.setLevel(logging.INFO)
+        # CLI entrypoints attach a root handler via basicConfig; propagation
+        # would print every record twice.
+        logger.propagate = False
     return logger
 
 
