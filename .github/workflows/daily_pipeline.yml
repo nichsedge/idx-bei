@@ -1,0 +1,46 @@
+name: daily-pipeline
+
+on:
+  schedule:
+    # 16:45 WIB (UTC+7) -> 09:45 UTC Monday through Friday
+    - cron: "45 9 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Date to ingest (YYYYMMDD), leave empty for today"
+        required: false
+        default: ""
+
+jobs:
+  daily-ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Run Daily Ingestion
+        run: |
+          if [ -n "${{ github.event.inputs.date }}" ]; then
+            uv run idx daily ${{ github.event.inputs.date }}
+          else
+            uv run idx daily
+          fi
+
+      - name: Refresh Parquet Exports
+        run: uv run idx parquet
+
+      - name: Generate Decision Signals Briefing
+        run: uv run idx signals
+
+      - name: Upload Daily Briefing Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-briefing
+          path: data/briefings/
