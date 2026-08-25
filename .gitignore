@@ -1,57 +1,50 @@
-# --- Python ---
+# --- Python & Environments ---
 __pycache__/
 *.py[cod]
 *$py.class
 .venv/
 venv/
 ENV/
+python/.venv/
 .env
+python/.env
+.env.local
 .python-version
 .ipynb_checkpoints/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 *.egg-info/
+dist/
+build/
+
+# --- Databases & DuckDB ---
+*.duckdb
+*.duckdb.wal
+neo4j_data/
+postgres_data/
 
 # --- Data ---
-# Scraped datasets (large, regeneratable)
-data/allCompanies.json
-data/brokerSearch.json
-data/companyDetailsByKodeEmiten.json
-data/companyDetailsByKodeEmitenTop50TradingValue.json
-data/companySummaryByKodeEmiten.json
-data/financial_ratio.json
-data/corporateActions.json
-data/network_alpha_data.json
-data/stock_summary_*.json
-data/broker_summary_*.json
-data/index_summary.json
-data/news/
-
-# Time-series & Parquet (large, regeneratable)
+# Large/regenerated scraped datasets
 data/timeseries/
 data/parquet/
-
-# Internal scraper state
+data/.raw_archive/
 data/.schema_snapshots.json
 data/.scrape_stats.json
-data/.raw_archive/
+data/*.tmp
+data/*.bak
+data/ownership/
 
-# --- Project Specific ---
-.claude/
-.deprecated/
-CLAUDE.md
-
-# --- OS/IDEs ---
+# --- Logs & OS ---
+*.log
 .DS_Store
+Thumbs.db
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# --- Docker ---
-neo4j_data/
-postgres_data/
-
-# --- Logs ---
-*.log
+# --- Project Specific ---
+.claude/
+.deprecated/
+CLAUDE.md
