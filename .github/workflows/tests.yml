@@ -3,20 +3,11 @@ name: tests
 on:
   push:
     branches: [main]
-    paths:
-      - "python/**"
-      - ".github/workflows/tests.yml"
   pull_request:
-    paths:
-      - "python/**"
-      - ".github/workflows/tests.yml"
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: python
     steps:
       - uses: actions/checkout@v4
 
@@ -29,7 +20,7 @@ jobs:
         run: uv sync --frozen
 
       - name: Lint (ruff)
-        run: uv run ruff check src tests cli.py
+        run: uv run ruff check python/src python/tests python/cli.py
 
       - name: Run tests (pytest)
-        run: uv run pytest -q
+        run: uv run pytest -q python/tests
