@@ -14,12 +14,12 @@ Keep new modules in `python/` and store generated outputs under `data/` with des
 ## Build, Test, and Development Commands
 Run commands from the repository root unless noted.
 
-- `cd python && uv sync`: install/update Python dependencies.
+- `uv sync`: install/update Python dependencies across workspace.
 - `docker compose up -d`: start local services (Neo4j enabled by default).
-- `cd python && uv run scrape_company_profiles.py`: fetch company profile data.
-- `cd python && uv run scrape_financial_ratio.py`: fetch financial ratio data.
-- `cd python && uv run neo4j_ingest.py`: ingest JSON data into Neo4j.
-- `cd python && uv run jupyter notebook neo4j.ipynb`: open analysis notebook.
+- `uv run idx all`: fetch all market snapshot data.
+- `uv run idx signals`: generate daily decision-support briefing.
+- `uv run python/neo4j_ingest.py`: ingest JSON data into Neo4j.
+- `uv run jupyter notebook python/neo4j.ipynb`: open analysis notebook.
 
 ## Coding Style & Naming Conventions
 Follow existing Python style in this repo:

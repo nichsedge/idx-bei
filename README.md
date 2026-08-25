@@ -8,37 +8,57 @@ Toolkit for scraping, storing, and analyzing data from the Indonesia Stock Excha
 
 ```bash
 git clone https://github.com/yourusername/idx-bei.git
-cd idx-bei/python
+cd idx-bei
 uv sync
 ```
 
-### Scrape Everything
+### Scrape & Pipeline Commands
 
 ```bash
-uv run python cli.py all
+# 1. Scrape all snapshot datasets (company profiles, financial ratios, corporate actions, brokers)
+uv run idx all
+
+# 2. Backfill full-universe company boards, shareholders & dividends (952 tickers)
+uv run idx company --all-details
+
+# 3. Daily ingestion (today's OHLCV, broker summary & index flow)
+uv run idx daily
+
+# 4. Historical OHLCV backfill (for backtesting)
+uv run idx backfill --start 20260101 --end 20260807
+
+# 5. Export all time-series and snapshots to Parquet
+uv run idx parquet
 ```
 
-### Historical Backfill (for backtesting)
+### Daily Decision-Support Signals
 
 ```bash
-uv run python cli.py backfill --start 20260101 --end 20260807
+# Generate daily signal briefing (writes Markdown + JSON into data/briefings/)
+uv run idx signals
+
+# Optional: broadcast briefing summary to Discord/Slack/Telegram webhook
+uv run idx signals --webhook-url "https://discord.com/api/webhooks/..."
 ```
 
-### Export to Parquet
+Runs five quantitative decision-support screens over Parquet exports:
+- **Foreign Flow Radar** — net foreign buying/selling as % of free float (accumulate/distribute)
+- **Audit Risk Shield** — stocks with non-clean audit opinions (`WDP`/`TMP`/`TL`)
+- **Dilution Watch** — recent private placements, warrants, and capital reductions
+- **Sharia Value Screen** — sharia-flagged, PER < 12, ROE ≥ 12%, DER ≤ 2
+- **Pasar Nego Crossing Radar** — stealth off-market block crossings (value > Rp25B, nego share > 75%)
+
+### Interactive Dashboard & AI Assistant (MCP)
 
 ```bash
-uv run python cli.py parquet
+# Launch Smart Money & Network Alpha visual dashboard
+uv run idx dashboard --port 8080
+
+# Start Model Context Protocol (MCP) Server for Claude, Cursor, Antigravity
+uv run idx mcp
 ```
 
-### Daily Ingestion (cron)
-
-```bash
-# Run manually
-uv run python cli.py daily
-
-# Crontab entry (16:45 WIB every weekday)
-# 45 16 * * 1-5 cd /path/to/python && uv run python -m idx.pipelines.daily
-```
+The MCP server exposes standard JSON-RPC tools (`idx_get_signals`, `idx_query_stock`, `idx_get_company_profile`, `idx_screen_sharia_value`, `idx_get_super_insiders`) for AI assistants.
 
 ## Repository Structure
 
@@ -46,17 +66,21 @@ uv run python cli.py daily
 idx-bei/
 ├── python/                        # Python package & scripts
 │   ├── src/idx/                   # Core package (src-layout)
-│   │   ├── core/                  # HTTP client, schema validation, drift detection
-│   │   ├── scrapers/              # Domain scrapers (company, trading, corporate, etc.)
-│   │   └── pipelines/             # Parquet export, daily ingestion, analysis
+│   │   ├── core/                  # HTTP client, DuckDB query layer, KSEI ownership engine
+│   │   ├── scrapers/              # Domain scrapers (company, trading, corporate, financial, news)
+│   │   ├── pipelines/             # Parquet export, daily ingestion, analysis
+│   │   ├── mcp/                   # Model Context Protocol (MCP) server
+│   │   └── signals.py             # Decision-support screens & briefing builder
 │   ├── cli.py                     # Unified CLI
-│   ├── tests/                     # Pytest suite
+│   ├── tests/                     # Pytest suite (65 passing unit tests)
 │   ├── neo4j_ingest.py            # Neo4j graph ingestion
 │   ├── neo4j.ipynb                # Graph analysis notebook
 │   └── pyproject.toml             # Package config (uv/setuptools)
 ├── data/                          # Generated datasets (gitignored)
-│   ├── timeseries/                # Historical OHLCV, broker, index JSON
-│   └── parquet/                   # Columnar exports for fast analytics
+│   ├── timeseries/                # Historical OHLCV, broker, index partitions
+│   ├── parquet/                   # Columnar exports for fast analytics
+│   └── briefings/                 # Daily signal briefings (md + json)
+├── .github/workflows/             # CI testing and automated 16:45 WIB daily pipeline
 ├── docker-compose/                # Neo4j & PostgreSQL service configs
 └── dashboard/index.html           # Smart Money Synergy Score dashboard
 ```

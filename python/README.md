@@ -33,9 +33,10 @@ python/
 │       │   ├── members.py          # Exchange Members & Broker Directory
 │       │   ├── news.py             # Market News & Company Disclosures (PDF Filings)
 │       │   └── historical.py      # Historical Time-Series Backfill Engine
-│       └── pipelines/              # Data Pipelines
-│           ├── parquet.py          # Parquet Export Pipeline (Snappy, Quant Features)
-│           └── daily.py            # Daily Cron Scheduled Ingestion
+│       ├── pipelines/              # Data Pipelines
+│       │   ├── parquet.py          # Parquet Export Pipeline (Snappy, Quant Features)
+│       │   └── daily.py            # Daily Cron Scheduled Ingestion
+│       └── signals.py              # Decision-Support Screens & Daily Briefing
 ├── cli.py                          # Unified Command-Line Interface
 ├── pyproject.toml                  # Package Configuration (src-layout)
 ├── API_VERIFICATION_SPEC.md       # Empirical API Verification Specification
@@ -67,32 +68,59 @@ If schema drift, validation failure, or JSON parse errors occur, the raw HTTP re
 
 ---
 
-## 🚀 Unified CLI Usage (`cli.py`)
+## 🚀 Unified CLI Usage (`idx`)
 
 Run any task using the unified CLI:
 
 ```bash
 # Snapshot Scrapers
-uv run python cli.py company        # Listed company profiles
-uv run python cli.py financial      # Financial ratios & statistics
-uv run python cli.py corporate      # Corporate actions (all 15 types)
-uv run python cli.py brokers        # Exchange member directory
-uv run python cli.py trading        # Stock summary, broker summary, index summary
-uv run python cli.py news           # News headlines
-uv run python cli.py announcements  # Disclosures & PDF filings
-uv run python cli.py all            # Run all snapshot scrapers
+uv run idx company        # Listed company profiles
+uv run idx company --all-details # Full boards, shareholders & dividends (952 tickers)
+uv run idx financial      # Financial ratios & statistics
+uv run idx corporate      # Corporate actions (all 15 types)
+uv run idx brokers        # Exchange member directory
+uv run idx trading        # Stock summary, broker summary, index summary
+uv run idx news           # News headlines
+uv run idx announcements  # Disclosures & PDF filings
+uv run idx all            # Run all snapshot scrapers
 
 # Historical Backfill (Time-Series)
-uv run python cli.py backfill --start 20260101 --end 20260807
+uv run idx backfill --start 20260101 --end 20260807
 
 # Parquet Export
-uv run python cli.py parquet
+uv run idx parquet
 
 # Daily Scheduled Ingestion
-uv run python cli.py daily [YYYYMMDD]
+uv run idx daily [YYYYMMDD]
+
+# Daily Signal Briefing (decision support)
+uv run idx signals                     # all 5 screens, defaults
+uv run idx signals --window 10         # foreign-flow window override
+uv run idx signals --webhook-url "..." # broadcast to Discord/Slack/Telegram
+
+# MCP Server & Dashboard
+uv run idx mcp                         # Model Context Protocol server for AI
+uv run idx dashboard --port 8080       # Smart Money visual network dashboard
 ```
 
----
+## 🎯 Decision-Support Signals (`idx.signals`)
+
+Pure DataFrame screens over the Parquet exports, composed by `build_briefing()`
+into a daily briefing (`data/briefings/briefing_<date>.md` + `.json`):
+
+| Screen | Money question | Key inputs |
+|--------|----------------|------------|
+| `foreign_flow_radar` | Where is foreign money accumulating / distributing vs free float? | NetForeignFlow, TradebleShares, Value |
+| `audit_risk_shield` | Which companies carry non-clean audit opinions (WDP/TMP/TMTP/TL)? | opini, fsDate |
+| `dilution_watch` | Who recently filed dilutive actions (private placement, warrants, capital reduction)? | caType, TanggalPencatatan |
+| `sharia_value_screen` | Cheap, profitable, sharia-flagged candidates (PER/ROE/DER caps)? | sharia, per, roe, deRatio, opini |
+| `pasar_nego_crossing_screen` | Stealth off-market block trades (> Rp25B, >75% volume)? | NonRegularValue, Value, NonRegularVolume |
+
+Cron chaining example (briefing right after daily ingestion):
+
+```bash
+# 45 16 * * 1-5 uv run idx daily && uv run idx signals
+```
 
 ## ⚡ Quant Data Format (Parquet)
 
