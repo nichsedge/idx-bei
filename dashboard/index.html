@@ -12,8 +12,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Vis-Network for Graph Visualization -->
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    <!-- Fallback dataset for direct file:// browser loading -->
+    <!-- Fallback dataset for direct file:// or nested path browser loading -->
+    <script type="text/javascript" src="../data/network_alpha_data.js"></script>
     <script type="text/javascript" src="data/network_alpha_data.js"></script>
+    <script type="text/javascript" src="network_alpha_data.js"></script>
     
     <style>
         :root {
@@ -1148,28 +1150,42 @@
             initConglomeratesTab();
         }
 
-        // Load data from JS variable or JSON file
-        function loadDashboardData() {
+        // Load data from JS variable or JSON file with multi-path fallbacks
+        async function loadDashboardData() {
             if (window.NETWORK_ALPHA_DATA) {
                 renderDashboard(window.NETWORK_ALPHA_DATA);
                 return;
             }
 
-            fetch('data/network_alpha_data.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('File not found');
+            const candidatePaths = [
+                '../data/network_alpha_data.json',
+                'data/network_alpha_data.json',
+                '/data/network_alpha_data.json',
+                'network_alpha_data.json'
+            ];
+
+            for (const path of candidatePaths) {
+                try {
+                    const response = await fetch(path);
+                    if (response.ok) {
+                        const data = await response.json();
+                        renderDashboard(data);
+                        return;
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    renderDashboard(data);
-                })
-                .catch(error => {
-                    console.error("Error loading dashboard dataset:", error);
-                    document.getElementById('dashboardContent').style.display = 'none';
-                    document.getElementById('errorBanner').style.display = 'flex';
-                });
+                } catch (err) {
+                    // Try next path candidate
+                }
+            }
+
+            // Check if window.NETWORK_ALPHA_DATA became available after script evaluation
+            if (window.NETWORK_ALPHA_DATA) {
+                renderDashboard(window.NETWORK_ALPHA_DATA);
+                return;
+            }
+
+            console.error("Error: Could not load dashboard dataset from any candidate path");
+            document.getElementById('dashboardContent').style.display = 'none';
+            document.getElementById('errorBanner').style.display = 'flex';
         }
 
         // Tab Switching Logic
