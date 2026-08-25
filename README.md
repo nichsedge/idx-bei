@@ -64,25 +64,52 @@ The MCP server exposes standard JSON-RPC tools (`idx_get_signals`, `idx_query_st
 
 ```text
 idx-bei/
+├── pyproject.toml                 # Root UV workspace configuration
+├── uv.lock                        # Consolidated workspace lockfile
 ├── python/                        # Python package & scripts
 │   ├── src/idx/                   # Core package (src-layout)
 │   │   ├── core/                  # HTTP client, DuckDB query layer, KSEI ownership engine
 │   │   ├── scrapers/              # Domain scrapers (company, trading, corporate, financial, news)
 │   │   ├── pipelines/             # Parquet export, daily ingestion, analysis
 │   │   ├── mcp/                   # Model Context Protocol (MCP) server
-│   │   └── signals.py             # Decision-support screens & briefing builder
-│   ├── cli.py                     # Unified CLI
+│   │   ├── signals.py             # Decision-support screens & briefing builder
+│   │   └── cli.py                 # CLI implementation
+│   ├── cli.py                     # CLI launcher
 │   ├── tests/                     # Pytest suite (65 passing unit tests)
-│   ├── neo4j_ingest.py            # Neo4j graph ingestion
+│   ├── neo4j_ingest.py            # Neo4j graph ingestion script
 │   ├── neo4j.ipynb                # Graph analysis notebook
 │   └── pyproject.toml             # Package config (uv/setuptools)
 ├── data/                          # Generated datasets (gitignored)
 │   ├── timeseries/                # Historical OHLCV, broker, index partitions
 │   ├── parquet/                   # Columnar exports for fast analytics
 │   └── briefings/                 # Daily signal briefings (md + json)
-├── .github/workflows/             # CI testing and automated 16:45 WIB daily pipeline
+├── .github/workflows/             # CI testing (tests.yml)
 ├── docker-compose/                # Neo4j & PostgreSQL service configs
-└── dashboard/index.html           # Smart Money Synergy Score dashboard
+└── dashboard/index.html           # Smart Money & Network Alpha visual dashboard
+```
+
+## Testing & Code Quality
+
+```bash
+# Run automated pytest suite (65 unit tests)
+uv run pytest python/tests
+
+# Run Ruff linter and formatter
+uv run ruff check python/src python/tests
+uv run ruff format python/src python/tests
+```
+
+## Neo4j Knowledge Graph Ingestion
+
+```bash
+# 1. Start Neo4j container
+docker compose up -d
+
+# 2. Ingest full 952-company network (12,000+ insiders, 5,400+ subsidiaries)
+uv run python/neo4j_ingest.py
+
+# 3. Open Neo4j Browser UI
+# URL: http://localhost:7474 (user: neo4j, password: password)
 ```
 
 ## Tech Stack
@@ -90,11 +117,12 @@ idx-bei/
 | Layer | Tools |
 |-------|-------|
 | Language | Python 3.13+ |
-| Package Manager | [uv](https://github.com/astral-sh/uv) |
+| Package Manager | [uv](https://github.com/astral-sh/uv) (root workspace) |
 | HTTP Client | `curl_cffi` (browser impersonation, Cloudflare bypass) |
-| Storage | JSON → Parquet (via `pyarrow`) |
+| Query & Storage | DuckDB, Parquet (`pyarrow`), JSON |
 | Databases | Neo4j (graph), PostgreSQL (relational) |
-| Analytics | `pandas`, `scikit-learn`, `matplotlib`, `seaborn` |
+| Analytics & ML | `pandas`, `scikit-learn`, `matplotlib`, `seaborn` |
+| AI Assistant Protocol | Model Context Protocol (MCP stdio) |
 | Infrastructure | Docker Compose |
 
 ## API Coverage
