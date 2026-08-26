@@ -207,3 +207,67 @@ def get_multi_holding_individuals(df: pd.DataFrame, min_tickers: int = 2) -> pd.
         "TickerCount", ascending=False, ignore_index=True
     )
     return g
+
+
+def scan_ownership_files(directory: str = None) -> list[str]:
+    """Scans and returns sorted list of ownership CSV files by date."""
+    import glob
+
+    search_dir = directory or DATA_DIR
+    files = sorted(glob.glob(os.path.join(search_dir, "*ownership*.csv")))
+    return files
+
+
+def track_tycoon_drift(
+    prev_df: pd.DataFrame, curr_df: pd.DataFrame, tycoons: dict = None
+) -> pd.DataFrame:
+    """Calculates position deltas filtered specifically for notable tycoons."""
+    deltas = compute_ownership_deltas(prev_df, curr_df, min_pct_delta=0.01)
+    if len(deltas) == 0:
+        return pd.DataFrame()
+
+    tycoons = tycoons or NOTABLE_TYCOONS
+    patterns = list(tycoons.keys())
+    regex_pat = "|".join(patterns)
+
+    tycoon_deltas = deltas[
+        deltas["InvestorName"].str.contains(regex_pat, case=False, na=False)
+    ].copy()
+    return tycoon_deltas.reset_index(drop=True)
+
+
+def get_latest_shareholder_drift(directory: str = None) -> dict:
+    """Compares the two latest ownership CSVs in directory and returns drift analytics."""
+    files = scan_ownership_files(directory)
+    if len(files) < 2:
+        if len(files) == 1:
+            curr = load_ownership_csv(files[0])
+            holdings = get_tycoon_holdings(curr)
+            return {
+                "status": "single_file",
+                "latest_file": files[0],
+                "tycoon_holdings": holdings.to_dict("records"),
+                "deltas": [],
+            }
+        return {"status": "no_files", "deltas": []}
+
+    prev_file = files[-2]
+    curr_file = files[-1]
+    prev_df = load_ownership_csv(prev_file)
+    curr_df = load_ownership_csv(curr_file)
+
+    deltas = compute_ownership_deltas(prev_df, curr_df, min_pct_delta=0.05)
+    tycoon_drift = track_tycoon_drift(prev_df, curr_df)
+
+    return {
+        "status": "ok",
+        "prev_file": os.path.basename(prev_file),
+        "curr_file": os.path.basename(curr_file),
+        "total_deltas": len(deltas),
+        "accumulations": len(deltas[deltas["Action"] == "ACCUMULATING"]),
+        "distributions": len(deltas[deltas["Action"] == "DISTRIBUTING"]),
+        "new_entries": len(deltas[deltas["Action"] == "NEW_POSITION"]),
+        "exits": len(deltas[deltas["Action"] == "FULL_EXIT"]),
+        "tycoon_drift": tycoon_drift.to_dict("records"),
+        "top_deltas": deltas.head(15).to_dict("records"),
+    }

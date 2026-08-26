@@ -322,6 +322,301 @@ def pasar_nego_crossing_screen(
     return out[cols]
 
 
+# ── Screen 6: Bandarmology & Broker Concentration Radar ────────────────────────
+
+
+INSTITUTIONAL_BROKERS = frozenset(
+    {"AK", "BK", "ZP", "CS", "KZ", "RX", "CC", "LG", "DX", "AI", "MS", "CG"}
+)
+RETAIL_BROKERS = frozenset({"YP", "PD", "XC", "NI", "KK", "CP", "AZ", "OD", "SQ", "XL"})
+
+
+def broker_concentration_screen(broker, *, on_date=None, top_k=5):
+    """Calculates Top-N broker concentration (CR_k) and institutional vs retail flow.
+
+    Args:
+        broker: broker_summary DataFrame (Date, IDFirm, FirmName, Value, Volume).
+        on_date: optional ISO date string. Defaults to latest session in data.
+        top_k: top N brokers to evaluate for concentration ratio.
+
+    Returns:
+        tuple (summary_dict, top_brokers_df)
+    """
+    cols = ["Rank", "IDFirm", "FirmName", "ValueRpB", "SharePct", "Category"]
+    if len(broker) == 0:
+        return {}, pd.DataFrame(columns=cols)
+
+    df = broker.copy()
+    if "Date" in df.columns:
+        df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
+        if on_date:
+            target_dt = pd.to_datetime(on_date)
+            df = df[df["Date"] == target_dt]
+        else:
+            latest_dt = df["Date"].max()
+            df = df[df["Date"] == latest_dt]
+
+    if len(df) == 0:
+        return {}, pd.DataFrame(columns=cols)
+
+    for c in ("Value", "Volume"):
+        if c in df.columns:
+            df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0)
+
+    # Group by firm
+    grouped = df.groupby(["IDFirm", "FirmName"], as_index=False)["Value"].sum()
+    total_val = grouped["Value"].sum()
+    if total_val <= 0:
+        return {}, pd.DataFrame(columns=cols)
+
+    grouped = grouped.sort_values("Value", ascending=False).reset_index(drop=True)
+    grouped["SharePct"] = (grouped["Value"] / total_val * 100.0).round(2)
+    grouped["ValueRpB"] = (grouped["Value"] / 1e9).round(2)
+    grouped["Rank"] = grouped.index + 1
+
+    def _cat(code):
+        if code in INSTITUTIONAL_BROKERS:
+            return "Institutional/Foreign"
+        if code in RETAIL_BROKERS:
+            return "Retail"
+        return "General"
+
+    grouped["Category"] = grouped["IDFirm"].apply(_cat)
+
+    cr1 = grouped.head(1)["SharePct"].sum().round(2)
+    cr3 = grouped.head(3)["SharePct"].sum().round(2)
+    cr5 = grouped.head(5)["SharePct"].sum().round(2)
+
+    inst_val = grouped[grouped["IDFirm"].isin(INSTITUTIONAL_BROKERS)]["Value"].sum()
+    retail_val = grouped[grouped["IDFirm"].isin(RETAIL_BROKERS)]["Value"].sum()
+
+    inst_share = round((inst_val / total_val) * 100.0, 2)
+    retail_share = round((retail_val / total_val) * 100.0, 2)
+    dominance_ratio = round(inst_val / (retail_val + 1e-9), 2)
+
+    summary = {
+        "total_market_turnover_rp_b": round(total_val / 1e9, 2),
+        "cr1_pct": cr1,
+        "cr3_pct": cr3,
+        "cr5_pct": cr5,
+        "institutional_share_pct": inst_share,
+        "retail_share_pct": retail_share,
+        "institutional_to_retail_ratio": dominance_ratio,
+        "top_dominant_broker": grouped.iloc[0]["IDFirm"] if len(grouped) > 0 else None,
+    }
+
+    return summary, grouped.head(top_k)[cols]
+
+
+# ── Technical Indicators & Vectorized Signals ─────────────────────────────────
+
+
+def compute_technical_indicators(stock, ticker=None, rsi_period=14):
+    """Computes vectorized technical indicators (RSI-14, EMA 20/50/200, Bollinger Bands, ATR-14).
+
+    Args:
+        stock: stock_summary DataFrame (Date, StockCode, OpenPrice, High, Low, Close, Volume).
+        ticker: optional ticker symbol. If None, processes all tickers.
+        rsi_period: period for Relative Strength Index.
+
+    Returns:
+        DataFrame with computed technical indicator columns.
+    """
+    if len(stock) == 0:
+        return pd.DataFrame()
+
+    df = stock.copy()
+    if ticker:
+        df = df[df["StockCode"] == ticker.upper()]
+
+    if len(df) == 0:
+        return pd.DataFrame()
+
+    df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
+    for col in ("OpenPrice", "High", "Low", "Close", "Volume", "Previous"):
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    df = df.sort_values(["StockCode", "Date"]).reset_index(drop=True)
+
+    def _calc_group(g):
+        if len(g) < 2:
+            g["RSI14"] = None
+            g["EMA20"] = None
+            g["EMA50"] = None
+            g["EMA200"] = None
+            g["BB_Upper"] = None
+            g["BB_Lower"] = None
+            g["BB_PctB"] = None
+            g["ATR14"] = None
+            g["VolRatio20"] = None
+            g["TrendRegime"] = "INSUFFICIENT_DATA"
+            return g
+
+        close = g["Close"]
+        # EMAs
+        g["EMA20"] = close.ewm(span=20, adjust=False).mean().round(2)
+        g["EMA50"] = close.ewm(span=50, adjust=False).mean().round(2)
+        g["EMA200"] = close.ewm(span=200, adjust=False).mean().round(2)
+
+        # RSI
+        delta = close.diff()
+        gain = delta.clip(lower=0)
+        loss = -delta.clip(upper=0)
+        avg_gain = gain.ewm(com=rsi_period - 1, min_periods=rsi_period).mean()
+        avg_loss = loss.ewm(com=rsi_period - 1, min_periods=rsi_period).mean()
+        rs = avg_gain / (avg_loss + 1e-9)
+        g["RSI14"] = (100 - (100 / (1 + rs))).round(1)
+
+        # Bollinger Bands (20-day, 2 std)
+        sma20 = close.rolling(20, min_periods=5).mean()
+        std20 = close.rolling(20, min_periods=5).std()
+        g["BB_Upper"] = (sma20 + 2 * std20).round(2)
+        g["BB_Lower"] = (sma20 - 2 * std20).round(2)
+        band_width = g["BB_Upper"] - g["BB_Lower"]
+        g["BB_PctB"] = ((close - g["BB_Lower"]) / (band_width + 1e-9)).round(2)
+
+        # ATR-14
+        if "High" in g.columns and "Low" in g.columns and "Previous" in g.columns:
+            prev_c = (
+                g["Close"].shift(1).fillna(g["OpenPrice"] if "OpenPrice" in g.columns else close)
+            )
+            tr = pd.concat(
+                [
+                    (g["High"] - g["Low"]).abs(),
+                    (g["High"] - prev_c).abs(),
+                    (g["Low"] - prev_c).abs(),
+                ],
+                axis=1,
+            ).max(axis=1)
+            g["ATR14"] = tr.ewm(span=14, adjust=False).mean().round(2)
+        else:
+            g["ATR14"] = None
+
+        # Volume ratio
+        vol = g["Volume"]
+        vol_sma20 = vol.rolling(20, min_periods=5).mean()
+        g["VolRatio20"] = (vol / (vol_sma20 + 1e-9)).round(2)
+
+        # Trend regime
+        last_c = close.iloc[-1]
+        e20 = g["EMA20"].iloc[-1]
+        e50 = g["EMA50"].iloc[-1]
+        if pd.notna(e20) and pd.notna(e50):
+            if last_c > e20 > e50:
+                trend = "STRONG_BULLISH"
+            elif last_c > e20:
+                trend = "BULLISH"
+            elif last_c < e20 < e50:
+                trend = "STRONG_BEARISH"
+            elif last_c < e20:
+                trend = "BEARISH"
+            else:
+                trend = "NEUTRAL"
+        else:
+            trend = "NEUTRAL"
+        g["TrendRegime"] = trend
+
+        return g
+
+    results = []
+    for _, g in df.groupby("StockCode"):
+        results.append(_calc_group(g.copy()))
+
+    out = pd.concat(results, ignore_index=True) if results else pd.DataFrame()
+    return out
+
+
+# ── Screen 7: Composite Alpha Ranking Model ───────────────────────────────────
+
+
+def composite_alpha_ranking(
+    stock,
+    ratios,
+    actions=None,
+    *,
+    min_turnover_rp=FOREIGN_MIN_TURNOVER_RP,
+    top_n=20,
+):
+    """Combines Value Fundamentals, Foreign Money Accumulation, Technical Trend & Risk factors.
+
+    Returns:
+        DataFrame sorted by CompositeAlphaScore descending.
+    """
+    cols = [
+        "StockCode",
+        "StockName",
+        "Close",
+        "AlphaScore",
+        "PER",
+        "ROE",
+        "DER",
+        "NetForeignFlow_MSh",
+        "RSI14",
+        "TrendRegime",
+        "AuditOpinion",
+    ]
+    if len(stock) == 0 or len(ratios) == 0:
+        return pd.DataFrame(columns=cols)
+
+    radar = foreign_flow_radar(
+        stock, window_days=20, min_turnover_rp=min_turnover_rp, min_abs_pct_float=0.0
+    )
+    tech = compute_technical_indicators(stock)
+    if len(tech) > 0:
+        latest_tech = tech.sort_values("Date").groupby("StockCode").last().reset_index()
+    else:
+        latest_tech = pd.DataFrame(columns=["StockCode", "RSI14", "TrendRegime"])
+
+    lat_ratios = _latest_per_code(ratios).rename(columns={"code": "StockCode"})
+    merged = pd.merge(lat_ratios, radar, on="StockCode", how="inner")
+    merged = pd.merge(
+        merged, latest_tech[["StockCode", "RSI14", "TrendRegime"]], on="StockCode", how="left"
+    )
+
+    if len(merged) == 0:
+        return pd.DataFrame(columns=cols)
+
+    # Score components (0-100 scale)
+    scores = pd.Series(50.0, index=merged.index)
+
+    # 1. Fundamental Value score (ROE, PER, DER)
+    roe = pd.to_numeric(merged["roe"], errors="coerce").fillna(0)
+    per = pd.to_numeric(merged["per"], errors="coerce").fillna(999)
+    der = pd.to_numeric(merged["deRatio"], errors="coerce").fillna(999)
+
+    scores += (roe.clip(0, 30) / 30.0) * 20.0  # Up to +20 for ROE
+    scores += ((per > 0) & (per < 15)).astype(float) * 15.0  # +15 for fair/low PER
+    scores -= (der > 3.0).astype(float) * 15.0  # -15 for high debt
+
+    # 2. Foreign Flow factor
+    pct_float = pd.to_numeric(merged["PctFloat"], errors="coerce").fillna(0)
+    scores += (pct_float.clip(-5, 5) / 5.0) * 25.0  # Up to +25 for heavy accumulation
+
+    # 3. Technical factor (RSI in sweet spot 45-65 & Bullish trend)
+    rsi = pd.to_numeric(merged["RSI14"], errors="coerce").fillna(50)
+    scores += ((rsi >= 45) & (rsi <= 68)).astype(float) * 10.0
+    scores += (merged["TrendRegime"].isin(["STRONG_BULLISH", "BULLISH"])).astype(float) * 10.0
+
+    # 4. Audit Risk Penalty
+    scores -= merged["opini"].isin(RISK_OPINIONS).astype(float) * 40.0
+
+    merged["AlphaScore"] = scores.clip(0, 100).round(1)
+    merged["StockName"] = (
+        merged["stockName"]
+        if "stockName" in merged.columns
+        else merged.get("StockName", merged["StockCode"])
+    )
+    merged["PER"] = per.round(1)
+    merged["ROE"] = roe.round(1)
+    merged["DER"] = der.round(2)
+    merged["NetForeignFlow_MSh"] = merged["NFF_MSh"]
+    merged["AuditOpinion"] = merged["opini"].fillna("Clean")
+
+    res = merged.sort_values("AlphaScore", ascending=False).reset_index(drop=True)
+    return res[cols].head(top_n)
+
+
 # ── Webhook Notification Helper ──────────────────────────────────────────────
 
 
@@ -408,6 +703,7 @@ def build_briefing(
     stock = _load_parquet("stock_summary.parquet")
     ratios = _load_parquet("financial_ratios.parquet")
     actions = _load_parquet("corporate_actions.parquet")
+    broker = _load_parquet("broker_summary.parquet")
 
     radar = foreign_flow_radar(
         stock,
@@ -426,6 +722,10 @@ def build_briefing(
         min_nego_val_rp=min_nego_val_rp,
         min_nego_pct=min_nego_pct,
     )
+    broker_sum, top_brokers = broker_concentration_screen(broker, on_date=date, top_k=5)
+    alpha = composite_alpha_ranking(
+        stock, ratios, actions=actions, min_turnover_rp=min_turnover_rp, top_n=10
+    )
 
     if len(stock) > 0:
         trade_date = pd.to_datetime(stock["Date"]).max()
@@ -436,11 +736,22 @@ def build_briefing(
 
     sections = [
         (
+            "Composite Alpha Rankings",
+            "Multi-factor score (Value + Foreign Flow + Momentum + Clean Audit)",
+            alpha.head(10),
+        ),
+        (
             "Foreign Flow Radar",
             f"net foreign flow vs free float, last "
             f"{min(window_days, radar['Sessions'].max() if len(radar) else window_days)} sessions,"
             f" turnover > Rp{min_turnover_rp / 1e9:.0f}B/day, |flow| > {min_abs_pct_float}% float",
             radar.head(10),
+        ),
+        (
+            "Bandarmology & Broker Dominance",
+            f"CR1: {broker_sum.get('cr1_pct', '-')}%, CR3: {broker_sum.get('cr3_pct', '-')}%, "
+            f"CR5: {broker_sum.get('cr5_pct', '-')}%, Inst/Retail ratio: {broker_sum.get('institutional_to_retail_ratio', '-')}",
+            top_brokers,
         ),
         (
             "Audit Risk Shield",
@@ -493,7 +804,10 @@ def build_briefing(
             {
                 "date": label,
                 "trade_date": trade_date,
+                "composite_alpha_rankings": alpha.head(10).to_dict("records"),
                 "foreign_flow_radar": radar.head(10).to_dict("records"),
+                "bandarmology_summary": broker_sum,
+                "top_brokers": top_brokers.to_dict("records"),
                 "audit_risk_shield": shield.to_dict("records"),
                 "dilution_watch": watch.to_dict("records"),
                 "sharia_value_screen": sharia.to_dict("records"),
@@ -508,7 +822,9 @@ def build_briefing(
     result = {
         "date": label,
         "trade_date": trade_date,
+        "alpha_rows": len(alpha),
         "radar_rows": len(radar),
+        "broker_rows": len(top_brokers),
         "shield_rows": len(shield),
         "dilution_rows": len(watch),
         "sharia_rows": len(sharia),
@@ -517,9 +833,11 @@ def build_briefing(
         "json": json_path,
     }
     log.info(
-        "Briefing %s: radar=%d shield=%d dilution=%d sharia=%d nego=%d",
+        "Briefing %s: alpha=%d radar=%d brokers=%d shield=%d dilution=%d sharia=%d nego=%d",
         label,
+        result["alpha_rows"],
         result["radar_rows"],
+        result["broker_rows"],
         result["shield_rows"],
         result["dilution_rows"],
         result["sharia_rows"],
