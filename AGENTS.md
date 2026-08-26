@@ -4,15 +4,18 @@
 This repository is organized as a unified Python quantitative data pipeline, MCP server, and decision-support engine.
 
 - `python/src/idx/`: core package (`src-layout`)
-  - `core/`: HTTP client (`curl_cffi`), schema validation, DuckDB time-series query layer, KSEI ownership engine.
-  - `scrapers/`: domain scrapers (company profiles, financial ratios, corporate actions, members, news, announcements).
-  - `pipelines/`: daily ingestion, time-series partitioning, Parquet columnar exports.
-  - `mcp/`: Model Context Protocol stdio server for AI assistants.
-  - `signals.py`: 5 decision-support screens (Foreign Flow, Audit Risk, Dilution Watch, Sharia Value, Pasar Nego).
+  - `core/`: HTTP client (`curl_cffi` sync & `AsyncIDXClient`), schema validation, DuckDB query layer, KSEI ownership & drift engine.
+  - `scrapers/`: domain scrapers (company profiles, financial ratios, corporate actions, members, news, announcements, async backfillers).
+  - `pipelines/`: daily ingestion, time-series partitioning, incremental Parquet columnar exports.
+  - `mcp/`: Model Context Protocol stdio server with 10 quantitative tools for AI assistants.
+  - `backtest.py`: vectorized strategy simulator, drawdown calculation, Sharpe/Sortino ratios, and benchmark alpha.
+  - `graph.py`: Neo4j UBO tree resolution, circular cross-holding detection, and board centrality.
+  - `api.py`: high-performance async FastAPI REST & WebSocket microservice.
+  - `signals.py`: 7 decision-support screens (Composite Alpha, Foreign Flow, Bandarmology Broker Dominance, Audit Risk, Dilution Watch, Sharia Value, Pasar Nego).
   - `cli.py`: unified CLI entrypoint for `idx` command.
-- `python/tests/`: automated pytest suite (65 passing unit tests).
+- `python/tests/`: automated pytest suite (90 passing unit tests).
 - `data/`: local datasets (partitioned time-series, Parquet exports, daily briefings, and KSEI ownership CSVs).
-- `dashboard/`: interactive Smart Money & Network Alpha visual dashboard.
+- `dashboard/`: interactive Smart Money & Network Alpha visual dashboard with TradingView Lightweight Charts.
 - `docker-compose/`: local Neo4j graph & PostgreSQL database definitions.
 - `.github/workflows/`: automated CI lint/test workflow (`tests.yml`).
 
@@ -22,13 +25,20 @@ Run all commands from the repository root using modern `uv`:
 - `uv sync`: install and sync workspace dependencies.
 - `docker compose up -d`: start local services (Neo4j on `bolt://localhost:7687`).
 - `uv run idx all`: run all snapshot scrapers (company, financials, corporate actions, brokers, trading).
-- `uv run idx company --all-details`: backfill full boards, shareholders, and dividends across all 952 tickers.
+- `uv run idx company --all-details --concurrency 8`: concurrent async backfill of company profiles, boards, and shareholders.
 - `uv run idx daily`: run daily market-close ingestion.
-- `uv run idx parquet`: rebuild Snappy-compressed Parquet datasets.
-- `uv run idx signals`: generate 5-screen daily decision-support briefing (`data/briefings/`).
-- `uv run idx dashboard --port 8080`: launch visual network dashboard.
+- `uv run idx backfill --start 20260101 --end 20260807 --concurrency 8`: concurrent historical backfill.
+- `uv run idx parquet`: rebuild Snappy-compressed Parquet datasets (supports `--incremental`).
+- `uv run idx signals`: generate 7-screen daily decision-support briefing (`data/briefings/`).
+- `uv run idx bandarmology`: inspect Top-N broker concentration ratios and retail vs institutional flow.
+- `uv run idx backtest --strategy foreign_flow --holding 20`: simulate strategy performance & calculate Sharpe/Drawdown.
+- `uv run idx graph --ubo BBCA`: resolve multi-hop Ultimate Beneficial Ownership (UBO) hierarchy.
+- `uv run idx graph --centrality`: rank corporate board powerbrokers by network centrality.
+- `uv run idx drift --latest`: track month-over-month KSEI shareholder and tycoon position changes.
+- `uv run idx serve --port 8000`: start high-performance FastAPI REST API & WebSocket server.
+- `uv run idx dashboard --port 8080`: launch visual network dashboard & TradingView candlestick charts.
 - `uv run idx mcp`: start Model Context Protocol (MCP) server for AI assistants.
-- `uv run pytest python/tests`: run full 65-test automated pytest suite.
+- `uv run pytest python/tests`: run full 90-test automated pytest suite.
 - `uv run ruff check python/src python/tests`: run Ruff linter.
 - `uv run ruff format python/src python/tests`: format Python codebase.
 

@@ -150,3 +150,131 @@ def _backfill_dataset(dataset, endpoint, start_date, end_date, client=None):
         "errors": errors,
         "total_records": total,
     }
+
+
+async def async_backfill_dataset(
+    dataset,
+    endpoint,
+    start_date,
+    end_date,
+    concurrency=5,
+    client=None,
+):
+    """Asynchronous concurrent backfill loop across trading days."""
+    import asyncio
+
+    from idx.core.client import AsyncIDXClient
+
+    have = ts.existing_dates(dataset)
+    dates = list(_trading_days(start_date, end_date))
+    to_fetch = [d for d in dates if d.strftime("%Y-%m-%d") not in have]
+
+    log.info(
+        "Async backfill %s: %d total days (%d cached, %d to fetch, concurrency=%d)",
+        dataset,
+        len(dates),
+        len(dates) - len(to_fetch),
+        len(to_fetch),
+        concurrency,
+    )
+
+    if not to_fetch:
+        return {
+            "dataset": dataset,
+            "dates_fetched": 0,
+            "dates_skipped": len(dates),
+            "errors": 0,
+            "total_records": 0,
+        }
+
+    async_client = client or AsyncIDXClient(concurrency=concurrency)
+    sem = asyncio.Semaphore(concurrency)
+    lock = asyncio.Lock()
+
+    fetched = 0
+    skipped = len(dates) - len(to_fetch)
+    errors = 0
+    total_records = 0
+
+    async def _worker(dt, idx, total_tasks):
+        nonlocal fetched, skipped, errors, total_records
+        date_str = dt.strftime("%Y-%m-%d")
+        date_api = dt.strftime("%Y%m%d")
+
+        async with sem:
+            try:
+                data = await async_client.get_json(
+                    endpoint, params={"date": date_api, "start": 0, "length": 9999}
+                )
+            except Exception as exc:
+                log.warning("Error fetching %s for %s: %s", dataset, date_api, exc)
+                async with lock:
+                    errors += 1
+                return
+
+            records = data.get("data") if isinstance(data, dict) else None
+            if isinstance(records, list) and len(records) > 0:
+                ts.write_partition(dataset, date_str, records)
+                async with lock:
+                    fetched += 1
+                    total_records += len(records)
+                log.info("[%d/%d] %s: %d records", idx, total_tasks, date_str, len(records))
+            else:
+                async with lock:
+                    skipped += 1
+                log.debug("[%d/%d] %s: no data", idx, total_tasks, date_str)
+
+    tasks = [_worker(dt, i + 1, len(to_fetch)) for i, dt in enumerate(to_fetch)]
+    await asyncio.gather(*tasks)
+
+    log.info(
+        "Async backfill %s finished: fetched=%d, skipped=%d, errors=%d, total_records=%d",
+        dataset,
+        fetched,
+        skipped,
+        errors,
+        total_records,
+    )
+    return {
+        "dataset": dataset,
+        "dates_fetched": fetched,
+        "dates_skipped": skipped,
+        "errors": errors,
+        "total_records": total_records,
+    }
+
+
+async def async_backfill_stock_summary(start_date, end_date, concurrency=5, client=None):
+    """Async backfill for stock OHLCV summaries."""
+    return await async_backfill_dataset(
+        "stock_summary",
+        "/TradingSummary/GetStockSummary",
+        start_date,
+        end_date,
+        concurrency=concurrency,
+        client=client,
+    )
+
+
+async def async_backfill_broker_summary(start_date, end_date, concurrency=5, client=None):
+    """Async backfill for broker transaction summaries."""
+    return await async_backfill_dataset(
+        "broker_summary",
+        "/TradingSummary/GetBrokerSummary",
+        start_date,
+        end_date,
+        concurrency=concurrency,
+        client=client,
+    )
+
+
+async def async_backfill_index_summary(start_date, end_date, concurrency=5, client=None):
+    """Async backfill for index summaries."""
+    return await async_backfill_dataset(
+        "index_summary",
+        "/TradingSummary/GetIndexSummary",
+        start_date,
+        end_date,
+        concurrency=concurrency,
+        client=client,
+    )

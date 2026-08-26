@@ -94,11 +94,12 @@ STOCK_DTYPES = {
 }
 
 
-def export_stock_timeseries(output=None):
+def export_stock_timeseries(output=None, incremental=False):
     """Consolidates stock-summary date partitions → single Parquet file.
 
     Args:
         output: Path to output Parquet file. Defaults to data/parquet/stock_summary.parquet
+        incremental: If True and target exists, only reads partitions newer than latest parquet date.
 
     Returns:
         dict with rows, columns, file, size_mb
@@ -107,14 +108,35 @@ def export_stock_timeseries(output=None):
     if output is None:
         output = os.path.join(PARQUET_DIR, "stock_summary.parquet")
 
-    df = ts.read_dataset("stock_summary")
-    if len(df) == 0:
+    start_date = None
+    existing_df = None
+    if incremental and os.path.exists(output):
+        try:
+            existing_df = pd.read_parquet(output)
+            if len(existing_df) > 0 and "Date" in existing_df.columns:
+                max_dt = pd.to_datetime(existing_df["Date"]).max()
+                start_date = (max_dt + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+        except Exception as e:
+            log.warning("Incremental read failed (%s), doing full export", e)
+            existing_df = None
+
+    new_df = ts.read_dataset("stock_summary", start=start_date)
+    if len(new_df) == 0 and existing_df is None:
         log.warning("No stock summary data to export")
         return None
+    elif len(new_df) == 0 and existing_df is not None:
+        log.info("Incremental export: no newer partitions to append.")
+        size_mb = os.path.getsize(output) / (1024 * 1024)
+        return {
+            "rows": len(existing_df),
+            "columns": len(existing_df.columns),
+            "file": output,
+            "size_mb": round(size_mb, 2),
+        }
 
     # Select and order columns (gracefully handle missing ones)
-    available = [c for c in STOCK_COLUMNS if c in df.columns]
-    df = df[available].copy()
+    available = [c for c in STOCK_COLUMNS if c in new_df.columns]
+    df = new_df[available].copy()
 
     # Parse dates
     if "Date" in df.columns:
@@ -134,6 +156,10 @@ def export_stock_timeseries(output=None):
 
     if "Value" in df.columns and "Volume" in df.columns:
         df["VWAP"] = (df["Value"] / df["Volume"]).where(df["Volume"] > 0).round(2)
+
+    if existing_df is not None:
+        df = pd.concat([existing_df, df], ignore_index=True)
+        df.drop_duplicates(subset=["Date", "StockCode"], keep="last", inplace=True)
 
     # Sort for optimal compression and query patterns
     df.sort_values(["Date", "StockCode"], inplace=True, ignore_index=True)
@@ -161,17 +187,37 @@ def export_stock_timeseries(output=None):
 # ── Broker Summary Time-Series ────────────────────────────────────────────────
 
 
-def export_broker_timeseries(output=None):
+def export_broker_timeseries(output=None, incremental=False):
     """Consolidates broker-summary date partitions → single Parquet file."""
     _ensure_parquet_dir()
     if output is None:
         output = os.path.join(PARQUET_DIR, "broker_summary.parquet")
 
-    df = ts.read_dataset("broker_summary")
-    if len(df) == 0:
+    start_date = None
+    existing_df = None
+    if incremental and os.path.exists(output):
+        try:
+            existing_df = pd.read_parquet(output)
+            if len(existing_df) > 0 and "Date" in existing_df.columns:
+                max_dt = pd.to_datetime(existing_df["Date"]).max()
+                start_date = (max_dt + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+        except Exception:
+            existing_df = None
+
+    new_df = ts.read_dataset("broker_summary", start=start_date)
+    if len(new_df) == 0 and existing_df is None:
         log.warning("No broker summary data to export")
         return None
+    elif len(new_df) == 0 and existing_df is not None:
+        size_mb = os.path.getsize(output) / (1024 * 1024)
+        return {
+            "rows": len(existing_df),
+            "columns": len(existing_df.columns),
+            "file": output,
+            "size_mb": round(size_mb, 2),
+        }
 
+    df = new_df.copy()
     if "Date" in df.columns:
         df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
 
@@ -179,7 +225,18 @@ def export_broker_timeseries(output=None):
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    df.sort_values(["Date", "IDFirm"], inplace=True, ignore_index=True)
+    if existing_df is not None:
+        df = pd.concat([existing_df, df], ignore_index=True)
+        id_col = (
+            "IDFirm"
+            if "IDFirm" in df.columns
+            else ("IDBrokerSummary" if "IDBrokerSummary" in df.columns else None)
+        )
+        if id_col:
+            df.drop_duplicates(subset=["Date", id_col], keep="last", inplace=True)
+
+    sort_col = "IDFirm" if "IDFirm" in df.columns else "Date"
+    df.sort_values(["Date", sort_col], inplace=True, ignore_index=True)
 
     table = pa.Table.from_pandas(df, preserve_index=False)
     pq.write_table(table, output, compression="snappy")
@@ -202,17 +259,37 @@ def export_broker_timeseries(output=None):
 # ── Index Summary Time-Series ─────────────────────────────────────────────────
 
 
-def export_index_timeseries(output=None):
+def export_index_timeseries(output=None, incremental=False):
     """Consolidates index-summary date partitions → single Parquet file."""
     _ensure_parquet_dir()
     if output is None:
         output = os.path.join(PARQUET_DIR, "index_summary.parquet")
 
-    df = ts.read_dataset("index_summary")
-    if len(df) == 0:
+    start_date = None
+    existing_df = None
+    if incremental and os.path.exists(output):
+        try:
+            existing_df = pd.read_parquet(output)
+            if len(existing_df) > 0 and "Date" in existing_df.columns:
+                max_dt = pd.to_datetime(existing_df["Date"]).max()
+                start_date = (max_dt + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+        except Exception:
+            existing_df = None
+
+    new_df = ts.read_dataset("index_summary", start=start_date)
+    if len(new_df) == 0 and existing_df is None:
         log.warning("No index summary data to export")
         return None
+    elif len(new_df) == 0 and existing_df is not None:
+        size_mb = os.path.getsize(output) / (1024 * 1024)
+        return {
+            "rows": len(existing_df),
+            "columns": len(existing_df.columns),
+            "file": output,
+            "size_mb": round(size_mb, 2),
+        }
 
+    df = new_df.copy()
     if "Date" in df.columns:
         df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
 
@@ -235,7 +312,14 @@ def export_index_timeseries(output=None):
     if "Close" in df.columns and "Previous" in df.columns:
         df["Return"] = ((df["Close"] - df["Previous"]) / df["Previous"]).round(6)
 
-    df.sort_values(["Date", "IndexCode"], inplace=True, ignore_index=True)
+    if existing_df is not None:
+        df = pd.concat([existing_df, df], ignore_index=True)
+        idx_col = "IndexCode" if "IndexCode" in df.columns else "IndexName"
+        if idx_col in df.columns:
+            df.drop_duplicates(subset=["Date", idx_col], keep="last", inplace=True)
+
+    sort_col = "IndexCode" if "IndexCode" in df.columns else "Date"
+    df.sort_values(["Date", sort_col], inplace=True, ignore_index=True)
 
     table = pa.Table.from_pandas(df, preserve_index=False)
     pq.write_table(table, output, compression="snappy")

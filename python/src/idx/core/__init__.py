@@ -2,7 +2,7 @@
 Core engine components: HTTP client, validation, drift detection, and logging.
 """
 
-from idx.core.client import IDXClient
+from idx.core.client import AsyncIDXClient, IDXClient
 from idx.core.utils import (
     archive_raw_response,
     check_count_anomaly,
@@ -15,6 +15,7 @@ from idx.core.utils import (
 
 __all__ = [
     "IDXClient",
+    "AsyncIDXClient",
     "validate_schema",
     "check_schema_drift",
     "check_count_anomaly",

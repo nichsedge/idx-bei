@@ -1,6 +1,138 @@
 {
   "date": "2026-08-24",
   "trade_date": "2026-08-24",
+  "composite_alpha_rankings": [
+    {
+      "StockCode": "MSTI",
+      "StockName": "Mastersystem Infotama Tbk.",
+      "Close": 1340.0,
+      "AlphaScore": 100.0,
+      "PER": 9.3,
+      "ROE": 29.2,
+      "DER": 0.63,
+      "NetForeignFlow_MSh": 5.66,
+      "RSI14": 56.6,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "MLBI",
+      "StockName": "Multi Bintang Indonesia Tbk.",
+      "Close": 6925.0,
+      "AlphaScore": 100.0,
+      "PER": 11.3,
+      "ROE": 86.1,
+      "DER": 1.64,
+      "NetForeignFlow_MSh": 0.78,
+      "RSI14": 63.7,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "MARK",
+      "StockName": "PT Mark Dynamics Indonesia Tbk.",
+      "Close": 1095.0,
+      "AlphaScore": 100.0,
+      "PER": 14.4,
+      "ROE": 31.9,
+      "DER": 0.2,
+      "NetForeignFlow_MSh": 26.5,
+      "RSI14": 57.6,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "SDMU",
+      "StockName": "Sidomulyo Selaras Tbk",
+      "Close": 88.0,
+      "AlphaScore": 100.0,
+      "PER": 0.9,
+      "ROE": 82.5,
+      "DER": 2.78,
+      "NetForeignFlow_MSh": 5.28,
+      "RSI14": 57.6,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "FWCT",
+      "StockName": "PT Wijaya Cahaya Timber Tbk",
+      "Close": 93.0,
+      "AlphaScore": 100.0,
+      "PER": 2.9,
+      "ROE": 26.2,
+      "DER": 1.03,
+      "NetForeignFlow_MSh": -0.01,
+      "RSI14": 54.0,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "HMSP",
+      "StockName": "HM Sampoerna Tbk",
+      "Close": 745.0,
+      "AlphaScore": 100.0,
+      "PER": 10.4,
+      "ROE": 26.3,
+      "DER": 0.97,
+      "NetForeignFlow_MSh": -7.5,
+      "RSI14": 55.9,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "PTBA",
+      "StockName": "Bukit Asam (Persero) Tbk.",
+      "Close": 2480.0,
+      "AlphaScore": 100.0,
+      "PER": 5.7,
+      "ROE": 27.3,
+      "DER": 0.97,
+      "NetForeignFlow_MSh": -4.26,
+      "RSI14": 65.5,
+      "TrendRegime": "BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "TINS",
+      "StockName": "Timah Tbk.",
+      "Close": 4130.0,
+      "AlphaScore": 100.0,
+      "PER": 14.6,
+      "ROE": 7.6,
+      "DER": 0.78,
+      "NetForeignFlow_MSh": 278.17,
+      "RSI14": 66.1,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "WTM"
+    },
+    {
+      "StockCode": "ADMR",
+      "StockName": "Alamtri Minerals Indonesia Tbk.",
+      "Close": 1680.0,
+      "AlphaScore": 100.0,
+      "PER": 6.2,
+      "ROE": 38.4,
+      "DER": 0.34,
+      "NetForeignFlow_MSh": -19.95,
+      "RSI14": 60.5,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "SMSM",
+      "StockName": "Selamat Sempurna Tbk.",
+      "Close": 1740.0,
+      "AlphaScore": 99.4,
+      "PER": 11.3,
+      "ROE": 25.3,
+      "DER": 0.23,
+      "NetForeignFlow_MSh": -28.5,
+      "RSI14": 52.8,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    }
+  ],
   "foreign_flow_radar": [
     {
       "StockCode": "LUCY",
@@ -91,6 +223,58 @@
       "PctFloat": 0.627166302910211,
       "AvgValueRpB": 2.59418808,
       "Signal": "accumulate"
+    }
+  ],
+  "bandarmology_summary": {
+    "total_market_turnover_rp_b": 28584.19,
+    "cr1_pct": 14.44,
+    "cr3_pct": 33.6,
+    "cr5_pct": 43.68,
+    "institutional_share_pct": 32.52,
+    "retail_share_pct": 39.46,
+    "institutional_to_retail_ratio": 0.82,
+    "top_dominant_broker": "XL"
+  },
+  "top_brokers": [
+    {
+      "Rank": 1,
+      "IDFirm": "XL",
+      "FirmName": "Stockbit Sekuritas Digital",
+      "ValueRpB": 4128.02,
+      "SharePct": 14.44,
+      "Category": "Retail"
+    },
+    {
+      "Rank": 2,
+      "IDFirm": "CC",
+      "FirmName": "MANDIRI SEKURITAS",
+      "ValueRpB": 2988.02,
+      "SharePct": 10.45,
+      "Category": "Institutional/Foreign"
+    },
+    {
+      "Rank": 3,
+      "IDFirm": "AK",
+      "FirmName": "UBS Sekuritas Indonesia",
+      "ValueRpB": 2488.75,
+      "SharePct": 8.71,
+      "Category": "Institutional/Foreign"
+    },
+    {
+      "Rank": 4,
+      "IDFirm": "ZP",
+      "FirmName": "Maybank Sekuritas Indonesia",
+      "ValueRpB": 1448.21,
+      "SharePct": 5.07,
+      "Category": "Institutional/Foreign"
+    },
+    {
+      "Rank": 5,
+      "IDFirm": "YP",
+      "FirmName": "Mirae Asset Sekuritas Indonesia",
+      "ValueRpB": 1431.51,
+      "SharePct": 5.01,
+      "Category": "Retail"
     }
   ],
   "audit_risk_shield": [

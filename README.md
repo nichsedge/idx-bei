@@ -18,47 +18,96 @@ uv sync
 # 1. Scrape all snapshot datasets (company profiles, financial ratios, corporate actions, brokers)
 uv run idx all
 
-# 2. Backfill full-universe company boards, shareholders & dividends (952 tickers)
-uv run idx company --all-details
+# 2. Concurrent async backfill across company boards & shareholders (952 tickers)
+uv run idx company --all-details --concurrency 8
 
 # 3. Daily ingestion (today's OHLCV, broker summary & index flow)
 uv run idx daily
 
-# 4. Historical OHLCV backfill (for backtesting)
-uv run idx backfill --start 20260101 --end 20260807
+# 4. Concurrent historical backfill (for backtesting)
+uv run idx backfill --start 20260101 --end 20260807 --concurrency 8
 
-# 5. Export all time-series and snapshots to Parquet
+# 5. Export all time-series and snapshots to Parquet (supports --incremental)
 uv run idx parquet
 ```
 
-### Daily Decision-Support Signals
+### Quantitative Backtesting & Strategy Simulator
 
 ```bash
-# Generate daily signal briefing (writes Markdown + JSON into data/briefings/)
+# Backtest strategy holding returns, Sharpe ratios, and max drawdowns
+uv run idx backtest --strategy foreign_flow --holding 20 --top 10
+uv run idx backtest --strategy composite_alpha --holding 20 --stop-loss 7.0 --take-profit 15.0
+```
+
+### Knowledge Graph & Ultimate Beneficial Ownership (UBO)
+
+```bash
+# Resolve multi-hop UBO hierarchy and corporate holding tree
+uv run idx graph --ubo BBCA
+
+# Rank top corporate board powerbrokers by network centrality
+uv run idx graph --centrality
+
+# Detect circular cross-holding loops between listed companies
+uv run idx graph --cross-holdings
+```
+
+### KSEI Shareholder Drift & Smart Money Tracking
+
+```bash
+# Track month-over-month position accumulation/distribution across all 1% & 5% holders
+uv run idx drift --latest
+
+# Inspect specific tycoon position changes (e.g. Lo Kheng Hong, Prajogo Pangestu)
+uv run idx drift --tycoon "LO KHENG HONG"
+```
+
+### Daily Decision-Support Signals & Bandarmology
+
+```bash
+# Generate daily 7-screen decision briefing (writes Markdown + JSON into data/briefings/)
 uv run idx signals
+
+# Inspect Top-N broker concentration ratios & institutional footprint
+uv run idx bandarmology
 
 # Optional: broadcast briefing summary to Discord/Slack/Telegram webhook
 uv run idx signals --webhook-url "https://discord.com/api/webhooks/..."
 ```
 
-Runs five quantitative decision-support screens over Parquet exports:
+Runs seven quantitative decision-support screens over Parquet exports:
+- **Composite Alpha Rankings** — multi-factor ranking (Value + Smart Money Flow + Technical Momentum + Clean Audit)
 - **Foreign Flow Radar** — net foreign buying/selling as % of free float (accumulate/distribute)
+- **Bandarmology & Broker Dominance** — Top-1 ($CR_1$), Top-3 ($CR_3$), Top-5 ($CR_5$) broker concentration and institutional vs retail footprint
 - **Audit Risk Shield** — stocks with non-clean audit opinions (`WDP`/`TMP`/`TL`)
 - **Dilution Watch** — recent private placements, warrants, and capital reductions
 - **Sharia Value Screen** — sharia-flagged, PER < 12, ROE ≥ 12%, DER ≤ 2
 - **Pasar Nego Crossing Radar** — stealth off-market block crossings (value > Rp25B, nego share > 75%)
 
-### Interactive Dashboard & AI Assistant (MCP)
+### Interactive Dashboard, REST API & AI Assistant (MCP)
 
 ```bash
-# Launch Smart Money & Network Alpha visual dashboard
+# Launch Smart Money Dashboard with TradingView candlestick & flow charts
 uv run idx dashboard --port 8080
+
+# Start high-performance FastAPI REST API & WebSocket server (Swagger docs at /docs)
+uv run idx serve --port 8000
 
 # Start Model Context Protocol (MCP) Server for Claude, Cursor, Antigravity
 uv run idx mcp
 ```
 
-The MCP server exposes standard JSON-RPC tools (`idx_get_signals`, `idx_query_stock`, `idx_get_company_profile`, `idx_screen_sharia_value`, `idx_get_super_insiders`) for AI assistants.
+The MCP server exposes 10 standard JSON-RPC tools for AI assistants:
+- `idx_get_signals`: daily 7-screen briefing summary.
+- `idx_query_stock`: OHLCV, Net Foreign Flow & VWAP.
+- `idx_get_company_profile`: board directors, commissioners, major shareholders & subsidiaries.
+- `idx_query_broker_flow`: Top-N broker market share, $CR_1/CR_3/CR_5$ concentration ratios.
+- `idx_get_technical_signals`: RSI-14, EMA 20/50/200, Bollinger Bands, ATR-14 & trend regime.
+- `idx_compare_peers`: sector-relative valuation benchmarking.
+- `idx_search_announcements`: public disclosures & PDF filing links.
+- `idx_screen_sharia_value`: profitable, low-debt Sharia stocks.
+- `idx_get_super_insiders`: billionaire/tycoon ownership holdings.
+- `idx_execute_sql`: safe read-only DuckDB SQL queries over Parquet datasets.
 
 ## Repository Structure
 
@@ -68,14 +117,17 @@ idx-bei/
 ├── uv.lock                        # Consolidated workspace lockfile
 ├── python/                        # Python package & scripts
 │   ├── src/idx/                   # Core package (src-layout)
-│   │   ├── core/                  # HTTP client, DuckDB query layer, KSEI ownership engine
-│   │   ├── scrapers/              # Domain scrapers (company, trading, corporate, financial, news)
-│   │   ├── pipelines/             # Parquet export, daily ingestion, analysis
-│   │   ├── mcp/                   # Model Context Protocol (MCP) server
-│   │   ├── signals.py             # Decision-support screens & briefing builder
+│   │   ├── core/                  # HTTP client (sync & async), DuckDB query layer, KSEI ownership engine
+│   │   ├── scrapers/              # Domain scrapers (company, trading, corporate, financial, news, async backfillers)
+│   │   ├── pipelines/             # Incremental Parquet export, daily ingestion, analysis
+│   │   ├── mcp/                   # Model Context Protocol (MCP) server (10 tools)
+│   │   ├── backtest.py            # Vectorized strategy simulator & performance analytics
+│   │   ├── graph.py               # Neo4j UBO tree resolution & board centrality
+│   │   ├── api.py                 # FastAPI REST microservice & WebSocket server
+│   │   ├── signals.py             # 7 decision-support screens & composite alpha model
 │   │   └── cli.py                 # CLI implementation
 │   ├── cli.py                     # CLI launcher
-│   ├── tests/                     # Pytest suite (65 passing unit tests)
+│   ├── tests/                     # Pytest suite (90 passing unit tests)
 │   ├── neo4j_ingest.py            # Neo4j graph ingestion script
 │   ├── neo4j.ipynb                # Graph analysis notebook
 │   └── pyproject.toml             # Package config (uv/setuptools)
@@ -85,13 +137,13 @@ idx-bei/
 │   └── briefings/                 # Daily signal briefings (md + json)
 ├── .github/workflows/             # CI testing (tests.yml)
 ├── docker-compose/                # Neo4j & PostgreSQL service configs
-└── dashboard/index.html           # Smart Money & Network Alpha visual dashboard
+└── dashboard/index.html           # Visual dashboard with TradingView Lightweight Charts
 ```
 
 ## Testing & Code Quality
 
 ```bash
-# Run automated pytest suite (65 unit tests)
+# Run automated pytest suite (90 unit tests)
 uv run pytest python/tests
 
 # Run Ruff linter and formatter
