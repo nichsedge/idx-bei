@@ -4,23 +4,23 @@ version = "0.2.0"
 description = "IDX-BEI Quantitative Data & Analysis Toolkit"
 readme = "README.md"
 license = { text = "MIT" }
-requires-python = ">=3.13"
+requires-python = ">=3.14.7"
 dependencies = [
-    "arelle-release>=2.37.33",
-    "matplotlib>=3.10.3",
-    "neo4j>=5.28.1",
+    "arelle-release>=2.44.5",
+    "matplotlib>=3.11.1",
+    "neo4j>=5.28.5",
     "psycopg2-binary",
-    "scikit-learn>=1.6.1",
+    "scikit-learn>=1.9.0",
     "seaborn>=0.13.2",
-    "sqlalchemy>=2.0.41",
-    "tqdm>=4.67.1",
-    "yfinance>=0.2.59",
-    "curl_cffi>=0.15.0",
-    "python-dotenv>=1.0.1",
-    "pyarrow>=18.0.0",
+    "sqlalchemy>=2.0.52",
+    "tqdm>=4.70.0",
+    "yfinance>=0.2.66",
+    "curl_cffi>=0.16.2",
+    "python-dotenv>=1.2.3",
+    "pyarrow>=18.1.0",
     "duckdb>=1.5.5",
-    "fastapi>=0.115.0",
-    "uvicorn>=0.30.0",
+    "fastapi>=0.141.1",
+    "uvicorn>=0.52.4",
 ]
 
 [project.scripts]
@@ -28,11 +28,11 @@ idx = "idx.cli:main"
 
 [dependency-groups]
 dev = [
-    "httpx>=0.28.0",
+    "httpx>=0.28.1",
     "ipykernel>=7.3.0",
-    "nbformat>=5.10.4",
+    "nbformat>=5.11.1",
     "pytest>=9.1.1",
-    "ruff>=0.8.0",
+    "ruff>=0.16.5",
 ]
 
 [build-system]

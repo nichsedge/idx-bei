@@ -3,16 +3,16 @@ name = "idx-bei-root"
 version = "0.2.0"
 description = "IDX-BEI Quantitative Data & Analysis Toolkit"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14.7"
 dependencies = [
     "idx-bei",
 ]
 
 [dependency-groups]
 dev = [
-    "httpx>=0.28.0",
+    "httpx>=0.28.1",
     "pytest>=9.1.1",
-    "ruff>=0.8.0",
+    "ruff>=0.16.5",
 ]
 
 [tool.uv.sources]
