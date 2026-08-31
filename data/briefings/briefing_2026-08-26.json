@@ -1,0 +1,1406 @@
+{
+  "date": "2026-08-26",
+  "trade_date": "2026-08-26",
+  "composite_alpha_rankings": [
+    {
+      "StockCode": "DMAS",
+      "StockName": "Puradelta Lestari Tbk.",
+      "Close": 167.0,
+      "AlphaScore": 100.0,
+      "PER": 4.2,
+      "ROE": 24.6,
+      "DER": 0.11,
+      "NetForeignFlow_MSh": 285.98,
+      "RSI14": 65.9,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "MSTI",
+      "StockName": "Mastersystem Infotama Tbk.",
+      "Close": 1335.0,
+      "AlphaScore": 100.0,
+      "PER": 9.3,
+      "ROE": 29.2,
+      "DER": 0.63,
+      "NetForeignFlow_MSh": 4.4,
+      "RSI14": 54.9,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "MLBI",
+      "StockName": "Multi Bintang Indonesia Tbk.",
+      "Close": 6900.0,
+      "AlphaScore": 100.0,
+      "PER": 11.3,
+      "ROE": 86.1,
+      "DER": 1.64,
+      "NetForeignFlow_MSh": 0.76,
+      "RSI14": 61.4,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "PTBA",
+      "StockName": "Bukit Asam (Persero) Tbk.",
+      "Close": 2420.0,
+      "AlphaScore": 100.0,
+      "PER": 5.7,
+      "ROE": 27.3,
+      "DER": 0.97,
+      "NetForeignFlow_MSh": -4.6,
+      "RSI14": 54.3,
+      "TrendRegime": "BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "TINS",
+      "StockName": "Timah Tbk.",
+      "Close": 4020.0,
+      "AlphaScore": 100.0,
+      "PER": 14.6,
+      "ROE": 7.6,
+      "DER": 0.78,
+      "NetForeignFlow_MSh": 272.2,
+      "RSI14": 60.0,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "WTM"
+    },
+    {
+      "StockCode": "AADI",
+      "StockName": "Adaro Andalan Indonesia Tbk.",
+      "Close": 10000.0,
+      "AlphaScore": 100.0,
+      "PER": 3.1,
+      "ROE": 47.3,
+      "DER": 1.0,
+      "NetForeignFlow_MSh": -12.4,
+      "RSI14": 65.5,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "WTM"
+    },
+    {
+      "StockCode": "ADMR",
+      "StockName": "Alamtri Minerals Indonesia Tbk.",
+      "Close": 1685.0,
+      "AlphaScore": 100.0,
+      "PER": 6.2,
+      "ROE": 38.4,
+      "DER": 0.34,
+      "NetForeignFlow_MSh": -22.65,
+      "RSI14": 61.0,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "HATM",
+      "StockName": "Habco Trans Maritima Tbk.",
+      "Close": 570.0,
+      "AlphaScore": 99.0,
+      "PER": 10.4,
+      "ROE": 20.0,
+      "DER": 0.3,
+      "NetForeignFlow_MSh": 10.86,
+      "RSI14": 54.4,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "MARK",
+      "StockName": "PT Mark Dynamics Indonesia Tbk.",
+      "Close": 1055.0,
+      "AlphaScore": 98.5,
+      "PER": 14.4,
+      "ROE": 31.9,
+      "DER": 0.2,
+      "NetForeignFlow_MSh": 26.93,
+      "RSI14": 48.7,
+      "TrendRegime": "BEARISH",
+      "AuditOpinion": "Clean"
+    },
+    {
+      "StockCode": "KETR",
+      "StockName": "Ketrosden Triasmitra Tbk.",
+      "Close": 620.0,
+      "AlphaScore": 98.2,
+      "PER": 6.7,
+      "ROE": 7.2,
+      "DER": 0.97,
+      "NetForeignFlow_MSh": 7.12,
+      "RSI14": 53.6,
+      "TrendRegime": "STRONG_BULLISH",
+      "AuditOpinion": "Clean"
+    }
+  ],
+  "foreign_flow_radar": [
+    {
+      "StockCode": "LUCY",
+      "Close": 338.0,
+      "Sessions": 5,
+      "NFF_MSh": 43.95,
+      "PctFloat": 2.901198667542655,
+      "AvgValueRpB": 14.40560088,
+      "Signal": "accumulate"
+    },
+    {
+      "StockCode": "PIPA",
+      "Close": 179.0,
+      "Sessions": 5,
+      "NFF_MSh": 47.65,
+      "PctFloat": 1.3907924194059422,
+      "AvgValueRpB": 141.87178616,
+      "Signal": "accumulate"
+    },
+    {
+      "StockCode": "CSMI",
+      "Close": 156.0,
+      "Sessions": 5,
+      "NFF_MSh": 10.22,
+      "PctFloat": 1.2527977364451086,
+      "AvgValueRpB": 18.3892378,
+      "Signal": "accumulate"
+    },
+    {
+      "StockCode": "ICON",
+      "Close": 128.0,
+      "Sessions": 5,
+      "NFF_MSh": 12.16,
+      "PctFloat": 1.1161367286074788,
+      "AvgValueRpB": 3.2605947,
+      "Signal": "accumulate"
+    },
+    {
+      "StockCode": "GPSO",
+      "Close": 300.0,
+      "Sessions": 5,
+      "NFF_MSh": 6.56,
+      "PctFloat": 0.8945138944050351,
+      "AvgValueRpB": 14.17329128,
+      "Signal": "accumulate"
+    },
+    {
+      "StockCode": "PSAB",
+      "Close": 635.0,
+      "Sessions": 5,
+      "NFF_MSh": 228.13,
+      "PctFloat": 0.8621829176114891,
+      "AvgValueRpB": 112.9854124,
+      "Signal": "accumulate"
+    },
+    {
+      "StockCode": "TMPO",
+      "Close": 252.0,
+      "Sessions": 5,
+      "NFF_MSh": 8.42,
+      "PctFloat": 0.7952977004171419,
+      "AvgValueRpB": 21.66491886,
+      "Signal": "accumulate"
+    },
+    {
+      "StockCode": "TINS",
+      "Close": 4020.0,
+      "Sessions": 5,
+      "NFF_MSh": 56.04,
+      "PctFloat": 0.7524430064196376,
+      "AvgValueRpB": 235.5274688,
+      "Signal": "accumulate"
+    },
+    {
+      "StockCode": "PEGE",
+      "Close": 107.0,
+      "Sessions": 5,
+      "NFF_MSh": 20.34,
+      "PctFloat": 0.538496440814818,
+      "AvgValueRpB": 3.23369788,
+      "Signal": "accumulate"
+    },
+    {
+      "StockCode": "TAMA",
+      "Close": 222.0,
+      "Sessions": 5,
+      "NFF_MSh": 6.13,
+      "PctFloat": 0.5104580372676717,
+      "AvgValueRpB": 4.59654164,
+      "Signal": "accumulate"
+    }
+  ],
+  "bandarmology_summary": {
+    "total_market_turnover_rp_b": 36171.12,
+    "cr1_pct": 13.93,
+    "cr3_pct": 32.03,
+    "cr5_pct": 43.26,
+    "institutional_share_pct": 30.11,
+    "retail_share_pct": 37.99,
+    "institutional_to_retail_ratio": 0.79,
+    "top_dominant_broker": "XL"
+  },
+  "top_brokers": [
+    {
+      "Rank": 1,
+      "IDFirm": "XL",
+      "FirmName": "Stockbit Sekuritas Digital",
+      "ValueRpB": 5040.11,
+      "SharePct": 13.93,
+      "Category": "Retail"
+    },
+    {
+      "Rank": 2,
+      "IDFirm": "AK",
+      "FirmName": "UBS Sekuritas Indonesia",
+      "ValueRpB": 3322.79,
+      "SharePct": 9.19,
+      "Category": "Institutional/Foreign"
+    },
+    {
+      "Rank": 3,
+      "IDFirm": "CC",
+      "FirmName": "MANDIRI SEKURITAS",
+      "ValueRpB": 3223.96,
+      "SharePct": 8.91,
+      "Category": "Institutional/Foreign"
+    },
+    {
+      "Rank": 4,
+      "IDFirm": "DH",
+      "FirmName": "SINARMAS SEKURITAS",
+      "ValueRpB": 2256.19,
+      "SharePct": 6.24,
+      "Category": "General"
+    },
+    {
+      "Rank": 5,
+      "IDFirm": "ZP",
+      "FirmName": "Maybank Sekuritas Indonesia",
+      "ValueRpB": 1805.07,
+      "SharePct": 4.99,
+      "Category": "Institutional/Foreign"
+    }
+  ],
+  "audit_risk_shield": [
+    {
+      "code": "NEST",
+      "stockName": "Esta Indonesia Tbk.",
+      "opini": "WDP",
+      "fsDate": "2024-09-30",
+      "roe": 6.5847,
+      "per": 66.9
+    },
+    {
+      "code": "SRAJ",
+      "stockName": "Sejahteraraya Anugrahjaya Tbk",
+      "opini": "WDP",
+      "fsDate": "2024-09-30",
+      "roe": 0.5033,
+      "per": 3021.79
+    },
+    {
+      "code": "TRAM",
+      "stockName": "Trada Alam Minera Tbk.",
+      "opini": "WDP",
+      "fsDate": "2020-12-31",
+      "roe": -61.9813,
+      "per": 0.0
+    },
+    {
+      "code": "COWL",
+      "stockName": "Cowell Development Tbk.",
+      "opini": "TMP",
+      "fsDate": "2019-12-31",
+      "roe": 0.0,
+      "per": 0.0
+    },
+    {
+      "code": "MABA",
+      "stockName": "Marga Abhinaya Abadi Tbk.",
+      "opini": "TMP",
+      "fsDate": "2019-12-31",
+      "roe": -92.12,
+      "per": 0.0
+    }
+  ],
+  "dilution_watch": [
+    {
+      "KodeEmiten": "SCMA",
+      "caType": "kurangModal",
+      "TanggalPencatatan": "2026-08-10",
+      "JenisTindakan": "kurangModal"
+    },
+    {
+      "KodeEmiten": "PYFA",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-08-10",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "PJHB",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-08-10",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "MGNA",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-08-10",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "ISAP",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-08-10",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "HUMI",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-08-10",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "CYBR",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-08-10",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "CSIS",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-08-07",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "KOCI",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-08-06",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "MANG",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-08-03",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "INTP",
+      "caType": "kurangModal",
+      "TanggalPencatatan": "2026-07-29",
+      "JenisTindakan": "kurangModal"
+    },
+    {
+      "KodeEmiten": "ASPI",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-07-28",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "INET",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-07-27",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "SLIS",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-07-16",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "GRPM",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-07-14",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "ADRO",
+      "caType": "kurangModal",
+      "TanggalPencatatan": "2026-07-13",
+      "JenisTindakan": "kurangModal"
+    },
+    {
+      "KodeEmiten": "PART",
+      "caType": "waran",
+      "TanggalPencatatan": "2026-07-07",
+      "JenisTindakan": "waran"
+    },
+    {
+      "KodeEmiten": "LPPF",
+      "caType": "kurangModal",
+      "TanggalPencatatan": "2026-06-30",
+      "JenisTindakan": "kurangModal"
+    }
+  ],
+  "sharia_value_screen": [
+    {
+      "code": "ALII",
+      "stockName": "Ancara Logistics Indonesia Tbk.",
+      "per": 2.99,
+      "roe": 116.3711,
+      "deRatio": 0.42,
+      "priceBV": 3.48
+    },
+    {
+      "code": "MLBI",
+      "stockName": "Multi Bintang Indonesia Tbk.",
+      "per": 11.31,
+      "roe": 86.0944,
+      "deRatio": 1.64,
+      "priceBV": 9.74
+    },
+    {
+      "code": "GEMS",
+      "stockName": "Golden Energy Mines Tbk.",
+      "per": 7.78,
+      "roe": 78.5161,
+      "deRatio": 0.82,
+      "priceBV": 6.1
+    },
+    {
+      "code": "LPKR",
+      "stockName": "Lippo Karawaci Tbk.",
+      "per": 0.4,
+      "roe": 58.2678,
+      "deRatio": 0.82,
+      "priceBV": 0.23
+    },
+    {
+      "code": "BSSR",
+      "stockName": "Baramulti Suksessarana Tbk.",
+      "per": 5.21,
+      "roe": 49.6462,
+      "deRatio": 0.5,
+      "priceBV": 2.59
+    },
+    {
+      "code": "AADI",
+      "stockName": "Adaro Andalan Indonesia Tbk.",
+      "per": 3.13,
+      "roe": 47.318,
+      "deRatio": 1.0,
+      "priceBV": 1.48
+    },
+    {
+      "code": "ADMR",
+      "stockName": "Alamtri Minerals Indonesia Tbk.",
+      "per": 6.15,
+      "roe": 38.4246,
+      "deRatio": 0.34,
+      "priceBV": 2.36
+    },
+    {
+      "code": "PBSA",
+      "stockName": "PT Paramita Bangun Sarana Tbk",
+      "per": 4.21,
+      "roe": 37.7429,
+      "deRatio": 0.51,
+      "priceBV": 1.59
+    },
+    {
+      "code": "SKRN",
+      "stockName": "Superkrane Mitra Utama Tbk.",
+      "per": 8.21,
+      "roe": 31.0934,
+      "deRatio": 1.84,
+      "priceBV": 2.55
+    },
+    {
+      "code": "SGER",
+      "stockName": "Sumber Global Energy Tbk.",
+      "per": 9.23,
+      "roe": 30.8403,
+      "deRatio": 1.44,
+      "priceBV": 2.85
+    },
+    {
+      "code": "MSTI",
+      "stockName": "Mastersystem Infotama Tbk.",
+      "per": 9.31,
+      "roe": 29.2288,
+      "deRatio": 0.63,
+      "priceBV": 2.72
+    },
+    {
+      "code": "PSGO",
+      "stockName": "Palma Serasih Tbk.",
+      "per": 5.33,
+      "roe": 28.5935,
+      "deRatio": 0.68,
+      "priceBV": 1.52
+    },
+    {
+      "code": "PTBA",
+      "stockName": "Bukit Asam (Persero) Tbk.",
+      "per": 5.7,
+      "roe": 27.3234,
+      "deRatio": 0.97,
+      "priceBV": 1.56
+    },
+    {
+      "code": "VAST",
+      "stockName": "PT Vastland Indonesia Tbk",
+      "per": 2.12,
+      "roe": 26.5723,
+      "deRatio": 0.37,
+      "priceBV": 0.56
+    },
+    {
+      "code": "SUNI",
+      "stockName": "PT Sunindo Pratama Tbk",
+      "per": 9.95,
+      "roe": 26.4588,
+      "deRatio": 0.34,
+      "priceBV": 2.63
+    },
+    {
+      "code": "HMSP",
+      "stockName": "HM Sampoerna Tbk",
+      "per": 10.38,
+      "roe": 26.3241,
+      "deRatio": 0.97,
+      "priceBV": 2.73
+    },
+    {
+      "code": "FWCT",
+      "stockName": "PT Wijaya Cahaya Timber Tbk",
+      "per": 2.94,
+      "roe": 26.1627,
+      "deRatio": 1.03,
+      "priceBV": 0.77
+    },
+    {
+      "code": "NELY",
+      "stockName": "Pelayaran Nelly Dwi Putri Tbk",
+      "per": 4.55,
+      "roe": 26.1519,
+      "deRatio": 0.14,
+      "priceBV": 1.19
+    },
+    {
+      "code": "MCOL",
+      "stockName": "Prima Andalan Mandiri Tbk.",
+      "per": 8.28,
+      "roe": 25.3751,
+      "deRatio": 0.34,
+      "priceBV": 2.1
+    },
+    {
+      "code": "SMSM",
+      "stockName": "Selamat Sempurna Tbk.",
+      "per": 11.29,
+      "roe": 25.2892,
+      "deRatio": 0.23,
+      "priceBV": 2.86
+    },
+    {
+      "code": "CBPE",
+      "stockName": "PT Citra Buana Prasida Tbk",
+      "per": 3.89,
+      "roe": 25.272,
+      "deRatio": 0.21,
+      "priceBV": 0.98
+    },
+    {
+      "code": "KMDS",
+      "stockName": "Kurniamitra Duta Sentosa Tbk.",
+      "per": 8.55,
+      "roe": 25.1083,
+      "deRatio": 0.21,
+      "priceBV": 2.15
+    },
+    {
+      "code": "HEXA",
+      "stockName": "Hexindo Adiperkasa Tbk.",
+      "per": 7.06,
+      "roe": 25.001,
+      "deRatio": 1.84,
+      "priceBV": 1.76
+    },
+    {
+      "code": "DMAS",
+      "stockName": "Puradelta Lestari Tbk.",
+      "per": 4.16,
+      "roe": 24.6262,
+      "deRatio": 0.11,
+      "priceBV": 1.03
+    },
+    {
+      "code": "CITA",
+      "stockName": "Cita Mineral Investindo Tbk.",
+      "per": 8.98,
+      "roe": 24.5541,
+      "deRatio": 0.07,
+      "priceBV": 2.21
+    },
+    {
+      "code": "SAMF",
+      "stockName": "Saraswanti Anugerah Makmur Tbk.",
+      "per": 10.95,
+      "roe": 24.5173,
+      "deRatio": 1.18,
+      "priceBV": 2.68
+    },
+    {
+      "code": "ELIT",
+      "stockName": "PT Data Sinergitama Jaya Tbk",
+      "per": 7.7,
+      "roe": 23.7041,
+      "deRatio": 1.2,
+      "priceBV": 1.82
+    },
+    {
+      "code": "UNTR",
+      "stockName": "United Tractors Tbk.",
+      "per": 4.79,
+      "roe": 22.9685,
+      "deRatio": 0.83,
+      "priceBV": 1.1
+    },
+    {
+      "code": "LFLO",
+      "stockName": "Imago Mulia Persada Tbk.",
+      "per": 7.93,
+      "roe": 22.9678,
+      "deRatio": 1.19,
+      "priceBV": 1.82
+    },
+    {
+      "code": "TLDN",
+      "stockName": "Teladan Prima Agro Tbk.",
+      "per": 11.54,
+      "roe": 22.6887,
+      "deRatio": 1.04,
+      "priceBV": 2.62
+    },
+    {
+      "code": "KKGI",
+      "stockName": "Resource Alam Indonesia Tbk.",
+      "per": 4.8,
+      "roe": 22.1984,
+      "deRatio": 0.32,
+      "priceBV": 1.07
+    },
+    {
+      "code": "DRMA",
+      "stockName": "Dharma Polimetal Tbk.",
+      "per": 8.58,
+      "roe": 22.1301,
+      "deRatio": 0.62,
+      "priceBV": 1.9
+    },
+    {
+      "code": "TOTL",
+      "stockName": "Total Bangun Persada Tbk",
+      "per": 9.53,
+      "roe": 21.9096,
+      "deRatio": 1.93,
+      "priceBV": 2.09
+    },
+    {
+      "code": "ADES",
+      "stockName": "Akasha Wira International Tbk.",
+      "per": 11.82,
+      "roe": 21.8288,
+      "deRatio": 0.19,
+      "priceBV": 2.58
+    },
+    {
+      "code": "KOCI",
+      "stockName": "PT Kokoh Exa Nusantara",
+      "per": 8.11,
+      "roe": 21.6068,
+      "deRatio": 0.09,
+      "priceBV": 1.75
+    },
+    {
+      "code": "ABMM",
+      "stockName": "ABM Investama Tbk",
+      "per": 3.66,
+      "roe": 21.4087,
+      "deRatio": 1.6,
+      "priceBV": 0.78
+    },
+    {
+      "code": "CTBN",
+      "stockName": "Citra Tubindo Tbk.",
+      "per": 5.78,
+      "roe": 21.2021,
+      "deRatio": 0.65,
+      "priceBV": 1.23
+    },
+    {
+      "code": "KEJU",
+      "stockName": "Mulia Boga Raya Tbk.",
+      "per": 8.5,
+      "roe": 20.4888,
+      "deRatio": 0.28,
+      "priceBV": 1.74
+    },
+    {
+      "code": "AREA",
+      "stockName": "Dunia Virtual Online Tbk.",
+      "per": 10.95,
+      "roe": 20.1813,
+      "deRatio": 0.26,
+      "priceBV": 2.21
+    },
+    {
+      "code": "HATM",
+      "stockName": "Habco Trans Maritima Tbk.",
+      "per": 10.38,
+      "roe": 20.0462,
+      "deRatio": 0.3,
+      "priceBV": 2.08
+    },
+    {
+      "code": "ITMG",
+      "stockName": "Indo Tambangraya Megah Tbk.",
+      "per": 5.41,
+      "roe": 20.022,
+      "deRatio": 0.28,
+      "priceBV": 1.08
+    },
+    {
+      "code": "MAHA",
+      "stockName": "PT Mandiri Herindo Adiperkasa Tbk",
+      "per": 7.79,
+      "roe": 20.0099,
+      "deRatio": 0.37,
+      "priceBV": 1.56
+    },
+    {
+      "code": "PNGO",
+      "stockName": "Pinago Utama Tbk.",
+      "per": 7.11,
+      "roe": 19.7969,
+      "deRatio": 0.75,
+      "priceBV": 1.41
+    },
+    {
+      "code": "GLVA",
+      "stockName": "Galva Technologies Tbk.",
+      "per": 5.94,
+      "roe": 19.7807,
+      "deRatio": 1.49,
+      "priceBV": 1.18
+    },
+    {
+      "code": "ADRO",
+      "stockName": "Alamtri Resources Indonesia Tbk.",
+      "per": 3.07,
+      "roe": 19.7421,
+      "deRatio": 0.34,
+      "priceBV": 0.61
+    },
+    {
+      "code": "BBRM",
+      "stockName": "Pelayaran Nasional Bina Buana Raya Tbk.",
+      "per": 6.29,
+      "roe": 19.7421,
+      "deRatio": 0.16,
+      "priceBV": 1.24
+    },
+    {
+      "code": "TAPG",
+      "stockName": "Triputra Agro Persada Tbk.",
+      "per": 7.16,
+      "roe": 19.0529,
+      "deRatio": 0.26,
+      "priceBV": 1.36
+    },
+    {
+      "code": "BAYU",
+      "stockName": "Bayu Buana Tbk",
+      "per": 5.42,
+      "roe": 19.0519,
+      "deRatio": 0.93,
+      "priceBV": 1.03
+    },
+    {
+      "code": "STAA",
+      "stockName": "Sumber Tani Agung Resources Tbk.",
+      "per": 8.73,
+      "roe": 19.0206,
+      "deRatio": 0.4,
+      "priceBV": 1.66
+    },
+    {
+      "code": "IFSH",
+      "stockName": "Ifishdeco Tbk.",
+      "per": 11.81,
+      "roe": 18.7247,
+      "deRatio": 0.29,
+      "priceBV": 2.21
+    },
+    {
+      "code": "AKRA",
+      "stockName": "AKR Corporindo Tbk.",
+      "per": 8.85,
+      "roe": 18.6499,
+      "deRatio": 1.19,
+      "priceBV": 1.65
+    },
+    {
+      "code": "PBID",
+      "stockName": "Panca Budi Idaman Tbk.",
+      "per": 7.7,
+      "roe": 18.4749,
+      "deRatio": 0.22,
+      "priceBV": 1.42
+    },
+    {
+      "code": "BMSR",
+      "stockName": "Bintang Mitra Semestaraya Tbk",
+      "per": 2.21,
+      "roe": 18.4322,
+      "deRatio": 0.7,
+      "priceBV": 0.41
+    },
+    {
+      "code": "HAIS",
+      "stockName": "Hasnur Internasional Shipping Tbk.",
+      "per": 4.37,
+      "roe": 18.259,
+      "deRatio": 0.64,
+      "priceBV": 0.8
+    },
+    {
+      "code": "NCKL",
+      "stockName": "PT Trimegah Bangun Persada Tbk.",
+      "per": 7.95,
+      "roe": 17.9473,
+      "deRatio": 0.55,
+      "priceBV": 1.43
+    },
+    {
+      "code": "DLTA",
+      "stockName": "Delta Djakarta Tbk.",
+      "per": 11.95,
+      "roe": 17.7513,
+      "deRatio": 0.37,
+      "priceBV": 2.12
+    },
+    {
+      "code": "BNBR",
+      "stockName": "Bakrie & Brothers Tbk",
+      "per": 8.09,
+      "roe": 17.3406,
+      "deRatio": 0.64,
+      "priceBV": 1.4
+    },
+    {
+      "code": "TPMA",
+      "stockName": "Trans Power Marine Tbk.",
+      "per": 6.11,
+      "roe": 17.3271,
+      "deRatio": 0.64,
+      "priceBV": 1.06
+    },
+    {
+      "code": "NPGF",
+      "stockName": "Nusa Palapa Gemilang Tbk.",
+      "per": 2.59,
+      "roe": 16.9456,
+      "deRatio": 0.14,
+      "priceBV": 0.44
+    },
+    {
+      "code": "ALKA",
+      "stockName": "Alakasa Industrindo Tbk",
+      "per": 5.05,
+      "roe": 16.7389,
+      "deRatio": 0.26,
+      "priceBV": 0.85
+    },
+    {
+      "code": "MUTU",
+      "stockName": "PT Mutuagung Lestari Tbk",
+      "per": 7.0,
+      "roe": 16.2394,
+      "deRatio": 0.4,
+      "priceBV": 1.14
+    },
+    {
+      "code": "DYAN",
+      "stockName": "Dyandra Media International Tbk.",
+      "per": 3.45,
+      "roe": 16.2107,
+      "deRatio": 0.89,
+      "priceBV": 0.56
+    },
+    {
+      "code": "MPIX",
+      "stockName": "Mitra Pedagang Indonesia Tbk.",
+      "per": 3.87,
+      "roe": 16.2045,
+      "deRatio": 0.11,
+      "priceBV": 0.63
+    },
+    {
+      "code": "GJTL",
+      "stockName": "Gajah Tunggal Tbk.",
+      "per": 2.65,
+      "roe": 16.0815,
+      "deRatio": 1.18,
+      "priceBV": 0.43
+    },
+    {
+      "code": "PTSP",
+      "stockName": "Pioneerindo Gourmet International Tbk.",
+      "per": 7.25,
+      "roe": 15.9342,
+      "deRatio": 0.99,
+      "priceBV": 1.16
+    },
+    {
+      "code": "JTPE",
+      "stockName": "Jasuindo Tiga Perkasa Tbk.",
+      "per": 8.13,
+      "roe": 15.888,
+      "deRatio": 0.58,
+      "priceBV": 1.29
+    },
+    {
+      "code": "HRTA",
+      "stockName": "Hartadinata Abadi Tbk.",
+      "per": 4.69,
+      "roe": 15.7766,
+      "deRatio": 1.48,
+      "priceBV": 0.74
+    },
+    {
+      "code": "FIRE",
+      "stockName": "Alfa Energi Investama Tbk.",
+      "per": 3.47,
+      "roe": 15.6986,
+      "deRatio": 0.65,
+      "priceBV": 0.54
+    },
+    {
+      "code": "IPCC",
+      "stockName": "Indonesia Kendaraan Terminal Tbk.",
+      "per": 6.51,
+      "roe": 15.6589,
+      "deRatio": 0.46,
+      "priceBV": 1.02
+    },
+    {
+      "code": "BFIN",
+      "stockName": "BFI Finance  Indonesia Tbk.",
+      "per": 9.53,
+      "roe": 15.4414,
+      "deRatio": 1.35,
+      "priceBV": 1.47
+    },
+    {
+      "code": "ADMF",
+      "stockName": "Adira Dinamika Multi Finance Tbk.",
+      "per": 5.74,
+      "roe": 15.2754,
+      "deRatio": 1.98,
+      "priceBV": 0.88
+    },
+    {
+      "code": "MAIN",
+      "stockName": "Malindo Feedmill Tbk.",
+      "per": 4.55,
+      "roe": 15.0562,
+      "deRatio": 1.17,
+      "priceBV": 0.68
+    },
+    {
+      "code": "GGRP",
+      "stockName": "Gunung Raja Paksi Tbk.",
+      "per": 1.45,
+      "roe": 15.0115,
+      "deRatio": 0.13,
+      "priceBV": 0.22
+    },
+    {
+      "code": "IATA",
+      "stockName": "MNC Energy Investments Tbk.",
+      "per": 4.69,
+      "roe": 14.9579,
+      "deRatio": 1.4,
+      "priceBV": 0.7
+    },
+    {
+      "code": "BUKK",
+      "stockName": "Bukaka Teknik Utama Tbk.",
+      "per": 3.09,
+      "roe": 14.8575,
+      "deRatio": 0.76,
+      "priceBV": 0.46
+    },
+    {
+      "code": "MGLV",
+      "stockName": "Panca Anugrah Wisesa Tbk.",
+      "per": 7.0,
+      "roe": 14.8297,
+      "deRatio": 0.82,
+      "priceBV": 1.04
+    },
+    {
+      "code": "RGAS",
+      "stockName": "Kian Santang Muliatama Tbk.",
+      "per": 10.57,
+      "roe": 14.8141,
+      "deRatio": 0.15,
+      "priceBV": 1.57
+    },
+    {
+      "code": "TLKM",
+      "stockName": "Telkom Indonesia (Persero) Tbk.",
+      "per": 11.81,
+      "roe": 14.7301,
+      "deRatio": 0.85,
+      "priceBV": 1.74
+    },
+    {
+      "code": "TSPC",
+      "stockName": "Tempo Scan Pacific Tbk.",
+      "per": 8.62,
+      "roe": 14.6234,
+      "deRatio": 0.36,
+      "priceBV": 1.26
+    },
+    {
+      "code": "BLUE",
+      "stockName": "Berkah Prima Perkasa Tbk.",
+      "per": 9.89,
+      "roe": 14.6102,
+      "deRatio": 0.15,
+      "priceBV": 1.45
+    },
+    {
+      "code": "ESTA",
+      "stockName": "Esta Multi Usaha Tbk.",
+      "per": 6.92,
+      "roe": 14.3665,
+      "deRatio": 0.71,
+      "priceBV": 0.99
+    },
+    {
+      "code": "WIIM",
+      "stockName": "Wismilak Inti Makmur Tbk",
+      "per": 5.64,
+      "roe": 14.2544,
+      "deRatio": 0.53,
+      "priceBV": 0.8
+    },
+    {
+      "code": "BISI",
+      "stockName": "BISI INTERNATIONAL Tbk",
+      "per": 7.72,
+      "roe": 13.9926,
+      "deRatio": 0.11,
+      "priceBV": 1.08
+    },
+    {
+      "code": "MYOH",
+      "stockName": "Samindo Resources Tbk",
+      "per": 9.18,
+      "roe": 13.9232,
+      "deRatio": 0.3,
+      "priceBV": 1.28
+    },
+    {
+      "code": "CEKA",
+      "stockName": "Wilmar Cahaya Indonesia Tbk.",
+      "per": 4.96,
+      "roe": 13.8573,
+      "deRatio": 0.24,
+      "priceBV": 0.69
+    },
+    {
+      "code": "ELSA",
+      "stockName": "Elnusa Tbk.",
+      "per": 4.87,
+      "roe": 13.5911,
+      "deRatio": 1.18,
+      "priceBV": 0.66
+    },
+    {
+      "code": "MTDL",
+      "stockName": "Metrodata Electronics Tbk.",
+      "per": 10.81,
+      "roe": 13.4506,
+      "deRatio": 1.15,
+      "priceBV": 1.45
+    },
+    {
+      "code": "WEHA",
+      "stockName": "PT WEHA Transportasi Indonesia Tbk",
+      "per": 4.79,
+      "roe": 13.4345,
+      "deRatio": 0.52,
+      "priceBV": 0.64
+    },
+    {
+      "code": "AXIO",
+      "stockName": "Tera Data Indonusa Tbk.",
+      "per": 10.23,
+      "roe": 13.4095,
+      "deRatio": 0.89,
+      "priceBV": 1.37
+    },
+    {
+      "code": "RMKE",
+      "stockName": "RMK Energy Tbk.",
+      "per": 9.98,
+      "roe": 13.3892,
+      "deRatio": 0.4,
+      "priceBV": 1.34
+    },
+    {
+      "code": "AUTO",
+      "stockName": "Astra Otoparts Tbk.",
+      "per": 5.38,
+      "roe": 13.3754,
+      "deRatio": 0.37,
+      "priceBV": 0.72
+    },
+    {
+      "code": "HBAT",
+      "stockName": "PT Minahasa Membangun Hebat Tbk",
+      "per": 3.72,
+      "roe": 13.2263,
+      "deRatio": 0.03,
+      "priceBV": 0.49
+    },
+    {
+      "code": "OBMD",
+      "stockName": "OBM Drilchem Tbk.",
+      "per": 7.81,
+      "roe": 13.1884,
+      "deRatio": 0.23,
+      "priceBV": 1.03
+    },
+    {
+      "code": "TBMS",
+      "stockName": "Tembaga Mulia Semanan Tbk.",
+      "per": 4.78,
+      "roe": 13.1537,
+      "deRatio": 1.14,
+      "priceBV": 0.63
+    },
+    {
+      "code": "DVLA",
+      "stockName": "Darya-Varia Laboratoria Tbk.",
+      "per": 9.24,
+      "roe": 13.1289,
+      "deRatio": 0.52,
+      "priceBV": 1.21
+    },
+    {
+      "code": "ERAL",
+      "stockName": "PT Sinar Eka Selaras Tbk",
+      "per": 8.39,
+      "roe": 12.9945,
+      "deRatio": 0.34,
+      "priceBV": 1.09
+    },
+    {
+      "code": "ASII",
+      "stockName": "Astra International Tbk",
+      "per": 5.83,
+      "roe": 12.9757,
+      "deRatio": 0.79,
+      "priceBV": 0.76
+    },
+    {
+      "code": "EMDE",
+      "stockName": "Megapolitan Developments Tbk.",
+      "per": 1.71,
+      "roe": 12.875,
+      "deRatio": 1.43,
+      "priceBV": 0.22
+    },
+    {
+      "code": "ERAA",
+      "stockName": "Erajaya Swasembada Tbk.",
+      "per": 5.74,
+      "roe": 12.777,
+      "deRatio": 1.68,
+      "priceBV": 0.73
+    },
+    {
+      "code": "SPTO",
+      "stockName": "Surya Pertiwi Tbk.",
+      "per": 5.83,
+      "roe": 12.7328,
+      "deRatio": 0.47,
+      "priceBV": 0.74
+    },
+    {
+      "code": "SCNP",
+      "stockName": "Selaras Citra Nusantara Perkasa Tbk.",
+      "per": 8.71,
+      "roe": 12.7041,
+      "deRatio": 0.16,
+      "priceBV": 1.11
+    },
+    {
+      "code": "JPFA",
+      "stockName": "Japfa Comfeed Indonesia Tbk.",
+      "per": 10.89,
+      "roe": 12.6655,
+      "deRatio": 1.16,
+      "priceBV": 1.38
+    },
+    {
+      "code": "TEBE",
+      "stockName": "Dana Brata Luhur Tbk.",
+      "per": 5.94,
+      "roe": 12.6224,
+      "deRatio": 0.07,
+      "priceBV": 0.75
+    },
+    {
+      "code": "CSRA",
+      "stockName": "Cisadane Sawit Raya Tbk.",
+      "per": 9.74,
+      "roe": 12.6015,
+      "deRatio": 0.82,
+      "priceBV": 1.23
+    },
+    {
+      "code": "PSSI",
+      "stockName": "IMC Pelita Logistik Tbk.",
+      "per": 7.22,
+      "roe": 12.592,
+      "deRatio": 0.29,
+      "priceBV": 0.91
+    },
+    {
+      "code": "IPCM",
+      "stockName": "PT Jasa Armada Indonesia Tbk.",
+      "per": 8.84,
+      "roe": 12.5836,
+      "deRatio": 0.22,
+      "priceBV": 1.11
+    },
+    {
+      "code": "DSNG",
+      "stockName": "PT Dharma Satya Nusantara Tbk.",
+      "per": 8.41,
+      "roe": 12.5249,
+      "deRatio": 0.82,
+      "priceBV": 1.05
+    },
+    {
+      "code": "WINS",
+      "stockName": "Wintermar Offshore Marine Tbk",
+      "per": 5.37,
+      "roe": 12.4972,
+      "deRatio": 0.22,
+      "priceBV": 0.67
+    },
+    {
+      "code": "RAFI",
+      "stockName": "Sari Kreasi Boga Tbk.",
+      "per": 2.45,
+      "roe": 12.3949,
+      "deRatio": 0.31,
+      "priceBV": 0.3
+    },
+    {
+      "code": "GDYR",
+      "stockName": "Goodyear Indonesia Tbk.",
+      "per": 3.93,
+      "roe": 12.3492,
+      "deRatio": 1.18,
+      "priceBV": 0.49
+    }
+  ],
+  "pasar_nego_crossing": [
+    {
+      "StockCode": "MAPI",
+      "Close": 1455.0,
+      "Sessions": 20,
+      "NegoValRpB": 9354.98,
+      "RegValRpB": 476.55,
+      "NegoSharePct": 95.2,
+      "NegoTrades": 31
+    },
+    {
+      "StockCode": "MBSS",
+      "Close": 2820.0,
+      "Sessions": 20,
+      "NegoValRpB": 4207.5,
+      "RegValRpB": 80.54,
+      "NegoSharePct": 98.1,
+      "NegoTrades": 2
+    },
+    {
+      "StockCode": "SMMA",
+      "Close": 20000.0,
+      "Sessions": 20,
+      "NegoValRpB": 2761.11,
+      "RegValRpB": 3.59,
+      "NegoSharePct": 99.9,
+      "NegoTrades": 2151
+    },
+    {
+      "StockCode": "IMPC",
+      "Close": 1305.0,
+      "Sessions": 20,
+      "NegoValRpB": 1822.07,
+      "RegValRpB": 261.09,
+      "NegoSharePct": 87.5,
+      "NegoTrades": 3
+    },
+    {
+      "StockCode": "GOTO",
+      "Close": 50.0,
+      "Sessions": 20,
+      "NegoValRpB": 1714.88,
+      "RegValRpB": 39.04,
+      "NegoSharePct": 97.8,
+      "NegoTrades": 1286
+    },
+    {
+      "StockCode": "MGLV",
+      "Close": 11800.0,
+      "Sessions": 20,
+      "NegoValRpB": 1596.68,
+      "RegValRpB": 307.99,
+      "NegoSharePct": 83.8,
+      "NegoTrades": 154
+    },
+    {
+      "StockCode": "MKPI",
+      "Close": 22100.0,
+      "Sessions": 20,
+      "NegoValRpB": 350.92,
+      "RegValRpB": 18.29,
+      "NegoSharePct": 95.0,
+      "NegoTrades": 54
+    },
+    {
+      "StockCode": "TIFA",
+      "Close": 326.0,
+      "Sessions": 20,
+      "NegoValRpB": 277.01,
+      "RegValRpB": 4.72,
+      "NegoSharePct": 98.3,
+      "NegoTrades": 2
+    },
+    {
+      "StockCode": "AVIA",
+      "Close": 344.0,
+      "Sessions": 20,
+      "NegoValRpB": 260.6,
+      "RegValRpB": 84.46,
+      "NegoSharePct": 75.5,
+      "NegoTrades": 17
+    },
+    {
+      "StockCode": "CASA",
+      "Close": 1800.0,
+      "Sessions": 20,
+      "NegoValRpB": 221.06,
+      "RegValRpB": 0.76,
+      "NegoSharePct": 99.7,
+      "NegoTrades": 39
+    }
+  ]
+}

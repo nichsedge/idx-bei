@@ -1,0 +1,24 @@
+{
+  "scraped_at": "2026-08-31T06:00:18+07:00",
+  "count": 2,
+  "articles": [
+    {
+      "title": "Israel Evakuasi Mendadak Putra Netanyahu dari AS, Klaim Bakal Dibunuh Iran",
+      "url": "https://news.detik.com/internasional/d-8641219/israel-evakuasi-mendadak-putra-netanyahu-dari-as-klaim-bakal-dibunuh-iran",
+      "source": "detik.com",
+      "source_url": "https://news.detik.com/internasional/d-8641219/israel-evakuasi-mendadak-putra-netanyahu-dari-as-klaim-bakal-dibunuh-iran",
+      "confidence": "high",
+      "verified": true
+    },
+    {
+      "title": "Video: Pemakaman Massal Ratusan Jenazah Korban Banjir Nepal yang Tak Dikenal",
+      "url": "https://20.detik.com/detikupdate/20260831-260831002/video-pemakaman-massal-ratusan-jenazah-korban-banjir-nepal-yang-tak-dikenal",
+      "source": "detik.com",
+      "source_url": "https://20.detik.com/detikupdate/20260831-260831002/video-pemakaman-massal-ratusan-jenazah-korban-banjir-nepal-yang-tak-dikenal",
+      "confidence": "high",
+      "verified": true
+    }
+  ],
+  "fallback_used": true,
+  "confidence": "high"
+}

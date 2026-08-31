@@ -1,0 +1,77 @@
+[
+    {
+        "name": "IR. ADIES KADIR, SH.",
+        "lembaga": "DEWAN PERWAKILAN RAKYAT (DPR)",
+        "unit_kerja": "WAKIL PIMPINAN",
+        "jabatan": "WAKIL KETUA DPR RI",
+        "tanggal_lapor": "31 Desember 2025",
+        "jenis_laporan": "Periodik",
+        "total_harta": "Rp.15.401.000.000",
+        "tanah_bangunan": [
+            {
+                "description": "Tanah dan Bangunan Seluas 288 m2/480 m2 di KAB / KOTA KOTA SURABAYA , HASIL SENDIRI",
+                "value": "2.976.000.000"
+            },
+            {
+                "description": "Tanah Seluas 280 m2 di KAB / KOTA KOTA BEKASI , HASIL SENDIRI",
+                "value": "1.820.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 105 m2/36 m2 di KAB / KOTA KOTA SURABAYA , HASIL SENDIRI",
+                "value": "550.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 105 m2/90 m2 di KAB / KOTA KOTA SURABAYA , HASIL SENDIRI",
+                "value": "600.000.000"
+            }
+        ],
+        "transportasi": [
+            {
+                "description": "MOBIL, MITSUBISHI PAJERO SUV Tahun 2017, HASIL SENDIRI",
+                "value": "150.000.000"
+            },
+            {
+                "description": "MOBIL, BMW SEDAN Tahun 2019, HASIL SENDIRI",
+                "value": "700.000.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA APHARD MINIBUS Tahun 2021, HASIL SENDIRI",
+                "value": "550.000.000"
+            },
+            {
+                "description": "MOBIL, LEXUS JEEP Tahun 2024, HASIL SENDIRI",
+                "value": "2.450.000.000"
+            }
+        ],
+        "bergerak_lainnya": [
+            {
+                "description": "Total",
+                "value": "2.260.000.000"
+            }
+        ],
+        "surat_berharga": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ],
+        "kas": [
+            {
+                "description": "Total",
+                "value": "3.345.000.000"
+            }
+        ],
+        "harta_lainnya": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ],
+        "hutang": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ]
+    }
+]

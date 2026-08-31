@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-08-31T11:35:00+07:00",
+  "count": 200,
+  "tiers_defined": "support>50=support, punish>60=punish, neutral=rest",
+  "normalized_0_100": true,
+  "summary": {
+    "avg_support": 35.19,
+    "avg_punish": 64.81
+  }
+}

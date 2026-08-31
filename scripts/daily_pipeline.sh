@@ -11,7 +11,7 @@ echo "== $(date -Is) uv run idx daily =="
 uv run idx daily
 
 echo "== $(date -Is) uv run idx signals --webhook-url =="
-uv run idx signals --webhook-url "$DISCORD_WEBHOOK"
+uv run idx signals ${DISCORD_WEBHOOK:+--webhook-url "$DISCORD_WEBHOOK"}
 
 echo "== $(date -Is) dashboard artifacts =="
 # signals/parquet refresh data/network_alpha_data.* consumed by dashboard/index.html

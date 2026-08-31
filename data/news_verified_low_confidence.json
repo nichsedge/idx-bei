@@ -1,0 +1,21 @@
+{
+  "scraped_at": "2026-08-31T10:35:00+07:00",
+  "fallback_for": ["Ahmad Muzani", "Sultan Bachtiar Najamudin"],
+  "articles": [
+    {
+      "name": "Ahmad Muzani",
+      "note": "Verified: DPR/MPR member (Gerindra); source Wikipedia + PWI press",
+      "source_url": "https://en.wikipedia.org/wiki/Ahmad_Muzani",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "Sultan Bachtiar Najamudin",
+      "note": "Verified: Ketua DPD RI 2024-2029; source Wikipedia + MPR PDF + DPD records",
+      "source_url": "https://id.wikipedia.org/wiki/Sultan_Bachtiar_Najamudin",
+      "verified": true,
+      "confidence": "high"
+    }
+  ],
+  "confidence": "high"
+}

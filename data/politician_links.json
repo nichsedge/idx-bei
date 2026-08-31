@@ -1,0 +1,247 @@
+{
+  "politicians": [
+    {
+      "name": "PRABOWO SUBIANTO",
+      "jabatan": "PRESIDEN REPUBLIK INDONESIA",
+      "lembaga": "KANTOR PRESIDEN",
+      "wealth": 2062241012691,
+      "wealth_raw": "Rp.2.062.241.012.691",
+      "tanggal_lapor": "31 Desember 2024",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PRABOWO SUBIANTO",
+      "jabatan": "MENTERI PERTAHANAN",
+      "lembaga": "KEMENTERIAN PERTAHANAN",
+      "wealth": 2042682732691,
+      "wealth_raw": "Rp.2.042.682.732.691",
+      "tanggal_lapor": "31 Desember 2023",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PRABOWO SUBIANTO",
+      "jabatan": "CALON PRESIDEN REPUBLIK INDONESIA",
+      "lembaga": "KPU (CALON PRESIDEN DAN WAKIL PRESIDEN 2024)",
+      "wealth": 2042682732691,
+      "wealth_raw": "Rp.2.042.682.732.691",
+      "tanggal_lapor": "18 Oktober 2023",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PRABOWO SUBIANTO",
+      "jabatan": "MENTERI",
+      "lembaga": "KEMENTERIAN PERTAHANAN",
+      "wealth": 2034395519335,
+      "wealth_raw": "Rp.2.034.395.519.335",
+      "tanggal_lapor": "31 Desember 2022",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PRABOWO SUBIANTO",
+      "jabatan": "MENTERI",
+      "lembaga": "KEMENTERIAN PERTAHANAN",
+      "wealth": 2032478722760,
+      "wealth_raw": "Rp.2.032.478.722.760",
+      "tanggal_lapor": "31 Desember 2021",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PRABOWO SUBIANTO",
+      "jabatan": "MENTERI",
+      "lembaga": "KEMENTERIAN PERTAHANAN",
+      "wealth": 2029339519335,
+      "wealth_raw": "Rp.2.029.339.519.335",
+      "tanggal_lapor": "31 Desember 2020",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PRABOWO SUBIANTO",
+      "jabatan": "MENTERI",
+      "lembaga": "KEMENTERIAN PERTAHANAN",
+      "wealth": 2005956560835,
+      "wealth_raw": "Rp.2.005.956.560.835",
+      "tanggal_lapor": "31 Desember 2019",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PRABOWO SUBIANTO",
+      "jabatan": "CALON PRESIDEN REPUBLIK INDONESIA",
+      "lembaga": "KPU (CALON PRESIDEN DAN WAKIL PRESIDEN 2019)",
+      "wealth": 1952013493659,
+      "wealth_raw": "Rp.1.952.013.493.659",
+      "tanggal_lapor": "26 Juli 2018",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PRABOWO SUBIANTO",
+      "jabatan": "CALON PRESIDEN RI PERIODE 2014 S.D 2019",
+      "lembaga": "KANTOR PRESIDEN",
+      "wealth": 1717892450401,
+      "wealth_raw": "Rp.1.717.892.450.401",
+      "tanggal_lapor": "20 Mei 2014",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PRABOWO SUBIANTO",
+      "jabatan": "",
+      "lembaga": "",
+      "wealth": 1655105383359,
+      "wealth_raw": "Rp.1.655.105.383.359",
+      "tanggal_lapor": "18 Mei 2009",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PUAN MAHARANI",
+      "jabatan": "KETUA DPR RI",
+      "lembaga": "DEWAN PERWAKILAN RAKYAT (DPR)",
+      "wealth": 552887740518,
+      "wealth_raw": "Rp.552.887.740.518",
+      "tanggal_lapor": "31 Desember 2023",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PUAN MAHARANI",
+      "jabatan": "KETUA DPR RI",
+      "lembaga": "DEWAN PERWAKILAN RAKYAT (DPR)",
+      "wealth": 495004890387,
+      "wealth_raw": "Rp.495.004.890.387",
+      "tanggal_lapor": "31 Desember 2022",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PUAN MAHARANI",
+      "jabatan": "KETUA DPR RI",
+      "lembaga": "DEWAN PERWAKILAN RAKYAT (DPR)",
+      "wealth": 395411122388,
+      "wealth_raw": "Rp.395.411.122.388",
+      "tanggal_lapor": "31 Desember 2024",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "SUFMI DASCO AHMAD",
+      "jabatan": "WAKIL KETUA DPR RI",
+      "lembaga": "DEWAN PERWAKILAN RAKYAT (DPR)",
+      "wealth": 81642193033,
+      "wealth_raw": "Rp.81.642.193.033",
+      "tanggal_lapor": "31 Desember 2025",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "AHMAD MUZANI",
+      "jabatan": "WAKIL KETUA MPR RI",
+      "lembaga": "MAJELIS PERMUSYAWARATAN RAKYAT (MPR)",
+      "wealth": 73711180000,
+      "wealth_raw": "Rp.73.711.180.000",
+      "tanggal_lapor": "31 Desember 2024",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "CUCUN AHMAD SYAMSURIJAL",
+      "jabatan": "WAKIL KETUA DPR RI",
+      "lembaga": "DEWAN PERWAKILAN RAKYAT (DPR)",
+      "wealth": 31350000000,
+      "wealth_raw": "Rp.31.350.000.000",
+      "tanggal_lapor": "31 Desember 2024",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "G. BUDISATRIO DJIWANDONO",
+      "jabatan": "ANGGOTA DPR RI",
+      "lembaga": "DEWAN PERWAKILAN RAKYAT (DPR)",
+      "wealth": 20198375182,
+      "wealth_raw": "Rp.20.198.375.182",
+      "tanggal_lapor": "31 Desember 2025",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "IR. ADIES KADIR, SH.",
+      "jabatan": "WAKIL KETUA DPR RI",
+      "lembaga": "DEWAN PERWAKILAN RAKYAT (DPR)",
+      "wealth": 15401000000,
+      "wealth_raw": "Rp.15.401.000.000",
+      "tanggal_lapor": "31 Desember 2025",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "PRABOWO SUBIANTO",
+      "jabatan": "",
+      "lembaga": "",
+      "wealth": 14314819999,
+      "wealth_raw": "Rp.14.314.819.999",
+      "tanggal_lapor": "23 Juli 2003",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "SAAN MUSTOPA",
+      "jabatan": "WAKIL KETUA DPR RI",
+      "lembaga": "DEWAN PERWAKILAN RAKYAT (DPR)",
+      "wealth": 11898547908,
+      "wealth_raw": "Rp.11.898.547.908",
+      "tanggal_lapor": "31 Desember 2025",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "SULTAN BAKTIAR NAJAMUDIN",
+      "jabatan": "KETUA DPD RI",
+      "lembaga": "DEWAN PERWAKILAN DAERAH (DPD)",
+      "wealth": 8752200000,
+      "wealth_raw": "Rp.8.752.200.000",
+      "tanggal_lapor": "31 Desember 2025",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    },
+    {
+      "name": "DANI AHMAD MUZANI",
+      "jabatan": "PEMERIKSA PAJAK",
+      "lembaga": "KEMENTERIAN KEUANGAN",
+      "wealth": 588600000,
+      "wealth_raw": "Rp.588.600.000",
+      "tanggal_lapor": "31 Desember 2025",
+      "source_url": "https://elhkpn.kpk.go.id",
+      "verified": true,
+      "confidence": "high"
+    }
+  ],
+  "links": []
+}

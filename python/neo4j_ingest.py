@@ -310,9 +310,58 @@ def ingest_all_stock_summaries(data_path=None):
     print("Stock summary data ingested successfully.")
 
 
+
+def ingest_power_graph(tx, politicians, ormas_list):
+    # Politicians
+    tx.run('''
+        UNWIND $politicians AS p
+        MERGE (pol:Politician {name: p.name})
+        SET pol.jabatan = p.jabatan, pol.lembaga = p.lembaga, pol.wealth = p.wealth, pol.source_url = p.source_url
+    ''', politicians=politicians)
+    # Ormas
+    tx.run('''
+        UNWIND $ormas AS o
+        MERGE (orm:Ormas {name: o.name})
+        SET orm.chairman = o.chairman, orm.city = o.city, orm.classification = o.classification,
+            orm.toxicity = o.toxicity, orm.benefit = o.benefit, orm.net_score = o.net_score,
+            orm.confidence = o.confidence, orm.source_url = o.source_url
+    ''', ormas=ormas_list)
+
+def ingest_all_power_graph(politician_path=None, ormas_path=None):
+    import json, os
+    from dotenv import load_dotenv
+    load_dotenv()
+    if politician_path is None:
+        politician_path = os.path.join(DATA_DIR, "politician_links.json")
+    if ormas_path is None:
+        ormas_path = os.path.join(DATA_DIR, "ormas_jabar.json")
+    pols=[]
+    ormas=[]
+    if os.path.exists(politician_path):
+        j=json.load(open(politician_path))
+        pols=j.get("politicians",[])[:50]
+        # deduplicate by name
+        seen=set(); uniq=[]
+        for p in pols:
+            n=p.get("name","").strip().upper()
+            if n and n not in seen:
+                seen.add(n)
+                uniq.append({"name": n, "jabatan": p.get("jabatan",""), "lembaga": p.get("lembaga",""), "wealth": p.get("wealth",0), "source_url": p.get("source_url","")})
+        pols=uniq
+    if os.path.exists(ormas_path):
+        ormas=json.load(open(ormas_path))
+    from neo4j import GraphDatabase
+    driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
+    with driver.session() as session:
+        session.execute_write(ingest_power_graph, pols, ormas)
+    driver.close()
+    print(f"Power graph ingested: {len(pols)} politicians, {len(ormas)} ormas")
+
+
 if __name__ == "__main__":
     # Example usage:
     delete_all_data()
     ingest_all_stock_profiles()
+    ingest_all_power_graph()
     # ingest_all_stock_summaries()
     pass

@@ -1,0 +1,970 @@
+[
+    {
+        "name": "PRABOWO SUBIANTO",
+        "lembaga": "KANTOR PRESIDEN",
+        "unit_kerja": "PIMPINAN PEMERINTAHAN",
+        "jabatan": "PRESIDEN REPUBLIK INDONESIA",
+        "tanggal_lapor": "31 Desember 2024",
+        "jenis_laporan": "Khusus, Awal Menjabat",
+        "total_harta": "Rp.2.062.241.012.691",
+        "tanah_bangunan": [
+            {
+                "description": "Tanah dan Bangunan Seluas 818 m2/580 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HIBAH DENGAN AKTA",
+                "value": "34.448.143.000"
+            },
+            {
+                "description": "Tanah Seluas 48970 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "10.000.000.000"
+            },
+            {
+                "description": "Tanah Seluas 8905 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.467.670.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 8365 m2/2175 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HASIL SENDIRI",
+                "value": "168.278.925.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 760 m2/760 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "7.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 2100 m2/2000 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "46.500.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 2000 m2/1800 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "17.500.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 70 m2/61 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "200.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 10000 m2/800 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "4.500.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 500 m2/500 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "700.000.000"
+            }
+        ],
+        "transportasi": [
+            {
+                "description": "MOBIL, TOYOTA ALPHARD MINIBUS Tahun 2005, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, HONDA CR-V JEEP                      Tahun 2007, HASIL SENDIRI",
+                "value": "130.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1994, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LAND CRUISER       JEEP                      Tahun 1980, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, MITSUBISHI PAJERO         JEEP                      Tahun 2000, HASIL SENDIRI",
+                "value": "175.000.000"
+            },
+            {
+                "description": "MOTOR, SUZUKI                    SEPEDA MOTOR              Tahun 2002, HASIL SENDIRI",
+                "value": "3.500.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LEXUS           JEEP                      Tahun 2002, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1992, HASIL SENDIRI",
+                "value": "50.000.000"
+            }
+        ],
+        "bergerak_lainnya": [
+            {
+                "description": "Total",
+                "value": "16.464.523.500"
+            }
+        ],
+        "surat_berharga": [
+            {
+                "description": "Total",
+                "value": "1.701.879.000.000"
+            }
+        ],
+        "kas": [
+            {
+                "description": "Total",
+                "value": "48.044.251.191"
+            }
+        ],
+        "harta_lainnya": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ],
+        "hutang": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ]
+    },
+    {
+        "name": "PRABOWO SUBIANTO",
+        "lembaga": "KEMENTERIAN PERTAHANAN",
+        "unit_kerja": "PIMPINAN TERTINGGI",
+        "jabatan": "MENTERI PERTAHANAN",
+        "tanggal_lapor": "31 Desember 2023",
+        "jenis_laporan": "Periodik",
+        "total_harta": "Rp.2.042.682.732.691",
+        "tanah_bangunan": [
+            {
+                "description": "Tanah dan Bangunan Seluas 818 m2/580 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HIBAH DENGAN AKTA",
+                "value": "32.666.905.000"
+            },
+            {
+                "description": "Tanah Seluas 48970 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "9.794.000.000"
+            },
+            {
+                "description": "Tanah Seluas 8905 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.467.670.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 8365 m2/2175 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HASIL SENDIRI",
+                "value": "158.491.875.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 760 m2/760 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 2100 m2/2000 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "45.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 2000 m2/1800 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "15.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 70 m2/61 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 10000 m2/800 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "3.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 500 m2/500 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "500.000.000"
+            }
+        ],
+        "transportasi": [
+            {
+                "description": "MOBIL, TOYOTA ALPHARD MINIBUS Tahun 2005, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, HONDA CR-V JEEP                      Tahun 2007, HASIL SENDIRI",
+                "value": "130.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1994, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LAND CRUISER       JEEP                      Tahun 1980, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, MITSUBISHI PAJERO         JEEP                      Tahun 2000, HASIL SENDIRI",
+                "value": "175.000.000"
+            },
+            {
+                "description": "MOTOR, SUZUKI                    SEPEDA MOTOR              Tahun 2002, HASIL SENDIRI",
+                "value": "3.500.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LEXUS           JEEP                      Tahun 2002, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1992, HASIL SENDIRI",
+                "value": "50.000.000"
+            }
+        ],
+        "bergerak_lainnya": [
+            {
+                "description": "Total",
+                "value": "16.415.023.500"
+            }
+        ],
+        "surat_berharga": [
+            {
+                "description": "Total",
+                "value": "1.701.879.000.000"
+            }
+        ],
+        "kas": [
+            {
+                "description": "Total",
+                "value": "47.809.759.191"
+            }
+        ],
+        "harta_lainnya": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ],
+        "hutang": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ]
+    },
+    {
+        "name": "PRABOWO SUBIANTO",
+        "lembaga": "KPU (CALON PRESIDEN DAN WAKIL PRESIDEN 2024)",
+        "unit_kerja": "PIMPINAN TERTINGGI",
+        "jabatan": "CALON PRESIDEN REPUBLIK INDONESIA",
+        "tanggal_lapor": "18 Oktober 2023",
+        "jenis_laporan": "Khusus, Calon PN",
+        "total_harta": "Rp.2.042.682.732.691",
+        "tanah_bangunan": [
+            {
+                "description": "Tanah dan Bangunan Seluas 818 m2/580 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HIBAH DENGAN AKTA",
+                "value": "32.666.905.000"
+            },
+            {
+                "description": "Tanah Seluas 48970 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "9.794.000.000"
+            },
+            {
+                "description": "Tanah Seluas 8905 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.467.670.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 8365 m2/2175 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HASIL SENDIRI",
+                "value": "158.491.875.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 760 m2/760 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 2100 m2/2000 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "45.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 2000 m2/1800 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "15.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 70 m2/61 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 10000 m2/800 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "3.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 500 m2/500 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "500.000.000"
+            }
+        ],
+        "transportasi": [
+            {
+                "description": "MOBIL, TOYOTA ALPHARD MINIBUS Tahun 2005, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, HONDA CR-V JEEP                      Tahun 2007, HASIL SENDIRI",
+                "value": "130.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1994, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LAND CRUISER       JEEP                      Tahun 1980, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, MITSUBISHI PAJERO         JEEP                      Tahun 2000, HASIL SENDIRI",
+                "value": "175.000.000"
+            },
+            {
+                "description": "MOTOR, SUZUKI                    SEPEDA MOTOR              Tahun 2002, HASIL SENDIRI",
+                "value": "3.500.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LEXUS           JEEP                      Tahun 2002, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1992, HASIL SENDIRI",
+                "value": "50.000.000"
+            }
+        ],
+        "bergerak_lainnya": [
+            {
+                "description": "Total",
+                "value": "16.415.023.500"
+            }
+        ],
+        "surat_berharga": [
+            {
+                "description": "Total",
+                "value": "1.701.879.000.000"
+            }
+        ],
+        "kas": [
+            {
+                "description": "Total",
+                "value": "47.809.759.191"
+            }
+        ],
+        "harta_lainnya": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ],
+        "hutang": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ]
+    },
+    {
+        "name": "PRABOWO SUBIANTO",
+        "lembaga": "KEMENTERIAN PERTAHANAN",
+        "unit_kerja": "PIMPINAN TERTINGGI",
+        "jabatan": "MENTERI",
+        "tanggal_lapor": "31 Desember 2022",
+        "jenis_laporan": "Periodik",
+        "total_harta": "Rp.2.034.395.519.335",
+        "tanah_bangunan": [
+            {
+                "description": "Tanah dan Bangunan Seluas 841 m2/580 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HIBAH TANPA AKTA",
+                "value": "32.666.905.000"
+            },
+            {
+                "description": "Tanah Seluas 48970 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "9.794.000.000"
+            },
+            {
+                "description": "Tanah Seluas 8905 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.467.670.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 8365 m2/2175 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HASIL SENDIRI",
+                "value": "158.491.875.000"
+            },
+            {
+                "description": "Bangunan Seluas 760 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.000.000.000"
+            },
+            {
+                "description": "Tanah Seluas 2100 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "45.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 1 m2/180000 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "15.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 1 m2/61 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 10000 m2/800 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "3.000.000.000"
+            },
+            {
+                "description": "Bangunan Seluas 500 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "500.000.000"
+            }
+        ],
+        "transportasi": [
+            {
+                "description": "MOBIL, TOYOTA ALPHARD MINIBUS Tahun 2005, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, HONDA CR-V JEEP                      Tahun 2007, HASIL SENDIRI",
+                "value": "130.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1994, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LAND CRUISER       JEEP                      Tahun 1980, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, MITSUBISHI PAJERO         JEEP                      Tahun 2000, HASIL SENDIRI",
+                "value": "175.000.000"
+            },
+            {
+                "description": "MOTOR, SUZUKI                    SEPEDA MOTOR              Tahun 2002, HASIL SENDIRI",
+                "value": "3.500.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LEXUS           JEEP                      Tahun 2002, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1992, HASIL SENDIRI",
+                "value": "50.000.000"
+            }
+        ],
+        "bergerak_lainnya": [
+            {
+                "description": "Total",
+                "value": "16.415.023.500"
+            }
+        ],
+        "surat_berharga": [
+            {
+                "description": "Total",
+                "value": "1.701.879.000.000"
+            }
+        ],
+        "kas": [
+            {
+                "description": "Total",
+                "value": "2.522.545.835"
+            }
+        ],
+        "harta_lainnya": [
+            {
+                "description": "Total",
+                "value": "45.000.000.000"
+            }
+        ],
+        "hutang": [
+            {
+                "description": "Total",
+                "value": "8.000.000.000"
+            }
+        ]
+    },
+    {
+        "name": "PRABOWO SUBIANTO",
+        "lembaga": "KEMENTERIAN PERTAHANAN",
+        "unit_kerja": "PIMPINAN TERTINGGI",
+        "jabatan": "MENTERI",
+        "tanggal_lapor": "31 Desember 2021",
+        "jenis_laporan": "Periodik",
+        "total_harta": "Rp.2.032.478.722.760",
+        "tanah_bangunan": [
+            {
+                "description": "Tanah dan Bangunan Seluas 841 m2/580 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HIBAH TANPA AKTA",
+                "value": "32.666.905.000"
+            },
+            {
+                "description": "Tanah Seluas 48970 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "9.794.000.000"
+            },
+            {
+                "description": "Tanah Seluas 8905 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.467.670.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 8365 m2/2175 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HASIL SENDIRI",
+                "value": "158.491.875.000"
+            },
+            {
+                "description": "Bangunan Seluas 760 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.000.000.000"
+            },
+            {
+                "description": "Tanah Seluas 2100 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "45.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 1 m2/180000 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "15.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 1 m2/61 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 10000 m2/800 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "3.000.000.000"
+            },
+            {
+                "description": "Bangunan Seluas 500 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "500.000.000"
+            }
+        ],
+        "transportasi": [
+            {
+                "description": "MOBIL, TOYOTA ALPHARD MINIBUS Tahun 2005, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, HONDA CR-V JEEP                      Tahun 2007, HASIL SENDIRI",
+                "value": "130.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1994, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LAND CRUISER       JEEP                      Tahun 1980, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, MITSUBISHI PAJERO         JEEP                      Tahun 2000, HASIL SENDIRI",
+                "value": "175.000.000"
+            },
+            {
+                "description": "MOTOR, SUZUKI                    SEPEDA MOTOR              Tahun 2002, HASIL SENDIRI",
+                "value": "3.500.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LEXUS           JEEP                      Tahun 2002, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1992, HASIL SENDIRI",
+                "value": "50.000.000"
+            }
+        ],
+        "bergerak_lainnya": [
+            {
+                "description": "Total",
+                "value": "16.359.023.500"
+            }
+        ],
+        "surat_berharga": [
+            {
+                "description": "Total",
+                "value": "1.701.879.000.000"
+            }
+        ],
+        "kas": [
+            {
+                "description": "Total",
+                "value": "2.522.545.835"
+            }
+        ],
+        "harta_lainnya": [
+            {
+                "description": "Total",
+                "value": "43.139.203.425"
+            }
+        ],
+        "hutang": [
+            {
+                "description": "Total",
+                "value": "8.000.000.000"
+            }
+        ]
+    },
+    {
+        "name": "PRABOWO SUBIANTO",
+        "lembaga": "KEMENTERIAN PERTAHANAN",
+        "unit_kerja": "PIMPINAN TERTINGGI",
+        "jabatan": "MENTERI",
+        "tanggal_lapor": "31 Desember 2020",
+        "jenis_laporan": "Periodik",
+        "total_harta": "Rp.2.029.339.519.335",
+        "tanah_bangunan": [
+            {
+                "description": "Tanah dan Bangunan Seluas 841 m2/580 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HIBAH TANPA AKTA",
+                "value": "32.666.905.000"
+            },
+            {
+                "description": "Tanah Seluas 48970 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "9.794.000.000"
+            },
+            {
+                "description": "Tanah Seluas 8905 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.467.670.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 8365 m2/2175 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HASIL SENDIRI",
+                "value": "158.491.875.000"
+            },
+            {
+                "description": "Bangunan Seluas 760 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.000.000.000"
+            },
+            {
+                "description": "Tanah Seluas 2100 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "45.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 1 m2/180000 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "15.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 1 m2/61 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 10000 m2/800 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "3.000.000.000"
+            },
+            {
+                "description": "Bangunan Seluas 500 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "500.000.000"
+            }
+        ],
+        "transportasi": [
+            {
+                "description": "MOBIL, TOYOTA ALPHARD MINIBUS Tahun 2005, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, HONDA CR-V JEEP                      Tahun 2007, HASIL SENDIRI",
+                "value": "130.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1994, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LAND CRUISER       JEEP                      Tahun 1980, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, MITSUBISHI PAJERO         JEEP                      Tahun 2000, HASIL SENDIRI",
+                "value": "175.000.000"
+            },
+            {
+                "description": "MOTOR, SUZUKI                    SEPEDA MOTOR              Tahun 2002, HASIL SENDIRI",
+                "value": "3.500.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LEXUS           JEEP                      Tahun 2002, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1992, HASIL SENDIRI",
+                "value": "50.000.000"
+            }
+        ],
+        "bergerak_lainnya": [
+            {
+                "description": "Total",
+                "value": "16.359.023.500"
+            }
+        ],
+        "surat_berharga": [
+            {
+                "description": "Total",
+                "value": "1.701.879.000.000"
+            }
+        ],
+        "kas": [
+            {
+                "description": "Total",
+                "value": "2.522.545.835"
+            }
+        ],
+        "harta_lainnya": [
+            {
+                "description": "Total",
+                "value": "40.000.000.000"
+            }
+        ],
+        "hutang": [
+            {
+                "description": "Total",
+                "value": "8.000.000.000"
+            }
+        ]
+    },
+    {
+        "name": "PRABOWO SUBIANTO",
+        "lembaga": "KEMENTERIAN PERTAHANAN",
+        "unit_kerja": "PIMPINAN TERTINGGI",
+        "jabatan": "MENTERI",
+        "tanggal_lapor": "31 Desember 2019",
+        "jenis_laporan": "Periodik",
+        "total_harta": "Rp.2.005.956.560.835",
+        "tanah_bangunan": [
+            {
+                "description": "Tanah dan Bangunan Seluas 841 m2/580 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HIBAH TANPA AKTA",
+                "value": "27.621.043.000"
+            },
+            {
+                "description": "Tanah Seluas 48970 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "9.794.000.000"
+            },
+            {
+                "description": "Tanah Seluas 8905 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.467.670.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 8365 m2/2175 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HASIL SENDIRI",
+                "value": "139.921.575.000"
+            },
+            {
+                "description": "Bangunan Seluas 760 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.000.000.000"
+            },
+            {
+                "description": "Tanah Seluas 2100 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "45.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 1 m2/180000 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "15.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 1 m2/61 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 10000 m2/800 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "3.000.000.000"
+            },
+            {
+                "description": "Bangunan Seluas 500 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "500.000.000"
+            }
+        ],
+        "transportasi": [
+            {
+                "description": "MOBIL, TOYOTA ALPHARD MINIBUS Tahun 2005, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, HONDA CR-V JEEP                      Tahun 2007, HASIL SENDIRI",
+                "value": "200.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1994, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LAND CRUISER       JEEP                      Tahun 1980, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, MITSUBISHI PAJERO         JEEP                      Tahun 2000, HASIL SENDIRI",
+                "value": "175.000.000"
+            },
+            {
+                "description": "MOTOR, SUZUKI                    SEPEDA MOTOR              Tahun 2002, HASIL SENDIRI",
+                "value": "7.500.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LEXUS           JEEP                      Tahun 2002, HASIL SENDIRI",
+                "value": "500.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1992, HASIL SENDIRI",
+                "value": "50.000.000"
+            }
+        ],
+        "bergerak_lainnya": [
+            {
+                "description": "Total",
+                "value": "16.418.227.000"
+            }
+        ],
+        "surat_berharga": [
+            {
+                "description": "Total",
+                "value": "1.701.879.000.000"
+            }
+        ],
+        "kas": [
+            {
+                "description": "Total",
+                "value": "2.522.545.835"
+            }
+        ],
+        "harta_lainnya": [
+            {
+                "description": "Total",
+                "value": "40.000.000.000"
+            }
+        ],
+        "hutang": [
+            {
+                "description": "Total",
+                "value": "8.000.000.000"
+            }
+        ]
+    },
+    {
+        "name": "PRABOWO SUBIANTO",
+        "lembaga": "KPU (CALON PRESIDEN DAN WAKIL PRESIDEN 2019)",
+        "unit_kerja": "PIMPINAN TERTINGGI",
+        "jabatan": "CALON PRESIDEN REPUBLIK INDONESIA",
+        "tanggal_lapor": "26 Juli 2018",
+        "jenis_laporan": "Khusus, Calon PN",
+        "total_harta": "Rp.1.952.013.493.659",
+        "tanah_bangunan": [
+            {
+                "description": "Tanah dan Bangunan Seluas 841 m2/580 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HIBAH TANPA AKTA",
+                "value": "24.845.605.000"
+            },
+            {
+                "description": "Tanah Seluas 48970 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "6.465.560.000"
+            },
+            {
+                "description": "Tanah Seluas 8905 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.467.670.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 8365 m2/2175 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HASIL SENDIRI",
+                "value": "124.764.195.000"
+            },
+            {
+                "description": "Bangunan Seluas 760 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "5.000.000.000"
+            },
+            {
+                "description": "Tanah Seluas 2100 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "45.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 1 m2/180000 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "15.000.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 1 m2/61 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 10000 m2/800 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "3.000.000.000"
+            },
+            {
+                "description": "Bangunan Seluas 500 m2 di KAB / KOTA BOGOR, HASIL SENDIRI",
+                "value": "500.000.000"
+            }
+        ],
+        "transportasi": [
+            {
+                "description": "MOBIL, TOYOTA ALPHARD MINIBUS Tahun 2005, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, HONDA CR-V JEEP                      Tahun 2007, HASIL SENDIRI",
+                "value": "200.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1994, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LAND CRUISER       JEEP                      Tahun 1980, HASIL SENDIRI",
+                "value": "50.000.000"
+            },
+            {
+                "description": "MOBIL, MITSUBISHI PAJERO         JEEP                      Tahun 2000, HASIL SENDIRI",
+                "value": "175.000.000"
+            },
+            {
+                "description": "MOTOR, SUZUKI                    SEPEDA MOTOR              Tahun 2002, HASIL SENDIRI",
+                "value": "7.500.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA LEXUS           JEEP                      Tahun 2002, HASIL SENDIRI",
+                "value": "500.000.000"
+            },
+            {
+                "description": "MOBIL, LAND ROVER                JEEP                      Tahun 1992, HASIL SENDIRI",
+                "value": "50.000.000"
+            }
+        ],
+        "bergerak_lainnya": [
+            {
+                "description": "Total",
+                "value": "16.418.227.000"
+            }
+        ],
+        "surat_berharga": [
+            {
+                "description": "Total",
+                "value": "1.701.879.000.000"
+            }
+        ],
+        "kas": [
+            {
+                "description": "Total",
+                "value": "1.840.736.659"
+            }
+        ],
+        "harta_lainnya": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ],
+        "hutang": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ]
+    },
+    {
+        "name": "PRABOWO SUBIANTO",
+        "lembaga": "",
+        "unit_kerja": "",
+        "jabatan": "",
+        "tanggal_lapor": "23 Juli 2003",
+        "jenis_laporan": "Periodik",
+        "total_harta": "Rp.14.314.819.999",
+        "tanah_bangunan": [],
+        "transportasi": [],
+        "bergerak_lainnya": [],
+        "surat_berharga": [],
+        "kas": [],
+        "harta_lainnya": [],
+        "hutang": []
+    },
+    {
+        "name": "PRABOWO SUBIANTO",
+        "lembaga": "KANTOR PRESIDEN",
+        "unit_kerja": "PIMPINAN PEMERINTAHAN",
+        "jabatan": "CALON PRESIDEN RI PERIODE 2014 S.D 2019",
+        "tanggal_lapor": "20 Mei 2014",
+        "jenis_laporan": "Periodik",
+        "total_harta": "Rp.1.717.892.450.401",
+        "tanah_bangunan": [],
+        "transportasi": [],
+        "bergerak_lainnya": [],
+        "surat_berharga": [],
+        "kas": [],
+        "harta_lainnya": [],
+        "hutang": []
+    },
+    {
+        "name": "PRABOWO SUBIANTO",
+        "lembaga": "",
+        "unit_kerja": "",
+        "jabatan": "",
+        "tanggal_lapor": "18 Mei 2009",
+        "jenis_laporan": "Periodik",
+        "total_harta": "Rp.1.655.105.383.359",
+        "tanah_bangunan": [],
+        "transportasi": [],
+        "bergerak_lainnya": [],
+        "surat_berharga": [],
+        "kas": [],
+        "harta_lainnya": [],
+        "hutang": []
+    }
+]

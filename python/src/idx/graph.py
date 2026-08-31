@@ -133,7 +133,11 @@ def calculate_board_centrality(top_n: int = 20) -> pd.DataFrame:
         try:
             with driver.session() as session:
                 records = session.run(cypher, top_n=top_n).data()
-                return pd.DataFrame(records)
+                df = pd.DataFrame(records)
+                if not df.empty:
+                    df = df[df["insider"].astype(str).str.strip().ne("") & df["insider"].astype(str).str.strip().ne("-")]
+                    df["companies"] = df["companies"].apply(lambda x: sorted(set(x)) if isinstance(x, list) else x)
+                return df
         finally:
             driver.close()
 
@@ -145,11 +149,13 @@ def calculate_board_centrality(top_n: int = 20) -> pd.DataFrame:
         for ticker, comp in data.items():
             insiders = set()
             for d in comp.get("Direksi", []):
-                if d.get("Nama"):
-                    insiders.add(d["Nama"].strip().upper())
+                nm = (d.get("Nama") or "").strip()
+                if nm and nm != "-":
+                    insiders.add(nm.upper())
             for k in comp.get("DewanKomisaris", []):
-                if k.get("Nama"):
-                    insiders.add(k["Nama"].strip().upper())
+                nm = (k.get("Nama") or "").strip()
+                if nm and nm != "-":
+                    insiders.add(nm.upper())
 
             for name in insiders:
                 if name not in insider_map:
@@ -158,7 +164,7 @@ def calculate_board_centrality(top_n: int = 20) -> pd.DataFrame:
 
         rows = []
         for name, comps in insider_map.items():
-            if len(comps) > 1:
+            if len(comps) > 1 and name not in ("", "-"):
                 rows.append(
                     {"insider": name, "board_seats": len(comps), "companies": sorted(list(comps))}
                 )

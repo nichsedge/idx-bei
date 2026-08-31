@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-08-31T11:31:00+07:00",
+  "normalized_0_100": true,
+  "tiers": {
+    "support": "green - good, low toxicity high benefit",
+    "punish": "red - high toxicity",
+    "neutral": "yellow"
+  },
+  "record_count": 10,
+  "confidence_notes": [
+    "high=source_url present + board link verified; low=fallback news only; pun=high toxicity"
+  ]
+}

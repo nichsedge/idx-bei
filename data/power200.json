@@ -1,0 +1,3341 @@
+[
+  {
+    "insider": "Edwin Soeryadjaya",
+    "board_seats": 5,
+    "companies": [
+      "ADRO",
+      "MDKA",
+      "MPMX",
+      "SRTG",
+      "TBIG"
+    ],
+    "rank": 1,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 45,
+    "punish_score": 55,
+    "tier": "neutral",
+    "enriched_hour": "2026-08-31T12:00+07:00",
+    "confidence_tag": "high",
+    "score_normalized": 30
+  },
+  {
+    "insider": "Hamid Awaluddin",
+    "board_seats": 5,
+    "companies": [
+      "ARCI",
+      "DOID",
+      "ESSA",
+      "OKAS",
+      "SINI"
+    ],
+    "rank": 2,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 45,
+    "punish_score": 55,
+    "tier": "neutral",
+    "enriched_hour": "2026-08-31T12:00+07:00",
+    "confidence_tag": "high",
+    "score_normalized": 30
+  },
+  {
+    "insider": "Hermanto Tanoko",
+    "board_seats": 5,
+    "companies": [
+      "AVIA",
+      "CLEO",
+      "DEPO",
+      "PEVE",
+      "RISE"
+    ],
+    "rank": 3,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 45,
+    "punish_score": 55,
+    "tier": "neutral",
+    "enriched_hour": "2026-08-31T12:00+07:00",
+    "confidence_tag": "high",
+    "score_normalized": 30
+  },
+  {
+    "insider": "Achmad Widjaja",
+    "board_seats": 5,
+    "companies": [
+      "BIPI",
+      "BRNA",
+      "BULL",
+      "CSAP",
+      "ITMA"
+    ],
+    "rank": 4,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 45,
+    "punish_score": 55,
+    "tier": "neutral",
+    "enriched_hour": "2026-08-31T12:00+07:00",
+    "confidence_tag": "high",
+    "score_normalized": 30
+  },
+  {
+    "insider": "Benny Setiawan Santoso",
+    "board_seats": 5,
+    "companies": [
+      "FAST",
+      "INDF",
+      "INTP",
+      "META",
+      "ROTI"
+    ],
+    "rank": 5,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 45,
+    "punish_score": 55,
+    "tier": "neutral",
+    "enriched_hour": "2026-08-31T12:00+07:00",
+    "confidence_tag": "high",
+    "score_normalized": 30
+  },
+  {
+    "insider": "Fendi Santoso",
+    "board_seats": 5,
+    "companies": [
+      "LPKR",
+      "LPLI",
+      "LPPS",
+      "MLPL",
+      "MPPA"
+    ],
+    "rank": 6,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 45,
+    "punish_score": 55,
+    "tier": "neutral",
+    "enriched_hour": "2026-08-31T12:00+07:00",
+    "confidence_tag": "high",
+    "score_normalized": 30
+  },
+  {
+    "insider": "Lindawati Gani",
+    "board_seats": 4,
+    "companies": [
+      "ACST",
+      "ADMR",
+      "HERO",
+      "SIDO"
+    ],
+    "rank": 7,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "enriched_hour": "2026-08-31T12:00+07:00",
+    "confidence_tag": "high",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Nalinkant Amratlal Rathod",
+    "board_seats": 4,
+    "companies": [
+      "ALII",
+      "BRMS",
+      "BUMI",
+      "DEWA"
+    ],
+    "rank": 8,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "enriched_hour": "2026-08-31T12:00+07:00",
+    "confidence_tag": "high",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Anne Patricia Sutanto",
+    "board_seats": 4,
+    "companies": [
+      "ANDI",
+      "BTEK",
+      "MTPS",
+      "PBRX"
+    ],
+    "rank": 9,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "enriched_hour": "2026-08-31T12:00+07:00",
+    "confidence_tag": "high",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Yuliana",
+    "board_seats": 4,
+    "companies": [
+      "BESS",
+      "JATI",
+      "SMMT",
+      "SOHO"
+    ],
+    "rank": 10,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "enriched_hour": "2026-08-31T12:00+07:00",
+    "confidence_tag": "high",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Hary Tanoesoedibjo",
+    "board_seats": 4,
+    "companies": [
+      "BHIT",
+      "BMTR",
+      "KPIG",
+      "MNCN"
+    ],
+    "rank": 11,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Syafril Nasution",
+    "board_seats": 4,
+    "companies": [
+      "BMTR",
+      "IPTV",
+      "MNCN",
+      "MSKY"
+    ],
+    "rank": 12,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Irhoan Tanudiredja",
+    "board_seats": 4,
+    "companies": [
+      "BSDE",
+      "DMAS",
+      "DUTI",
+      "SMDM"
+    ],
+    "rank": 13,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Monik William",
+    "board_seats": 4,
+    "companies": [
+      "BSDE",
+      "DMAS",
+      "DUTI",
+      "SMDM"
+    ],
+    "rank": 14,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Erwin Ciputra",
+    "board_seats": 4,
+    "companies": [
+      "CDIA",
+      "CUAN",
+      "PTRO",
+      "TPIA"
+    ],
+    "rank": 15,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Rudiantara",
+    "board_seats": 4,
+    "companies": [
+      "ERAA",
+      "INCO",
+      "ISAT",
+      "RAJA"
+    ],
+    "rank": 16,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Franciscus Welirang",
+    "board_seats": 4,
+    "companies": [
+      "ICBP",
+      "INDF",
+      "INTP",
+      "UNIC"
+    ],
+    "rank": 17,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Moleonoto (Paulus Moleonoto)",
+    "board_seats": 4,
+    "companies": [
+      "ICBP",
+      "INDF",
+      "LSIP",
+      "SIMP"
+    ],
+    "rank": 18,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Hendra Widjaja",
+    "board_seats": 4,
+    "companies": [
+      "ICBP",
+      "INDF",
+      "LSIP",
+      "SIMP"
+    ],
+    "rank": 19,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Axton Salim",
+    "board_seats": 4,
+    "companies": [
+      "ICBP",
+      "INDF",
+      "LSIP",
+      "SIMP"
+    ],
+    "rank": 20,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 41,
+    "punish_score": 59,
+    "tier": "neutral",
+    "score_normalized": 26
+  },
+  {
+    "insider": "Budi Bowoleksono",
+    "board_seats": 3,
+    "companies": [
+      "AADI",
+      "ADRO",
+      "MDKA"
+    ],
+    "rank": 21,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Martin Suharlie",
+    "board_seats": 3,
+    "companies": [
+      "ABBA",
+      "MCAS",
+      "NFCX"
+    ],
+    "rank": 22,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Iwan Dewono Budiyuwono",
+    "board_seats": 3,
+    "companies": [
+      "ADMR",
+      "ADRO",
+      "DRMA"
+    ],
+    "rank": 23,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Agoes Projosasmito",
+    "board_seats": 3,
+    "companies": [
+      "AMMN",
+      "BRMS",
+      "BUMI"
+    ],
+    "rank": 24,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Teguh Boentoro",
+    "board_seats": 3,
+    "companies": [
+      "AMMN",
+      "BRMS",
+      "DEWA"
+    ],
+    "rank": 25,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Budi Setiyadi",
+    "board_seats": 3,
+    "companies": [
+      "AMRT",
+      "BIRD",
+      "SLIS"
+    ],
+    "rank": 26,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Budiyanto Djoko Susanto",
+    "board_seats": 3,
+    "companies": [
+      "AMRT",
+      "BLOG",
+      "MIDI"
+    ],
+    "rank": 27,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Ludijanto Setijo",
+    "board_seats": 3,
+    "companies": [
+      "ANDI",
+      "MTPS",
+      "PBRX"
+    ],
+    "rank": 28,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Irawan Sastrotanojo",
+    "board_seats": 3,
+    "companies": [
+      "APEX",
+      "DAAZ",
+      "IPOL"
+    ],
+    "rank": 29,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Leo Yulianto Sutedja",
+    "board_seats": 3,
+    "companies": [
+      "ARGO",
+      "ASRI",
+      "BEST"
+    ],
+    "rank": 30,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Pranata Hajadi",
+    "board_seats": 3,
+    "companies": [
+      "ARII",
+      "IMAS",
+      "LTLS"
+    ],
+    "rank": 31,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Erida",
+    "board_seats": 3,
+    "companies": [
+      "ASLC",
+      "ASSA",
+      "TAPG"
+    ],
+    "rank": 32,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Lukas Rusli",
+    "board_seats": 3,
+    "companies": [
+      "AVIA",
+      "BLES",
+      "PEVE"
+    ],
+    "rank": 33,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Handry Soesanto",
+    "board_seats": 3,
+    "companies": [
+      "BCIP",
+      "SAGE",
+      "WINR"
+    ],
+    "rank": 34,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Kusmayanto Kadiman",
+    "board_seats": 3,
+    "companies": [
+      "BFIN",
+      "SUPR",
+      "TOWR"
+    ],
+    "rank": 35,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Anindra Ardiansyah Bakrie",
+    "board_seats": 3,
+    "companies": [
+      "BNBR",
+      "MDIA",
+      "VKTR"
+    ],
+    "rank": 36,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Anindya Novyan Bakrie",
+    "board_seats": 3,
+    "companies": [
+      "BNBR",
+      "VIVA",
+      "VKTR"
+    ],
+    "rank": 37,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Merly",
+    "board_seats": 3,
+    "companies": [
+      "BREN",
+      "CDIA",
+      "RATU"
+    ],
+    "rank": 38,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Agus Salim Pangestu",
+    "board_seats": 3,
+    "companies": [
+      "BREN",
+      "BRPT",
+      "TPIA"
+    ],
+    "rank": 39,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Adhika Andrayudha Bakrie",
+    "board_seats": 3,
+    "companies": [
+      "BRMS",
+      "BUMI",
+      "UNSP"
+    ],
+    "rank": 40,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Adika Nuraga Bakrie",
+    "board_seats": 3,
+    "companies": [
+      "BRMS",
+      "BUMI",
+      "JGLE"
+    ],
+    "rank": 41,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Gories Mere",
+    "board_seats": 3,
+    "companies": [
+      "BRMS",
+      "CLAY",
+      "DEWA"
+    ],
+    "rank": 42,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Lim Chong Thian",
+    "board_seats": 3,
+    "companies": [
+      "BRPT",
+      "FASW",
+      "TPIA"
+    ],
+    "rank": 43,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Tjia Daniel Wirawan",
+    "board_seats": 3,
+    "companies": [
+      "BSBK",
+      "KBAG",
+      "PAMG"
+    ],
+    "rank": 44,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Hongky Jeffry Nantung",
+    "board_seats": 3,
+    "companies": [
+      "BSDE",
+      "DMAS",
+      "DUTI"
+    ],
+    "rank": 45,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Teky Mailoa",
+    "board_seats": 3,
+    "companies": [
+      "BSDE",
+      "DMAS",
+      "DUTI"
+    ],
+    "rank": 46,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Lie Jani Harjanto",
+    "board_seats": 3,
+    "companies": [
+      "BSDE",
+      "DUTI",
+      "SMDM"
+    ],
+    "rank": 47,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Teddy Pawitra",
+    "board_seats": 3,
+    "companies": [
+      "BSDE",
+      "DMAS",
+      "DUTI"
+    ],
+    "rank": 48,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Susiyati Bambang Hirawan",
+    "board_seats": 3,
+    "companies": [
+      "BSDE",
+      "DMAS",
+      "DUTI"
+    ],
+    "rank": 49,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Hermawan Wijaya",
+    "board_seats": 3,
+    "companies": [
+      "BSDE",
+      "DMAS",
+      "SMDM"
+    ],
+    "rank": 50,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Nengah Rama Gautama",
+    "board_seats": 3,
+    "companies": [
+      "BSML",
+      "RAAM",
+      "UNSP"
+    ],
+    "rank": 51,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Sanderawati Joesoef",
+    "board_seats": 3,
+    "companies": [
+      "CAKK",
+      "CLEO",
+      "RISE"
+    ],
+    "rank": 52,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Richard Halim Kusuma",
+    "board_seats": 3,
+    "companies": [
+      "CBDK",
+      "ERAA",
+      "PANI"
+    ],
+    "rank": 53,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Budyanto Totong",
+    "board_seats": 3,
+    "companies": [
+      "CSAP",
+      "DEPO",
+      "KKES"
+    ],
+    "rank": 54,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Junita Ciputra",
+    "board_seats": 3,
+    "companies": [
+      "CTRA",
+      "MKPI",
+      "MTLA"
+    ],
+    "rank": 55,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Michael",
+    "board_seats": 3,
+    "companies": [
+      "CUAN",
+      "MDIY",
+      "PTRO"
+    ],
+    "rank": 56,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Suryandy Jahja",
+    "board_seats": 3,
+    "companies": [
+      "DMMX",
+      "MCAS",
+      "NFCX"
+    ],
+    "rank": 57,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Adi Pranoto Leman",
+    "board_seats": 3,
+    "companies": [
+      "DNET",
+      "ICBP",
+      "PANI"
+    ],
+    "rank": 58,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Franky Oesman Widjaja",
+    "board_seats": 3,
+    "companies": [
+      "DSSA",
+      "PLIN",
+      "SMAR"
+    ],
+    "rank": 59,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "M. Arsjad Rasjid P.M.",
+    "board_seats": 3,
+    "companies": [
+      "EXCL",
+      "INDY",
+      "MORA"
+    ],
+    "rank": 60,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Anthoni Salim",
+    "board_seats": 3,
+    "companies": [
+      "FAST",
+      "ICBP",
+      "INDF"
+    ],
+    "rank": 61,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Chandra",
+    "board_seats": 3,
+    "companies": [
+      "FOLK",
+      "TRIN",
+      "TRUE"
+    ],
+    "rank": 62,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Ketut Sanjaya",
+    "board_seats": 3,
+    "companies": [
+      "GEMS",
+      "SMAR",
+      "SMMA"
+    ],
+    "rank": 63,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Theo Lekatompessy",
+    "board_seats": 3,
+    "companies": [
+      "GRPM",
+      "PMUI",
+      "TMAS"
+    ],
+    "rank": 64,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Ang Andri Pribadi",
+    "board_seats": 3,
+    "companies": [
+      "GWSA",
+      "IFII",
+      "SMSM"
+    ],
+    "rank": 65,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Tjhie Tje Fie (Thomas Tjhie)",
+    "board_seats": 3,
+    "companies": [
+      "ICBP",
+      "INDF",
+      "SIMP"
+    ],
+    "rank": 66,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "In She",
+    "board_seats": 3,
+    "companies": [
+      "ICBP",
+      "LSIP",
+      "SIMP"
+    ],
+    "rank": 67,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Taufik Wiraatmadja",
+    "board_seats": 3,
+    "companies": [
+      "ICBP",
+      "INDF",
+      "SIMP"
+    ],
+    "rank": 68,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Alamsyah",
+    "board_seats": 3,
+    "companies": [
+      "ICBP",
+      "INDF",
+      "IOTF"
+    ],
+    "rank": 69,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Surja Hartono",
+    "board_seats": 3,
+    "companies": [
+      "IFII",
+      "INPP",
+      "SMSM"
+    ],
+    "rank": 70,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Farid Harianto",
+    "board_seats": 3,
+    "companies": [
+      "INDY",
+      "META",
+      "UNIC"
+    ],
+    "rank": 71,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Hendra Jaya Kosasih",
+    "board_seats": 3,
+    "companies": [
+      "INKP",
+      "TKIM",
+      "UCID"
+    ],
+    "rank": 72,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Sugianto Kusuma",
+    "board_seats": 3,
+    "companies": [
+      "INPC",
+      "JIHD",
+      "PANI"
+    ],
+    "rank": 73,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Hadi Cahyadi",
+    "board_seats": 3,
+    "companies": [
+      "INPP",
+      "LPCK",
+      "MORA"
+    ],
+    "rank": 74,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Vivian Setjakusuma",
+    "board_seats": 3,
+    "companies": [
+      "JRPT",
+      "MDKI",
+      "MKPI"
+    ],
+    "rank": 75,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Rokhmad Sunanto",
+    "board_seats": 3,
+    "companies": [
+      "KINO",
+      "RMKE",
+      "RMKO"
+    ],
+    "rank": 76,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Agus Arismunandar",
+    "board_seats": 3,
+    "companies": [
+      "LPCK",
+      "LPIN",
+      "LPKR"
+    ],
+    "rank": 77,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Merry Maryati",
+    "board_seats": 3,
+    "companies": [
+      "LPIN",
+      "LPLI",
+      "LPPS"
+    ],
+    "rank": 78,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Herry Senjaya",
+    "board_seats": 3,
+    "companies": [
+      "LPIN",
+      "LPLI",
+      "LPPS"
+    ],
+    "rank": 79,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Yerry Goei",
+    "board_seats": 3,
+    "companies": [
+      "LPIN",
+      "MLPL",
+      "MPPA"
+    ],
+    "rank": 80,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Surya Tatang",
+    "board_seats": 3,
+    "companies": [
+      "LPKR",
+      "LPLI",
+      "SILO"
+    ],
+    "rank": 81,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Adrian Suherman",
+    "board_seats": 3,
+    "companies": [
+      "LPPF",
+      "MLPL",
+      "MPPA"
+    ],
+    "rank": 82,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Edy Sugito",
+    "board_seats": 3,
+    "companies": [
+      "LSIP",
+      "MOLI",
+      "TRIM"
+    ],
+    "rank": 83,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Handaka Santosa",
+    "board_seats": 3,
+    "companies": [
+      "MAPA",
+      "MAPB",
+      "MAPI"
+    ],
+    "rank": 84,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Susiana Latif",
+    "board_seats": 3,
+    "companies": [
+      "MAPA",
+      "MAPB",
+      "MAPI"
+    ],
+    "rank": 85,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Hendra Kurniawan",
+    "board_seats": 3,
+    "companies": [
+      "MDIY",
+      "MYOR",
+      "NOBU"
+    ],
+    "rank": 86,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Hardi Wijaya Liong",
+    "board_seats": 3,
+    "companies": [
+      "MDKA",
+      "PALM",
+      "TBIG"
+    ],
+    "rank": 87,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Fenza Sofyan",
+    "board_seats": 3,
+    "companies": [
+      "MDKI",
+      "MKPI",
+      "POWR"
+    ],
+    "rank": 88,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Noprian Fadli",
+    "board_seats": 3,
+    "companies": [
+      "MEJA",
+      "NINE",
+      "PIPA"
+    ],
+    "rank": 89,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Iwan Putra Brasali",
+    "board_seats": 3,
+    "companies": [
+      "MKPI",
+      "MTLA",
+      "POWR"
+    ],
+    "rank": 90,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Benny Haryanto Djie",
+    "board_seats": 3,
+    "companies": [
+      "MLPL",
+      "MLPT",
+      "SILO"
+    ],
+    "rank": 91,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Supandi Widi Siswanto",
+    "board_seats": 3,
+    "companies": [
+      "PBRX",
+      "PGJO",
+      "UNIQ"
+    ],
+    "rank": 92,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Ignasius Jonan",
+    "board_seats": 3,
+    "companies": [
+      "SOHO",
+      "UNTR",
+      "UNVR"
+    ],
+    "rank": 93,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 37,
+    "punish_score": 63,
+    "tier": "punish",
+    "score_normalized": 22
+  },
+  {
+    "insider": "Primus Dorimulu",
+    "board_seats": 2,
+    "companies": [
+      "AADI",
+      "GMTD"
+    ],
+    "rank": 94,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Adrian Syarkawi",
+    "board_seats": 2,
+    "companies": [
+      "ABBA",
+      "MARI"
+    ],
+    "rank": 95,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Achmad Ananda Djajanegara",
+    "board_seats": 2,
+    "companies": [
+      "ABMM",
+      "GEMS"
+    ],
+    "rank": 96,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Feriwan Sinatra",
+    "board_seats": 2,
+    "companies": [
+      "ABMM",
+      "GEMS"
+    ],
+    "rank": 97,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Manggi Taruna Habir",
+    "board_seats": 2,
+    "companies": [
+      "ABMM",
+      "ADMF"
+    ],
+    "rank": 98,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Iwan Hadiantoro",
+    "board_seats": 2,
+    "companies": [
+      "ACST",
+      "UNTR"
+    ],
+    "rank": 99,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Idot Supriadi",
+    "board_seats": 2,
+    "companies": [
+      "ACST",
+      "UNTR"
+    ],
+    "rank": 100,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Rudy Hidayat",
+    "board_seats": 2,
+    "companies": [
+      "ADES",
+      "MSIN"
+    ],
+    "rank": 101,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Nobuya Kawasaki",
+    "board_seats": 2,
+    "companies": [
+      "ADMF",
+      "BDMN"
+    ],
+    "rank": 102,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Bambang Husodo",
+    "board_seats": 2,
+    "companies": [
+      "ADMG",
+      "GSMF"
+    ],
+    "rank": 103,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Garibaldi Thohir",
+    "board_seats": 2,
+    "companies": [
+      "ADMR",
+      "ADRO"
+    ],
+    "rank": 104,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Mohammad Effendi",
+    "board_seats": 2,
+    "companies": [
+      "ADMR",
+      "ADRO"
+    ],
+    "rank": 105,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Mohammad Syah Indra Aman",
+    "board_seats": 2,
+    "companies": [
+      "ADMR",
+      "ADRO"
+    ],
+    "rank": 106,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Lany Djuwita Wong",
+    "board_seats": 2,
+    "companies": [
+      "ADRO",
+      "SRTG"
+    ],
+    "rank": 107,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Arini Saraswaty Subianto",
+    "board_seats": 2,
+    "companies": [
+      "ADRO",
+      "TAPG"
+    ],
+    "rank": 108,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Lukman Hakim",
+    "board_seats": 2,
+    "companies": [
+      "AGRO",
+      "PBID"
+    ],
+    "rank": 109,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Adhi Indrawan",
+    "board_seats": 2,
+    "companies": [
+      "AHAP",
+      "FAST"
+    ],
+    "rank": 110,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Herwan Ng",
+    "board_seats": 2,
+    "companies": [
+      "AISA",
+      "FISH"
+    ],
+    "rank": 111,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Jeyson Pribadi",
+    "board_seats": 2,
+    "companies": [
+      "AKPI",
+      "BKSL"
+    ],
+    "rank": 112,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Marciano Hersondrie Herman",
+    "board_seats": 2,
+    "companies": [
+      "AKSI",
+      "BESS"
+    ],
+    "rank": 113,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Wisnu Wahyudin Pettalolo",
+    "board_seats": 2,
+    "companies": [
+      "AKSI",
+      "DEWA"
+    ],
+    "rank": 114,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Bambang Rahardja Burhan",
+    "board_seats": 2,
+    "companies": [
+      "ALKA",
+      "LAPD"
+    ],
+    "rank": 115,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Alim Markus",
+    "board_seats": 2,
+    "companies": [
+      "ALMI",
+      "INAI"
+    ],
+    "rank": 116,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Alim Prakasa",
+    "board_seats": 2,
+    "companies": [
+      "ALMI",
+      "INAI"
+    ],
+    "rank": 117,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Alim Mulia Sastra",
+    "board_seats": 2,
+    "companies": [
+      "ALMI",
+      "INAI"
+    ],
+    "rank": 118,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Rudy Susanto",
+    "board_seats": 2,
+    "companies": [
+      "AMIN",
+      "KDTN"
+    ],
+    "rank": 119,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Kahar Anwar",
+    "board_seats": 2,
+    "companies": [
+      "ANDI",
+      "MTPS"
+    ],
+    "rank": 120,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Francis Indarto",
+    "board_seats": 2,
+    "companies": [
+      "ANDI",
+      "MTPS"
+    ],
+    "rank": 121,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Ridwan",
+    "board_seats": 2,
+    "companies": [
+      "ANTM",
+      "BATR"
+    ],
+    "rank": 122,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Irwandy Arif",
+    "board_seats": 2,
+    "companies": [
+      "ANTM",
+      "TRAM"
+    ],
+    "rank": 123,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Abed Nego",
+    "board_seats": 2,
+    "companies": [
+      "ARCI",
+      "BWPT"
+    ],
+    "rank": 124,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Dr. Ir. Bambang Setiawan",
+    "board_seats": 2,
+    "companies": [
+      "ARCI",
+      "GEMS"
+    ],
+    "rank": 125,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Notariza Taher",
+    "board_seats": 2,
+    "companies": [
+      "ARII",
+      "INDF"
+    ],
+    "rank": 126,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Wiwik Sukarno AR",
+    "board_seats": 2,
+    "companies": [
+      "ARMY",
+      "SIMA"
+    ],
+    "rank": 127,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Ikman Maulana",
+    "board_seats": 2,
+    "companies": [
+      "ARMY",
+      "SIMA"
+    ],
+    "rank": 128,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Firdaus",
+    "board_seats": 2,
+    "companies": [
+      "ARMY",
+      "BEBS"
+    ],
+    "rank": 129,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Dahnu Teguh Adrianto",
+    "board_seats": 2,
+    "companies": [
+      "ARTA",
+      "CMNP"
+    ],
+    "rank": 130,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Ronald Waas",
+    "board_seats": 2,
+    "companies": [
+      "ASBI",
+      "MSTI"
+    ],
+    "rank": 131,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Santosa",
+    "board_seats": 2,
+    "companies": [
+      "ASGR",
+      "ASII"
+    ],
+    "rank": 132,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Gunawan Geniusahardja",
+    "board_seats": 2,
+    "companies": [
+      "ASGR",
+      "AUTO"
+    ],
+    "rank": 133,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Gidion Hasan",
+    "board_seats": 2,
+    "companies": [
+      "ASII",
+      "AUTO"
+    ],
+    "rank": 134,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Gita Tiffani Boer",
+    "board_seats": 2,
+    "companies": [
+      "ASII",
+      "UNTR"
+    ],
+    "rank": 135,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Djap Tet Fa",
+    "board_seats": 2,
+    "companies": [
+      "ASII",
+      "MMLP"
+    ],
+    "rank": 136,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Rudy",
+    "board_seats": 2,
+    "companies": [
+      "ASII",
+      "UNTR"
+    ],
+    "rank": 137,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Lincoln Lin Feng Pan",
+    "board_seats": 2,
+    "companies": [
+      "ASII",
+      "UNTR"
+    ],
+    "rank": 138,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Sri Indrastuti Hadiputranto",
+    "board_seats": 2,
+    "companies": [
+      "ASII",
+      "MAPI"
+    ],
+    "rank": 139,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Drs. Prodjo Sunarjanto Sekar Pantjawati",
+    "board_seats": 2,
+    "companies": [
+      "ASLC",
+      "ASSA"
+    ],
+    "rank": 140,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Jany Candra",
+    "board_seats": 2,
+    "companies": [
+      "ASLC",
+      "ASSA"
+    ],
+    "rank": 141,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Pingki Elka Pangestu",
+    "board_seats": 2,
+    "companies": [
+      "ASRI",
+      "NIRO"
+    ],
+    "rank": 142,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Irfan Setiaputra",
+    "board_seats": 2,
+    "companies": [
+      "ATIC",
+      "PJAA"
+    ],
+    "rank": 143,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Agus Tjahajana Wirakusumah",
+    "board_seats": 2,
+    "companies": [
+      "AUTO",
+      "POLY"
+    ],
+    "rank": 144,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Sugiyanto Sutikno",
+    "board_seats": 2,
+    "companies": [
+      "AXIO",
+      "KOCI"
+    ],
+    "rank": 145,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "ENTARIO WIDJAJA SUSANTO",
+    "board_seats": 2,
+    "companies": [
+      "BAJA",
+      "ISSP"
+    ],
+    "rank": 146,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Santoso",
+    "board_seats": 2,
+    "companies": [
+      "BBCA",
+      "JECC"
+    ],
+    "rank": 147,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Siang Hadi Widjaja",
+    "board_seats": 2,
+    "companies": [
+      "BBLD",
+      "DPNS"
+    ],
+    "rank": 148,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Muhammad Iqbal",
+    "board_seats": 2,
+    "companies": [
+      "BBNI",
+      "BSML"
+    ],
+    "rank": 149,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Agung Prabowo",
+    "board_seats": 2,
+    "companies": [
+      "BBNI",
+      "HAJJ"
+    ],
+    "rank": 150,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Kukuh Komandoko",
+    "board_seats": 2,
+    "companies": [
+      "BBRM",
+      "TOOL"
+    ],
+    "rank": 151,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Kreisna Dewantara Gozali",
+    "board_seats": 2,
+    "companies": [
+      "BBYB",
+      "GZCO"
+    ],
+    "rank": 152,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Anthony Putra Tjiptodihardjo",
+    "board_seats": 2,
+    "companies": [
+      "BCAP",
+      "BHIT"
+    ],
+    "rank": 153,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Santi Paramita",
+    "board_seats": 2,
+    "companies": [
+      "BCAP",
+      "BHIT"
+    ],
+    "rank": 154,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Angela Herliani Tanoesoedibjo",
+    "board_seats": 2,
+    "companies": [
+      "BCAP",
+      "MSIN"
+    ],
+    "rank": 155,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Mashudi Hamka",
+    "board_seats": 2,
+    "companies": [
+      "BCAP",
+      "BHIT"
+    ],
+    "rank": 156,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Edward Halim",
+    "board_seats": 2,
+    "companies": [
+      "BCIP",
+      "SAGE"
+    ],
+    "rank": 157,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Hedy Maria Helena Lapian",
+    "board_seats": 2,
+    "companies": [
+      "BDMN",
+      "RANC"
+    ],
+    "rank": 158,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Suryadi Sasmita",
+    "board_seats": 2,
+    "companies": [
+      "BELI",
+      "NCKL"
+    ],
+    "rank": 159,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Kusumo Martanto",
+    "board_seats": 2,
+    "companies": [
+      "BELI",
+      "RANC"
+    ],
+    "rank": 160,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Wahyu Hidayat",
+    "board_seats": 2,
+    "companies": [
+      "BEST",
+      "RUNS"
+    ],
+    "rank": 161,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Lisawati",
+    "board_seats": 2,
+    "companies": [
+      "BGTG",
+      "GSMF"
+    ],
+    "rank": 162,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Marcello Theodore Taufik",
+    "board_seats": 2,
+    "companies": [
+      "BGTG",
+      "GSMF"
+    ],
+    "rank": 163,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Dimas Teguh Mulyanto",
+    "board_seats": 2,
+    "companies": [
+      "BHAT",
+      "LAJU"
+    ],
+    "rank": 164,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Henry Suparman",
+    "board_seats": 2,
+    "companies": [
+      "BHIT",
+      "KPIG"
+    ],
+    "rank": 165,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "MUHAMMAD REAGY SUKMANA",
+    "board_seats": 2,
+    "companies": [
+      "BIKE",
+      "MENN"
+    ],
+    "rank": 166,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Agus Soetopo",
+    "board_seats": 2,
+    "companies": [
+      "BIMA",
+      "TRGU"
+    ],
+    "rank": 167,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Wong Michael",
+    "board_seats": 2,
+    "companies": [
+      "BIPI",
+      "ITMA"
+    ],
+    "rank": 168,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Tjiu Thomas Effendy",
+    "board_seats": 2,
+    "companies": [
+      "BISI",
+      "CPIN"
+    ],
+    "rank": 169,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Andrian Budi Utama",
+    "board_seats": 2,
+    "companies": [
+      "BKSL",
+      "KPIG"
+    ],
+    "rank": 170,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Gatot Sudariyono",
+    "board_seats": 2,
+    "companies": [
+      "BKSL",
+      "DRMA"
+    ],
+    "rank": 171,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Andrew",
+    "board_seats": 2,
+    "companies": [
+      "BLES",
+      "WIFI"
+    ],
+    "rank": 172,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Antonius Joenoes Supit",
+    "board_seats": 2,
+    "companies": [
+      "BLTA",
+      "KMTR"
+    ],
+    "rank": 173,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Ivan Rizal Sini",
+    "board_seats": 2,
+    "companies": [
+      "BMHS",
+      "DGNS"
+    ],
+    "rank": 174,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Agus Heru Darjono",
+    "board_seats": 2,
+    "companies": [
+      "BMHS",
+      "DGNS"
+    ],
+    "rank": 175,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Arianti Anaya",
+    "board_seats": 2,
+    "companies": [
+      "BMHS",
+      "EPMT"
+    ],
+    "rank": 176,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Sunarto",
+    "board_seats": 2,
+    "companies": [
+      "BMRI",
+      "KJEN"
+    ],
+    "rank": 177,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "WELLY THOMAS",
+    "board_seats": 2,
+    "companies": [
+      "BMSR",
+      "SGER"
+    ],
+    "rank": 178,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Rosano Barack",
+    "board_seats": 2,
+    "companies": [
+      "BMTR",
+      "PLIN"
+    ],
+    "rank": 179,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Armansyah Yamin",
+    "board_seats": 2,
+    "companies": [
+      "BNBR",
+      "ELTY"
+    ],
+    "rank": 180,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Adika Aryasthana Bakrie",
+    "board_seats": 2,
+    "companies": [
+      "BNBR",
+      "BRMS"
+    ],
+    "rank": 181,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Syailendra S. Bakrie",
+    "board_seats": 2,
+    "companies": [
+      "BNBR",
+      "ENRG"
+    ],
+    "rank": 182,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "R.A. Sri Dharmayanti",
+    "board_seats": 2,
+    "companies": [
+      "BNBR",
+      "BUMI"
+    ],
+    "rank": 183,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Steffano Ridwan",
+    "board_seats": 2,
+    "companies": [
+      "BNII",
+      "WOMF"
+    ],
+    "rank": 184,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Dewi Irianty Wijaya",
+    "board_seats": 2,
+    "companies": [
+      "BOBA",
+      "KMDS"
+    ],
+    "rank": 185,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Hengky Wijaya",
+    "board_seats": 2,
+    "companies": [
+      "BOBA",
+      "KMDS"
+    ],
+    "rank": 186,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Andreas Lesmana",
+    "board_seats": 2,
+    "companies": [
+      "BRAM",
+      "RALS"
+    ],
+    "rank": 187,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "David Kosasih",
+    "board_seats": 2,
+    "companies": [
+      "BREN",
+      "BRPT"
+    ],
+    "rank": 188,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Tan Ek Kia",
+    "board_seats": 2,
+    "companies": [
+      "BREN",
+      "TPIA"
+    ],
+    "rank": 189,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Adrian Wicaksono",
+    "board_seats": 2,
+    "companies": [
+      "BRMS",
+      "BUMI"
+    ],
+    "rank": 190,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Kanaka Puradiredja",
+    "board_seats": 2,
+    "companies": [
+      "BRMS",
+      "BUMI"
+    ],
+    "rank": 191,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Henky Susanto",
+    "board_seats": 2,
+    "companies": [
+      "BRPT",
+      "CUAN"
+    ],
+    "rank": 192,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Diana Arsiyanti",
+    "board_seats": 2,
+    "companies": [
+      "BRPT",
+      "CUAN"
+    ],
+    "rank": 193,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Leo Herlambang",
+    "board_seats": 2,
+    "companies": [
+      "BRRC",
+      "ISEA"
+    ],
+    "rank": 194,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Veronica Pudjiati Lias",
+    "board_seats": 2,
+    "companies": [
+      "BSBK",
+      "PAMG"
+    ],
+    "rank": 195,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Leonardus Sutarman",
+    "board_seats": 2,
+    "companies": [
+      "BSBK",
+      "PAMG"
+    ],
+    "rank": 196,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Christopher Sumasto Tjia",
+    "board_seats": 2,
+    "companies": [
+      "BSBK",
+      "PAMG"
+    ],
+    "rank": 197,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Franciscus Xaverius RD",
+    "board_seats": 2,
+    "companies": [
+      "BSDE",
+      "DUTI"
+    ],
+    "rank": 198,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Ir. Siswanto Adisaputro",
+    "board_seats": 2,
+    "companies": [
+      "BSDE",
+      "SMDM"
+    ],
+    "rank": 199,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  },
+  {
+    "insider": "Mohamad Prapanca",
+    "board_seats": 2,
+    "companies": [
+      "BSML",
+      "KOTA"
+    ],
+    "rank": 200,
+    "source_url": "https://idx.co.id + companyDetailsByKodeEmiten.json",
+    "confidence": "high",
+    "verified": true,
+    "support_score": 33,
+    "punish_score": 67,
+    "tier": "punish",
+    "score_normalized": 18
+  }
+]

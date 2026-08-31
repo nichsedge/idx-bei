@@ -1,0 +1,105 @@
+[
+    {
+        "name": "SUFMI DASCO AHMAD",
+        "lembaga": "DEWAN PERWAKILAN RAKYAT (DPR)",
+        "unit_kerja": "WAKIL PIMPINAN",
+        "jabatan": "WAKIL KETUA DPR RI",
+        "tanggal_lapor": "31 Desember 2025",
+        "jenis_laporan": "Periodik",
+        "total_harta": "Rp.81.642.193.033",
+        "tanah_bangunan": [
+            {
+                "description": "Tanah dan Bangunan Seluas 300 m2/90 m2 di KAB / KOTA KOTA JAKARTA PUSAT , HASIL SENDIRI",
+                "value": "3.001.500.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 266 m2/232 m2 di KAB / KOTA KOTA JAKARTA PUSAT , HASIL SENDIRI",
+                "value": "2.235.386.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 261 m2/271 m2 di KAB / KOTA TANGERANG SELATAN, HASIL SENDIRI",
+                "value": "2.185.854.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 261 m2/271 m2 di KAB / KOTA KOTA JAKARTA PUSAT , HASIL SENDIRI",
+                "value": "3.225.538.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 225 m2/110 m2 di KAB / KOTA KOTA JAKARTA PUSAT , HASIL SENDIRI",
+                "value": "3.650.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 54 m2/135 m2 di KAB / KOTA TANGERANG, HASIL SENDIRI",
+                "value": "1.500.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 206 m2/225 m2 di KAB / KOTA KOTA JAKARTA PUSAT , HASIL SENDIRI",
+                "value": "4.250.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 292 m2/180 m2 di KAB / KOTA KOTA JAKARTA PUSAT , HASIL SENDIRI",
+                "value": "9.200.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 300 m2/180 m2 di KAB / KOTA KOTA JAKARTA PUSAT , HASIL SENDIRI",
+                "value": "6.500.000.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 842 m2/136 m2 di KAB / KOTA KOTA BANDAR LAMPUNG , HASIL SENDIRI",
+                "value": "4.000.000.000"
+            }
+        ],
+        "transportasi": [
+            {
+                "description": "MOBIL, BENTLEY   B LAND 1997 Tahun 1997, HASIL SENDIRI",
+                "value": "120.000.000"
+            },
+            {
+                "description": "MOBIL, JAGUAR XJ8L XJ8L Tahun 2008, HASIL SENDIRI",
+                "value": "175.000.000"
+            },
+            {
+                "description": "MOBIL, VOLVO / HASIL TAX AMNESTY S 802.5 AT Tahun 2008, HASIL SENDIRI",
+                "value": "80.000.000"
+            },
+            {
+                "description": "MOBIL, VW 1500 / SEDAN Tahun 1978, HASIL SENDIRI",
+                "value": "150.000.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA CENTURY Tahun 2022, HASIL SENDIRI",
+                "value": "4.500.000.000"
+            }
+        ],
+        "bergerak_lainnya": [
+            {
+                "description": "Total",
+                "value": "5.720.466.382"
+            }
+        ],
+        "surat_berharga": [
+            {
+                "description": "Total",
+                "value": "3.886.611.520"
+            }
+        ],
+        "kas": [
+            {
+                "description": "Total",
+                "value": "25.148.880.615"
+            }
+        ],
+        "harta_lainnya": [
+            {
+                "description": "Total",
+                "value": "2.112.956.516"
+            }
+        ],
+        "hutang": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ]
+    }
+]

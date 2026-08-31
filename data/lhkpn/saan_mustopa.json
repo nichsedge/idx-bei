@@ -1,0 +1,77 @@
+[
+    {
+        "name": "SAAN MUSTOPA",
+        "lembaga": "DEWAN PERWAKILAN RAKYAT (DPR)",
+        "unit_kerja": "WAKIL PIMPINAN",
+        "jabatan": "WAKIL KETUA DPR RI",
+        "tanggal_lapor": "31 Desember 2025",
+        "jenis_laporan": "Periodik",
+        "total_harta": "Rp.11.898.547.908",
+        "tanah_bangunan": [
+            {
+                "description": "Tanah dan Bangunan Seluas 105 m2/70 m2 di KAB / KOTA KOTA BEKASI , HASIL SENDIRI",
+                "value": "1.575.000.000"
+            },
+            {
+                "description": "Tanah Seluas 9104 m2 di KAB / KOTA KARAWANG, HASIL SENDIRI",
+                "value": "637.280.000"
+            },
+            {
+                "description": "Tanah Seluas 5240 m2 di KAB / KOTA KARAWANG, HASIL SENDIRI",
+                "value": "366.800.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 5868 m2/1000 m2 di KAB / KOTA KARAWANG, HASIL SENDIRI",
+                "value": "1.349.640.000"
+            },
+            {
+                "description": "Tanah dan Bangunan Seluas 304 m2/304 m2 di KAB / KOTA KOTA JAKARTA SELATAN , HASIL SENDIRI",
+                "value": "7.600.000.000"
+            },
+            {
+                "description": "Tanah Seluas 11643 m2 di KAB / KOTA KARAWANG, HASIL SENDIRI",
+                "value": "815.010.000"
+            }
+        ],
+        "transportasi": [
+            {
+                "description": "MOBIL, TOYOTA INNOVA ZENIX MAGH10R-BPXHBD 2.0 Q HV CVT TSS Tahun 2023, HASIL SENDIRI",
+                "value": "400.000.000"
+            },
+            {
+                "description": "MOBIL, TOYOTA ALPHARD 2.5G A/T Tahun 2023, HASIL SENDIRI",
+                "value": "900.000.000"
+            }
+        ],
+        "bergerak_lainnya": [
+            {
+                "description": "Total",
+                "value": "50.000.000"
+            }
+        ],
+        "surat_berharga": [
+            {
+                "description": "Total",
+                "value": "0"
+            }
+        ],
+        "kas": [
+            {
+                "description": "Total",
+                "value": "830.149.641"
+            }
+        ],
+        "harta_lainnya": [
+            {
+                "description": "Total",
+                "value": "874.668.267"
+            }
+        ],
+        "hutang": [
+            {
+                "description": "Total",
+                "value": "3.500.000.000"
+            }
+        ]
+    }
+]

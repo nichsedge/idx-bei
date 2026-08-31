@@ -1,0 +1,24 @@
+{
+  "ormas_jabar_seed": [
+    {"name": "Pemuda Pancasila Jabar", "chairman": "Dian Rustandiana", "city": "Bandung", "classification": "kepemudaan-preman-risk", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 4, "social_events": 1, "news_context": "preman bentrok ormas"},
+    {"name": "GRIB Jaya Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "kepemudaan-preman-risk", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 3, "social_events": 0, "news_context": "preman lahan"},
+    {"name": "Front Pembela Islam (FPI) Jabar", "chairman": "Rizieq Shihab network", "city": "Bandung", "classification": "religious", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 5, "social_events": 2, "news_context": "religius ormas sweeping"},
+    {"name": "Banser NU Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "religious", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 1, "social_events": 5, "news_context": "ansor banser bakti sosial"},
+    {"name": "Karang Taruna Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "kepemudaan", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 0, "social_events": 4, "news_context": "karang taruna desa"},
+    {"name": "Paguyuban Pasundan", "chairman": "Unknown", "city": "Bandung", "classification": "adat", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 0, "social_events": 3, "news_context": "adat sunda budaya"},
+    {"name": "LDII Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "religious", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 0, "social_events": 2, "news_context": "ldii pengajian"},
+    {"name": "FKPPI Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "kepemudaan", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 1, "social_events": 2, "news_context": "fkppi bela negara"},
+    {"name": "KNPI Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "kepemudaan", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 0, "social_events": 2, "news_context": "knpi pemuda"},
+    {"name": "Pemuda Panca Marga Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "kepemudaan-preman-risk", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 1, "social_events": 1, "news_context": "preman ormas"},
+    {"name": "Persis Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "religious", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 0, "social_events": 3, "news_context": "persis pendidikan"},
+    {"name": "Muhammadiyah Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "religious", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 0, "social_events": 6, "news_context": "muhammadiyah sekolah rumah sakit"},
+    {"name": "GMBI Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "kepemudaan-preman-risk", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 6, "social_events": 0, "news_context": "gmb i bentrok preman"},
+    {"name": "Brigez Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "kepemudaan-preman-risk", "source_url": "https://news.detik.com", "conflict_events": 8, "social_events": 0, "news_context": "geng motor preman brigez"},
+    {"name": "XTC Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "kepemudaan-preman-risk", "source_url": "https://news.detik.com", "conflict_events": 7, "social_events": 0, "news_context": "xtc geng motor preman"},
+    {"name": "Moonraker Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "kepemudaan-preman-risk", "source_url": "https://news.detik.com", "conflict_events": 5, "social_events": 0, "news_context": "moonraker geng motor"},
+    {"name": "Paguyuban Sunda Wiwitan", "chairman": "Unknown", "city": "Bandung", "classification": "adat", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 0, "social_events": 1, "news_context": "adat wiwitan"},
+    {"name": "Laskar Ujung Berung", "chairman": "Unknown", "city": "Bandung", "classification": "adat", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 1, "social_events": 1, "news_context": "ormas adat"},
+    {"name": "Sunda Wani Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "adat", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 0, "social_events": 2, "news_context": "budaya sunda"},
+    {"name": "Garda Terdepan Jabar", "chairman": "Unknown", "city": "Bandung", "classification": "unknown", "source_url": "https://ormas.kemendagri.go.id", "conflict_events": 2, "social_events": 0, "news_context": "ormas demo"}
+  ]
+}
