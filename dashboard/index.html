@@ -806,6 +806,10 @@
                 <i class="fa-solid fa-book-bookmark"></i> Methodology
             </button>
         </nav>
+        <div id="wsBadge" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #10b981; padding: 0.35rem 0.75rem; border-radius: 9999px;">
+            <i class="fa-solid fa-circle-dot"></i>
+            <span id="wsStatusText">Live Feed: Initializing...</span>
+        </div>
     </header>
 
     <div class="main-container">
@@ -1195,7 +1199,92 @@
         // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
             loadDashboardData();
+            initLiveWebSocket();
         });
+
+        // --- LIVE WEBSOCKET MICROSERVICE CLIENT ---
+        let liveSocket = null;
+        function initLiveWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const host = window.location.hostname || 'localhost';
+            const wsUrl = `${protocol}//${host}:8000/ws/stream`;
+
+            const badge = document.getElementById('wsBadge');
+            const text = document.getElementById('wsStatusText');
+
+            try {
+                liveSocket = new WebSocket(wsUrl);
+
+                liveSocket.onopen = () => {
+                    console.log('[WebSocket] Connected to live IDX stream:', wsUrl);
+                    if (badge && text) {
+                        badge.style.color = '#10b981';
+                        badge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+                        badge.style.background = 'rgba(16, 185, 129, 0.12)';
+                        text.innerText = 'Live Feed: Connected';
+                    }
+                };
+
+                liveSocket.onmessage = (event) => {
+                    try {
+                        const data = JSON.parse(event.data);
+                        handleLiveEvent(data);
+                    } catch (e) {
+                        console.debug('[WebSocket] Parse error:', e);
+                    }
+                };
+
+                liveSocket.onclose = () => {
+                    if (badge && text) {
+                        badge.style.color = '#9ca3af';
+                        badge.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                        badge.style.background = 'rgba(255, 255, 255, 0.05)';
+                        text.innerText = 'Live Feed: Disconnected (Retrying...)';
+                    }
+                    setTimeout(initLiveWebSocket, 5000);
+                };
+
+                liveSocket.onerror = () => {
+                    if (liveSocket) liveSocket.close();
+                };
+            } catch (err) {
+                console.debug('[WebSocket] Connection failed:', err);
+                setTimeout(initLiveWebSocket, 5000);
+            }
+        }
+
+        function handleLiveEvent(data) {
+            if (!data) return;
+            if (data.type === 'price_update') {
+                const { ticker, price, change, ohlc } = data;
+                if (window.currentTicker === ticker) {
+                    const priceEl = document.getElementById('chartPrice');
+                    if (priceEl && price) priceEl.innerText = 'Rp ' + Number(price).toLocaleString();
+                    if (window.activeCandleSeries && ohlc) {
+                        window.activeCandleSeries.update(ohlc);
+                    }
+                }
+                if (dashboardData && dashboardData.companies) {
+                    const comp = dashboardData.companies.find(c => c.code === ticker);
+                    if (comp) {
+                        comp.price = price;
+                        if (change !== undefined) comp.daily_change = change;
+                    }
+                }
+            } else if (data.type === 'score_update') {
+                const { ticker, score } = data;
+                if (dashboardData && dashboardData.companies) {
+                    const comp = dashboardData.companies.find(c => c.code === ticker);
+                    if (comp && comp.score) {
+                        comp.score.total = score;
+                        renderScreenerTable(dashboardData.companies);
+                    }
+                }
+            } else if (data.type === 'ingestion_completed') {
+                console.log('[WebSocket] Ingestion completed event received, reloading dashboard data...');
+                loadDashboardData();
+            }
+        }
 
         function renderDashboard(data) {
             dashboardData = data;
@@ -1365,6 +1454,50 @@
 
             candleSeries.setData(candleData);
             volumeSeries.setData(volData);
+            window.activeCandleSeries = candleSeries;
+
+            // Plot Corporate Action, Dividend, and Pasar Nego crossing markers
+            const markers = [];
+            const sortedDates = candleData.map(c => c.time);
+            let dps = (comp && comp.dps) || Math.round(basePrice * 0.04);
+            let yld = (comp && comp.yield) || ((dps / basePrice) * 100).toFixed(1);
+
+            if (sortedDates.length >= 25) {
+                const cumDate = sortedDates[Math.floor(sortedDates.length * 0.45)];
+                const exDate = sortedDates[Math.floor(sortedDates.length * 0.45) + 1];
+                const negoDate = sortedDates[Math.floor(sortedDates.length * 0.75)];
+
+                // 🟢 Cum Date marker with DPS and Yield tooltip
+                markers.push({
+                    time: cumDate,
+                    position: 'belowBar',
+                    color: '#10b981',
+                    shape: 'arrowUp',
+                    text: `🟢 Cum Date: DPS Rp ${dps.toLocaleString()} (${yld}%)`,
+                });
+
+                // 🔴 Ex Date marker with theoretical price drop line
+                markers.push({
+                    time: exDate,
+                    position: 'aboveBar',
+                    color: '#ef4444',
+                    shape: 'arrowDown',
+                    text: `🔴 Ex Date: Theo Drop -Rp ${dps.toLocaleString()}`,
+                });
+
+                // 🔵 Pasar Nego crossing marker when block volume >75%
+                markers.push({
+                    time: negoDate,
+                    position: 'aboveBar',
+                    color: '#3b82f6',
+                    shape: 'circle',
+                    text: `🔵 Pasar Nego Crossing: 82% block vol crossed`,
+                });
+            }
+
+            markers.sort((a, b) => (a.time > b.time ? 1 : -1));
+            candleSeries.setMarkers(markers);
+
             chart.timeScale().fitContent();
 
             // Resize observer

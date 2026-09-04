@@ -1,0 +1,59 @@
+name: daily-market-close
+
+on:
+  schedule:
+    - cron: '0 10 * * 1-5'  # 17:00 WIB (Mon-Fri)
+  workflow_dispatch:
+    inputs:
+      trade_date:
+        description: 'Optional override date (YYYYMMDD)'
+        required: false
+        default: ''
+
+jobs:
+  ingest:
+    name: Market-Close Data Ingestion & Briefing
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Run daily market-close ingestion
+        run: |
+          if [ -n "${{ github.event.inputs.trade_date }}" ]; then
+            uv run idx daily --date ${{ github.event.inputs.trade_date }}
+          else
+            uv run idx daily
+          fi
+
+      - name: Export consolidated Parquet datasets
+        run: uv run idx parquet
+
+      - name: Generate daily 8-screen decision-support briefing
+        run: |
+          if [ -n "${{ secrets.BRIEFING_WEBHOOK_URL }}" ]; then
+            uv run idx signals --webhook-url "${{ secrets.BRIEFING_WEBHOOK_URL }}"
+          else
+            uv run idx signals
+          fi
+
+      - name: Commit and push updated datasets
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --staged --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "chore(data): automated daily market-close update [skip ci]"
+            git push
+          fi

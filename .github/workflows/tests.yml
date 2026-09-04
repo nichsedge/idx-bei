@@ -22,5 +22,8 @@ jobs:
       - name: Lint (ruff)
         run: uv run ruff check python/src python/tests python/cli.py
 
-      - name: Run tests (pytest)
-        run: uv run pytest -q python/tests
+      - name: Static Type Checking (mypy)
+        run: uv run mypy python/src/idx
+
+      - name: Run tests with coverage enforcement (pytest-cov >= 85%)
+        run: uv run pytest python/tests --cov=idx --cov-fail-under=85

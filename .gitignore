@@ -17,6 +17,9 @@ python/.env
 *.egg-info/
 dist/
 build/
+.coverage
+.coverage.*
+htmlcov/
 
 # --- Databases & DuckDB ---
 *.duckdb
@@ -34,6 +37,7 @@ data/.scrape_stats.json
 data/*.tmp
 data/*.bak
 data/ownership/
+data/usd_idr_rate.json
 
 # --- Logs & OS ---
 *.log

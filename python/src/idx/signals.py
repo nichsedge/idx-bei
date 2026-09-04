@@ -19,6 +19,7 @@ Usage:
 import datetime
 import json
 import os
+from typing import Any
 
 import pandas as pd
 
@@ -251,7 +252,8 @@ def sharia_value_screen(
         mask &= ~df["opini"].isin(RISK_OPINIONS)
     df = df[mask]
 
-    return df[cols].sort_values("roe", ascending=False).reset_index(drop=True)
+    avail_cols = [c for c in cols if c in df.columns]
+    return df[avail_cols].sort_values("roe", ascending=False).reset_index(drop=True)
 
 
 # ── Screen 5: Pasar Nego Crossing Radar ───────────────────────────────────────
@@ -408,6 +410,189 @@ def broker_concentration_screen(broker, *, on_date=None, top_k=5):
     return summary, grouped.head(top_k)[cols]
 
 
+STEALTH_SMART_BROKERS = frozenset({"AK", "BK", "ZP", "RX", "CC"})
+STEALTH_RETAIL_BROKERS = frozenset({"YP", "PD", "XC", "NI"})
+
+
+def detect_stealth_accumulation(
+    broker: pd.DataFrame,
+    stock: pd.DataFrame | None = None,
+    *,
+    on_date: str | None = None,
+    min_smart_delta: float = 3.0,
+    max_price_change_pct: float = 1.0,
+) -> dict[str, Any]:
+    """Detects 'Stealth Accumulation vs Retail Trap' bandarmology anomalies.
+
+    Computes:
+        Smart Money Delta = sum(Turnover(AK, BK, ZP, RX, CC)) / sum(Turnover(YP, PD, XC, NI))
+
+    Flags:
+        - STEALTH_ACCUMULATION: Price moves < 1% while Smart Money Delta > 3.0
+        - RETAIL_TRAP: Price moves > 1% while Smart Money Delta < 0.5 (retail buying into distribution)
+        - NEUTRAL otherwise.
+
+    Args:
+        broker: broker_summary DataFrame (Date, IDFirm, Value, Volume, optional StockCode)
+        stock: stock_summary DataFrame (Date, StockCode, Close, Previous, Value, ForeignBuy, ForeignSell)
+        on_date: optional ISO date string
+        min_smart_delta: threshold ratio to qualify as smart accumulation (default 3.0)
+        max_price_change_pct: max price movement % for stealth accumulation (default 1.0)
+
+    Returns:
+        dict with keys: 'summary', 'anomalies_df', 'signal', 'smart_money_delta'
+    """
+    if len(broker) == 0:
+        return {
+            "signal": "NO_DATA",
+            "smart_money_delta": 0.0,
+            "summary": {},
+            "anomalies_df": pd.DataFrame(),
+        }
+
+    b_df = broker.copy()
+    if "Date" in b_df.columns:
+        b_df["Date"] = pd.to_datetime(b_df["Date"], errors="coerce")
+        if on_date:
+            target_dt = pd.to_datetime(on_date)
+            b_df = b_df[b_df["Date"] == target_dt]
+        else:
+            latest_dt = b_df["Date"].max()
+            b_df = b_df[b_df["Date"] == latest_dt]
+
+    for c in ("Value", "Volume"):
+        if c in b_df.columns:
+            b_df[c] = pd.to_numeric(b_df[c], errors="coerce").fillna(0)
+
+    has_stock_code = "StockCode" in b_df.columns
+
+    smart_val = float(b_df[b_df["IDFirm"].isin(STEALTH_SMART_BROKERS)]["Value"].sum())
+    retail_val = float(b_df[b_df["IDFirm"].isin(STEALTH_RETAIL_BROKERS)]["Value"].sum())
+    overall_delta = round(float(smart_val / (retail_val + 1e-9)), 2)
+
+    records = []
+    if has_stock_code:
+        for ticker, g in b_df.groupby("StockCode"):
+            s_val = float(g[g["IDFirm"].isin(STEALTH_SMART_BROKERS)]["Value"].sum())
+            r_val = float(g[g["IDFirm"].isin(STEALTH_RETAIL_BROKERS)]["Value"].sum())
+            delta = round(float(s_val / (r_val + 1e-9)), 2)
+
+            price_chg = 0.0
+            if stock is not None and len(stock) > 0 and "StockCode" in stock.columns:
+                s_rows = stock[stock["StockCode"] == ticker]
+                if len(s_rows) > 0:
+                    last_s = s_rows.iloc[-1]
+                    c_p = float(last_s.get("Close", 0))
+                    p_p = float(last_s.get("Previous", c_p))
+                    if p_p > 0:
+                        price_chg = (c_p - p_p) / p_p * 100.0
+
+            if abs(price_chg) <= max_price_change_pct and delta >= min_smart_delta:
+                records.append(
+                    {
+                        "StockCode": ticker,
+                        "PriceChangePct": round(price_chg, 2),
+                        "SmartMoneyDelta": delta,
+                        "SmartTurnoverRpM": round(s_val / 1e6, 2),
+                        "RetailTurnoverRpM": round(r_val / 1e6, 2),
+                        "Signal": "STEALTH_ACCUMULATION",
+                        "Priority": "HIGH",
+                    }
+                )
+            elif price_chg > 1.0 and delta < 0.5:
+                records.append(
+                    {
+                        "StockCode": ticker,
+                        "PriceChangePct": round(price_chg, 2),
+                        "SmartMoneyDelta": delta,
+                        "SmartTurnoverRpM": round(s_val / 1e6, 2),
+                        "RetailTurnoverRpM": round(r_val / 1e6, 2),
+                        "Signal": "RETAIL_TRAP",
+                        "Priority": "MEDIUM",
+                    }
+                )
+    elif stock is not None and len(stock) > 0 and "StockCode" in stock.columns:
+        s_df = stock.copy()
+        if "Date" in s_df.columns:
+            s_df["Date"] = pd.to_datetime(s_df["Date"], errors="coerce")
+            if on_date:
+                s_df = s_df[s_df["Date"] == pd.to_datetime(on_date)]
+            else:
+                s_df = s_df[s_df["Date"] == s_df["Date"].max()]
+
+        for _, row in s_df.iterrows():
+            c_p = float(row.get("Close", 0))
+            p_p = float(row.get("Previous", c_p))
+            if p_p <= 0 or c_p <= 0:
+                continue
+            price_chg = (c_p - p_p) / p_p * 100.0
+            nff = float(row.get("ForeignBuy", 0)) - float(row.get("ForeignSell", 0))
+            val = float(row.get("Value", 0))
+
+            if val >= 5e9:
+                flow_ratio = nff / val if val > 0 else 0
+                if abs(price_chg) <= max_price_change_pct and (
+                    overall_delta >= min_smart_delta or flow_ratio > 0.25
+                ):
+                    records.append(
+                        {
+                            "StockCode": str(row.get("StockCode")),
+                            "PriceChangePct": round(price_chg, 2),
+                            "SmartMoneyDelta": overall_delta,
+                            "NetForeignFlowRpB": round(nff / 1e9, 2),
+                            "TurnoverRpB": round(val / 1e9, 2),
+                            "Signal": "STEALTH_ACCUMULATION",
+                            "Priority": "HIGH" if overall_delta >= min_smart_delta else "MEDIUM",
+                        }
+                    )
+                elif price_chg > 1.0 and (overall_delta < 0.5 or flow_ratio < -0.25):
+                    records.append(
+                        {
+                            "StockCode": str(row.get("StockCode")),
+                            "PriceChangePct": round(price_chg, 2),
+                            "SmartMoneyDelta": overall_delta,
+                            "NetForeignFlowRpB": round(nff / 1e9, 2),
+                            "TurnoverRpB": round(val / 1e9, 2),
+                            "Signal": "RETAIL_TRAP",
+                            "Priority": "MEDIUM",
+                        }
+                    )
+
+    anomalies_df = pd.DataFrame(records)
+    if not anomalies_df.empty:
+        anomalies_df = anomalies_df.sort_values(
+            ["Priority", "SmartMoneyDelta"], ascending=[True, False], ignore_index=True
+        )
+
+    if overall_delta >= min_smart_delta:
+        overall_signal = "STEALTH_ACCUMULATION"
+    elif overall_delta < 0.5:
+        overall_signal = "RETAIL_TRAP"
+    else:
+        overall_signal = "NEUTRAL"
+
+    summary = {
+        "on_date": on_date
+        or (
+            b_df["Date"].max().strftime("%Y-%m-%d")
+            if "Date" in b_df.columns and not b_df.empty
+            else None
+        ),
+        "smart_money_turnover_rp_b": round(smart_val / 1e9, 2),
+        "retail_turnover_rp_b": round(retail_val / 1e9, 2),
+        "smart_money_delta": overall_delta,
+        "market_signal": overall_signal,
+        "anomalies_detected": len(anomalies_df),
+    }
+
+    return {
+        "summary": summary,
+        "signal": overall_signal,
+        "smart_money_delta": overall_delta,
+        "anomalies_df": anomalies_df,
+    }
+
+
 # ── Technical Indicators & Vectorized Signals ─────────────────────────────────
 
 
@@ -494,9 +679,12 @@ def compute_technical_indicators(stock, ticker=None, rsi_period=14):
             g["ATR14"] = None
 
         # Volume ratio
-        vol = g["Volume"]
-        vol_sma20 = vol.rolling(20, min_periods=5).mean()
-        g["VolRatio20"] = (vol / (vol_sma20 + 1e-9)).round(2)
+        if "Volume" in g.columns:
+            vol = g["Volume"]
+            vol_sma20 = vol.rolling(20, min_periods=5).mean()
+            g["VolRatio20"] = (vol / (vol_sma20 + 1e-9)).round(2)
+        else:
+            g["VolRatio20"] = 1.0
 
         # Trend regime
         last_c = close.iloc[-1]
@@ -581,25 +769,47 @@ def composite_alpha_ranking(
     scores = pd.Series(50.0, index=merged.index)
 
     # 1. Fundamental Value score (ROE, PER, DER)
-    roe = pd.to_numeric(merged["roe"], errors="coerce").fillna(0)
-    per = pd.to_numeric(merged["per"], errors="coerce").fillna(999)
-    der = pd.to_numeric(merged["deRatio"], errors="coerce").fillna(999)
+    roe = (
+        pd.to_numeric(merged["roe"], errors="coerce").fillna(0)
+        if "roe" in merged.columns
+        else pd.Series(0.0, index=merged.index)
+    )
+    per = (
+        pd.to_numeric(merged["per"], errors="coerce").fillna(999)
+        if "per" in merged.columns
+        else pd.Series(999.0, index=merged.index)
+    )
+    der = (
+        pd.to_numeric(merged["deRatio"], errors="coerce").fillna(999)
+        if "deRatio" in merged.columns
+        else pd.Series(999.0, index=merged.index)
+    )
 
     scores += (roe.clip(0, 30) / 30.0) * 20.0  # Up to +20 for ROE
     scores += ((per > 0) & (per < 15)).astype(float) * 15.0  # +15 for fair/low PER
     scores -= (der > 3.0).astype(float) * 15.0  # -15 for high debt
 
     # 2. Foreign Flow factor
-    pct_float = pd.to_numeric(merged["PctFloat"], errors="coerce").fillna(0)
+    pct_float = (
+        pd.to_numeric(merged["PctFloat"], errors="coerce").fillna(0)
+        if "PctFloat" in merged.columns
+        else pd.Series(0.0, index=merged.index)
+    )
     scores += (pct_float.clip(-5, 5) / 5.0) * 25.0  # Up to +25 for heavy accumulation
 
     # 3. Technical factor (RSI in sweet spot 45-65 & Bullish trend)
-    rsi = pd.to_numeric(merged["RSI14"], errors="coerce").fillna(50)
+    rsi = (
+        pd.to_numeric(merged["RSI14"], errors="coerce").fillna(50)
+        if "RSI14" in merged.columns
+        else pd.Series(50.0, index=merged.index)
+    )
     scores += ((rsi >= 45) & (rsi <= 68)).astype(float) * 10.0
-    scores += (merged["TrendRegime"].isin(["STRONG_BULLISH", "BULLISH"])).astype(float) * 10.0
+    if "TrendRegime" in merged.columns:
+        scores += (merged["TrendRegime"].isin(["STRONG_BULLISH", "BULLISH"])).astype(float) * 10.0
 
     # 4. Audit Risk Penalty
-    scores -= merged["opini"].isin(RISK_OPINIONS).astype(float) * 40.0
+    if "opini" in merged.columns:
+        scores -= merged["opini"].isin(RISK_OPINIONS).astype(float) * 40.0
 
     merged["AlphaScore"] = scores.clip(0, 100).round(1)
     merged["StockName"] = (
@@ -723,6 +933,7 @@ def build_briefing(
         min_nego_pct=min_nego_pct,
     )
     broker_sum, top_brokers = broker_concentration_screen(broker, on_date=date, top_k=5)
+    stealth_res = detect_stealth_accumulation(broker, stock, on_date=date)
     alpha = composite_alpha_ranking(
         stock, ratios, actions=actions, min_turnover_rp=min_turnover_rp, top_n=10
     )
@@ -752,6 +963,11 @@ def build_briefing(
             f"CR1: {broker_sum.get('cr1_pct', '-')}%, CR3: {broker_sum.get('cr3_pct', '-')}%, "
             f"CR5: {broker_sum.get('cr5_pct', '-')}%, Inst/Retail ratio: {broker_sum.get('institutional_to_retail_ratio', '-')}",
             top_brokers,
+        ),
+        (
+            "Stealth Accumulation vs Retail Trap",
+            f"Smart Money Delta: {stealth_res['smart_money_delta']:.2f}, Market Signal: {stealth_res['signal']}",
+            stealth_res["anomalies_df"].head(10),
         ),
         (
             "Audit Risk Shield",
@@ -808,6 +1024,12 @@ def build_briefing(
                 "foreign_flow_radar": radar.head(10).to_dict("records"),
                 "bandarmology_summary": broker_sum,
                 "top_brokers": top_brokers.to_dict("records"),
+                "stealth_accumulation": {
+                    "summary": stealth_res["summary"],
+                    "signal": stealth_res["signal"],
+                    "smart_money_delta": stealth_res["smart_money_delta"],
+                    "anomalies": stealth_res["anomalies_df"].head(10).to_dict("records"),
+                },
                 "audit_risk_shield": shield.to_dict("records"),
                 "dilution_watch": watch.to_dict("records"),
                 "sharia_value_screen": sharia.to_dict("records"),
@@ -825,6 +1047,7 @@ def build_briefing(
         "alpha_rows": len(alpha),
         "radar_rows": len(radar),
         "broker_rows": len(top_brokers),
+        "stealth_anomalies": len(stealth_res["anomalies_df"]),
         "shield_rows": len(shield),
         "dilution_rows": len(watch),
         "sharia_rows": len(sharia),

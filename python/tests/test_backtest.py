@@ -85,6 +85,35 @@ class TestBacktest(unittest.TestCase):
         self.assertIn("total_return_pct", metrics)
         self.assertGreaterEqual(len(trades), 1)
 
+    def test_run_backtest_sharia_and_alpha(self):
+        m_sharia, t_sharia = run_backtest(
+            strategy="sharia_value",
+            holding_days=10,
+            top_n=2,
+            stock_df=self.stock_df,
+            ratios_df=self.ratios_df,
+        )
+        self.assertIn("total_return_pct", m_sharia)
+
+        m_alpha, t_alpha = run_backtest(
+            strategy="composite_alpha",
+            holding_days=10,
+            top_n=2,
+            stock_df=self.stock_df,
+            ratios_df=self.ratios_df,
+        )
+        self.assertIn("total_return_pct", m_alpha)
+
+    def test_run_backtest_bandarmology(self):
+        m_bandar, t_bandar = run_backtest(
+            strategy="bandarmology",
+            holding_days=10,
+            top_n=2,
+            stock_df=self.stock_df,
+            ratios_df=self.ratios_df,
+        )
+        self.assertIn("total_return_pct", m_bandar)
+
 
 if __name__ == "__main__":
     unittest.main()

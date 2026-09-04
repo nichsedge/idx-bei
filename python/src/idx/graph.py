@@ -5,6 +5,7 @@ Provides multi-hop UBO resolution, circular cross-holding detection, and board c
 """
 
 import os
+from typing import Any
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -135,8 +136,13 @@ def calculate_board_centrality(top_n: int = 20) -> pd.DataFrame:
                 records = session.run(cypher, top_n=top_n).data()
                 df = pd.DataFrame(records)
                 if not df.empty:
-                    df = df[df["insider"].astype(str).str.strip().ne("") & df["insider"].astype(str).str.strip().ne("-")]
-                    df["companies"] = df["companies"].apply(lambda x: sorted(set(x)) if isinstance(x, list) else x)
+                    df = df[
+                        df["insider"].astype(str).str.strip().ne("")
+                        & df["insider"].astype(str).str.strip().ne("-")
+                    ]
+                    df["companies"] = df["companies"].apply(
+                        lambda x: sorted(set(x)) if isinstance(x, list) else x
+                    )
                 return df
         finally:
             driver.close()
@@ -145,7 +151,7 @@ def calculate_board_centrality(top_n: int = 20) -> pd.DataFrame:
     details_file = os.path.join(DATA_DIR, "companyDetailsByKodeEmiten.json")
     if os.path.exists(details_file):
         data = load_json(details_file)
-        insider_map = {}
+        insider_map: dict[str, Any] = {}
         for ticker, comp in data.items():
             insiders = set()
             for d in comp.get("Direksi", []):

@@ -142,3 +142,27 @@ def test_sharia_screen_filters_flag_valuation_and_opinion():
     )
     out = sharia_value_screen(ratios)
     assert list(out["code"]) == ["GOOD"]
+
+
+def test_build_briefing(tmp_path):
+    from idx.signals import build_briefing
+
+    res = build_briefing(out_dir=str(tmp_path))
+    assert "markdown" in res
+    assert "json" in res
+    assert "trade_date" in res
+
+
+def test_composite_alpha_and_tech_indicators(stock_df):
+    from idx.signals import composite_alpha_ranking, compute_technical_indicators
+
+    tech = compute_technical_indicators(stock_df)
+    assert not tech.empty
+    assert "RSI14" in tech.columns
+    assert "TrendRegime" in tech.columns
+
+    ratios = pd.DataFrame(
+        [{"code": "AAA", "per": "10.0", "roe": "25.0", "opini": "WTM", "fsDate": "2026-06-30"}]
+    )
+    alpha = composite_alpha_ranking(stock_df, ratios, min_turnover_rp=1e8)
+    assert isinstance(alpha, pd.DataFrame)

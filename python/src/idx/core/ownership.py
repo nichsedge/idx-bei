@@ -151,7 +151,7 @@ def compute_ownership_deltas(
     ]
 
 
-def get_tycoon_holdings(df: pd.DataFrame, tycoons: dict = None) -> pd.DataFrame:
+def get_tycoon_holdings(df: pd.DataFrame, tycoons: dict[str, str] | None = None) -> pd.DataFrame:
     """Extracts all holdings belonging to notable individual investors/tycoons."""
     if len(df) == 0:
         return pd.DataFrame()
@@ -209,7 +209,7 @@ def get_multi_holding_individuals(df: pd.DataFrame, min_tickers: int = 2) -> pd.
     return g
 
 
-def scan_ownership_files(directory: str = None) -> list[str]:
+def scan_ownership_files(directory: str | None = None) -> list[str]:
     """Scans and returns sorted list of ownership CSV files by date."""
     import glob
 
@@ -219,7 +219,7 @@ def scan_ownership_files(directory: str = None) -> list[str]:
 
 
 def track_tycoon_drift(
-    prev_df: pd.DataFrame, curr_df: pd.DataFrame, tycoons: dict = None
+    prev_df: pd.DataFrame, curr_df: pd.DataFrame, tycoons: dict[str, str] | None = None
 ) -> pd.DataFrame:
     """Calculates position deltas filtered specifically for notable tycoons."""
     deltas = compute_ownership_deltas(prev_df, curr_df, min_pct_delta=0.01)
@@ -236,7 +236,7 @@ def track_tycoon_drift(
     return tycoon_deltas.reset_index(drop=True)
 
 
-def get_latest_shareholder_drift(directory: str = None) -> dict:
+def get_latest_shareholder_drift(directory: str | None = None) -> dict:
     """Compares the two latest ownership CSVs in directory and returns drift analytics."""
     files = scan_ownership_files(directory)
     if len(files) < 2:
@@ -246,7 +246,7 @@ def get_latest_shareholder_drift(directory: str = None) -> dict:
             return {
                 "status": "single_file",
                 "latest_file": files[0],
-                "tycoon_holdings": holdings.to_dict("records"),
+                "tycoon_holdings": holdings.fillna("").to_dict("records"),
                 "deltas": [],
             }
         return {"status": "no_files", "deltas": []}
@@ -268,6 +268,161 @@ def get_latest_shareholder_drift(directory: str = None) -> dict:
         "distributions": len(deltas[deltas["Action"] == "DISTRIBUTING"]),
         "new_entries": len(deltas[deltas["Action"] == "NEW_POSITION"]),
         "exits": len(deltas[deltas["Action"] == "FULL_EXIT"]),
-        "tycoon_drift": tycoon_drift.to_dict("records"),
-        "top_deltas": deltas.head(15).to_dict("records"),
+        "tycoon_drift": tycoon_drift.fillna("").to_dict("records"),
+        "top_deltas": deltas.head(15).fillna("").to_dict("records"),
+    }
+
+
+def ingest_ksei_ownership(path_or_url: str, output_dir: str | None = None) -> dict:
+    """Automates downloading/parsing of KSEI >1% ownership publication and computes drift.
+
+    Args:
+        path_or_url: Local file path or HTTP/HTTPS download URL.
+        output_dir: Destination directory for standardized CSV (defaults to DATA_DIR).
+
+    Returns:
+        Summary dict containing output file, parsed rows, and month-over-month drift deltas.
+    """
+    import datetime
+    import io
+    import re
+    import urllib.request
+
+    out_dir = output_dir or DATA_DIR
+    os.makedirs(out_dir, exist_ok=True)
+
+    # 1. Fetch data bytes
+    if path_or_url.startswith(("http://", "https://")):
+        log.info("Downloading KSEI ownership data from %s...", path_or_url)
+        req = urllib.request.Request(
+            path_or_url,
+            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"},
+        )
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            content_bytes = resp.read()
+    else:
+        log.info("Reading local KSEI ownership file from %s...", path_or_url)
+        with open(path_or_url, "rb") as f:
+            content_bytes = f.read()
+
+    # 2. Decode with robust encoding fallbacks
+    decoded_text = None
+    for enc in ["utf-8-sig", "utf-8", "latin-1", "cp1252"]:
+        try:
+            decoded_text = content_bytes.decode(enc)
+            break
+        except UnicodeDecodeError:
+            continue
+
+    if decoded_text is None:
+        raise ValueError(f"Unable to decode file content from {path_or_url}")
+
+    # 3. Parse CSV with delimiter detection
+    df = pd.read_csv(io.StringIO(decoded_text), sep=None, engine="python", dtype=str)
+
+    # Normalize column names
+    col_map = {}
+    for col in df.columns:
+        norm = str(col).strip().upper().replace(" ", "_").replace(".", "")
+        if "DATE" in norm or "TANGGAL" in norm:
+            col_map[col] = "DATE"
+        elif "SHARE_CODE" in norm or norm in ("CODE", "KODE", "SECURITY_CODE", "SYMBOL"):
+            col_map[col] = "SHARE_CODE"
+        elif "ISSUER" in norm or "EMITEN" in norm:
+            col_map[col] = "ISSUER_NAME"
+        elif "INVESTOR" in norm or "PEMEGANG" in norm or "HOLDER" in norm or "SHAREHOLDER" in norm:
+            col_map[col] = "INVESTOR_NAME"
+        elif "TOTAL_HOLDING" in norm or "JUMLAH" in norm or "SHARES" in norm:
+            col_map[col] = "TOTAL_HOLDING_SHARES"
+        elif "PERCENT" in norm or "PCT" in norm or "PORSI" in norm or "%" in norm:
+            col_map[col] = "PERCENTAGE"
+        elif "LOCAL" in norm or "ASING" in norm:
+            col_map[col] = "LOCAL_FOREIGN"
+        elif "TYPE" in norm or "JENIS" in norm:
+            col_map[col] = "INVESTOR_TYPE"
+
+    df = df.rename(columns=col_map)
+
+    required = [
+        "DATE",
+        "SHARE_CODE",
+        "ISSUER_NAME",
+        "INVESTOR_NAME",
+        "TOTAL_HOLDING_SHARES",
+        "PERCENTAGE",
+    ]
+    missing = [r for r in required if r not in df.columns]
+    if missing:
+        raise ValueError(
+            f"KSEI ownership file missing required columns: {missing}. Available: {list(df.columns)}"
+        )
+
+    # Clean and validate investor names
+    def clean_name(val):
+        if val is None or pd.isna(val):
+            return "UNKNOWN"
+        s = str(val).strip()
+        s = re.sub(r"[\x00-\x1f\x7f-\x9f]", "", s)
+        s = re.sub(r"\s+", " ", s)
+        return s.strip()
+
+    df["INVESTOR_NAME"] = df["INVESTOR_NAME"].apply(clean_name)
+    df["SHARE_CODE"] = df["SHARE_CODE"].fillna("").astype(str).str.strip().str.upper()
+
+    # Extract snapshot date
+    date_val = str(df["DATE"].dropna().iloc[0]).strip() if len(df) > 0 else ""
+    date_iso = None
+    try:
+        dt = pd.to_datetime(date_val, dayfirst=True)
+        date_iso = dt.strftime("%Y-%m-%d")
+    except Exception:
+        pass
+
+    if not date_iso:
+        m = re.search(r"(\d{4})[-_](\d{2})[-_](\d{2})", path_or_url)
+        if m:
+            date_iso = f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+        else:
+            date_iso = datetime.date.today().isoformat()
+
+    out_file = os.path.join(out_dir, f"1%ownership-{date_iso}.csv")
+
+    # Re-order columns
+    cols_to_save = [c for c in required if c in df.columns]
+    for opt in ["LOCAL_FOREIGN", "INVESTOR_TYPE"]:
+        if opt in df.columns:
+            cols_to_save.append(opt)
+
+    df[cols_to_save].to_csv(out_file, index=False, encoding="utf-8")
+    log.info("Saved standardized KSEI ownership dataset: %s (%d rows)", out_file, len(df))
+
+    # Identify previous snapshot for drift calculation
+    existing_files = [
+        f
+        for f in scan_ownership_files(out_dir)
+        if os.path.abspath(f) != os.path.abspath(out_file)
+        and os.path.basename(f) < os.path.basename(out_file)
+    ]
+
+    deltas_df = pd.DataFrame()
+    tycoon_drift_df = pd.DataFrame()
+    prev_file = None
+
+    curr_df = load_ownership_csv(out_file)
+
+    if existing_files:
+        prev_file = existing_files[-1]
+        prev_df = load_ownership_csv(prev_file)
+        deltas_df = compute_ownership_deltas(prev_df, curr_df, min_pct_delta=0.05)
+        tycoon_drift_df = track_tycoon_drift(prev_df, curr_df)
+
+    return {
+        "status": "ok",
+        "output_file": out_file,
+        "date": date_iso,
+        "total_rows": len(df),
+        "prev_file": os.path.basename(prev_file) if prev_file else None,
+        "deltas_count": len(deltas_df),
+        "deltas": deltas_df,
+        "tycoon_drift": tycoon_drift_df,
     }

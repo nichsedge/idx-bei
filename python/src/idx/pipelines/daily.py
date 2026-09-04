@@ -91,6 +91,16 @@ def ingest_daily(date=None, client=None, export_parquet=True):
             log.error("%s ingestion failed: %s", dataset, exc)
             results[dataset] = {"status": "error", "message": str(exc)}
 
+    # Refresh dynamic USD/IDR exchange rate
+    try:
+        from idx.core.currency import get_usd_idr_rate
+
+        rate = get_usd_idr_rate(force_refresh=True)
+        results["usd_idr_rate"] = rate
+        log.info("Refreshed USD/IDR exchange rate: %.2f", rate)
+    except Exception as exc:
+        log.warning("USD/IDR rate refresh skipped: %s", exc)
+
     # ── Consolidated Parquet Export ────────────────────────────────────────
     if export_parquet:
         try:

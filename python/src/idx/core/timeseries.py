@@ -47,13 +47,35 @@ def partition_path(dataset, date_iso, base_dir=None):
     return os.path.join(dataset_dir(dataset, base_dir), f"date={date_iso}.parquet")
 
 
+def compacted_partitions(dataset, base_dir=None):
+    """Returns list of monthly/quarterly compacted parquet paths."""
+    pattern = os.path.join(dataset_dir(dataset, base_dir), "year=*", "month=*.parquet")
+    return sorted(glob.glob(pattern))
+
+
 def existing_dates(dataset, base_dir=None):
     """Returns the set of ingested dates (ISO strings) for a dataset."""
-    pattern = os.path.join(dataset_dir(dataset, base_dir), "date=*.parquet")
     dates = {}
+
+    # 1. Compacted monthly partitions: year=YYYY/month=MM.parquet
+    for comp_path in compacted_partitions(dataset, base_dir):
+        try:
+            # Read only the Date column to quickly identify covered dates
+            tbl = pq.read_table(comp_path, columns=["Date"])
+            col_dates = set(tbl["Date"].to_pylist())
+            for d in col_dates:
+                if d:
+                    d_str = str(d)[:10]
+                    dates[d_str] = comp_path
+        except Exception as exc:
+            log.warning("Could not read dates from compacted partition %s: %s", comp_path, exc)
+
+    # 2. Daily partitions: date=YYYY-MM-DD.parquet (daily overrides if both exist)
+    pattern = os.path.join(dataset_dir(dataset, base_dir), "date=*.parquet")
     for path in glob.glob(pattern):
         basename = os.path.basename(path)  # date=YYYY-MM-DD.parquet
         dates[basename[len("date=") : -len(".parquet")]] = path
+
     return dates
 
 
@@ -104,13 +126,28 @@ def read_dataset(dataset, start=None, end=None, base_dir=None):
     if not selected:
         return pd.DataFrame()
 
-    tables = [pq.read_table(dates[d]) for d in selected]
+    unique_paths = sorted(set(dates[d] for d in selected))
+    tables = [pq.read_table(p) for p in unique_paths]
     df = pa.concat_tables(tables).to_pandas()
-    df.sort_values(
-        ["Date"] + [c for c in df.columns if c.endswith(("Code", "Firm"))],
-        inplace=True,
-        ignore_index=True,
-    )
+
+    # Filter to selected dates
+    if "Date" in df.columns:
+        df["_d_str"] = df["Date"].astype(str).str[:10]
+        selected_set = set(selected)
+        df = df[df["_d_str"].isin(selected_set)].copy()
+        df.drop(columns=["_d_str"], inplace=True)
+
+    sort_cols = [
+        c
+        for c in ["Date"] + [c for c in df.columns if c.endswith(("Code", "Firm"))]
+        if c in df.columns
+    ]
+    if sort_cols:
+        df.sort_values(
+            sort_cols,
+            inplace=True,
+            ignore_index=True,
+        )
     return df
 
 

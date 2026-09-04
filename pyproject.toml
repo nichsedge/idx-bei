@@ -11,7 +11,9 @@ dependencies = [
 [dependency-groups]
 dev = [
     "httpx>=0.28.0",
+    "mypy>=1.15.0",
     "pytest>=9.1.1",
+    "pytest-cov>=6.0.0",
     "ruff>=0.8.0",
 ]
 
@@ -23,4 +25,26 @@ members = ["python"]
 
 [tool.pytest.ini_options]
 pythonpath = ["python/src", "python"]
+
+[tool.mypy]
+python_version = "3.13"
+warn_unused_configs = true
+ignore_missing_imports = true
+follow_imports = "silent"
+
+[tool.coverage.run]
+source = ["python/src/idx"]
+omit = [
+    "python/src/idx/mcp/*",
+    "python/src/idx/cli.py",
+    "python/src/idx/scrapers/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]
 

@@ -156,12 +156,23 @@ def build_parser():
     p_bandar = sub.add_parser("bandarmology", help="Inspect Top-N broker concentration & flow")
     p_bandar.add_argument("--date", default=None, metavar="YYYY-MM-DD", help="Date filter")
     p_bandar.add_argument("--top", type=int, default=10, help="Top N brokers (default 10)")
+    p_bandar.add_argument(
+        "--stealth",
+        action="store_true",
+        help="Detect stealth accumulation vs retail trap anomalies",
+    )
 
     # 7. Backtest
     p_bt = sub.add_parser("backtest", help="Vectorized backtesting of quantitative screens")
     p_bt.add_argument(
         "--strategy",
-        choices=["foreign_flow", "bandarmology", "sharia_value", "composite_alpha"],
+        choices=[
+            "foreign_flow",
+            "bandarmology",
+            "sharia_value",
+            "composite_alpha",
+            "dividend_arbitrage",
+        ],
         default="foreign_flow",
         help="Strategy to simulate (default: foreign_flow)",
     )
@@ -192,8 +203,35 @@ def build_parser():
     )
     p_drift.add_argument("--tycoon", metavar="NAME", help="Filter drift for specific tycoon")
     p_drift.add_argument("--latest", action="store_true", help="Show latest month-over-month drift")
+    p_drift.add_argument(
+        "--ingest",
+        metavar="PATH_OR_URL",
+        help="Ingest and standardize KSEI ownership CSV from file path or URL",
+    )
 
-    # 10. FastAPI Microservice
+    # 10. Compaction
+    p_comp = sub.add_parser(
+        "compact", help="Compact daily partitioned time-series into monthly parquet files"
+    )
+    p_comp.add_argument(
+        "--dataset",
+        choices=["stock_summary", "broker_summary", "index_summary", "all"],
+        default="all",
+        help="Dataset to compact (default: all)",
+    )
+    p_comp.add_argument(
+        "--freq",
+        choices=["month", "quarter"],
+        default="month",
+        help="Compaction frequency (default: month)",
+    )
+    p_comp.add_argument(
+        "--keep-source",
+        action="store_true",
+        help="Keep original daily files after compaction (default: False)",
+    )
+
+    # 11. FastAPI Microservice
     p_serve = sub.add_parser("serve", help="Start high-performance FastAPI & WebSocket REST server")
     p_serve.add_argument("--host", default="0.0.0.0", help="Host address (default: 0.0.0.0)")
     p_serve.add_argument("--port", type=int, default=8000, help="Port to bind (default: 8000)")
@@ -204,6 +242,24 @@ def build_parser():
     # 12. Dashboard
     p_dash = sub.add_parser("dashboard", help="Start visual Smart Money Dashboard HTTP server")
     p_dash.add_argument("--port", type=int, default=8080, help="Port to bind (default 8080)")
+
+    # 13. Dividend Decision Engine
+    p_div = sub.add_parser("dividend", help="Dividend decision engine & dividend trap analyzer")
+    p_div.add_argument(
+        "ticker", nargs="?", default=None, help="4-letter IDX stock code (e.g. BBCA, PTBA)"
+    )
+    p_div.add_argument(
+        "--screen",
+        action="store_true",
+        help="Screen high-yield dividend opportunities across all stocks",
+    )
+    p_div.add_argument(
+        "--min-yield", type=float, default=3.0, help="Minimum dividend yield % (default: 3.0)"
+    )
+    p_div.add_argument("--year", default="2026", help="Filter by cum date year (default: 2026)")
+    p_div.add_argument(
+        "--limit", type=int, default=25, help="Max results for screener (default: 25)"
+    )
 
     sub.add_parser("all", help="Run all snapshot scrapers sequentially")
     return parser
@@ -321,6 +377,21 @@ def main(argv=None):
         with pd.option_context("display.max_columns", None, "display.width", 150):
             print(top_df.to_string(index=False))
 
+        if getattr(args, "stealth", False):
+            from idx.signals import detect_stealth_accumulation
+
+            df_s = read_dataset("stock_summary")
+            stealth = detect_stealth_accumulation(df_b, df_s, on_date=args.date)
+            print("\nStealth Accumulation vs Retail Trap:")
+            print(
+                f"  Smart Money Delta : {stealth['smart_money_delta']} (Smart: Rp{stealth['summary'].get('smart_money_turnover_rp_b', 0)}B vs Retail: Rp{stealth['summary'].get('retail_turnover_rp_b', 0)}B)"
+            )
+            print(f"  Market Signal     : {stealth['signal']}")
+            if len(stealth["anomalies_df"]) > 0:
+                print("\nFlagged Stocks / Anomalies:")
+                with pd.option_context("display.max_columns", None, "display.width", 150):
+                    print(stealth["anomalies_df"].head(15).to_string(index=False))
+
     elif cmd == "parquet":
         print("=== Exporting All Datasets to Parquet ===")
         results = export_all_parquet()
@@ -329,6 +400,20 @@ def main(argv=None):
                 print(f"  {name}: {info['rows']} rows → {info.get('size_mb', '?')} MB")
             else:
                 print(f"  {name}: {info}")
+    elif cmd == "compact":
+        from idx.pipelines.parquet import compact_partitions
+
+        print(
+            f"=== Compacting Time-Series Partitions (dataset={args.dataset}, freq={args.freq}) ==="
+        )
+        ds_arg = None if args.dataset == "all" else args.dataset
+        summary = compact_partitions(
+            dataset=ds_arg, freq=args.freq, remove_source=not args.keep_source
+        )
+        for ds, info in summary.items():
+            print(
+                f"  {ds}: {info.get('daily_files_merged', 0)} daily files → {info.get('compacted_partitions', 0)} compacted partitions ({info.get('status')})"
+            )
     elif cmd == "query":
         df = query_dataset(
             args.dataset,
@@ -358,17 +443,70 @@ def main(argv=None):
             stop_loss_pct=args.stop_loss,
             take_profit_pct=args.take_profit,
         )
-        print(f"  Total Return : {metrics.get('total_return_pct', 0.0)}%")
-        print(f"  Sharpe Ratio : {metrics.get('sharpe_ratio', 0.0)}")
-        print(f"  Sortino Ratio: {metrics.get('sortino_ratio', 0.0)}")
-        print(f"  Max Drawdown : {metrics.get('max_drawdown_pct', 0.0)}%")
-        print(
-            f"  Win Rate     : {metrics.get('win_rate_pct', 0.0)}% ({metrics.get('total_trades', 0)} trades)"
-        )
-        print(f"  Profit Factor: {metrics.get('profit_factor', 0.0)}")
-        print(f"  Avg Trade Ret: {metrics.get('avg_trade_return_pct', 0.0)}%")
+
+        if args.strategy == "dividend_arbitrage":
+            print(
+                f"\n=== Dividend Strategies Simulation (Total Events: {metrics.get('total_events', 0)}) ==="
+            )
+            comparison = [
+                {
+                    "Strategy": "Strategy A: Naive Hold",
+                    "Description": "Buy 10d pre-cum, hold through Ex-Date, collect div (10% tax)",
+                    "Total Return%": metrics.get("strategy_a_naive_hold", {}).get(
+                        "total_return_pct", 0.0
+                    ),
+                    "Sharpe": metrics.get("strategy_a_naive_hold", {}).get("sharpe_ratio", 0.0),
+                    "Max Drawdown%": metrics.get("strategy_a_naive_hold", {}).get(
+                        "max_drawdown_pct", 0.0
+                    ),
+                    "Win Rate%": metrics.get("strategy_a_naive_hold", {}).get("win_rate_pct", 0.0),
+                    "Trades": metrics.get("strategy_a_naive_hold", {}).get("total_trades", 0),
+                },
+                {
+                    "Strategy": "Strategy B: Pre-Cum Exit",
+                    "Description": "Buy 10d pre-cum, sell on Cum close, dodge Ex-Date drop",
+                    "Total Return%": metrics.get("strategy_b_precum_exit", {}).get(
+                        "total_return_pct", 0.0
+                    ),
+                    "Sharpe": metrics.get("strategy_b_precum_exit", {}).get("sharpe_ratio", 0.0),
+                    "Max Drawdown%": metrics.get("strategy_b_precum_exit", {}).get(
+                        "max_drawdown_pct", 0.0
+                    ),
+                    "Win Rate%": metrics.get("strategy_b_precum_exit", {}).get("win_rate_pct", 0.0),
+                    "Trades": metrics.get("strategy_b_precum_exit", {}).get("total_trades", 0),
+                },
+                {
+                    "Strategy": "Strategy C: Post-Ex Rebuy",
+                    "Description": "Rebuy 3d post-Ex on panic exhaustion, hold 10d",
+                    "Total Return%": metrics.get("strategy_c_postex_rebuy", {}).get(
+                        "total_return_pct", 0.0
+                    ),
+                    "Sharpe": metrics.get("strategy_c_postex_rebuy", {}).get("sharpe_ratio", 0.0),
+                    "Max Drawdown%": metrics.get("strategy_c_postex_rebuy", {}).get(
+                        "max_drawdown_pct", 0.0
+                    ),
+                    "Win Rate%": metrics.get("strategy_c_postex_rebuy", {}).get(
+                        "win_rate_pct", 0.0
+                    ),
+                    "Trades": metrics.get("strategy_c_postex_rebuy", {}).get("total_trades", 0),
+                },
+            ]
+            cmp_df = pd.DataFrame(comparison)
+            with pd.option_context("display.max_columns", None, "display.width", 150):
+                print(cmp_df.to_string(index=False))
+        else:
+            print(f"  Total Return : {metrics.get('total_return_pct', 0.0)}%")
+            print(f"  Sharpe Ratio : {metrics.get('sharpe_ratio', 0.0)}")
+            print(f"  Sortino Ratio: {metrics.get('sortino_ratio', 0.0)}")
+            print(f"  Max Drawdown : {metrics.get('max_drawdown_pct', 0.0)}%")
+            print(
+                f"  Win Rate     : {metrics.get('win_rate_pct', 0.0)}% ({metrics.get('total_trades', 0)} trades)"
+            )
+            print(f"  Profit Factor: {metrics.get('profit_factor', 0.0)}")
+            print(f"  Avg Trade Ret: {metrics.get('avg_trade_return_pct', 0.0)}%")
+
         if len(trades_df) > 0:
-            print("\nRecent Completed Trades:")
+            print("\nRecent Sample Trades:")
             with pd.option_context("display.max_columns", None, "display.width", 150):
                 print(trades_df.tail(10).to_string(index=False))
 
@@ -396,6 +534,22 @@ def main(argv=None):
             print("Specify --ubo <TICKER>, --centrality, or --cross-holdings.")
 
     elif cmd == "drift":
+        if getattr(args, "ingest", None):
+            from idx.core.ownership import ingest_ksei_ownership
+
+            print(f"=== Ingesting KSEI Ownership Publication: {args.ingest} ===")
+            res = ingest_ksei_ownership(args.ingest)
+            print(f"  Standardized File : {res['output_file']}")
+            print(f"  Snapshot Date     : {res['date']}")
+            print(f"  Rows Parsed       : {res['total_rows']}")
+            print(f"  Previous Snapshot : {res['prev_file'] or 'None (First Snapshot)'}")
+            print(f"  Position Deltas   : {res['deltas_count']}")
+            if res.get("deltas_count", 0) > 0:
+                print("\nTop Position Deltas:")
+                with pd.option_context("display.max_columns", None, "display.width", 150):
+                    print(res["deltas"].head(15).to_string(index=False))
+            return
+
         from idx.core.ownership import (
             get_latest_shareholder_drift,
         )
@@ -432,6 +586,29 @@ def main(argv=None):
         print(f"=== Starting IDX-BEI FastAPI Microservice on http://{args.host}:{args.port} ===")
         print(f"Interactive OpenAPI Swagger Docs: http://{args.host}:{args.port}/docs")
         run_server(host=args.host, port=args.port)
+
+    elif cmd == "dividend":
+        from idx.dividend import (
+            analyze_stock_dividend,
+            format_dividend_report,
+            screen_upcoming_dividends,
+        )
+
+        if args.screen or not args.ticker:
+            print(
+                f"=== Screening IDX Dividend Opportunities ({args.year}, Min Yield: {args.min_yield}%) ==="
+            )
+            df = screen_upcoming_dividends(
+                min_yield=args.min_yield, year_filter=args.year, limit=args.limit
+            )
+            if len(df) == 0:
+                print("No dividend records match the criteria.")
+            else:
+                with pd.option_context("display.max_columns", None, "display.width", 150):
+                    print(df.to_string(index=False))
+        else:
+            analysis = analyze_stock_dividend(args.ticker)
+            print(format_dividend_report(analysis))
 
     elif cmd == "all":
         print("=== Running All Snapshot Scrapers ===")

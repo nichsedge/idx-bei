@@ -482,3 +482,111 @@ def export_all():
         "Export all complete: %s", {k: v.get("rows", v.get("status")) for k, v in results.items()}
     )
     return results
+
+
+# ── Time-Series Partition Compaction ──────────────────────────────────────────
+
+
+def compact_partitions(dataset=None, freq="month", base_dir=None, remove_source=True):
+    """Compacts daily time-series partitions into monthly or quarterly parquet files.
+
+    Merges daily files (data/timeseries/{dataset}/date=YYYY-MM-DD.parquet) into
+    monthly partitions (data/timeseries/{dataset}/year=YYYY/month=MM.parquet).
+
+    Args:
+        dataset: Specific dataset name ('stock_summary', 'broker_summary', 'index_summary') or None for all.
+        freq: 'month' (default) or 'quarter'.
+        base_dir: Optional timeseries root override.
+        remove_source: If True, delete original daily files after writing compacted partition.
+
+    Returns:
+        dict with compaction summary per dataset.
+    """
+    import glob
+
+    target_datasets = [dataset] if dataset else list(ts.DATASETS)
+    summary = {}
+
+    for ds in target_datasets:
+        d_dir = ts.dataset_dir(ds, base_dir)
+        daily_files = sorted(glob.glob(os.path.join(d_dir, "date=*.parquet")))
+        if not daily_files:
+            summary[ds] = {
+                "compacted_partitions": 0,
+                "daily_files_merged": 0,
+                "status": "no_files",
+            }
+            continue
+
+        groups = {}
+        for fpath in daily_files:
+            fname = os.path.basename(fpath)  # date=YYYY-MM-DD.parquet
+            d_str = fname[len("date=") : -len(".parquet")]
+            parts = d_str.split("-")
+            if len(parts) >= 2:
+                year, month = parts[0], parts[1]
+                if freq == "quarter":
+                    q = (int(month) - 1) // 3 + 1
+                    key = (year, f"Q{q}")
+                else:
+                    key = (year, month)
+                groups.setdefault(key, []).append(fpath)
+
+        compacted_count = 0
+        merged_files_count = 0
+
+        for (year, period), file_list in groups.items():
+            if not file_list:
+                continue
+
+            if freq == "quarter":
+                out_dir = os.path.join(d_dir, f"year={year}")
+                out_file = os.path.join(out_dir, f"quarter={period}.parquet")
+            else:
+                out_dir = os.path.join(d_dir, f"year={year}")
+                out_file = os.path.join(out_dir, f"month={period}.parquet")
+
+            os.makedirs(out_dir, exist_ok=True)
+
+            tables = [pq.read_table(f) for f in file_list]
+            merged_table = pa.concat_tables(tables)
+            df = merged_table.to_pandas()
+
+            sort_cols = [
+                c
+                for c in ["Date"] + [c for c in df.columns if c.endswith(("Code", "Firm"))]
+                if c in df.columns
+            ]
+            if sort_cols:
+                df.sort_values(sort_cols, inplace=True, ignore_index=True)
+
+            compacted_table = pa.Table.from_pandas(df, preserve_index=False)
+            tmp_out = out_file + ".tmp"
+            pq.write_table(compacted_table, tmp_out, compression="snappy")
+            os.replace(tmp_out, out_file)
+
+            compacted_count += 1
+            merged_files_count += len(file_list)
+
+            if remove_source:
+                for f in file_list:
+                    try:
+                        os.remove(f)
+                    except OSError as e:
+                        log.warning("Could not delete daily file %s: %s", f, e)
+
+            log.info(
+                "Compacted %s: %d daily files into %s (%d rows)",
+                ds,
+                len(file_list),
+                out_file,
+                len(df),
+            )
+
+        summary[ds] = {
+            "compacted_partitions": compacted_count,
+            "daily_files_merged": merged_files_count,
+            "status": "ok",
+        }
+
+    return summary

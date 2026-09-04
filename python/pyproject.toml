@@ -30,8 +30,10 @@ idx = "idx.cli:main"
 dev = [
     "httpx>=0.28.0",
     "ipykernel>=7.3.0",
+    "mypy>=1.15.0",
     "nbformat>=5.10.4",
     "pytest>=9.1.1",
+    "pytest-cov>=6.0.0",
     "ruff>=0.8.0",
 ]
 
@@ -65,3 +67,25 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 # Tests may adjust sys.path before importing modules under test
 "tests/*" = ["E402"]
+
+[tool.mypy]
+python_version = "3.13"
+warn_unused_configs = true
+ignore_missing_imports = true
+follow_imports = "silent"
+
+[tool.coverage.run]
+source = ["src/idx"]
+omit = [
+    "src/idx/mcp/*",
+    "src/idx/cli.py",
+    "src/idx/scrapers/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]

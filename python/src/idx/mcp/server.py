@@ -194,6 +194,20 @@ TOOLS = [
             "required": ["sql"],
         },
     },
+    {
+        "name": "idx_analyze_dividend",
+        "description": "Analyze an announced or historical dividend for an IDX stock to decide whether to BUY, HOLD, or SELL before Cum Date, including Dividend Trap Risk scoring and after-tax considerations.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "ticker": {
+                    "type": "string",
+                    "description": "4-letter IDX stock code, e.g. 'BBCA', 'PTBA', 'AALI'.",
+                },
+            },
+            "required": ["ticker"],
+        },
+    },
 ]
 
 
@@ -226,6 +240,13 @@ def handle_tool_call(name, args):
                 if ticker in details:
                     return json.dumps(details[ticker], indent=2)
             return f"Company details for ticker '{ticker}' not found in local store."
+
+        elif name == "idx_analyze_dividend":
+            ticker = args.get("ticker", "").strip().upper()
+            from idx.dividend import analyze_stock_dividend
+
+            res = analyze_stock_dividend(ticker)
+            return json.dumps(res, indent=2)
 
         elif name == "idx_screen_sharia_value":
             max_per = args.get("max_per", 12.0)

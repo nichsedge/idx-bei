@@ -103,6 +103,24 @@ async def get_peers(ticker: str):
     return latest.to_dict("records")
 
 
+@app.get("/api/dividend/{ticker}", tags=["Dividends"])
+async def get_dividend_analysis(ticker: str):
+    from idx.dividend import analyze_stock_dividend
+
+    res = analyze_stock_dividend(ticker)
+    if not res.get("has_dividend"):
+        raise HTTPException(status_code=404, detail=res.get("message", "Dividend data not found"))
+    return res
+
+
+@app.get("/api/dividend", tags=["Dividends"])
+async def screen_dividends(min_yield: float = 3.0, year: str = "2026", limit: int = 25):
+    from idx.dividend import screen_upcoming_dividends
+
+    df = screen_upcoming_dividends(min_yield=min_yield, year_filter=year, limit=limit)
+    return df.to_dict("records")
+
+
 @app.get("/api/drift", tags=["Ownership"])
 async def get_drift():
     return get_latest_shareholder_drift()
@@ -141,21 +159,103 @@ async def execute_sql(req: SQLQueryRequest):
         raise HTTPException(status_code=400, detail=str(e)) from e
 
 
+@app.get("/api/stealth-accumulation", tags=["Bandarmology"])
+async def get_stealth_accumulation(date: str | None = None):
+    import pandas as pd
+
+    from idx.signals import detect_stealth_accumulation
+
+    broker_path = os.path.join(DATA_DIR, "parquet", "broker_summary.parquet")
+    stock_path = os.path.join(DATA_DIR, "parquet", "stock_summary.parquet")
+
+    broker_df = pd.read_parquet(broker_path) if os.path.exists(broker_path) else pd.DataFrame()
+    stock_df = pd.read_parquet(stock_path) if os.path.exists(stock_path) else pd.DataFrame()
+
+    res = detect_stealth_accumulation(broker_df, stock_df, on_date=date)
+    return {
+        "summary": res["summary"],
+        "signal": res["signal"],
+        "smart_money_delta": res["smart_money_delta"],
+        "anomalies": res["anomalies_df"].to_dict("records"),
+    }
+
+
+class ConnectionManager:
+    """Manages active WebSocket client connections and broadcasts live market events."""
+
+    def __init__(self):
+        self.active_connections: list[WebSocket] = []
+
+    async def connect(self, websocket: WebSocket):
+        await websocket.accept()
+        self.active_connections.append(websocket)
+
+    def disconnect(self, websocket: WebSocket):
+        if websocket in self.active_connections:
+            self.active_connections.remove(websocket)
+
+    async def broadcast(self, message: dict):
+        payload = json.dumps(message, default=str)
+        dead = []
+        for conn in self.active_connections:
+            try:
+                await conn.send_text(payload)
+            except Exception:
+                dead.append(conn)
+        for d in dead:
+            self.disconnect(d)
+
+
+ws_manager = ConnectionManager()
+
+
+@app.post("/api/broadcast", tags=["System"])
+async def broadcast_event(event: dict):
+    """Broadcasts a live event payload to all connected dashboard WebSockets."""
+    await ws_manager.broadcast(event)
+    return {"status": "broadcast_sent", "active_clients": len(ws_manager.active_connections)}
+
+
 @app.websocket("/ws/stream")
 async def websocket_stream(websocket: WebSocket):
-    await websocket.accept()
+    await ws_manager.connect(websocket)
     try:
+        # Welcome handshake
+        await websocket.send_text(
+            json.dumps(
+                {
+                    "type": "handshake",
+                    "status": "connected",
+                    "service": "idx-microservice-stream",
+                    "timestamp": asyncio.get_event_loop().time(),
+                }
+            )
+        )
         while True:
-            # Emit periodic heartbeat with market timestamp
-            payload = {
-                "type": "heartbeat",
-                "timestamp": asyncio.get_event_loop().time(),
-                "status": "connected",
-            }
-            await websocket.send_text(json.dumps(payload))
-            await asyncio.sleep(5)
+            # Check for incoming client messages or wait
+            try:
+                msg = await asyncio.wait_for(websocket.receive_text(), timeout=5.0)
+                data = json.loads(msg)
+                if data.get("type") == "ping":
+                    await websocket.send_text(
+                        json.dumps({"type": "pong", "time": asyncio.get_event_loop().time()})
+                    )
+            except TimeoutError:
+                # Periodic heartbeat with market status
+                await websocket.send_text(
+                    json.dumps(
+                        {
+                            "type": "heartbeat",
+                            "status": "alive",
+                            "timestamp": asyncio.get_event_loop().time(),
+                            "connected_clients": len(ws_manager.active_connections),
+                        }
+                    )
+                )
     except WebSocketDisconnect:
-        pass
+        ws_manager.disconnect(websocket)
+    except Exception:
+        ws_manager.disconnect(websocket)
 
 
 def run_server(host: str = "0.0.0.0", port: int = 8000):
