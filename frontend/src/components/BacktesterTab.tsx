@@ -177,6 +177,7 @@ export const BacktesterTab: React.FC<BacktesterTabProps> = ({ onSelectStock }) =
               style={{ width: '100%', padding: '0.5rem', borderRadius: '8px' }}
             >
               <option value="foreign_flow">Foreign Flow Accumulation</option>
+              <option value="stealth_accumulation">Wyckoff Stealth Accumulation (Smart Money)</option>
               <option value="bandarmology">Bandarmology Momentum</option>
               <option value="composite_alpha">Composite Multi-Factor Alpha</option>
               <option value="sharia_value">Sharia Value Screen</option>
@@ -312,6 +313,101 @@ export const BacktesterTab: React.FC<BacktesterTabProps> = ({ onSelectStock }) =
           </div>
         </div>
       </div>
+
+      {/* 3-Way Dividend Arbitrage Comparison Matrix */}
+      {strategy === 'dividend_arbitrage' && (metrics?.strategy_a_naive_hold || metrics?.strategy_b_precum_exit || metrics?.strategy_c_postex_rebuy) && (
+        <div style={{
+          background: 'rgba(15, 23, 42, 0.65)',
+          backdropFilter: 'blur(16px)',
+          border: '1px solid rgba(234, 179, 8, 0.25)',
+          borderRadius: '16px',
+          padding: '1.5rem',
+        }}>
+          <div style={{ marginBottom: '1.25rem' }}>
+            <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 700, color: '#facc15' }}>
+              3-Way Dividend Capture Arbitrage Comparison ({metrics?.total_events || 0} Dividend Events)
+            </h3>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              Empirical historical simulation: Hold through Ex-Date vs Pre-Cum Capital Gain Exit vs Post-Ex Rebuy
+            </span>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: '1rem',
+          }}>
+            {/* Strategy A */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.03)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderRadius: '12px',
+              padding: '1.25rem',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#f8fafc' }}>Strategy A: Naive Hold</span>
+                <span style={{ fontSize: '0.7rem', padding: '2px 6px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', color: 'var(--text-secondary)' }}>Collects Div</span>
+              </div>
+              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '0.35rem 0 0.75rem' }}>
+                Hold through Ex-Date, pay 10% dividend tax, suffer Ex-Date drop.
+              </p>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: (metrics.strategy_a_naive_hold?.total_return_pct ?? 0) >= 0 ? '#10b981' : '#ef4444' }}>
+                {metrics.strategy_a_naive_hold?.total_return_pct !== undefined ? `${metrics.strategy_a_naive_hold.total_return_pct > 0 ? '+' : ''}${metrics.strategy_a_naive_hold.total_return_pct}%` : '—'}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginTop: '0.5rem', color: 'var(--text-secondary)' }}>
+                <span>Win Rate: {metrics.strategy_a_naive_hold?.win_rate_pct ?? '—'}%</span>
+                <span>Max DD: -{Math.abs(metrics.strategy_a_naive_hold?.max_drawdown_pct ?? 0)}%</span>
+              </div>
+            </div>
+
+            {/* Strategy B */}
+            <div style={{
+              background: 'rgba(56, 189, 248, 0.04)',
+              border: '1px solid rgba(56, 189, 248, 0.3)',
+              borderRadius: '12px',
+              padding: '1.25rem',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#38bdf8' }}>Strategy B: Pre-Cum Exit</span>
+                <span style={{ fontSize: '0.7rem', padding: '2px 6px', borderRadius: '4px', background: 'rgba(56, 189, 248, 0.2)', color: '#38bdf8' }}>Capital Gain</span>
+              </div>
+              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '0.35rem 0 0.75rem' }}>
+                Sell on Cum Date close, avoid Ex-Date drop & dividend tax.
+              </p>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: (metrics.strategy_b_precum_exit?.total_return_pct ?? 0) >= 0 ? '#10b981' : '#ef4444' }}>
+                {metrics.strategy_b_precum_exit?.total_return_pct !== undefined ? `${metrics.strategy_b_precum_exit.total_return_pct > 0 ? '+' : ''}${metrics.strategy_b_precum_exit.total_return_pct}%` : '—'}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginTop: '0.5rem', color: 'var(--text-secondary)' }}>
+                <span>Win Rate: {metrics.strategy_b_precum_exit?.win_rate_pct ?? '—'}%</span>
+                <span>Max DD: -{Math.abs(metrics.strategy_b_precum_exit?.max_drawdown_pct ?? 0)}%</span>
+              </div>
+            </div>
+
+            {/* Strategy C */}
+            <div style={{
+              background: 'rgba(16, 185, 129, 0.04)',
+              border: '1px solid rgba(16, 185, 129, 0.3)',
+              borderRadius: '12px',
+              padding: '1.25rem',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#34d399' }}>Strategy C: Post-Ex Rebuy</span>
+                <span style={{ fontSize: '0.7rem', padding: '2px 6px', borderRadius: '4px', background: 'rgba(16, 185, 129, 0.2)', color: '#34d399' }}>Dip Rebuy</span>
+              </div>
+              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '0.35rem 0 0.75rem' }}>
+                Enter 2 days after Ex-Date after panic settles, hold 10 sessions.
+              </p>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: (metrics.strategy_c_postex_rebuy?.total_return_pct ?? 0) >= 0 ? '#10b981' : '#ef4444' }}>
+                {metrics.strategy_c_postex_rebuy?.total_return_pct !== undefined ? `${metrics.strategy_c_postex_rebuy.total_return_pct > 0 ? '+' : ''}${metrics.strategy_c_postex_rebuy.total_return_pct}%` : '—'}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginTop: '0.5rem', color: 'var(--text-secondary)' }}>
+                <span>Win Rate: {metrics.strategy_c_postex_rebuy?.win_rate_pct ?? '—'}%</span>
+                <span>Max DD: -{Math.abs(metrics.strategy_c_postex_rebuy?.max_drawdown_pct ?? 0)}%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Equity Curve & Trades */}
       <div style={{

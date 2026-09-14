@@ -28,11 +28,13 @@ def _load_data():
     stock_path = os.path.join(PARQUET_DIR, "stock_summary.parquet")
     ratios_path = os.path.join(PARQUET_DIR, "financial_ratios.parquet")
     actions_path = os.path.join(PARQUET_DIR, "corporate_actions.parquet")
+    broker_path = os.path.join(PARQUET_DIR, "broker_summary.parquet")
 
     stock = pd.read_parquet(stock_path) if os.path.exists(stock_path) else pd.DataFrame()
     ratios = pd.read_parquet(ratios_path) if os.path.exists(ratios_path) else pd.DataFrame()
     actions = pd.read_parquet(actions_path) if os.path.exists(actions_path) else pd.DataFrame()
-    return stock, ratios, actions
+    broker = pd.read_parquet(broker_path) if os.path.exists(broker_path) else pd.DataFrame()
+    return stock, ratios, actions, broker
 
 
 def calculate_metrics(
@@ -140,7 +142,7 @@ def simulate_dividend_arbitrage(
         tuple (metrics_dict, combined_trades_df)
     """
     if stock_df is None:
-        stock_df, _, actions_df = _load_data()
+        stock_df, _, actions_df, *_ = _load_data()
     if details_dict is None:
         details_dict = load_json(DETAILS_FILE) if os.path.exists(DETAILS_FILE) else {}
     if usd_rate is None or usd_rate <= 0:
@@ -350,11 +352,12 @@ def run_backtest(
     stock_df: pd.DataFrame | None = None,
     ratios_df: pd.DataFrame | None = None,
     actions_df: pd.DataFrame | None = None,
+    broker_df: pd.DataFrame | None = None,
 ) -> tuple[dict, pd.DataFrame]:
     """Runs a vectorized strategy backtest over historical time-series datasets.
 
     Args:
-        strategy: "foreign_flow" | "bandarmology" | "sharia_value" | "composite_alpha" | "dividend_arbitrage"
+        strategy: "foreign_flow" | "bandarmology" | "stealth_accumulation" | "sharia_value" | "composite_alpha" | "dividend_arbitrage"
         holding_days: forward holding period in trading sessions
         top_n: number of stocks picked per rebalancing session
         min_turnover_rp: minimum average daily turnover filter
@@ -362,7 +365,7 @@ def run_backtest(
         end_date: optional ending date filter (YYYY-MM-DD)
         stop_loss_pct: optional stop loss percentage e.g. 7.0 for -7%
         take_profit_pct: optional take profit percentage e.g. 15.0 for +15%
-        stock_df, ratios_df, actions_df: optional custom DataFrames
+        stock_df, ratios_df, actions_df, broker_df: optional custom DataFrames
 
     Returns:
         tuple (metrics_dict, trades_dataframe)
@@ -375,7 +378,9 @@ def run_backtest(
             end_date=end_date,
         )
     if stock_df is None or ratios_df is None:
-        stock_df, ratios_df, actions_df = _load_data()
+        stock_df, ratios_df, actions_df, loaded_broker = _load_data()
+        if broker_df is None:
+            broker_df = loaded_broker
 
     if len(stock_df) == 0:
         log.warning("No stock summary data for backtest.")
@@ -435,18 +440,42 @@ def run_backtest(
             )
             selected_tickers = alpha.head(top_n)["StockCode"].tolist() if len(alpha) > 0 else []
 
-        elif strategy == "bandarmology":
-            tech = compute_technical_indicators(history_slice)
-            if len(tech) > 0:
-                latest_tech = tech[tech["Date"] == entry_date]
-                bullish = latest_tech[
-                    latest_tech["TrendRegime"].isin(["STRONG_BULLISH", "BULLISH"])
+        elif strategy in ("bandarmology", "stealth_accumulation"):
+            from idx.signals import detect_stealth_accumulation
+
+            entry_date_str = (
+                entry_date.strftime("%Y-%m-%d")
+                if hasattr(entry_date, "strftime")
+                else str(entry_date)[:10]
+            )
+            stealth_res = detect_stealth_accumulation(
+                broker=broker_df if broker_df is not None else pd.DataFrame(),
+                stock=history_slice,
+                on_date=entry_date_str,
+                lookback_days=min(5, i + 1),
+                min_turnover_rp=min_turnover_rp,
+            )
+            anomalies = stealth_res.get("anomalies_df", pd.DataFrame())
+            if not anomalies.empty:
+                cand = anomalies[
+                    anomalies["Signal"].isin(["STEALTH_ACCUMULATION", "MARKUP_CONFIRMATION"])
                 ]
-                selected_tickers = (
-                    bullish.sort_values("VolRatio20", ascending=False)
-                    .head(top_n)["StockCode"]
-                    .tolist()
-                )
+                if cand.empty:
+                    cand = anomalies[anomalies["Signal"] == "STEALTH_ACCUMULATION"]
+                selected_tickers = cand.head(top_n)["StockCode"].tolist() if not cand.empty else []
+
+            if not selected_tickers:
+                tech = compute_technical_indicators(history_slice)
+                if len(tech) > 0:
+                    latest_tech = tech[tech["Date"] == entry_date]
+                    bullish = latest_tech[
+                        latest_tech["TrendRegime"].isin(["STRONG_BULLISH", "BULLISH"])
+                    ]
+                    selected_tickers = (
+                        bullish.sort_values("VolRatio20", ascending=False)
+                        .head(top_n)["StockCode"]
+                        .tolist()
+                    )
 
         if not selected_tickers:
             continue

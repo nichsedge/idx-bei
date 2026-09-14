@@ -207,7 +207,7 @@ export interface StreamEvent {
 }
 
 export interface BacktestParams {
-  strategy: 'foreign_flow' | 'bandarmology' | 'sharia_value' | 'composite_alpha' | 'dividend_arbitrage';
+  strategy: 'foreign_flow' | 'bandarmology' | 'stealth_accumulation' | 'sharia_value' | 'composite_alpha' | 'dividend_arbitrage';
   holding_days: number;
   top_n: number;
   min_turnover_rp: number;
@@ -231,6 +231,10 @@ export interface BacktestMetrics {
   alpha_pct: number;
   strategy?: string;
   holding_days?: number;
+  total_events?: number;
+  strategy_a_naive_hold?: BacktestMetrics;
+  strategy_b_precum_exit?: BacktestMetrics;
+  strategy_c_postex_rebuy?: BacktestMetrics;
 }
 
 export interface EquityPoint {

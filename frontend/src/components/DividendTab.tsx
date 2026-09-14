@@ -17,6 +17,7 @@ export const DividendTab: React.FC<DividendTabProps> = ({ onSelectStock }) => {
   const [selectedTicker, setSelectedTicker] = useState<string>('BBCA');
   const [analysis, setAnalysis] = useState<DividendAnalysis | null>(null);
   const [minYield, setMinYield] = useState<number>(3.0);
+  const [trapTier, setTrapTier] = useState<string>('ALL');
   const [loadingList, setLoadingList] = useState<boolean>(true);
   const [loadingDetail, setLoadingDetail] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -48,6 +49,14 @@ export const DividendTab: React.FC<DividendTabProps> = ({ onSelectStock }) => {
       setLoadingList(false);
     }
   };
+
+  const filteredOpportunities = opportunities.filter((op) => {
+    const score = op.TrapScore ?? 50;
+    if (trapTier === 'SAFE') return score <= 35;
+    if (trapTier === 'MODERATE') return score > 35 && score <= 60;
+    if (trapTier === 'HIGH_TRAP') return score > 60;
+    return true;
+  });
 
   const loadDetail = async (ticker: string) => {
     setSelectedTicker(ticker);
@@ -139,19 +148,46 @@ export const DividendTab: React.FC<DividendTabProps> = ({ onSelectStock }) => {
           padding: '1.5rem',
           overflow: 'hidden',
         }}>
-          <h3 style={{ margin: '0 0 1rem', fontSize: '1.15rem', fontWeight: 700 }}>
-            Upcoming & High-Yield Opportunities ({opportunities.length})
-          </h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+            <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700 }}>
+              High-Yield Opportunities ({filteredOpportunities.length})
+            </h3>
+            <div style={{ display: 'flex', gap: '0.35rem' }}>
+              {[
+                { id: 'ALL', label: 'All' },
+                { id: 'SAFE', label: 'Safe (≤35)' },
+                { id: 'MODERATE', label: 'Moderate (36-60)' },
+                { id: 'HIGH_TRAP', label: 'High Trap (>60)' },
+              ].map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setTrapTier(t.id)}
+                  style={{
+                    padding: '0.25rem 0.6rem',
+                    borderRadius: '6px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    background: trapTier === t.id ? 'rgba(234, 179, 8, 0.2)' : 'rgba(255, 255, 255, 0.04)',
+                    color: trapTier === t.id ? '#facc15' : 'var(--text-secondary)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
           {loadingList ? (
             <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
               <Loader2 size={32} className="spinning" style={{ margin: '0 auto 0.5rem', color: '#eab308' }} />
               <p>Evaluating dividend records and payout sustainability...</p>
             </div>
-          ) : opportunities.length === 0 ? (
+          ) : filteredOpportunities.length === 0 ? (
             <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
               <Coins size={32} style={{ margin: '0 auto 0.5rem', opacity: 0.5 }} />
-              <p>No dividend opportunities found matching yield ≥ {minYield}%.</p>
+              <p>No dividend opportunities found matching criteria.</p>
             </div>
           ) : (
             <div style={{ overflowX: 'auto' }}>
@@ -167,7 +203,7 @@ export const DividendTab: React.FC<DividendTabProps> = ({ onSelectStock }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {opportunities.map((opp) => {
+                  {filteredOpportunities.map((opp) => {
                     const isSelected = opp.StockCode === selectedTicker;
                     const trapColor =
                       opp.TrapScore && opp.TrapScore > 60
@@ -355,6 +391,30 @@ export const DividendTab: React.FC<DividendTabProps> = ({ onSelectStock }) => {
                       <strong style={{ color: '#38bdf8' }}>Selective</strong>
                     </div>
                   </div>
+                  <button
+                    onClick={() => {
+                      window.location.hash = '#simulator';
+                    }}
+                    style={{
+                      marginTop: '0.85rem',
+                      width: '100%',
+                      padding: '0.55rem',
+                      borderRadius: '8px',
+                      background: 'rgba(234, 179, 8, 0.15)',
+                      border: '1px solid rgba(234, 179, 8, 0.3)',
+                      color: '#facc15',
+                      fontSize: '0.8rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '6px',
+                    }}
+                  >
+                    <span>Simulate 3-Way Arbitrage on Full History</span>
+                    <ArrowRight size={14} />
+                  </button>
                 </div>
               </div>
             ) : (

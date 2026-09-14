@@ -114,6 +114,17 @@ class TestBacktest(unittest.TestCase):
         )
         self.assertIn("total_return_pct", m_bandar)
 
+    def test_run_backtest_stealth_accumulation(self):
+        m_stealth, t_stealth = run_backtest(
+            strategy="stealth_accumulation",
+            holding_days=10,
+            top_n=2,
+            stock_df=self.stock_df,
+            ratios_df=self.ratios_df,
+        )
+        self.assertIn("total_return_pct", m_stealth)
+        self.assertEqual(m_stealth.get("strategy"), "stealth_accumulation")
+
 
 if __name__ == "__main__":
     unittest.main()

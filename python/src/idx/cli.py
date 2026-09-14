@@ -183,6 +183,7 @@ def build_parser():
         choices=[
             "foreign_flow",
             "bandarmology",
+            "stealth_accumulation",
             "sharia_value",
             "composite_alpha",
             "dividend_arbitrage",

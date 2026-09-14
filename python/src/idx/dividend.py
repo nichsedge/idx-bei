@@ -398,6 +398,7 @@ def screen_upcoming_dividends(
     *,
     min_yield: float = 2.0,
     max_trap_score: float = 100.0,
+    trap_tier: str | None = None,
     year_filter: str = "2026",
     limit: int = 50,
 ) -> pd.DataFrame:
@@ -430,8 +431,11 @@ def screen_upcoming_dividends(
 
         yld = analysis["dividend_yield_pct"]
         trap = analysis["dividend_trap_score"]
+        tier = analysis["dividend_trap_tier"]
 
         if yld >= min_yield and trap <= max_trap_score:
+            if trap_tier and tier.upper() != trap_tier.upper():
+                continue
             results.append(
                 {
                     "Ticker": ticker,
@@ -443,8 +447,11 @@ def screen_upcoming_dividends(
                     "CumDate": analysis["dates"]["cum_date"],
                     "ExDate": analysis["dates"]["ex_date"],
                     "TrapScore": trap,
-                    "TrapRisk": analysis["dividend_trap_tier"],
+                    "TrapRisk": tier,
+                    "ExpectedExDropRp": analysis["expected_ex_date_drop_rp"],
+                    "ExpectedExDropPct": analysis["expected_ex_date_drop_pct"],
                     "Verdict": analysis["verdict"],
+                    "TacticalAction": analysis["tactical_action"],
                 }
             )
 
