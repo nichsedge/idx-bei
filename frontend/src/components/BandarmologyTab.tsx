@@ -23,12 +23,13 @@ export const BandarmologyTab: React.FC<BandarmologyTabProps> = ({ onSelectStock 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [filterSignal, setFilterSignal] = useState<string>('ALL');
+  const [lookbackDays, setLookbackDays] = useState<number>(5);
 
-  const loadData = async () => {
+  const loadData = async (lookback = lookbackDays) => {
     setLoading(true);
     setError(null);
     try {
-      const stealthRes = await fetchStealthAccumulation();
+      const stealthRes = await fetchStealthAccumulation(lookback);
       setData(stealthRes);
     } catch (err: any) {
       setError(err.message || 'Failed to load bandarmology intelligence');
@@ -38,8 +39,8 @@ export const BandarmologyTab: React.FC<BandarmologyTabProps> = ({ onSelectStock 
   };
 
   useEffect(() => {
-    loadData();
-  }, []);
+    loadData(lookbackDays);
+  }, [lookbackDays]);
 
   const anomalies: StealthAnomaly[] = data?.anomalies || [];
   const filteredAnomalies = anomalies.filter((a) => {
@@ -78,7 +79,7 @@ export const BandarmologyTab: React.FC<BandarmologyTabProps> = ({ onSelectStock 
           </p>
         </div>
         <button
-          onClick={loadData}
+          onClick={() => loadData()}
           disabled={loading}
           className="filter-btn"
           style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.2rem', cursor: 'pointer' }}
@@ -196,20 +197,40 @@ export const BandarmologyTab: React.FC<BandarmologyTabProps> = ({ onSelectStock 
             padding: '1.5rem',
             overflow: 'hidden',
           }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
               <div>
-                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700 }}>Stealth Flow Anomalies ({filteredAnomalies.length})</h3>
+                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700 }}>Stealth Flow & Wyckoff Anomalies ({filteredAnomalies.length})</h3>
                 <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                  Flat-price stealth accumulation vs retail distribution traps
+                  Institutional absorption vs retail liquidity traps over {lookbackDays}-session window
                 </span>
               </div>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                {['ALL', 'STEALTH_ACCUMULATION', 'RETAIL_TRAP'].map((sig) => (
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', background: 'rgba(255, 255, 255, 0.04)', borderRadius: '8px', padding: '2px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                  {[1, 3, 5, 10].map((days) => (
+                    <button
+                      key={days}
+                      onClick={() => setLookbackDays(days)}
+                      style={{
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '6px',
+                        fontSize: '0.7rem',
+                        fontWeight: 700,
+                        border: 'none',
+                        background: lookbackDays === days ? '#38bdf8' : 'transparent',
+                        color: lookbackDays === days ? '#0f172a' : 'var(--text-secondary)',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {days}D
+                    </button>
+                  ))}
+                </div>
+                {['ALL', 'STEALTH_ACCUMULATION', 'MARKUP_CONFIRMATION', 'RETAIL_TRAP', 'DISTRIBUTION'].map((sig) => (
                   <button
                     key={sig}
                     onClick={() => setFilterSignal(sig)}
                     style={{
-                      padding: '0.35rem 0.75rem',
+                      padding: '0.35rem 0.65rem',
                       borderRadius: '8px',
                       fontSize: '0.75rem',
                       fontWeight: 600,
@@ -236,10 +257,11 @@ export const BandarmologyTab: React.FC<BandarmologyTabProps> = ({ onSelectStock 
                   <thead>
                     <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', color: 'var(--text-secondary)', textAlign: 'left' }}>
                       <th style={{ padding: '0.75rem 0.5rem' }}>Ticker</th>
-                      <th style={{ padding: '0.75rem 0.5rem' }}>Signal</th>
-                      <th style={{ padding: '0.75rem 0.5rem' }}>Price Change</th>
-                      <th style={{ padding: '0.75rem 0.5rem' }}>Net Foreign Flow</th>
-                      <th style={{ padding: '0.75rem 0.5rem' }}>Turnover</th>
+                      <th style={{ padding: '0.75rem 0.5rem' }}>Signal & Phase</th>
+                      <th style={{ padding: '0.75rem 0.5rem' }}>Conviction</th>
+                      <th style={{ padding: '0.75rem 0.5rem' }}>Price (1D / {lookbackDays}D)</th>
+                      <th style={{ padding: '0.75rem 0.5rem' }}>Net Flow (1D / {lookbackDays}D)</th>
+                      <th style={{ padding: '0.75rem 0.5rem' }}>Flow Ratio</th>
                       <th style={{ padding: '0.75rem 0.5rem' }}>Priority</th>
                       <th style={{ padding: '0.75rem 0.5rem', textAlign: 'right' }}>Action</th>
                     </tr>
@@ -247,6 +269,31 @@ export const BandarmologyTab: React.FC<BandarmologyTabProps> = ({ onSelectStock 
                   <tbody>
                     {filteredAnomalies.map((a, idx) => {
                       const isStealth = a.Signal === 'STEALTH_ACCUMULATION';
+                      const isMarkup = a.Signal === 'MARKUP_CONFIRMATION';
+                      const isTrap = a.Signal === 'RETAIL_TRAP';
+                      const isDist = a.Signal === 'DISTRIBUTION';
+
+                      let badgeBg = 'rgba(255, 255, 255, 0.05)';
+                      let badgeColor = 'var(--text-secondary)';
+                      let badgeBorder = 'rgba(255, 255, 255, 0.1)';
+
+                      if (isStealth) {
+                        badgeBg = 'rgba(16, 185, 129, 0.15)';
+                        badgeColor = '#34d399';
+                        badgeBorder = 'rgba(16, 185, 129, 0.3)';
+                      } else if (isMarkup) {
+                        badgeBg = 'rgba(56, 189, 248, 0.15)';
+                        badgeColor = '#38bdf8';
+                        badgeBorder = 'rgba(56, 189, 248, 0.3)';
+                      } else if (isTrap || isDist) {
+                        badgeBg = 'rgba(239, 68, 68, 0.15)';
+                        badgeColor = '#f87171';
+                        badgeBorder = 'rgba(239, 68, 68, 0.3)';
+                      }
+
+                      const score = a.AccumulationScore ?? 50;
+                      const scoreColor = score >= 75 ? '#34d399' : (score <= 30 ? '#f87171' : '#facc15');
+
                       return (
                         <tr
                           key={`${a.StockCode}-${idx}`}
@@ -262,30 +309,64 @@ export const BandarmologyTab: React.FC<BandarmologyTabProps> = ({ onSelectStock 
                             <span style={{ fontWeight: 700, color: '#f8fafc', fontSize: '0.95rem' }}>{a.StockCode}</span>
                           </td>
                           <td style={{ padding: '0.85rem 0.5rem' }}>
-                            <span
-                              style={{
-                                padding: '0.2rem 0.5rem',
-                                borderRadius: '6px',
-                                fontSize: '0.7rem',
-                                fontWeight: 700,
-                                background: isStealth ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
-                                color: isStealth ? '#34d399' : '#f87171',
-                                border: isStealth ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid rgba(239, 68, 68, 0.3)',
-                              }}
-                            >
-                              {isStealth ? 'STEALTH ACCUMULATION' : 'RETAIL TRAP'}
-                            </span>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                              <span
+                                style={{
+                                  padding: '0.2rem 0.5rem',
+                                  borderRadius: '6px',
+                                  fontSize: '0.7rem',
+                                  fontWeight: 700,
+                                  background: badgeBg,
+                                  color: badgeColor,
+                                  border: `1px solid ${badgeBorder}`,
+                                  width: 'fit-content',
+                                }}
+                              >
+                                {a.Signal.replace('_', ' ')}
+                              </span>
+                              {a.WyckoffPhase && (
+                                <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', marginLeft: '2px' }}>
+                                  {a.WyckoffPhase.replace('_', ' ')}
+                                </span>
+                              )}
+                            </div>
                           </td>
-                          <td style={{ padding: '0.85rem 0.5rem', fontWeight: 600, color: a.PriceChangePct >= 0 ? '#10b981' : '#ef4444' }}>
-                            {a.PriceChangePct >= 0 ? `+${a.PriceChangePct.toFixed(2)}%` : `${a.PriceChangePct.toFixed(2)}%`}
+                          <td style={{ padding: '0.85rem 0.5rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <span style={{ fontWeight: 700, color: scoreColor, fontSize: '0.85rem' }}>{score}</span>
+                              <div style={{ width: '40px', height: '4px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '2px', overflow: 'hidden' }}>
+                                <div style={{ width: `${score}%`, height: '100%', background: scoreColor }} />
+                              </div>
+                            </div>
                           </td>
-                          <td style={{ padding: '0.85rem 0.5rem', fontWeight: 600, color: (a.NetForeignFlowRpB ?? 0) >= 0 ? '#10b981' : '#ef4444' }}>
-                            {a.NetForeignFlowRpB !== undefined
-                              ? `${a.NetForeignFlowRpB >= 0 ? '+' : ''}Rp ${a.NetForeignFlowRpB.toFixed(2)}B`
-                              : '—'}
+                          <td style={{ padding: '0.85rem 0.5rem', fontWeight: 600 }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                              <span style={{ color: a.PriceChangePct >= 0 ? '#10b981' : '#ef4444' }}>
+                                {a.PriceChangePct >= 0 ? `+${a.PriceChangePct.toFixed(2)}%` : `${a.PriceChangePct.toFixed(2)}%`}
+                              </span>
+                              {a.CumPriceChangePct !== undefined && (
+                                <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
+                                  {lookbackDays}D: {a.CumPriceChangePct >= 0 ? `+${a.CumPriceChangePct.toFixed(1)}%` : `${a.CumPriceChangePct.toFixed(1)}%`}
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.5rem', fontWeight: 600 }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                              <span style={{ color: (a.NetForeignFlowRpB ?? 0) >= 0 ? '#10b981' : '#ef4444' }}>
+                                {a.NetForeignFlowRpB !== undefined
+                                  ? `${a.NetForeignFlowRpB >= 0 ? '+' : ''}Rp ${a.NetForeignFlowRpB.toFixed(1)}B`
+                                  : '—'}
+                              </span>
+                              {a.CumNetForeignFlowRpB !== undefined && (
+                                <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
+                                  {lookbackDays}D: {a.CumNetForeignFlowRpB >= 0 ? '+' : ''}Rp {a.CumNetForeignFlowRpB.toFixed(1)}B
+                                </span>
+                              )}
+                            </div>
                           </td>
                           <td style={{ padding: '0.85rem 0.5rem', color: 'var(--text-secondary)' }}>
-                            {a.TurnoverRpB !== undefined ? `Rp ${a.TurnoverRpB.toFixed(2)}B` : '—'}
+                            {a.FlowRatioPct !== undefined ? `${a.FlowRatioPct >= 0 ? '+' : ''}${a.FlowRatioPct}%` : '—'}
                           </td>
                           <td style={{ padding: '0.85rem 0.5rem' }}>
                             <span style={{

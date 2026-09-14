@@ -163,6 +163,18 @@ def build_parser():
         action="store_true",
         help="Detect stealth accumulation vs retail trap anomalies",
     )
+    p_bandar.add_argument(
+        "--lookback",
+        type=int,
+        default=5,
+        help="Multi-session lookback window in trading days (default: 5)",
+    )
+    p_bandar.add_argument(
+        "--min-turnover",
+        type=float,
+        default=1.0,
+        help="Minimum daily turnover threshold in billion IDR (default: 1.0)",
+    )
 
     # 7. Backtest
     p_bt = sub.add_parser("backtest", help="Vectorized backtesting of quantitative screens")
@@ -400,16 +412,23 @@ def main(argv=None):
             from idx.signals import detect_stealth_accumulation
 
             df_s = read_dataset("stock_summary")
-            stealth = detect_stealth_accumulation(df_b, df_s, on_date=args.date)
+            stealth = detect_stealth_accumulation(
+                df_b,
+                df_s,
+                on_date=args.date,
+                lookback_days=getattr(args, "lookback", 5),
+                min_turnover_rp=getattr(args, "min_turnover", 1.0) * 1e9,
+            )
             print("\nStealth Accumulation vs Retail Trap:")
             print(
                 f"  Smart Money Delta : {stealth['smart_money_delta']} (Smart: Rp{stealth['summary'].get('smart_money_turnover_rp_b', 0)}B vs Retail: Rp{stealth['summary'].get('retail_turnover_rp_b', 0)}B)"
             )
             print(f"  Market Signal     : {stealth['signal']}")
+            print(f"  Lookback Window   : {getattr(args, 'lookback', 5)} sessions")
             if len(stealth["anomalies_df"]) > 0:
                 print("\nFlagged Stocks / Anomalies:")
                 with pd.option_context("display.max_columns", None, "display.width", 150):
-                    print(stealth["anomalies_df"].head(15).to_string(index=False))
+                    print(stealth["anomalies_df"].head(20).to_string(index=False))
 
     elif cmd == "parquet":
         print("=== Exporting All Datasets to Parquet ===")

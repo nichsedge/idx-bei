@@ -87,8 +87,8 @@ export async function fetchCrossHoldings(): Promise<any[]> {
   return await resp.json();
 }
 
-export async function fetchStealthAccumulation(): Promise<any> {
-  const resp = await fetch('/api/stealth-accumulation');
+export async function fetchStealthAccumulation(lookbackDays = 5, minTurnoverRpB = 1.0): Promise<any> {
+  const resp = await fetch(`/api/stealth-accumulation?lookback_days=${lookbackDays}&min_turnover_rp=${minTurnoverRpB * 1e9}`);
   if (!resp.ok) {
     throw new Error('Failed to fetch stealth accumulation');
   }

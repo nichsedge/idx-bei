@@ -453,7 +453,11 @@ async def execute_sql(req: SQLQueryRequest):
 
 
 @app.get("/api/stealth-accumulation", tags=["Bandarmology"])
-async def get_stealth_accumulation(date: str | None = None):
+async def get_stealth_accumulation(
+    date: str | None = None,
+    lookback_days: int = 5,
+    min_turnover_rp: float = 1e9,
+):
     import pandas as pd
 
     from idx.signals import detect_stealth_accumulation
@@ -464,7 +468,13 @@ async def get_stealth_accumulation(date: str | None = None):
     broker_df = pd.read_parquet(broker_path) if os.path.exists(broker_path) else pd.DataFrame()
     stock_df = pd.read_parquet(stock_path) if os.path.exists(stock_path) else pd.DataFrame()
 
-    res = detect_stealth_accumulation(broker_df, stock_df, on_date=date)
+    res = detect_stealth_accumulation(
+        broker_df,
+        stock_df,
+        on_date=date,
+        lookback_days=lookback_days,
+        min_turnover_rp=min_turnover_rp,
+    )
     return {
         "summary": res["summary"],
         "signal": res["signal"],

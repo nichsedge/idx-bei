@@ -257,11 +257,16 @@ export interface BacktestResponse {
 export interface StealthAnomaly {
   StockCode: string;
   PriceChangePct: number;
+  CumPriceChangePct?: number;
   SmartMoneyDelta: number;
   NetForeignFlowRpB?: number;
+  CumNetForeignFlowRpB?: number;
   TurnoverRpB?: number;
-  Signal: 'STEALTH_ACCUMULATION' | 'RETAIL_TRAP' | string;
-  Priority?: 'HIGH' | 'MEDIUM' | string;
+  FlowRatioPct?: number;
+  AccumulationScore?: number;
+  WyckoffPhase?: string;
+  Signal: 'STEALTH_ACCUMULATION' | 'MARKUP_CONFIRMATION' | 'RETAIL_TRAP' | 'DISTRIBUTION' | string;
+  Priority?: 'HIGH' | 'MEDIUM' | 'LOW' | string;
 }
 
 export interface StealthAccumulationSummary {

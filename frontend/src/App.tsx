@@ -1,17 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Header } from './components/Header';
 import { AlphaHub } from './components/AlphaHub';
-import { ChartTab } from './components/ChartTab';
-import { PowerMapTab } from './components/PowerMapTab';
-import { BacktesterTab } from './components/BacktesterTab';
-import { IngestionTab } from './components/IngestionTab';
-import { InvestorMemoModal } from './components/InvestorMemoModal';
-import { WatchlistDrawer } from './components/WatchlistDrawer';
 import { useDashboardData } from './hooks/useDashboardData';
 import { useLiveStream } from './hooks/useLiveStream';
 import { useWatchlist } from './hooks/useWatchlist';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, Loader2 } from 'lucide-react';
 import type { TabType, Company, LiveAlert } from './types';
+
+// Code-split heavy sub-panels and visualization graphs
+const ChartTab = lazy(() => import('./components/ChartTab').then(m => ({ default: m.ChartTab })));
+const PowerMapTab = lazy(() => import('./components/PowerMapTab').then(m => ({ default: m.PowerMapTab })));
+const BacktesterTab = lazy(() => import('./components/BacktesterTab').then(m => ({ default: m.BacktesterTab })));
+const IngestionTab = lazy(() => import('./components/IngestionTab').then(m => ({ default: m.IngestionTab })));
+const InvestorMemoModal = lazy(() => import('./components/InvestorMemoModal').then(m => ({ default: m.InvestorMemoModal })));
+const WatchlistDrawer = lazy(() => import('./components/WatchlistDrawer').then(m => ({ default: m.WatchlistDrawer })));
+
+const TabFallback: React.FC = () => (
+  <div style={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: '420px',
+    gap: '1rem',
+    color: 'var(--text-secondary)',
+  }}>
+    <Loader2 size={36} className="spinning" style={{ color: '#38bdf8' }} />
+    <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>Loading quantitative view...</span>
+  </div>
+);
 
 function parseRouteFromUrl(): { tab: TabType; ticker: string } {
   if (typeof window === 'undefined') {
@@ -201,7 +218,7 @@ export const App: React.FC = () => {
         )}
 
         {data && (
-          <>
+          <Suspense fallback={<TabFallback />}>
             {/* 1. Alpha Finder (Opportunities Hub) */}
             {activeTab === 'opportunities' && (
               <AlphaHub
@@ -249,27 +266,27 @@ export const App: React.FC = () => {
                 lastLiveEvent={lastEvent}
               />
             )}
-          </>
+
+            {/* 1-Click Printable Investor Dossier / Memo Modal */}
+            {memoCompany && (
+              <InvestorMemoModal
+                company={memoCompany}
+                onClose={() => setMemoCompany(null)}
+              />
+            )}
+
+            {/* Watchlist & Live Alerts Slide-over Drawer */}
+            <WatchlistDrawer
+              isOpen={isWatchlistOpen}
+              onClose={() => setIsWatchlistOpen(false)}
+              watchlist={watchlist}
+              onRemoveWatchlist={removeStar}
+              onSelectStock={handleSelectStock}
+              alerts={alerts}
+            />
+          </Suspense>
         )}
       </main>
-
-      {/* 1-Click Printable Investor Dossier / Memo Modal */}
-      {memoCompany && (
-        <InvestorMemoModal
-          company={memoCompany}
-          onClose={() => setMemoCompany(null)}
-        />
-      )}
-
-      {/* Watchlist & Live Alerts Slide-over Drawer */}
-      <WatchlistDrawer
-        isOpen={isWatchlistOpen}
-        onClose={() => setIsWatchlistOpen(false)}
-        watchlist={watchlist}
-        onRemoveWatchlist={removeStar}
-        onSelectStock={handleSelectStock}
-        alerts={alerts}
-      />
 
       <footer style={{
         textAlign: 'center',
