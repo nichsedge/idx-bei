@@ -81,7 +81,9 @@ def get_dataset_inventory(base_dir: str | None = None) -> dict[str, Any]:
         ds_dir = os.path.join(ts_root, ds)
         part_files = glob.glob(os.path.join(ds_dir, "date=*.parquet"))
         compacted_files = glob.glob(os.path.join(ds_dir, "year=*", "month=*.parquet"))
-        total_size = sum(os.path.getsize(f) for f in part_files + compacted_files if os.path.exists(f))
+        total_size = sum(
+            os.path.getsize(f) for f in part_files + compacted_files if os.path.exists(f)
+        )
 
         inventory["timeseries"][ds] = {
             "total_dates": len(sorted_dates),
@@ -93,7 +95,13 @@ def get_dataset_inventory(base_dir: str | None = None) -> dict[str, Any]:
         }
 
     # 2. Consolidated Parquet Datasets
-    for ds in ["stock_summary", "broker_summary", "index_summary", "financial_ratios", "corporate_actions"]:
+    for ds in [
+        "stock_summary",
+        "broker_summary",
+        "index_summary",
+        "financial_ratios",
+        "corporate_actions",
+    ]:
         p_path = os.path.join(parquet_root, f"{ds}.parquet")
         finfo = _file_info(p_path)
         row_count = 0
@@ -397,7 +405,9 @@ def get_full_ingestion_status(base_dir: str | None = None) -> dict[str, Any]:
         health_score -= 10
 
     return {
-        "status": "healthy" if health_score >= 75 else ("warning" if health_score >= 50 else "critical"),
+        "status": "healthy"
+        if health_score >= 75
+        else ("warning" if health_score >= 50 else "critical"),
         "health_score": max(0, health_score),
         "inventory": inventory,
         "gaps": gaps,
@@ -544,4 +554,3 @@ async def run_async_ingestion_job(
                 pass
 
     return job_record
-

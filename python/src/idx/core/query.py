@@ -59,9 +59,13 @@ def query_dataset(
 
     conds = []
     if start:
-        conds.append(f"(Date >= '{start}' OR regexp_extract(filename, 'date=(.*)\\.parquet', 1) >= '{start}')")
+        conds.append(
+            f"(Date >= '{start}' OR regexp_extract(filename, 'date=(.*)\\.parquet', 1) >= '{start}')"
+        )
     if end:
-        conds.append(f"(Date <= '{end}' OR regexp_extract(filename, 'date=(.*)\\.parquet', 1) <= '{end}')")
+        conds.append(
+            f"(Date <= '{end}' OR regexp_extract(filename, 'date=(.*)\\.parquet', 1) <= '{end}')"
+        )
     if where:
         conds.append(f"({where})")
     where_clause = f"WHERE {' AND '.join(conds)}" if conds else ""

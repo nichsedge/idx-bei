@@ -549,7 +549,7 @@ def compact_partitions(dataset=None, freq="month", base_dir=None, remove_source=
             os.makedirs(out_dir, exist_ok=True)
 
             tables = [pq.read_table(f) for f in file_list]
-            merged_table = pa.concat_tables(tables, promote_options="default")
+            merged_table = pa.concat_tables(tables, promote_options="permissive")
             df = merged_table.to_pandas()
 
             sort_cols = [

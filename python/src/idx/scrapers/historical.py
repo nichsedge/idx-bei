@@ -261,7 +261,9 @@ async def async_backfill_stock_summary(start_date, end_date, concurrency=5, dela
     )
 
 
-async def async_backfill_broker_summary(start_date, end_date, concurrency=5, delay=0.2, client=None):
+async def async_backfill_broker_summary(
+    start_date, end_date, concurrency=5, delay=0.2, client=None
+):
     """Async backfill for broker transaction summaries."""
     return await async_backfill_dataset(
         "broker_summary",

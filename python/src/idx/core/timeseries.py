@@ -129,7 +129,7 @@ def read_dataset(dataset, start=None, end=None, base_dir=None):
 
     unique_paths = sorted(set(dates[d] for d in selected))
     tables = [pq.read_table(p) for p in unique_paths]
-    df = pa.concat_tables(tables, promote_options="default").to_pandas()
+    df = pa.concat_tables(tables, promote_options="permissive").to_pandas()
 
     # Filter to selected dates
     if "Date" in df.columns:

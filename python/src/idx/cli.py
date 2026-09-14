@@ -184,7 +184,9 @@ def build_parser():
     p_bt.add_argument(
         "--top", type=int, default=10, help="Top N stocks picked per session (default 10)"
     )
-    p_bt.add_argument("--stop-loss", type=float, default=None, help="Stop loss %% e.g. 7.0 for -7%%")
+    p_bt.add_argument(
+        "--stop-loss", type=float, default=None, help="Stop loss %% e.g. 7.0 for -7%%"
+    )
     p_bt.add_argument(
         "--take-profit", type=float, default=None, help="Take profit %% e.g. 15.0 for +15%%"
     )
@@ -271,14 +273,17 @@ def build_parser():
 
     # 14. Ingestion Status & Backfill Recommendation
     sub.add_parser(
-        "status", help="Display dataset inventory, calendar gaps, and tiered backfill recommendations"
+        "status",
+        help="Display dataset inventory, calendar gaps, and tiered backfill recommendations",
     )
 
     # 15. LHKPN & PEP Political Capital Radar
     p_lhkpn = sub.add_parser(
         "lhkpn", help="Cross-reference KPK LHKPN asset filings with IDX boards and tycoons"
     )
-    p_lhkpn.add_argument("--query", type=str, default=None, help="Filter by official name or ticker code")
+    p_lhkpn.add_argument(
+        "--query", type=str, default=None, help="Filter by official name or ticker code"
+    )
 
     sub.add_parser("all", help="Run all snapshot scrapers sequentially")
     return parser
@@ -655,7 +660,9 @@ def main(argv=None):
         print("=" * 80)
         print("             IDX-BEI DATA INGESTION & BACKFILL STATUS REPORT                    ")
         print("=" * 80)
-        print(f" Health Status:    {status['status'].upper()} (Score: {status['health_score']}/100)")
+        print(
+            f" Health Status:    {status['status'].upper()} (Score: {status['health_score']}/100)"
+        )
         print(f" Generated At:     {status['generated_at']}")
         print("-" * 80)
         print(" 1. TIMESERIES DATASETS (Partitioned Parquet)")
