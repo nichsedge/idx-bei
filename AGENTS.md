@@ -45,7 +45,6 @@ Run all commands from the repository root using modern `uv`:
 - `uv run idx graph --ingest`: batch ingest company profiles and summaries into Neo4j graph.
 - `uv run idx drift --latest`: track month-over-month KSEI shareholder and tycoon position changes.
 - `uv run idx drift --ingest <path_or_url>`: ingest, clean, standardize, and compute drift deltas from KSEI shareholder reports.
-- `uv run idx lhkpn`: cross-reference KPK LHKPN asset filings & PEPs with IDX listed boards and tycoons.
 - `cd frontend && bun install && bun run build`: compile modern React 19 / TypeScript SPA to `frontend/dist`.
 - `uv run idx serve --port 8000`: start unified Web Dashboard (serves `frontend/dist` with fallback to `dashboard/`), FastAPI REST API & WebSocket server.
 - `uv run idx dashboard --port 8000`: start unified Web Dashboard, FastAPI REST API & WebSocket server.

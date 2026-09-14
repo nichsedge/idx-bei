@@ -208,19 +208,6 @@ TOOLS = [
             "required": ["ticker"],
         },
     },
-    {
-        "name": "idx_scan_pep_overlaps",
-        "description": "Cross-reference KPK LHKPN asset declarations and Politically Exposed Persons (PEPs) against IDX listed company boards, commissioners, and major shareholders.",
-        "inputSchema": {
-            "type": "object",
-            "properties": {
-                "query": {
-                    "type": "string",
-                    "description": "Optional search term for official name or 4-letter ticker code (e.g. 'Luhut', 'Erick', 'ADRO', 'TOBA').",
-                },
-            },
-        },
-    },
 ]
 
 
@@ -432,13 +419,6 @@ def handle_tool_call(name, args):
                 res_df = res_df.head(limit)
             return res_df.to_json(orient="records", date_format="iso", indent=2)
 
-        elif name == "idx_scan_pep_overlaps":
-            from idx.lhkpn_radar import LHKPNRadar
-
-            radar = LHKPNRadar()
-            query = args.get("query")
-            overlaps = radar.scan_pep_overlaps(query=query)
-            return json.dumps(overlaps, indent=2)
 
         else:
             return f"Unknown tool '{name}'."

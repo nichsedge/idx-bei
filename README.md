@@ -59,10 +59,6 @@ uv run idx graph --centrality
 
 # Detect circular cross-holding loops between listed companies
 uv run idx graph --cross-holdings
-
-# Cross-reference KPK LHKPN asset filings & PEPs with IDX boards and tycoons
-uv run idx lhkpn
-uv run idx lhkpn --query ADRO
 ```
 
 ### KSEI Shareholder Drift & Smart Money Tracking
