@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { 
   PlayCircle, 
   ShieldAlert, 
-  Loader2 
+  Loader2,
+  Download
 } from 'lucide-react';
 import { 
   createChart, 
@@ -25,6 +26,7 @@ export const BacktesterTab: React.FC<BacktesterTabProps> = ({ onSelectStock }) =
   const [topN, setTopN] = useState<number>(10);
   const [stopLoss, setStopLoss] = useState<number>(7);
   const [takeProfit, setTakeProfit] = useState<number>(15);
+  const [positionSizing, setPositionSizing] = useState<'equal_weight' | 'volatility_parity'>('equal_weight');
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -45,6 +47,7 @@ export const BacktesterTab: React.FC<BacktesterTabProps> = ({ onSelectStock }) =
         min_turnover_rp: 1_000_000_000,
         stop_loss_pct: stopLoss > 0 ? stopLoss : undefined,
         take_profit_pct: takeProfit > 0 ? takeProfit : undefined,
+        position_sizing: positionSizing,
       });
       setResult(res);
     } catch (err: any) {
@@ -52,6 +55,29 @@ export const BacktesterTab: React.FC<BacktesterTabProps> = ({ onSelectStock }) =
     } finally {
       setLoading(false);
     }
+  };
+
+  const exportTradesCSV = () => {
+    if (!result?.trades || result.trades.length === 0) return;
+    const headers = ['Ticker', 'Entry Date', 'Exit Date', 'Entry Price', 'Exit Price', 'Return (%)', 'Weight', 'Weighted Return'];
+    const rows = result.trades.map((t) => [
+      t.StockCode,
+      t.EntryDate,
+      t.ExitDate,
+      t.EntryPrice,
+      t.ExitPrice,
+      t.ReturnPct,
+      t.Weight ?? '',
+      t.WeightedReturn ?? '',
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `backtest_${strategy}_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   useEffect(() => {
@@ -243,6 +269,21 @@ export const BacktesterTab: React.FC<BacktesterTabProps> = ({ onSelectStock }) =
               className="filter-input"
               style={{ width: '100%', padding: '0.5rem', borderRadius: '8px' }}
             />
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+              Position Sizing Mode
+            </label>
+            <select
+              value={positionSizing}
+              onChange={(e) => setPositionSizing(e.target.value as any)}
+              className="filter-select"
+              style={{ width: '100%', padding: '0.5rem', borderRadius: '8px' }}
+            >
+              <option value="equal_weight">Equal Weight (1/N)</option>
+              <option value="volatility_parity">Volatility Parity (Inverse Vol)</option>
+            </select>
           </div>
         </div>
       </div>
@@ -441,9 +482,36 @@ export const BacktesterTab: React.FC<BacktesterTabProps> = ({ onSelectStock }) =
           borderRadius: '16px',
           padding: '1.5rem',
         }}>
-          <h3 style={{ margin: '0 0 1rem', fontSize: '1.15rem', fontWeight: 700 }}>
-            Simulated Trades Log ({result.trades.length})
-          </h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+            <div>
+              <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700 }}>
+                Simulated Trades Log ({result.trades.length})
+              </h3>
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                Showing up to 50 recent executions
+              </span>
+            </div>
+            <button
+              onClick={exportTradesCSV}
+              className="filter-btn"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.45rem 0.9rem',
+                fontSize: '0.8rem',
+                cursor: 'pointer',
+                background: 'rgba(56, 189, 248, 0.1)',
+                border: '1px solid rgba(56, 189, 248, 0.3)',
+                color: '#38bdf8',
+                borderRadius: '8px',
+                fontWeight: 600,
+              }}
+            >
+              <Download size={15} />
+              <span>Export Trades CSV</span>
+            </button>
+          </div>
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
               <thead>
@@ -453,6 +521,7 @@ export const BacktesterTab: React.FC<BacktesterTabProps> = ({ onSelectStock }) =
                   <th style={{ padding: '0.75rem 0.5rem' }}>Exit Date</th>
                   <th style={{ padding: '0.75rem 0.5rem' }}>Entry Price</th>
                   <th style={{ padding: '0.75rem 0.5rem' }}>Exit Price</th>
+                  <th style={{ padding: '0.75rem 0.5rem' }}>Weight</th>
                   <th style={{ padding: '0.75rem 0.5rem', textAlign: 'right' }}>Return (%)</th>
                 </tr>
               </thead>
@@ -472,6 +541,9 @@ export const BacktesterTab: React.FC<BacktesterTabProps> = ({ onSelectStock }) =
                     <td style={{ padding: '0.75rem 0.5rem', color: 'var(--text-secondary)' }}>{t.ExitDate}</td>
                     <td style={{ padding: '0.75rem 0.5rem' }}>Rp {t.EntryPrice.toLocaleString()}</td>
                     <td style={{ padding: '0.75rem 0.5rem' }}>Rp {t.ExitPrice.toLocaleString()}</td>
+                    <td style={{ padding: '0.75rem 0.5rem', color: 'var(--text-secondary)' }}>
+                      {t.Weight !== undefined ? `${(t.Weight * 100).toFixed(1)}%` : '—'}
+                    </td>
                     <td style={{ padding: '0.75rem 0.5rem', textAlign: 'right', fontWeight: 700, color: t.ReturnPct >= 0 ? '#10b981' : '#ef4444' }}>
                       {t.ReturnPct >= 0 ? `+${t.ReturnPct}%` : `${t.ReturnPct}%`}
                     </td>

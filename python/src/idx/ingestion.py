@@ -41,6 +41,29 @@ KNOWN_IDX_HOLIDAYS_2026 = {
 }
 
 
+def get_idx_holidays(year: int | None = None, base_dir: str | None = None) -> dict[str, str]:
+    """Retrieves IDX public holidays and non-trading days with local cache support.
+
+    Merges static 2026 holiday calendar with any custom or cached entries in data/idx_holidays.json.
+    """
+    root = base_dir or DATA_DIR
+    holidays = dict(KNOWN_IDX_HOLIDAYS_2026)
+    cache_path = os.path.join(root, "idx_holidays.json")
+    if os.path.exists(cache_path):
+        try:
+            cached = load_json(cache_path)
+            if isinstance(cached, dict):
+                holidays.update(cached)
+        except Exception as e:
+            log.warning("Failed to load custom holiday cache %s: %s", cache_path, e)
+
+    if year is not None:
+        prefix = f"{year:04d}-"
+        return {d: name for d, name in holidays.items() if d.startswith(prefix)}
+    return holidays
+
+
+
 def _file_info(path: str) -> dict[str, Any]:
     """Helper to get file size and last modified time."""
     if not os.path.exists(path):
@@ -199,12 +222,13 @@ def detect_timeseries_gaps(
     expected_weekdays = [d.strftime("%Y-%m-%d") for d in _trading_days(start_date, end_date)]
     all_missing = [d for d in expected_weekdays if d not in existing]
 
+    holidays_map = get_idx_holidays(base_dir=base_dir)
     holidays = []
     true_missing = []
 
     for d in all_missing:
-        if d in KNOWN_IDX_HOLIDAYS_2026:
-            holidays.append({"date": d, "holiday_name": KNOWN_IDX_HOLIDAYS_2026[d]})
+        if d in holidays_map:
+            holidays.append({"date": d, "holiday_name": holidays_map[d]})
         else:
             true_missing.append(d)
 

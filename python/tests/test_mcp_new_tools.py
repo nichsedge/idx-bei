@@ -17,6 +17,39 @@ class TestMCPNewTools(unittest.TestCase):
         self.assertIn("idx_compare_peers", tool_names)
         self.assertIn("idx_search_announcements", tool_names)
         self.assertIn("idx_execute_sql", tool_names)
+        self.assertIn("idx_screen_stealth_accumulation", tool_names)
+        self.assertIn("idx_run_backtest", tool_names)
+
+    @patch("idx.signals.detect_stealth_accumulation")
+    def test_screen_stealth_accumulation_tool(self, mock_stealth):
+        import pandas as pd
+
+        mock_stealth.return_value = {
+            "summary": "Stealth accumulation detected in 1 stock",
+            "signal": "STEALTH_ACCUMULATION",
+            "smart_money_delta": 4.5,
+            "anomalies_df": pd.DataFrame([{"StockCode": "BBCA", "Signal": "STEALTH_ACCUMULATION", "WyckoffPhase": "Phase C"}]),
+        }
+        res = handle_tool_call("idx_screen_stealth_accumulation", {"lookback_days": 5})
+        data = json.loads(res)
+        self.assertEqual(data["signal"], "STEALTH_ACCUMULATION")
+        self.assertEqual(data["smart_money_delta"], 4.5)
+        self.assertEqual(len(data["anomalies"]), 1)
+        self.assertEqual(data["anomalies"][0]["StockCode"], "BBCA")
+
+    @patch("idx.backtest.run_backtest")
+    def test_run_backtest_tool(self, mock_bt):
+        import pandas as pd
+
+        mock_bt.return_value = (
+            {"strategy": "foreign_flow", "total_return_pct": 14.2, "sharpe_ratio": 1.8},
+            pd.DataFrame([{"StockCode": "BBCA", "ReturnPct": 14.2, "Weight": 0.5}]),
+        )
+        res = handle_tool_call("idx_run_backtest", {"strategy": "foreign_flow", "holding_days": 20})
+        data = json.loads(res)
+        self.assertEqual(data["metrics"]["strategy"], "foreign_flow")
+        self.assertEqual(data["metrics"]["total_return_pct"], 14.2)
+        self.assertEqual(data["total_trades"], 1)
 
     def test_execute_sql_guardrails(self):
         # Disallow unsafe queries

@@ -8,6 +8,7 @@ export class LiveStreamClient {
   private messageListeners: Set<MessageHandler> = new Set();
   private statusListeners: Set<StatusHandler> = new Set();
   private reconnectTimer: any = null;
+  private reconnectAttempts = 0;
   private isConnected = false;
 
   constructor() {
@@ -29,6 +30,7 @@ export class LiveStreamClient {
 
       this.socket.onopen = () => {
         this.isConnected = true;
+        this.reconnectAttempts = 0;
         this.notifyStatus(true);
       };
 
@@ -59,10 +61,17 @@ export class LiveStreamClient {
 
   private scheduleReconnect() {
     if (!this.reconnectTimer) {
+      const baseDelay = 1000;
+      const maxDelay = 30000;
+      const delay = Math.min(
+        maxDelay,
+        baseDelay * Math.pow(1.5, this.reconnectAttempts) + Math.random() * 1000
+      );
+      this.reconnectAttempts++;
       this.reconnectTimer = setTimeout(() => {
         this.reconnectTimer = null;
         this.connect();
-      }, 5000);
+      }, delay);
     }
   }
 

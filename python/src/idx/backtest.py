@@ -349,6 +349,7 @@ def run_backtest(
     end_date: str | None = None,
     stop_loss_pct: float | None = None,
     take_profit_pct: float | None = None,
+    position_sizing: str = "equal_weight",
     stock_df: pd.DataFrame | None = None,
     ratios_df: pd.DataFrame | None = None,
     actions_df: pd.DataFrame | None = None,
@@ -365,6 +366,7 @@ def run_backtest(
         end_date: optional ending date filter (YYYY-MM-DD)
         stop_loss_pct: optional stop loss percentage e.g. 7.0 for -7%
         take_profit_pct: optional take profit percentage e.g. 15.0 for +15%
+        position_sizing: "equal_weight" | "volatility_parity"
         stock_df, ratios_df, actions_df, broker_df: optional custom DataFrames
 
     Returns:
@@ -480,7 +482,28 @@ def run_backtest(
         if not selected_tickers:
             continue
 
+        # Position sizing calculation
+        weights: dict[str, float] = {}
+        if position_sizing == "volatility_parity" and len(selected_tickers) > 1:
+            inv_vols: dict[str, float] = {}
+            for t in selected_tickers:
+                t_hist = history_slice[history_slice["StockCode"] == t].sort_values("Date")
+                if len(t_hist) >= 5:
+                    pct_chg = t_hist["Close"].pct_change().dropna()
+                    vol = float(pct_chg.std())
+                    inv_vols[t] = 1.0 / (vol + 1e-4) if vol > 0 else 1.0
+                else:
+                    inv_vols[t] = 1.0
+            total_inv_vol = sum(inv_vols.values())
+            weights = {t: v / (total_inv_vol + 1e-9) for t, v in inv_vols.items()}
+        else:
+            w_eq = 1.0 / len(selected_tickers) if selected_tickers else 0.0
+            weights = {t: w_eq for t in selected_tickers}
+
         # Evaluate performance for each selected ticker between entry_date and exit_date
+        period_weighted_ret = 0.0
+        active_weights = 0.0
+
         for ticker in selected_tickers:
             ticker_slice = df[
                 (df["StockCode"] == ticker) & (df["Date"] >= entry_date) & (df["Date"] <= exit_date)
@@ -509,6 +532,10 @@ def run_backtest(
                         exit_price = entry_price * (1.0 + ret)
                         break
 
+            w = weights.get(ticker, 1.0 / len(selected_tickers))
+            period_weighted_ret += ret * w
+            active_weights += w
+
             trades.append(
                 {
                     "EntryDate": entry_date.strftime("%Y-%m-%d"),
@@ -518,6 +545,8 @@ def run_backtest(
                     "ExitPrice": exit_price,
                     "ReturnPct": round(ret * 100.0, 2),
                     "Return": ret,
+                    "Weight": round(w, 4),
+                    "WeightedReturn": round(ret * w, 4),
                 }
             )
 
@@ -526,5 +555,6 @@ def run_backtest(
     metrics = calculate_metrics(returns_series)
     metrics["strategy"] = strategy
     metrics["holding_days"] = holding_days
+    metrics["position_sizing"] = position_sizing
 
     return metrics, trades_df

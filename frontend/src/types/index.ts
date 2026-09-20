@@ -215,6 +215,7 @@ export interface BacktestParams {
   end_date?: string;
   stop_loss_pct?: number;
   take_profit_pct?: number;
+  position_sizing?: 'equal_weight' | 'volatility_parity';
 }
 
 export interface BacktestMetrics {
@@ -231,6 +232,7 @@ export interface BacktestMetrics {
   alpha_pct: number;
   strategy?: string;
   holding_days?: number;
+  position_sizing?: string;
   total_events?: number;
   strategy_a_naive_hold?: BacktestMetrics;
   strategy_b_precum_exit?: BacktestMetrics;
@@ -250,6 +252,8 @@ export interface BacktestTrade {
   ExitPrice: number;
   ReturnPct: number;
   Return: number;
+  Weight?: number;
+  WeightedReturn?: number;
 }
 
 export interface BacktestResponse {

@@ -140,12 +140,14 @@ The unified web dashboard automatically serves the compiled modern React 19 SPA 
 - **Data Ingestion & Backfill Horizon Status**: Live timeseries health matrix, calendar gap detection separating national holidays from missing trading sessions, and 4-tier quantitative backfill horizon guidance with 1-click execution.
 - **Super-Insiders & Conglomerates**: Tycoon portfolio tracking and corporate ownership cluster graphs.
 
-The MCP server exposes 11 standard JSON-RPC tools for AI assistants:
+The MCP server exposes 13 standard JSON-RPC tools for AI assistants:
 - `idx_analyze_dividend`: evaluate dividend announcements (Yield, DPR, Trap Risk 0–100, Buy/Hold/Sell verdict).
 - `idx_get_signals`: daily 7-screen briefing summary.
 - `idx_query_stock`: OHLCV, Net Foreign Flow & VWAP.
 - `idx_get_company_profile`: board directors, commissioners, major shareholders & subsidiaries.
 - `idx_query_broker_flow`: Top-N broker market share, $CR_1/CR_3/CR_5$ concentration ratios.
+- `idx_screen_stealth_accumulation`: Wyckoff accumulation phases (Phases A–D), Smart Money Delta $\Delta$, and retail trap detection.
+- `idx_run_backtest`: vectorized quantitative strategy simulator across 6 strategies with customizable holding periods, stop loss/take profit, and volatility parity position sizing.
 - `idx_get_technical_signals`: RSI-14, EMA 20/50/200, Bollinger Bands, ATR-14 & trend regime.
 - `idx_compare_peers`: sector-relative valuation benchmarking.
 - `idx_search_announcements`: public disclosures & PDF filing links.
@@ -168,7 +170,7 @@ idx-bei/
 │   │   ├── core/                  # HTTP client (sync & async), DuckDB query layer, KSEI ownership engine, currency rates
 │   │   ├── scrapers/              # Domain scrapers (company, trading, corporate, financial, news, async backfillers)
 │   │   ├── pipelines/             # Incremental Parquet export, daily ingestion, compaction
-│   │   ├── mcp/                   # Model Context Protocol (MCP) server (11 tools)
+│   │   ├── mcp/                   # Model Context Protocol (MCP) server (13 tools)
 │   │   ├── dividend.py            # Dividend decision engine & trap risk analyzer
 │   │   ├── ingestion.py           # Dataset inventory, calendar gap detection & backfill recommendations
 │   │   ├── backtest.py            # Vectorized strategy simulator & dividend arbitrage backtester
@@ -176,7 +178,7 @@ idx-bei/
 │   │   ├── api.py                 # FastAPI REST microservice & WebSocket broadcast server
 │   │   ├── signals.py             # 7 decision-support screens & stealth accumulation model
 │   │   └── cli.py                 # CLI implementation
-│   ├── tests/                     # Pytest suite (165 passing unit tests, >=85% coverage)
+│   ├── tests/                     # Pytest suite (171 passing unit tests, >=85% coverage)
 │   ├── neo4j.ipynb                # Graph analysis notebook
 │   └── pyproject.toml             # Package config (uv/setuptools)
 ├── data/                          # Generated datasets (gitignored)
@@ -191,7 +193,7 @@ idx-bei/
 ## Testing & Code Quality
 
 ```bash
-# Run automated pytest suite with coverage enforcement (154 unit tests, >=85% coverage)
+# Run automated pytest suite with coverage enforcement (171 unit tests, >=85% coverage)
 uv run pytest python/tests --cov=idx --cov-fail-under=85
 
 # Run Mypy static type checker

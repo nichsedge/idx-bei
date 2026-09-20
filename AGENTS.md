@@ -7,15 +7,15 @@ This repository is organized as a unified Python quantitative data pipeline, MCP
   - `core/`: HTTP client (`curl_cffi` sync & `AsyncIDXClient`), schema validation, DuckDB query layer, KSEI ownership & drift engine.
   - `scrapers/`: domain scrapers (company profiles, financial ratios, corporate actions, members, news, announcements, async backfillers).
   - `pipelines/`: daily ingestion, time-series partitioning, incremental Parquet columnar exports.
-  - `mcp/`: Model Context Protocol stdio server with 11 quantitative tools for AI assistants.
+  - `mcp/`: Model Context Protocol stdio server with 13 quantitative tools for AI assistants.
   - `dividend.py`: Dividend decision engine, Dividend Trap Risk scoring (0–100), and Buy/Hold/Sell analyzer.
-  - `ingestion.py`: dataset inventory inspection, calendar gap detection, 4-tier quantitative backfill recommendations, and async background task runner.
-  - `backtest.py`: vectorized strategy simulator, drawdown calculation, Sharpe/Sortino ratios, and benchmark alpha.
+  - `ingestion.py`: dataset inventory inspection, dynamic calendar gap detection with holiday caching, 4-tier quantitative backfill recommendations, and async background task runner.
+  - `backtest.py`: vectorized strategy simulator, volatility parity position sizing, drawdown calculation, Sharpe/Sortino ratios, and benchmark alpha.
   - `graph.py`: Neo4j UBO tree resolution, circular cross-holding detection, and board centrality.
-  - `api.py`: high-performance async FastAPI REST & WebSocket microservice.
+  - `api.py`: high-performance async FastAPI REST & WebSocket microservice with in-memory TTL query caching.
   - `signals.py`: 7 decision-support screens (Composite Alpha, Foreign Flow, Bandarmology Broker Dominance, Audit Risk, Dilution Watch, Sharia Value, Pasar Nego).
   - `cli.py`: unified CLI entrypoint for `idx` command.
-- `python/tests/`: automated pytest suite (165 passing unit tests, >=85% coverage).
+- `python/tests/`: automated pytest suite (171 passing unit tests, >=85% coverage).
 - `data/`: local datasets (partitioned time-series, Parquet exports, daily briefings, dynamic USD/IDR rate cache, and KSEI ownership CSVs).
 - `frontend/`: Modern React 19 + TypeScript + Vite single-page application (SPA) with TradingView Lightweight Charts v5 (candlesticks, EMA-20/50, Bollinger Bands, Foreign Flow sub-panel), Vis.js relationship graphs, Bandarmology & Stealth Accumulation radar, Dividend Decision & Trap Radar, Data Ingestion & Backfill Horizon Status page, Interactive Strategy Backtester, Lucide icons, and live WebSocket streaming.
 - `dashboard/`: Vanilla HTML/CSS/JS reference dashboard.
@@ -49,7 +49,7 @@ Run all commands from the repository root using modern `uv`:
 - `uv run idx serve --port 8000`: start unified Web Dashboard (serves `frontend/dist` with fallback to `dashboard/`), FastAPI REST API & WebSocket server.
 - `uv run idx dashboard --port 8000`: start unified Web Dashboard, FastAPI REST API & WebSocket server.
 - `uv run idx mcp`: start Model Context Protocol (MCP) server for AI assistants.
-- `uv run pytest python/tests`: run full 165-test automated pytest suite with >=85% coverage enforcement.
+- `uv run pytest python/tests`: run full 171-test automated pytest suite with >=85% coverage enforcement.
 - `uv run mypy python/src/idx`: run Mypy static type checker.
 - `uv run ruff check python/src python/tests`: run Ruff linter.
 - `uv run ruff format python/src python/tests`: format Python codebase.

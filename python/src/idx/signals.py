@@ -49,11 +49,8 @@ DILUTION_LOOKBACK_DAYS = 90
 SHARIA_FLAG = "S"
 SHARIA_MAX_PER = 12.0
 SHARIA_MIN_ROE = 12.0
-
-SHARIA_FLAG = "S"
-SHARIA_MAX_PER = 12.0
-SHARIA_MIN_ROE = 12.0
 SHARIA_MAX_DER = 2.0  # screens out junk-leverage names that inflate ROE
+
 
 
 def _load_parquet(name):

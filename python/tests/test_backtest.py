@@ -125,6 +125,21 @@ class TestBacktest(unittest.TestCase):
         self.assertIn("total_return_pct", m_stealth)
         self.assertEqual(m_stealth.get("strategy"), "stealth_accumulation")
 
+    def test_run_backtest_volatility_parity(self):
+        metrics, trades = run_backtest(
+            strategy="foreign_flow",
+            holding_days=10,
+            top_n=2,
+            position_sizing="volatility_parity",
+            stock_df=self.stock_df,
+            ratios_df=self.ratios_df,
+        )
+        self.assertIn("total_return_pct", metrics)
+        self.assertEqual(metrics["position_sizing"], "volatility_parity")
+        self.assertGreaterEqual(len(trades), 1)
+        self.assertIn("Weight", trades.columns)
+        self.assertIn("WeightedReturn", trades.columns)
+
 
 if __name__ == "__main__":
     unittest.main()

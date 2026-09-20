@@ -5,6 +5,8 @@ High-Performance FastAPI REST & WebSocket Microservice Layer for IDX-BEI Toolkit
 import asyncio
 import json
 import os
+import time
+from typing import Any
 
 from fastapi import FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
@@ -65,6 +67,22 @@ async def root_redirect():
     return RedirectResponse(url="/dashboard/")
 
 
+_TTL_CACHE: dict[str, tuple[float, Any]] = {}
+
+
+def get_from_cache(key: str, ttl_seconds: float = 60.0) -> Any | None:
+    if key in _TTL_CACHE:
+        timestamp, value = _TTL_CACHE[key]
+        if time.time() - timestamp < ttl_seconds:
+            return value
+        del _TTL_CACHE[key]
+    return None
+
+
+def set_in_cache(key: str, value: Any) -> None:
+    _TTL_CACHE[key] = (time.time(), value)
+
+
 class SQLQueryRequest(BaseModel):
     sql: str
     limit: int | None = 50
@@ -79,6 +97,8 @@ class BacktestRequest(BaseModel):
     end_date: str | None = None
     stop_loss_pct: float | None = None
     take_profit_pct: float | None = None
+    position_sizing: str = "equal_weight"
+
 
 
 class TriggerIngestionRequest(BaseModel):
@@ -117,12 +137,17 @@ async def get_companies():
 async def get_signals(
     date: str | None = Query(None, description="Optional trading date (YYYY-MM-DD)"),
 ):
+    cache_key = f"signals:{date or 'latest'}"
+    cached = get_from_cache(cache_key, ttl_seconds=60.0)
+    if cached is not None:
+        return cached
+
     try:
         res = build_briefing(date=date)
         json_file = res.get("json")
-        if json_file and os.path.exists(json_file):
-            return load_json(json_file)
-        return res
+        result = load_json(json_file) if (json_file and os.path.exists(json_file)) else res
+        set_in_cache(cache_key, result)
+        return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
 
@@ -458,6 +483,11 @@ async def get_stealth_accumulation(
     lookback_days: int = 5,
     min_turnover_rp: float = 1e9,
 ):
+    cache_key = f"stealth:{date or 'latest'}:{lookback_days}:{min_turnover_rp}"
+    cached = get_from_cache(cache_key, ttl_seconds=60.0)
+    if cached is not None:
+        return cached
+
     import pandas as pd
 
     from idx.signals import detect_stealth_accumulation
@@ -475,12 +505,14 @@ async def get_stealth_accumulation(
         lookback_days=lookback_days,
         min_turnover_rp=min_turnover_rp,
     )
-    return {
+    result = {
         "summary": res["summary"],
         "signal": res["signal"],
         "smart_money_delta": res["smart_money_delta"],
         "anomalies": res["anomalies_df"].to_dict("records"),
     }
+    set_in_cache(cache_key, result)
+    return result
 
 
 @app.post("/api/backtest", tags=["Backtesting"])
@@ -499,6 +531,7 @@ async def backtest_strategy(req: BacktestRequest):
             end_date=req.end_date,
             stop_loss_pct=req.stop_loss_pct,
             take_profit_pct=req.take_profit_pct,
+            position_sizing=req.position_sizing,
         )
 
         # Sanitize metrics floats for JSON compliance

@@ -23,6 +23,7 @@ export const BandarmologyTab: React.FC<BandarmologyTabProps> = ({ onSelectStock 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [filterSignal, setFilterSignal] = useState<string>('ALL');
+  const [filterPhase, setFilterPhase] = useState<string>('ALL');
   const [lookbackDays, setLookbackDays] = useState<number>(5);
 
   const loadData = async (lookback = lookbackDays) => {
@@ -43,9 +44,20 @@ export const BandarmologyTab: React.FC<BandarmologyTabProps> = ({ onSelectStock 
   }, [lookbackDays]);
 
   const anomalies: StealthAnomaly[] = data?.anomalies || [];
+  const phaseACount = anomalies.filter((a) => a.WyckoffPhase?.startsWith('Phase A')).length;
+  const phaseBCount = anomalies.filter((a) => a.WyckoffPhase?.startsWith('Phase B')).length;
+  const phaseCCount = anomalies.filter((a) => a.WyckoffPhase?.startsWith('Phase C')).length;
+  const phaseDCount = anomalies.filter((a) => a.WyckoffPhase?.startsWith('Phase D')).length;
+
   const filteredAnomalies = anomalies.filter((a) => {
-    if (filterSignal === 'ALL') return true;
-    return a.Signal === filterSignal;
+    if (filterSignal !== 'ALL' && a.Signal !== filterSignal) return false;
+    if (filterPhase !== 'ALL') {
+      if (filterPhase === 'Phase A' && !a.WyckoffPhase?.startsWith('Phase A')) return false;
+      if (filterPhase === 'Phase B' && !a.WyckoffPhase?.startsWith('Phase B')) return false;
+      if (filterPhase === 'Phase C' && !a.WyckoffPhase?.startsWith('Phase C')) return false;
+      if (filterPhase === 'Phase D' && !a.WyckoffPhase?.startsWith('Phase D')) return false;
+    }
+    return true;
   });
 
   const summaryObj = typeof data?.summary === 'object' && data.summary !== null ? data.summary : null;
@@ -181,6 +193,88 @@ export const BandarmologyTab: React.FC<BandarmologyTabProps> = ({ onSelectStock 
           <div>
             <h4 style={{ margin: 0 }}>Radar Alert</h4>
             <p style={{ margin: 0, fontSize: '0.9rem' }}>{error}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Wyckoff Accumulation Lifecycle Pipeline */}
+      {data && (
+        <div style={{
+          background: 'rgba(15, 23, 42, 0.55)',
+          backdropFilter: 'blur(16px)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: '16px',
+          padding: '1.25rem',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+            <div>
+              <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Wyckoff Phase Lifecycle Pipeline</h3>
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                Stage distribution of institutional campaign across monitored stocks
+              </span>
+            </div>
+            {filterPhase !== 'ALL' && (
+              <button
+                onClick={() => setFilterPhase('ALL')}
+                style={{
+                  padding: '0.3rem 0.6rem',
+                  fontSize: '0.75rem',
+                  borderRadius: '6px',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  color: 'var(--text-secondary)',
+                  cursor: 'pointer',
+                }}
+              >
+                Clear Phase Filter
+              </button>
+            )}
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '0.75rem',
+          }}>
+            {[
+              { id: 'Phase A', label: 'Phase A: Stopping Action', desc: 'Selling Climax & Automatic Rally', count: phaseACount, color: '#f59e0b' },
+              { id: 'Phase B', label: 'Phase B: Absorption', desc: 'Secondary Testing & Range Bound', count: phaseBCount, color: '#38bdf8' },
+              { id: 'Phase C', label: 'Phase C: Spring / Shakeout', desc: 'Liquidity Sweep & False Breakdown', count: phaseCCount, color: '#10b981' },
+              { id: 'Phase D', label: 'Phase D: Markup (SOS)', desc: 'Sign of Strength & Trend Breakout', count: phaseDCount, color: '#a855f7' },
+            ].map((p) => {
+              const active = filterPhase === p.id;
+              return (
+                <div
+                  key={p.id}
+                  onClick={() => setFilterPhase(active ? 'ALL' : p.id)}
+                  style={{
+                    background: active ? `rgba(56, 189, 248, 0.15)` : 'rgba(255, 255, 255, 0.03)',
+                    border: `1px solid ${active ? p.color : 'rgba(255, 255, 255, 0.06)'}`,
+                    borderRadius: '12px',
+                    padding: '1rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 700, color: p.color }}>{p.label}</span>
+                    <span style={{
+                      fontSize: '0.85rem',
+                      fontWeight: 800,
+                      background: 'rgba(255, 255, 255, 0.08)',
+                      padding: '0.15rem 0.45rem',
+                      borderRadius: '6px',
+                      color: '#ffffff',
+                    }}>
+                      {p.count}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                    {p.desc}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

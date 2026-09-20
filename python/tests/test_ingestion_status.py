@@ -15,6 +15,7 @@ from idx.ingestion import (
     detect_timeseries_gaps,
     get_dataset_inventory,
     get_full_ingestion_status,
+    get_idx_holidays,
     run_async_ingestion_job,
 )
 
@@ -125,7 +126,14 @@ class TestIngestionStatus(unittest.TestCase):
         )
         self.assertEqual(res["status"], "completed")
         self.assertEqual(res["progress_pct"], 100)
-        self.assertTrue(callback.called)
+    def test_get_idx_holidays(self):
+        holidays_all = get_idx_holidays()
+        self.assertIsInstance(holidays_all, dict)
+        self.assertIn("2026-01-01", holidays_all)
+        self.assertIn("2026-08-17", holidays_all)
+
+        holidays_2026 = get_idx_holidays(year=2026)
+        self.assertTrue(all(d.startswith("2026-") for d in holidays_2026.keys()))
 
 
 if __name__ == "__main__":

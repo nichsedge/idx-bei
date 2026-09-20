@@ -208,6 +208,61 @@ TOOLS = [
             "required": ["ticker"],
         },
     },
+    {
+        "name": "idx_screen_stealth_accumulation",
+        "description": "Screen for stealth institutional accumulation, Wyckoff accumulation phases (Phase A-D), and retail distribution traps across Indonesian stocks.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "description": "Optional trading session date (YYYY-MM-DD). Defaults to latest.",
+                },
+                "lookback_days": {
+                    "type": "integer",
+                    "description": "Number of sessions for rolling volume and flow accumulation (default 5).",
+                },
+                "min_turnover_rp": {
+                    "type": "number",
+                    "description": "Minimum average daily turnover in IDR (default 1,000,000,000).",
+                },
+            },
+        },
+    },
+    {
+        "name": "idx_run_backtest",
+        "description": "Run a vectorized quantitative strategy simulation over historical IDX Parquet datasets and compute performance metrics (Sharpe ratio, Sortino, win rate, max drawdown, benchmark alpha).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "strategy": {
+                    "type": "string",
+                    "description": "Strategy to simulate: 'foreign_flow' | 'bandarmology' | 'stealth_accumulation' | 'composite_alpha' | 'sharia_value' | 'dividend_arbitrage'.",
+                },
+                "holding_days": {
+                    "type": "integer",
+                    "description": "Forward holding period in sessions (default 20).",
+                },
+                "top_n": {
+                    "type": "integer",
+                    "description": "Number of top ranked candidate stocks per rebalance (default 10).",
+                },
+                "stop_loss_pct": {
+                    "type": "number",
+                    "description": "Optional stop-loss percentage, e.g. 7.0 for -7%.",
+                },
+                "take_profit_pct": {
+                    "type": "number",
+                    "description": "Optional take-profit percentage, e.g. 15.0 for +15%.",
+                },
+                "position_sizing": {
+                    "type": "string",
+                    "description": "Position sizing mode: 'equal_weight' (default) or 'volatility_parity'.",
+                },
+            },
+            "required": ["strategy"],
+        },
+    },
 ]
 
 
@@ -419,6 +474,70 @@ def handle_tool_call(name, args):
                 res_df = res_df.head(limit)
             return res_df.to_json(orient="records", date_format="iso", indent=2)
 
+        elif name == "idx_screen_stealth_accumulation":
+            date = args.get("date")
+            lookback_days = args.get("lookback_days", 5)
+            min_turnover_rp = args.get("min_turnover_rp", 1e9)
+
+            from idx.signals import detect_stealth_accumulation
+
+            broker_path = os.path.join(DATA_DIR, "parquet", "broker_summary.parquet")
+            stock_path = os.path.join(DATA_DIR, "parquet", "stock_summary.parquet")
+
+            broker_df = (
+                pd.read_parquet(broker_path) if os.path.exists(broker_path) else pd.DataFrame()
+            )
+            stock_df = (
+                pd.read_parquet(stock_path) if os.path.exists(stock_path) else pd.DataFrame()
+            )
+
+            res = detect_stealth_accumulation(
+                broker_df,
+                stock_df,
+                on_date=date,
+                lookback_days=lookback_days,
+                min_turnover_rp=min_turnover_rp,
+            )
+            return json.dumps(
+                {
+                    "summary": res["summary"],
+                    "signal": res["signal"],
+                    "smart_money_delta": res["smart_money_delta"],
+                    "anomalies": res["anomalies_df"].to_dict("records"),
+                },
+                indent=2,
+                default=str,
+            )
+
+        elif name == "idx_run_backtest":
+            strategy = args.get("strategy", "foreign_flow")
+            holding_days = args.get("holding_days", 20)
+            top_n = args.get("top_n", 10)
+            stop_loss = args.get("stop_loss_pct")
+            take_profit = args.get("take_profit_pct")
+            position_sizing = args.get("position_sizing", "equal_weight")
+
+            from idx.backtest import run_backtest
+
+            metrics, trades_df = run_backtest(
+                strategy=strategy,
+                holding_days=holding_days,
+                top_n=top_n,
+                stop_loss_pct=stop_loss,
+                take_profit_pct=take_profit,
+                position_sizing=position_sizing,
+            )
+            return json.dumps(
+                {
+                    "metrics": metrics,
+                    "trades_sample": trades_df.head(25).to_dict("records")
+                    if len(trades_df) > 0
+                    else [],
+                    "total_trades": len(trades_df),
+                },
+                indent=2,
+                default=str,
+            )
 
         else:
             return f"Unknown tool '{name}'."
