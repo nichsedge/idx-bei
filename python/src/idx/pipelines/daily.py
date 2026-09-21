@@ -41,6 +41,10 @@ def _ingest_dataset(client, dataset, endpoint, date, date_iso):
         return {"status": "skipped"}
 
     data = client.get_json(endpoint, params={"date": date, "start": 0, "length": 9999})
+    if data is None:
+        log.error("%s: fetch failed for %s (HTTP error or request blocked)", dataset, date_iso)
+        return {"status": "error", "message": "API request failed or blocked"}
+
     records = data.get("data") if isinstance(data, dict) else None
 
     if not isinstance(records, list) or len(records) == 0:

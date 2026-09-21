@@ -74,6 +74,24 @@ class TestAsyncIDXClient(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(IDXRequestError):
             await client.get_json("/test/404", raise_on_error=True)
 
+    @patch("curl_cffi.requests.AsyncSession.get")
+    async def test_async_retry_403_rotates_impersonation(self, mock_get):
+        mock_resp_403 = MagicMock(status_code=403)
+        mock_resp_200 = MagicMock(status_code=200)
+        mock_resp_200.json.return_value = {"ok": True}
+        mock_get.side_effect = [mock_resp_403, mock_resp_200]
+
+        client = AsyncIDXClient(max_retries=1, delay_seconds=0.0)
+        with patch("asyncio.sleep"):
+            res = await client.get("/test/waf_retry", impersonate="chrome")
+            self.assertEqual(res.status_code, 200)
+
+        self.assertEqual(mock_get.call_count, 2)
+        first_call = mock_get.call_args_list[0]
+        second_call = mock_get.call_args_list[1]
+        self.assertEqual(first_call.kwargs.get("impersonate"), "chrome")
+        self.assertEqual(second_call.kwargs.get("impersonate"), "chrome124")
+
 
 class TestSyncIDXClient(unittest.TestCase):
     @patch("curl_cffi.requests.get")
@@ -110,6 +128,24 @@ class TestSyncIDXClient(unittest.TestCase):
         self.assertIsNone(client.get_json("/test/bad"))
         with self.assertRaises(IDXRequestError):
             client.get_json("/test/bad", raise_on_error=True)
+
+    @patch("curl_cffi.requests.get")
+    def test_sync_retry_403_rotates_impersonation(self, mock_get):
+        from idx.core.client import IDXClient
+
+        client = IDXClient(max_retries=1, delay_seconds=0.0)
+        mock_resp_403 = MagicMock(status_code=403)
+        mock_resp_200 = MagicMock(status_code=200)
+        mock_resp_200.json.return_value = {"data": ["ok"]}
+        mock_get.side_effect = [mock_resp_403, mock_resp_200]
+
+        with patch("time.sleep"):
+            res = client.get("/test/waf_sync", impersonate="chrome")
+            self.assertEqual(res.status_code, 200)
+
+        self.assertEqual(mock_get.call_count, 2)
+        self.assertEqual(mock_get.call_args_list[0].kwargs.get("impersonate"), "chrome")
+        self.assertEqual(mock_get.call_args_list[1].kwargs.get("impersonate"), "chrome124")
 
 
 if __name__ == "__main__":

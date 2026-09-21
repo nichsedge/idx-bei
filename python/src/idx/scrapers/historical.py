@@ -125,6 +125,16 @@ def _backfill_dataset(dataset, endpoint, start_date, end_date, client=None):
             errors += 1
             continue
 
+        if data is None:
+            errors += 1
+            log.warning(
+                "[%d/%d] %s: fetch failed (HTTP error or request blocked)",
+                i + 1,
+                len(dates),
+                date_str,
+            )
+            continue
+
         records = data.get("data") if isinstance(data, dict) else None
         if isinstance(records, list) and len(records) > 0:
             ts.write_partition(dataset, date_str, records)
@@ -214,6 +224,17 @@ async def async_backfill_dataset(
                 log.warning("Error fetching %s for %s: %s", dataset, date_api, exc)
                 async with lock:
                     errors += 1
+                return
+
+            if data is None:
+                async with lock:
+                    errors += 1
+                log.warning(
+                    "[%d/%d] %s: fetch failed (HTTP error or request blocked)",
+                    idx,
+                    total_tasks,
+                    date_str,
+                )
                 return
 
             records = data.get("data") if isinstance(data, dict) else None

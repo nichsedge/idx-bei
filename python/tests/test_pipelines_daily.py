@@ -71,7 +71,7 @@ class TestIngestDataset:
         result = daily_mod._ingest_dataset(
             client, "broker_summary", "/TradingSummary/GetBrokerSummary", "20260105", "2026-01-05"
         )
-        assert result["status"] == "no_data"
+        assert result["status"] == "error"
 
 
 class TestIngestDaily:

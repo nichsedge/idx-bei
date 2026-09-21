@@ -9,9 +9,10 @@ from idx.scrapers import historical
 class FakeClient:
     """Returns data for requested dates; tracks calls."""
 
-    def __init__(self, empty_dates=(), fail_dates=()):
+    def __init__(self, empty_dates=(), fail_dates=(), none_dates=()):
         self.empty_dates = set(empty_dates)
         self.fail_dates = set(fail_dates)
+        self.none_dates = set(none_dates)
         self.requested = []
 
     def get_json(self, endpoint, params=None, **kwargs):
@@ -19,6 +20,8 @@ class FakeClient:
         self.requested.append(date)
         if date in self.fail_dates:
             raise RuntimeError("boom")
+        if date in self.none_dates:
+            return None
         if date in self.empty_dates:
             return {"data": []}
         return {"data": [{"Date": f"{date[:4]}-{date[4:6]}-{date[6:8]}", "n": 1}]}
@@ -66,6 +69,19 @@ class TestBackfillDataset:
 
     def test_counts_errors_and_continues(self, ts_dir):
         client = FakeClient(fail_dates=["20260106"])
+        result = historical._backfill_dataset(
+            "stock_summary",
+            "/TradingSummary/GetStockSummary",
+            "20260105",
+            "20260107",
+            client=client,
+        )
+        assert result["dates_fetched"] == 2
+        assert result["errors"] == 1
+        assert len(ts.existing_dates("stock_summary")) == 2
+
+    def test_counts_none_response_as_error(self, ts_dir):
+        client = FakeClient(none_dates=["20260106"])
         result = historical._backfill_dataset(
             "stock_summary",
             "/TradingSummary/GetStockSummary",
