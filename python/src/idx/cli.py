@@ -290,7 +290,6 @@ def build_parser():
         help="Display dataset inventory, calendar gaps, and tiered backfill recommendations",
     )
 
-
     sub.add_parser("all", help="Run all snapshot scrapers sequentially")
     return parser
 
@@ -381,6 +380,8 @@ def main(argv=None):
             webhook_url=args.webhook_url,
         )
         print(f"  Trading date : {result['trade_date']}")
+        print(f"  Market Regime: {result.get('market_regime', 'NEUTRAL')}")
+        print(f"  Sectors      : {result.get('sector_rows', 0)} sectors tracked")
         print(f"  Alpha ranks  : {result.get('alpha_rows', 0)}  (top 10 in briefing)")
         print(f"  Radar hits   : {result['radar_rows']}  (top 10 in briefing)")
         print(f"  Top brokers  : {result.get('broker_rows', 0)}")
@@ -734,7 +735,6 @@ def main(argv=None):
         fetch_index_summary()
         fetch_news_search()
         fetch_all_announcements()
-
 
 
 if __name__ == "__main__":

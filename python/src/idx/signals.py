@@ -52,7 +52,6 @@ SHARIA_MIN_ROE = 12.0
 SHARIA_MAX_DER = 2.0  # screens out junk-leverage names that inflate ROE
 
 
-
 def _load_parquet(name):
     """Loads one consolidated Parquet export; returns empty DataFrame if absent."""
     path = os.path.join(PARQUET_DIR, name)
@@ -562,21 +561,11 @@ def detect_stealth_accumulation(
         unique_dates = sorted(s_all["Date"].unique()) if "Date" in s_all.columns else []
         latest_date = unique_dates[-1] if unique_dates else None
         lookback_slice = (
-            unique_dates[-lookback_days:]
-            if len(unique_dates) >= lookback_days
-            else unique_dates
+            unique_dates[-lookback_days:] if len(unique_dates) >= lookback_days else unique_dates
         )
 
-        s_latest = (
-            s_all[s_all["Date"] == latest_date]
-            if latest_date is not None
-            else s_all
-        )
-        s_window = (
-            s_all[s_all["Date"].isin(lookback_slice)]
-            if lookback_slice
-            else s_latest
-        )
+        s_latest = s_all[s_all["Date"] == latest_date] if latest_date is not None else s_all
+        s_window = s_all[s_all["Date"].isin(lookback_slice)] if lookback_slice else s_latest
 
         window_stats: dict[str, dict[str, float]] = {}
         if not s_window.empty:
@@ -586,16 +575,10 @@ def detect_stealth_accumulation(
                 first_close = float(first_row.get("Previous", first_row.get("Close", 0)))
                 last_close = float(grp_sorted.iloc[-1].get("Close", 0))
                 cum_pct = (
-                    ((last_close - first_close) / first_close * 100.0)
-                    if first_close > 0
-                    else 0.0
+                    ((last_close - first_close) / first_close * 100.0) if first_close > 0 else 0.0
                 )
 
-                tot_val = (
-                    float(grp_sorted["Value"].sum())
-                    if "Value" in grp_sorted.columns
-                    else 0.0
-                )
+                tot_val = float(grp_sorted["Value"].sum()) if "Value" in grp_sorted.columns else 0.0
                 fb = (
                     grp_sorted["ForeignBuy"].fillna(0).astype(float)
                     if "ForeignBuy" in grp_sorted.columns
@@ -737,7 +720,11 @@ def detect_stealth_accumulation(
 
     anomalies_df = pd.DataFrame(records)
     if not anomalies_df.empty:
-        sort_cols = [c for c in ["Priority", "AccumulationScore", "SmartMoneyDelta"] if c in anomalies_df.columns]
+        sort_cols = [
+            c
+            for c in ["Priority", "AccumulationScore", "SmartMoneyDelta"]
+            if c in anomalies_df.columns
+        ]
         asc = [True if c == "Priority" else False for c in sort_cols]
         anomalies_df = anomalies_df.sort_values(sort_cols, ascending=asc, ignore_index=True)
 
@@ -1045,6 +1032,174 @@ def send_webhook_briefing(webhook_url, briefing_result, summary_text=None):
         return False
 
 
+# ── Screen 8: Sector Rotation & Market Regime Radar ───────────────────────────
+
+SECTOR_INDICES = {
+    "IDXENERGY": "Energy",
+    "IDXBASIC": "Basic Materials",
+    "IDXINDUST": "Industrials",
+    "IDXNONCYC": "Consumer Non-Cyclical",
+    "IDXCYCLIC": "Consumer Cyclical",
+    "IDXHEALTH": "Healthcare",
+    "IDXFINANCE": "Financials",
+    "IDXPROPERT": "Properties & Real Estate",
+    "IDXTECHNO": "Technology",
+    "IDXINFRA": "Infrastructure",
+    "IDXTRANS": "Transportation & Logistics",
+}
+
+
+def sector_rotation_radar(
+    index_df,
+    *,
+    benchmark="COMPOSITE",
+    window_days=20,
+    on_date=None,
+):
+    """Calculates Sector Relative Strength (RS), Momentum Alpha, and Market Regime.
+
+    Compares IDX primary sectoral indices against the COMPOSITE (IHSG) benchmark
+    to identify rotation leaders, defensive resilience, and macro regime.
+
+    Args:
+        index_df: index_summary DataFrame (Date, IndexCode, Close, Change, Value, Volume).
+        benchmark: benchmark IndexCode (default 'COMPOSITE').
+        window_days: sessions lookback window for return and momentum (default 20).
+        on_date: reference evaluation date (defaults to latest available date).
+
+    Returns:
+        tuple (regime_dict, sector_df):
+            - regime_dict: dict with market_regime, benchmark return, leading/lagging sectors
+            - sector_df: DataFrame sorted by AlphaVsIHSG descending
+    """
+    cols = [
+        "IndexCode",
+        "SectorName",
+        "Close",
+        "DailyChangePct",
+        "PeriodReturnPct",
+        "AlphaVsIHSG",
+        "ValueRpB",
+        "Status",
+    ]
+    empty_regime = {
+        "market_regime": "NEUTRAL",
+        "benchmark": benchmark,
+        "benchmark_close": 0.0,
+        "benchmark_return_pct": 0.0,
+        "window_days": 0,
+        "leading_sectors": [],
+        "lagging_sectors": [],
+    }
+    if index_df is None or len(index_df) == 0:
+        return empty_regime, pd.DataFrame(columns=cols)
+
+    df = index_df.copy()
+    if "Date" in df.columns:
+        df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
+        if on_date:
+            target_dt = pd.to_datetime(on_date)
+            df = df[df["Date"] <= target_dt]
+
+    if len(df) == 0:
+        return empty_regime, pd.DataFrame(columns=cols)
+
+    for num_col in ("Close", "Change", "Value", "Volume"):
+        if num_col in df.columns:
+            df[num_col] = pd.to_numeric(df[num_col], errors="coerce").fillna(0.0)
+
+    dates = sorted(df["Date"].dropna().unique())
+    if not dates:
+        return empty_regime, pd.DataFrame(columns=cols)
+
+    active_dates = dates[-window_days:]
+    df = df[df["Date"].isin(active_dates)]
+
+    # Compute Benchmark return
+    b_df = df[df["IndexCode"] == benchmark].sort_values("Date")
+    if len(b_df) > 0 and b_df["Close"].iloc[0] > 0:
+        b_close = float(b_df["Close"].iloc[-1])
+        b_start = float(b_df["Close"].iloc[0])
+        b_return = ((b_close - b_start) / b_start) * 100.0
+    else:
+        b_close = 0.0
+        b_return = 0.0
+
+    if b_return >= 2.0:
+        market_regime = "BULLISH_EXPANSION"
+    elif b_return <= -2.0:
+        market_regime = "BEARISH_CONTRACTION"
+    else:
+        market_regime = "RANGEBOUND_NEUTRAL"
+
+    records = []
+    all_codes = set(df["IndexCode"].dropna().unique())
+    target_sectors = {k: v for k, v in SECTOR_INDICES.items() if k in all_codes}
+    if not target_sectors:
+        target_sectors = {c: c for c in all_codes if c != benchmark and "IDX" in c}
+
+    for code, sector_name in target_sectors.items():
+        s_df = df[df["IndexCode"] == code].sort_values("Date")
+        if len(s_df) == 0:
+            continue
+        c_last = float(s_df["Close"].iloc[-1])
+        c_first = float(s_df["Close"].iloc[0])
+        period_ret = ((c_last - c_first) / c_first * 100.0) if c_first > 0 else 0.0
+        alpha = period_ret - b_return
+
+        chg = float(s_df["Change"].iloc[-1]) if "Change" in s_df.columns else 0.0
+        prev_c = c_last - chg
+        daily_chg = (chg / prev_c * 100.0) if prev_c > 0 else 0.0
+
+        val_rpb = (float(s_df["Value"].iloc[-1]) / 1e9) if "Value" in s_df.columns else 0.0
+
+        if alpha >= 1.5 and period_ret > 0:
+            status = "Leading"
+        elif alpha >= 0.0 and period_ret <= 0:
+            status = "Resilient"
+        elif alpha <= -1.5 and period_ret < 0:
+            status = "Lagging"
+        elif alpha < 0.0 and period_ret >= 0:
+            status = "Weakening"
+        else:
+            status = "In-Line"
+
+        records.append(
+            {
+                "IndexCode": code,
+                "SectorName": sector_name,
+                "Close": round(c_last, 2),
+                "DailyChangePct": round(daily_chg, 2),
+                "PeriodReturnPct": round(period_ret, 2),
+                "AlphaVsIHSG": round(alpha, 2),
+                "ValueRpB": round(val_rpb, 2),
+                "Status": status,
+            }
+        )
+
+    out_df = pd.DataFrame(records)
+    if not out_df.empty:
+        out_df = out_df.sort_values("AlphaVsIHSG", ascending=False).reset_index(drop=True)
+    else:
+        out_df = pd.DataFrame(columns=cols)
+
+    regime_dict = {
+        "market_regime": market_regime,
+        "benchmark": benchmark,
+        "benchmark_close": round(b_close, 2),
+        "benchmark_return_pct": round(b_return, 2),
+        "window_days": len(active_dates),
+        "leading_sectors": out_df[out_df["Status"] == "Leading"]["IndexCode"].tolist()
+        if not out_df.empty
+        else [],
+        "lagging_sectors": out_df[out_df["Status"] == "Lagging"]["IndexCode"].tolist()
+        if not out_df.empty
+        else [],
+    }
+
+    return regime_dict, out_df
+
+
 # ── Briefing builder ──────────────────────────────────────────────────────────
 
 
@@ -1093,6 +1248,7 @@ def build_briefing(
     ratios = _load_parquet("financial_ratios.parquet")
     actions = _load_parquet("corporate_actions.parquet")
     broker = _load_parquet("broker_summary.parquet")
+    index = _load_parquet("index_summary.parquet")
 
     radar = foreign_flow_radar(
         stock,
@@ -1116,6 +1272,7 @@ def build_briefing(
     alpha = composite_alpha_ranking(
         stock, ratios, actions=actions, min_turnover_rp=min_turnover_rp, top_n=10
     )
+    regime_summary, sector_df = sector_rotation_radar(index, on_date=date)
 
     if len(stock) > 0:
         trade_date = pd.to_datetime(stock["Date"]).max()
@@ -1125,6 +1282,12 @@ def build_briefing(
     label = date or trade_date
 
     sections = [
+        (
+            "Sector Rotation & Market Regime Radar",
+            f"Market Regime: {regime_summary.get('market_regime', 'NEUTRAL')}, "
+            f"IHSG: {regime_summary.get('benchmark_return_pct', 0.0):+.2f}% over {regime_summary.get('window_days', 0)} sessions",
+            sector_df,
+        ),
         (
             "Composite Alpha Rankings",
             "Multi-factor score (Value + Foreign Flow + Momentum + Clean Audit)",
@@ -1199,6 +1362,8 @@ def build_briefing(
             {
                 "date": label,
                 "trade_date": trade_date,
+                "market_regime": regime_summary,
+                "sector_rotation": sector_df.to_dict("records"),
                 "composite_alpha_rankings": alpha.head(10).to_dict("records"),
                 "foreign_flow_radar": radar.head(10).to_dict("records"),
                 "bandarmology_summary": broker_sum,
@@ -1223,6 +1388,8 @@ def build_briefing(
     result = {
         "date": label,
         "trade_date": trade_date,
+        "market_regime": regime_summary.get("market_regime", "NEUTRAL"),
+        "sector_rows": len(sector_df),
         "alpha_rows": len(alpha),
         "radar_rows": len(radar),
         "broker_rows": len(top_brokers),
@@ -1235,8 +1402,10 @@ def build_briefing(
         "json": json_path,
     }
     log.info(
-        "Briefing %s: alpha=%d radar=%d brokers=%d shield=%d dilution=%d sharia=%d nego=%d",
+        "Briefing %s: regime=%s sectors=%d alpha=%d radar=%d brokers=%d shield=%d dilution=%d sharia=%d nego=%d",
         label,
+        result["market_regime"],
+        result["sector_rows"],
         result["alpha_rows"],
         result["radar_rows"],
         result["broker_rows"],

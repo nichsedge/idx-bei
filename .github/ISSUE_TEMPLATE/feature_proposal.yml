@@ -1,0 +1,26 @@
+name: Feature Proposal / Indicator Request
+description: Suggest a new quantitative model, data pipeline feature, or scraper
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: Have an idea for a new quantitative screen, backtest rule, or IDX data scraper? We would love to hear it!
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Motivation
+      description: What challenge or trading research question does this feature address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution / Quantitative Formulation
+      description: Describe the proposed strategy logic, mathematical formulas, or pipeline design.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative approaches or workarounds considered.

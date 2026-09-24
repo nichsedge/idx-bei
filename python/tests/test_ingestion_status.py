@@ -126,6 +126,7 @@ class TestIngestionStatus(unittest.TestCase):
         )
         self.assertEqual(res["status"], "completed")
         self.assertEqual(res["progress_pct"], 100)
+
     def test_get_idx_holidays(self):
         holidays_all = get_idx_holidays()
         self.assertIsInstance(holidays_all, dict)

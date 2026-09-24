@@ -63,7 +63,6 @@ def get_idx_holidays(year: int | None = None, base_dir: str | None = None) -> di
     return holidays
 
 
-
 def _file_info(path: str) -> dict[str, Any]:
     """Helper to get file size and last modified time."""
     if not os.path.exists(path):

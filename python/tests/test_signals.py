@@ -166,3 +166,60 @@ def test_composite_alpha_and_tech_indicators(stock_df):
     )
     alpha = composite_alpha_ranking(stock_df, ratios, min_turnover_rp=1e8)
     assert isinstance(alpha, pd.DataFrame)
+
+
+def test_sector_rotation_radar():
+    from idx.signals import sector_rotation_radar
+
+    # Empty test
+    regime, df = sector_rotation_radar(pd.DataFrame())
+    assert regime["market_regime"] == "NEUTRAL"
+    assert df.empty
+
+    # Synthetic multi-session index data
+    dates = ["2026-08-01", "2026-08-02", "2026-08-03", "2026-08-04", "2026-08-05"]
+    records = []
+    for d in dates:
+        # Benchmark rises 5%
+        records.append(
+            {
+                "Date": d,
+                "IndexCode": "COMPOSITE",
+                "Close": 7000.0 if d == dates[0] else 7350.0,
+                "Change": 50.0,
+                "Value": 1e13,
+            }
+        )
+        # Energy surges 10% (Leading)
+        records.append(
+            {
+                "Date": d,
+                "IndexCode": "IDXENERGY",
+                "Close": 2000.0 if d == dates[0] else 2200.0,
+                "Change": 20.0,
+                "Value": 2e12,
+            }
+        )
+        # Finance drops 2% (Lagging)
+        records.append(
+            {
+                "Date": d,
+                "IndexCode": "IDXFINANCE",
+                "Close": 1500.0 if d == dates[0] else 1470.0,
+                "Change": -10.0,
+                "Value": 3e12,
+            }
+        )
+
+    index_df = pd.DataFrame(records)
+    regime, sectors = sector_rotation_radar(index_df, window_days=5)
+
+    assert regime["market_regime"] == "BULLISH_EXPANSION"
+    assert regime["benchmark_return_pct"] == pytest.approx(5.0)
+    assert "IDXENERGY" in regime["leading_sectors"]
+    assert "IDXFINANCE" in regime["lagging_sectors"]
+
+    by_code = sectors.set_index("IndexCode")
+    assert by_code.loc["IDXENERGY", "Status"] == "Leading"
+    assert by_code.loc["IDXFINANCE", "Status"] == "Lagging"
+    assert sectors.iloc[0]["IndexCode"] == "IDXENERGY"

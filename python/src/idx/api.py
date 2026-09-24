@@ -100,7 +100,6 @@ class BacktestRequest(BaseModel):
     position_sizing: str = "equal_weight"
 
 
-
 class TriggerIngestionRequest(BaseModel):
     job_type: str = "daily"  # "daily" or "backfill"
     date: str | None = None  # YYYYMMDD for daily

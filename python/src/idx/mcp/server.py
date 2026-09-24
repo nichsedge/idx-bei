@@ -263,6 +263,23 @@ TOOLS = [
             "required": ["strategy"],
         },
     },
+    {
+        "name": "idx_get_market_regime",
+        "description": "Inspect IDX Market Regime (Bullish Expansion, Bearish Contraction, Rangebound) and Sector Rotation Relative Strength (RS) leaders/laggards against IHSG.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "description": "Optional evaluation date filter (YYYY-MM-DD). Defaults to latest.",
+                },
+                "window_days": {
+                    "type": "integer",
+                    "description": "Sessions lookback window for return and momentum (default 20).",
+                },
+            },
+        },
+    },
 ]
 
 
@@ -487,9 +504,7 @@ def handle_tool_call(name, args):
             broker_df = (
                 pd.read_parquet(broker_path) if os.path.exists(broker_path) else pd.DataFrame()
             )
-            stock_df = (
-                pd.read_parquet(stock_path) if os.path.exists(stock_path) else pd.DataFrame()
-            )
+            stock_df = pd.read_parquet(stock_path) if os.path.exists(stock_path) else pd.DataFrame()
 
             res = detect_stealth_accumulation(
                 broker_df,
@@ -534,6 +549,25 @@ def handle_tool_call(name, args):
                     if len(trades_df) > 0
                     else [],
                     "total_trades": len(trades_df),
+                },
+                indent=2,
+                default=str,
+            )
+
+        elif name == "idx_get_market_regime":
+            date = args.get("date")
+            window_days = args.get("window_days", 20)
+            from idx.signals import sector_rotation_radar
+
+            index_path = os.path.join(DATA_DIR, "parquet", "index_summary.parquet")
+            index_df = pd.read_parquet(index_path) if os.path.exists(index_path) else pd.DataFrame()
+            regime_dict, sector_df = sector_rotation_radar(
+                index_df, window_days=window_days, on_date=date
+            )
+            return json.dumps(
+                {
+                    "regime_summary": regime_dict,
+                    "sectors": sector_df.to_dict("records"),
                 },
                 indent=2,
                 default=str,

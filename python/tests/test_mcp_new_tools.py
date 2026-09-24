@@ -19,6 +19,28 @@ class TestMCPNewTools(unittest.TestCase):
         self.assertIn("idx_execute_sql", tool_names)
         self.assertIn("idx_screen_stealth_accumulation", tool_names)
         self.assertIn("idx_run_backtest", tool_names)
+        self.assertIn("idx_get_market_regime", tool_names)
+
+    @patch("idx.signals.sector_rotation_radar")
+    def test_get_market_regime_tool(self, mock_regime):
+        import pandas as pd
+
+        mock_regime.return_value = (
+            {
+                "market_regime": "BULLISH_EXPANSION",
+                "benchmark": "COMPOSITE",
+                "benchmark_close": 7350.0,
+                "benchmark_return_pct": 5.0,
+                "leading_sectors": ["IDXENERGY"],
+                "lagging_sectors": [],
+            },
+            pd.DataFrame([{"IndexCode": "IDXENERGY", "SectorName": "Energy", "AlphaVsIHSG": 3.5}]),
+        )
+        res = handle_tool_call("idx_get_market_regime", {"window_days": 20})
+        data = json.loads(res)
+        self.assertEqual(data["regime_summary"]["market_regime"], "BULLISH_EXPANSION")
+        self.assertEqual(len(data["sectors"]), 1)
+        self.assertEqual(data["sectors"][0]["IndexCode"], "IDXENERGY")
 
     @patch("idx.signals.detect_stealth_accumulation")
     def test_screen_stealth_accumulation_tool(self, mock_stealth):
@@ -28,7 +50,9 @@ class TestMCPNewTools(unittest.TestCase):
             "summary": "Stealth accumulation detected in 1 stock",
             "signal": "STEALTH_ACCUMULATION",
             "smart_money_delta": 4.5,
-            "anomalies_df": pd.DataFrame([{"StockCode": "BBCA", "Signal": "STEALTH_ACCUMULATION", "WyckoffPhase": "Phase C"}]),
+            "anomalies_df": pd.DataFrame(
+                [{"StockCode": "BBCA", "Signal": "STEALTH_ACCUMULATION", "WyckoffPhase": "Phase C"}]
+            ),
         }
         res = handle_tool_call("idx_screen_stealth_accumulation", {"lookback_days": 5})
         data = json.loads(res)

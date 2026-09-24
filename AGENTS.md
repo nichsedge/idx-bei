@@ -7,15 +7,15 @@ This repository is organized as a unified Python quantitative data pipeline, MCP
   - `core/`: HTTP client (`curl_cffi` sync & `AsyncIDXClient`), schema validation, DuckDB query layer, KSEI ownership & drift engine.
   - `scrapers/`: domain scrapers (company profiles, financial ratios, corporate actions, members, news, announcements, async backfillers).
   - `pipelines/`: daily ingestion, time-series partitioning, incremental Parquet columnar exports.
-  - `mcp/`: Model Context Protocol stdio server with 13 quantitative tools for AI assistants.
+  - `mcp/`: Model Context Protocol stdio server with 14 quantitative tools for AI assistants.
   - `dividend.py`: Dividend decision engine, Dividend Trap Risk scoring (0–100), and Buy/Hold/Sell analyzer.
   - `ingestion.py`: dataset inventory inspection, dynamic calendar gap detection with holiday caching, 4-tier quantitative backfill recommendations, and async background task runner.
   - `backtest.py`: vectorized strategy simulator, volatility parity position sizing, drawdown calculation, Sharpe/Sortino ratios, and benchmark alpha.
   - `graph.py`: Neo4j UBO tree resolution, circular cross-holding detection, and board centrality.
   - `api.py`: high-performance async FastAPI REST & WebSocket microservice with in-memory TTL query caching.
-  - `signals.py`: 7 decision-support screens (Composite Alpha, Foreign Flow, Bandarmology Broker Dominance, Audit Risk, Dilution Watch, Sharia Value, Pasar Nego).
+  - `signals.py`: 8 decision-support screens (Sector Rotation & Market Regime, Composite Alpha, Foreign Flow, Bandarmology Broker Dominance, Audit Risk, Dilution Watch, Sharia Value, Pasar Nego).
   - `cli.py`: unified CLI entrypoint for `idx` command.
-- `python/tests/`: automated pytest suite (171 passing unit tests, >=85% coverage).
+- `python/tests/`: automated pytest suite (175+ passing unit tests, >=85% coverage).
 - `data/`: local datasets (partitioned time-series, Parquet exports, daily briefings, dynamic USD/IDR rate cache, and KSEI ownership CSVs).
 - `frontend/`: Modern React 19 + TypeScript + Vite single-page application (SPA) with TradingView Lightweight Charts v5 (candlesticks, EMA-20/50, Bollinger Bands, Foreign Flow sub-panel), Vis.js relationship graphs, Bandarmology & Stealth Accumulation radar, Dividend Decision & Trap Radar, Data Ingestion & Backfill Horizon Status page, Interactive Strategy Backtester, Lucide icons, and live WebSocket streaming.
 - `dashboard/`: Vanilla HTML/CSS/JS reference dashboard.
@@ -35,7 +35,7 @@ Run all commands from the repository root using modern `uv`:
 - `uv run idx compact`: compact daily timeseries partitions into monthly partitions (`year=YYYY/month=MM.parquet`).
 - `uv run idx dividend BBCA`: analyze dividend decision and trap risk for a specific stock.
 - `uv run idx dividend --screen --min-yield 4.0`: screen and rank dividend opportunities across the market.
-- `uv run idx signals`: generate 7-screen daily decision-support briefing (`data/briefings/`).
+- `uv run idx signals`: generate 8-screen daily decision-support briefing (`data/briefings/`).
 - `uv run idx bandarmology`: inspect Top-N broker concentration ratios and retail vs institutional flow.
 - `uv run idx bandarmology --stealth`: scan for stealth institutional accumulation vs retail traps across top stocks.
 - `uv run idx backtest --strategy foreign_flow --holding 20`: simulate strategy performance & calculate Sharpe/Drawdown.

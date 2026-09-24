@@ -1,5 +1,12 @@
 # IDX-BEI Data & Quantitative Analysis Toolkit
 
+![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)
+![Coverage >=85%](https://img.shields.io/badge/coverage-%3E%3D85%25-brightgreen.svg)
+![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)
+![Types: Mypy](https://img.shields.io/badge/types-mypy-blue.svg)
+![MCP Tools: 14](https://img.shields.io/badge/MCP%20Tools-14-purple.svg)
+![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)
+
 Toolkit for scraping, storing, and analyzing data from the Indonesia Stock Exchange (IDX / Bursa Efek Indonesia). Covers market data, company fundamentals, corporate actions, and broker flows — with time-series storage, Parquet export, and graph analysis pipelines.
 
 ![Neo4j Network Analysis](docs/assets/neo4j-network-analysis.png)
@@ -10,6 +17,18 @@ Toolkit for scraping, storing, and analyzing data from the Indonesia Stock Excha
 git clone https://github.com/yourusername/idx-bei.git
 cd idx-bei
 uv sync
+```
+
+### 📓 Interactive Quantitative Walkthrough
+For a self-contained, zero-boilerplate exploration of the data pipeline, foreign flow, Bandarmology, and vectorized backtesting, open the interactive notebook:
+- **[notebooks/idx_quantitative_walkthrough.ipynb](notebooks/idx_quantitative_walkthrough.ipynb)**
+
+### 🐳 1-Click Docker Launch
+Launch the complete stack (Unified Web Dashboard, REST API, WebSocket server, and Neo4j graph database) with a single command:
+```bash
+docker compose up -d
+# Dashboard & REST API: http://localhost:8000
+# Neo4j Graph Browser:   http://localhost:7474
 ```
 
 ### Scrape & Pipeline Commands
@@ -77,7 +96,7 @@ uv run idx drift --tycoon "LO KHENG HONG"
 ### Daily Decision-Support Signals & Bandarmology
 
 ```bash
-# Generate daily 7-screen decision briefing (writes Markdown + JSON into data/briefings/)
+# Generate daily 8-screen decision briefing (writes Markdown + JSON into data/briefings/)
 uv run idx signals
 
 # Inspect Top-N broker concentration ratios & institutional footprint
@@ -90,7 +109,8 @@ uv run idx bandarmology --stealth
 uv run idx signals --webhook-url "https://discord.com/api/webhooks/..."
 ```
 
-Runs seven quantitative decision-support screens over Parquet exports:
+Runs eight quantitative decision-support screens over Parquet exports:
+- **Sector Rotation & Market Regime Radar** — Sector Relative Strength (RS Alpha) vs COMPOSITE (IHSG), leading/lagging rotation, and macro regime (Bullish Expansion, Bearish Contraction, Rangebound)
 - **Composite Alpha Rankings** — multi-factor ranking (Value + Smart Money Flow + Technical Momentum + Clean Audit)
 - **Foreign Flow Radar** — net foreign buying/selling as % of free float (accumulate/distribute)
 - **Bandarmology & Broker Dominance** — Top-1 ($CR_1$), Top-3 ($CR_3$), Top-5 ($CR_5$) broker concentration and institutional vs retail footprint
@@ -140,9 +160,10 @@ The unified web dashboard automatically serves the compiled modern React 19 SPA 
 - **Data Ingestion & Backfill Horizon Status**: Live timeseries health matrix, calendar gap detection separating national holidays from missing trading sessions, and 4-tier quantitative backfill horizon guidance with 1-click execution.
 - **Super-Insiders & Conglomerates**: Tycoon portfolio tracking and corporate ownership cluster graphs.
 
-The MCP server exposes 13 standard JSON-RPC tools for AI assistants:
+The MCP server exposes 14 standard JSON-RPC tools for AI assistants:
+- `idx_get_market_regime`: inspect macro regime (Bullish Expansion, Bearish Contraction, Rangebound) and sector rotation Relative Strength (Alpha) against IHSG.
 - `idx_analyze_dividend`: evaluate dividend announcements (Yield, DPR, Trap Risk 0–100, Buy/Hold/Sell verdict).
-- `idx_get_signals`: daily 7-screen briefing summary.
+- `idx_get_signals`: daily 8-screen briefing summary.
 - `idx_query_stock`: OHLCV, Net Foreign Flow & VWAP.
 - `idx_get_company_profile`: board directors, commissioners, major shareholders & subsidiaries.
 - `idx_query_broker_flow`: Top-N broker market share, $CR_1/CR_3/CR_5$ concentration ratios.
@@ -176,11 +197,12 @@ idx-bei/
 │   │   ├── backtest.py            # Vectorized strategy simulator & dividend arbitrage backtester
 │   │   ├── graph.py               # Neo4j UBO tree resolution, board centrality & ingestion
 │   │   ├── api.py                 # FastAPI REST microservice & WebSocket broadcast server
-│   │   ├── signals.py             # 7 decision-support screens & stealth accumulation model
+│   │   ├── signals.py             # 8 decision-support screens & stealth accumulation model
 │   │   └── cli.py                 # CLI implementation
-│   ├── tests/                     # Pytest suite (171 passing unit tests, >=85% coverage)
+│   ├── tests/                     # Pytest suite (175+ passing unit tests, >=85% coverage)
 │   ├── neo4j.ipynb                # Graph analysis notebook
 │   └── pyproject.toml             # Package config (uv/setuptools)
+├── notebooks/                     # Interactive Jupyter research walkthrough notebooks
 ├── data/                          # Generated datasets (gitignored)
 │   ├── timeseries/                # Historical OHLCV, broker, index partitions
 │   ├── parquet/                   # Columnar exports (daily and monthly compacted)
@@ -190,10 +212,12 @@ idx-bei/
 └── dashboard/                     # Reference vanilla dashboard (index.html, css/, js/)
 ```
 
-## Testing & Code Quality
+## Testing, Code Quality & Contributing
+
+See **[CONTRIBUTING.md](CONTRIBUTING.md)** for developer onboarding and guidelines.
 
 ```bash
-# Run automated pytest suite with coverage enforcement (171 unit tests, >=85% coverage)
+# Run automated pytest suite with coverage enforcement (175+ unit tests, >=85% coverage)
 uv run pytest python/tests --cov=idx --cov-fail-under=85
 
 # Run Mypy static type checker
