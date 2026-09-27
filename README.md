@@ -56,6 +56,20 @@ uv run idx parquet
 uv run idx compact
 ```
 
+### Forensic Quality & DCA Compounder Screener
+
+```bash
+# Screen top long-term DCA compounders with forensic anti-trap protection
+uv run idx compounder --top 15
+
+# Analyze specific ticker for forensic quality, Justified PBV, and DCA suitability
+uv run idx compounder BMRI
+uv run idx compounder LPKR
+
+# Inspect identified accounting value traps (one-off earnings distortions)
+uv run idx compounder --show-traps
+```
+
 ### Quantitative Backtesting & Strategy Simulator
 
 ```bash

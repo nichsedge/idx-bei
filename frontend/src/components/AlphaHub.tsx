@@ -33,7 +33,7 @@ export const AlphaHub: React.FC<AlphaHubProps> = ({
   isStarred,
   onToggleStar,
 }) => {
-  const [activeCategory, setActiveCategory] = useState<'all' | 'smart_money' | 'dividends' | 'value' | 'danger'>('all');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'dca_prime' | 'smart_money' | 'dividends' | 'value' | 'danger'>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [stealthAnomalies, setStealthAnomalies] = useState<StealthAnomaly[]>([]);
   const [dividendOpps, setDividendOpps] = useState<DividendOpportunity[]>([]);
@@ -137,13 +137,17 @@ export const AlphaHub: React.FC<AlphaHubProps> = ({
       const chg = c.daily_change ?? (c.previous_price && c.price ? c.price - c.previous_price : 0);
       const chgPct = (c as any).daily_change_pct ?? stealthMatch?.PriceChangePct ?? (c.previous_price && c.previous_price > 0 ? (chg / c.previous_price) * 100 : 0);
 
-      const isTrap = stealthMatch?.Signal === 'RETAIL_TRAP';
+      const isTrap = c.is_value_trap || stealthMatch?.Signal === 'RETAIL_TRAP';
       const trapScore = divMatch?.TrapScore ?? 25;
       if (price <= 0 || isTrap || trapScore > 65) {
         return null;
       }
 
       let score = 0;
+      // 0. Compounder & Quality Score Bonus: up to 25 pts
+      if (c.compounder_score && c.compounder_score >= 75) score += 30;
+      else if (c.compounder_score && c.compounder_score >= 65) score += 20;
+
       // 1. High ROE (cash generator): up to 35 pts
       if (roe >= 20) score += 35;
       else if (roe >= 15) score += 28;
@@ -155,8 +159,9 @@ export const AlphaHub: React.FC<AlphaHubProps> = ({
       else if (yieldPct >= 4.0) score += 24;
       else if (yieldPct >= 2.5) score += 15;
 
-      // 3. Discount Valuation (PBV): up to 20 pts
-      if (pbv > 0 && pbv <= 1.5) score += 20;
+      // 3. Discount Valuation (PBV / Sector Justified): up to 20 pts
+      if (c.valuation_status === 'SECTOR_UNDERVALUED') score += 20;
+      else if (pbv > 0 && pbv <= 1.5) score += 20;
       else if (pbv > 0 && pbv <= 2.5) score += 14;
       else if (pbv > 0 && pbv <= 4.0) score += 8;
 
@@ -221,6 +226,9 @@ export const AlphaHub: React.FC<AlphaHubProps> = ({
       }
 
       // Category matching
+      if (activeCategory === 'dca_prime') {
+        return (c.compounder_score ?? 0) >= 70 || c.dca_verdict === 'PRIME_DCA';
+      }
       if (activeCategory === 'smart_money') {
         return stealthAnomalies.some((a) => a.StockCode === c.code && a.Signal === 'STEALTH_ACCUMULATION');
       }
@@ -228,12 +236,14 @@ export const AlphaHub: React.FC<AlphaHubProps> = ({
         return (c.yield ?? 0) >= 4.0 || dividendOpps.some((d) => d.StockCode === c.code);
       }
       if (activeCategory === 'value') {
+        if (c.is_value_trap) return false;
         const pbv = c.pbv ?? c.price_bv ?? 99;
         const roe = c.roe ?? 0;
-        return pbv < 1.5 && roe >= 12.0;
+        const isSecVal = c.is_undervalued || c.valuation_status === 'SECTOR_UNDERVALUED' || c.valuation_status === 'DEEP_VALUE';
+        return isSecVal || (pbv < 1.5 && roe >= 12.0);
       }
       if (activeCategory === 'danger') {
-        return stealthAnomalies.some((a) => a.StockCode === c.code && a.Signal === 'RETAIL_TRAP');
+        return c.is_value_trap || stealthAnomalies.some((a) => a.StockCode === c.code && a.Signal === 'RETAIL_TRAP');
       }
 
       return true;
@@ -841,9 +851,10 @@ export const AlphaHub: React.FC<AlphaHubProps> = ({
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           {[
             { id: 'all', label: 'All Opportunities', icon: Compass },
+            { id: 'dca_prime', label: '⭐ Layak Tabung (DCA)', icon: Sparkles },
+            { id: 'value', label: 'Undervalued Quality', icon: TrendingUp },
             { id: 'smart_money', label: 'Smart Money (Bandarmology)', icon: Zap },
             { id: 'dividends', label: 'Cashflow Gems', icon: Coins },
-            { id: 'value', label: 'Undervalued Quality', icon: TrendingUp },
             { id: 'danger', label: 'Danger Shield', icon: ShieldAlert },
           ].map((tab) => {
             const Icon = tab.icon;

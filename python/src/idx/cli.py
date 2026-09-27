@@ -284,6 +284,19 @@ def build_parser():
         "--limit", type=int, default=25, help="Max results for screener (default: 25)"
     )
 
+    # 14. Forensic Compounder Screener
+    p_comp = sub.add_parser(
+        "compounder", help="Screen long-term DCA compounders with forensic anti-trap protection"
+    )
+    p_comp.add_argument("ticker", nargs="?", default=None, help="Specific ticker to analyze")
+    p_comp.add_argument(
+        "--min-score", type=float, default=65.0, help="Minimum Compounder Score (default: 65.0)"
+    )
+    p_comp.add_argument(
+        "--top", type=int, default=15, help="Number of top compounders to display (default: 15)"
+    )
+    p_comp.add_argument("--show-traps", action="store_true", help="Display identified value traps")
+
     # 14. Ingestion Status & Backfill Recommendation
     sub.add_parser(
         "status",
@@ -721,6 +734,86 @@ def main(argv=None):
             print("     Commands:")
             for c in t["recommended_cli_commands"]:
                 print(f"       $ {c}")
+            print()
+        print("=" * 80)
+
+    elif cmd == "compounder":
+        import os
+
+        from idx.compounder import enrich_company_intellect
+        from idx.core.utils import DATA_DIR, load_json
+
+        alpha_file = os.path.join(DATA_DIR, "network_alpha_data.json")
+        if not os.path.exists(alpha_file):
+            print("Error: data/network_alpha_data.json not found.")
+            return
+        data = load_json(alpha_file)
+        companies = data.get("companies", [])
+
+        if args.ticker:
+            target = args.ticker.upper()
+            match = next((c for c in companies if c.get("code") == target), None)
+            if not match:
+                print(f"Ticker '{target}' not found in dataset.")
+                return
+            enriched = enrich_company_intellect(match, trading_value=15_000_000_000)
+            print("=" * 80)
+            print(
+                f" FORENSIC QUALITY & DCA COMPOUNDER ANALYSIS: {enriched.get('code')} ({enriched.get('name')})"
+            )
+            print("=" * 80)
+            print(f" DCA Verdict       : {enriched.get('dca_rating')}")
+            print(f" Compounder Score  : {enriched.get('compounder_score')}/100")
+            print(f" Valuation Status  : {enriched.get('valuation_badge')}")
+            if enriched.get("justified_pbv"):
+                print(
+                    f" Justified PBV     : {enriched.get('justified_pbv')}x (Actual PBV: {enriched.get('price_bv') or enriched.get('pbv')}x)"
+                )
+            print(
+                f" Value Trap Risk   : {'🚨 YES (TERDETEKSI)' if enriched.get('is_value_trap') else '✅ CLEAN (Aman)'}"
+            )
+            if enriched.get("forensic_reasons"):
+                print(" Forensic Flags    :")
+                for r in enriched["forensic_reasons"]:
+                    print(f"   • {r}")
+            print(f" AI Investment Memo: {enriched.get('ai_thesis')}")
+            print("=" * 80)
+            return
+
+        if args.show_traps:
+            traps = [c for c in companies if c.get("is_value_trap")]
+            print("=" * 80)
+            print(f" FORENSIC VALUE TRAP WATCHLIST ({len(traps)} EMITEN TERINDIKASI LABA SEMU)")
+            print("=" * 80)
+            for c in traps:
+                print(
+                    f" • {c.get('code'):<5} | {c.get('name')[:30]:<30} | ROE: {c.get('roe', 0):.1f}% | PER: {c.get('per', 0):.2f}"
+                )
+                for r in c.get("forensic_reasons", []):
+                    print(f"     -> {r}")
+            print("=" * 80)
+            return
+
+        # Top Compounders
+        filtered = [
+            c
+            for c in companies
+            if not c.get("is_value_trap") and (c.get("compounder_score") or 0) >= args.min_score
+        ]
+        filtered.sort(key=lambda x: x.get("compounder_score", 0), reverse=True)
+        top_list = filtered[: args.top]
+
+        print("=" * 80)
+        print(f" TOP {len(top_list)} LONG-TERM DCA COMPOUNDERS (SCORE >= {args.min_score})")
+        print("=" * 80)
+        for i, c in enumerate(top_list, 1):
+            pbv_val = c.get("price_bv") or c.get("pbv") or 0.0
+            print(
+                f"{i:>2}. {c.get('code'):<5} ({c.get('name')[:28]:<28}) | Score: {c.get('compounder_score'):.0f} | PBV: {pbv_val:.2f}x | ROE: {c.get('roe', 0):.1f}%"
+            )
+            print(f"    Rating: {c.get('dca_rating')}")
+            print(f"    Badges: {', '.join(c.get('intellect_badges', []))}")
+            print(f"    Memo  : {c.get('ai_thesis')}")
             print()
         print("=" * 80)
 

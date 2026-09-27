@@ -132,6 +132,39 @@ async def get_companies():
     return []
 
 
+@app.get("/api/compounder-screen", tags=["Intelligence"])
+async def get_compounder_screen(
+    min_score: float = Query(60.0, description="Minimum DCA Compounder Score (0-100)"),
+    exclude_traps: bool = Query(True, description="Filter out one-off value traps"),
+    category: str | None = Query(
+        None, description="Optional category: prime_dca, accumulate, sector_value"
+    ),
+    limit: int = Query(50, description="Max results to return"),
+):
+    """Return top long-term DCA compounders screened for forensic health and sector-aware valuation."""
+    alpha_file = os.path.join(DATA_DIR, "network_alpha_data.json")
+    if not os.path.exists(alpha_file):
+        return []
+    data = load_json(alpha_file)
+    companies = data.get("companies", [])
+
+    results = []
+    for c in companies:
+        if exclude_traps and c.get("is_value_trap"):
+            continue
+        score = float(c.get("compounder_score") or 0.0)
+        if score < min_score:
+            continue
+        if category == "prime_dca" and c.get("dca_verdict") != "PRIME_DCA":
+            continue
+        if category == "sector_value" and c.get("valuation_status") != "SECTOR_UNDERVALUED":
+            continue
+        results.append(c)
+
+    results.sort(key=lambda x: x.get("compounder_score", 0), reverse=True)
+    return results[:limit]
+
+
 @app.get("/api/signals", tags=["Signals"])
 async def get_signals(
     date: str | None = Query(None, description="Optional trading date (YYYY-MM-DD)"),

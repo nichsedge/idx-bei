@@ -144,6 +144,19 @@ export interface Company {
   market_cap?: number;
   is_blue_chip?: boolean;
   conglomerate?: string | null;
+  // Forensic & Intellect Compounder Intelligence
+  is_value_trap?: boolean;
+  forensic_flags?: string[];
+  forensic_reasons?: string[];
+  valuation_status?: string;
+  is_undervalued?: boolean;
+  justified_pbv?: number | null;
+  valuation_badge?: string;
+  compounder_score?: number;
+  dca_verdict?: string;
+  dca_rating?: string;
+  intellect_badges?: string[];
+  ai_thesis?: string;
 }
 
 export interface InsiderHolding {

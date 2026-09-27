@@ -32,9 +32,11 @@ export const ScreenerTab: React.FC<ScreenerTabProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSector, setSelectedSector] = useState('');
   const [scoreFilter, setScoreFilter] = useState<'all' | 'high' | 'medium' | 'low'>('all');
-  const [valuationFilter, setValuationFilter] = useState<'all' | 'undervalued' | 'pe15' | 'profitable' | 'dividend'>('all');
+  const [valuationFilter, setValuationFilter] = useState<'all' | 'dca_prime' | 'sector_value' | 'undervalued' | 'pe15' | 'profitable' | 'dividend'>('all');
 
   // Quick toggle pill filters
+  const [dcaOnly, setDcaOnly] = useState(false);
+  const [noTrapsOnly, setNoTrapsOnly] = useState(true);
   const [blueChipOnly, setBlueChipOnly] = useState(false);
   const [tycoonOnly, setTycoonOnly] = useState(false);
   const [conglomOnly, setConglomOnly] = useState(false);
@@ -86,6 +88,8 @@ export const ScreenerTab: React.FC<ScreenerTabProps> = ({
     selectedSector ||
     scoreFilter !== 'all' ||
     valuationFilter !== 'all' ||
+    dcaOnly ||
+    !noTrapsOnly ||
     blueChipOnly ||
     tycoonOnly ||
     conglomOnly ||
@@ -98,6 +102,8 @@ export const ScreenerTab: React.FC<ScreenerTabProps> = ({
     setSelectedSector('');
     setScoreFilter('all');
     setValuationFilter('all');
+    setDcaOnly(false);
+    setNoTrapsOnly(true);
     setBlueChipOnly(false);
     setTycoonOnly(false);
     setConglomOnly(false);
@@ -110,6 +116,9 @@ export const ScreenerTab: React.FC<ScreenerTabProps> = ({
     const q = searchQuery.toLowerCase().trim();
 
     const filtered = companies.filter((c) => {
+      // 0. Anti-Value Trap Filter (Active by default)
+      if (noTrapsOnly && c.is_value_trap) return false;
+
       // Search
       if (q) {
         const matchCode = c.code.toLowerCase().includes(q);
@@ -130,12 +139,20 @@ export const ScreenerTab: React.FC<ScreenerTabProps> = ({
 
       // Valuation & Quality dropdown
       const pbv = c.pbv ?? c.price_bv;
-      if (valuationFilter === 'undervalued' && (!(pbv && pbv > 0 && pbv < 1.0))) return false;
+      const isSectorVal = c.is_undervalued || c.valuation_status === 'SECTOR_UNDERVALUED' || c.valuation_status === 'DEEP_VALUE';
+
+      if (valuationFilter === 'dca_prime' && (!(c.compounder_score && c.compounder_score >= 70))) return false;
+      if (valuationFilter === 'sector_value' && !isSectorVal) return false;
+      if (valuationFilter === 'undervalued') {
+        if (c.is_value_trap) return false;
+        if (!isSectorVal && (!(pbv && pbv > 0 && pbv < 1.0))) return false;
+      }
       if (valuationFilter === 'pe15' && (!(c.per && c.per > 0 && c.per < 15.0))) return false;
       if (valuationFilter === 'profitable' && (!(c.roe && c.roe >= 15.0))) return false;
       if (valuationFilter === 'dividend' && (!(c.yield && c.yield >= 4.0))) return false;
 
       // Quick pills
+      if (dcaOnly && (!(c.compounder_score && c.compounder_score >= 70))) return false;
       if (blueChipOnly && !c.is_blue_chip) return false;
       if (tycoonOnly) {
         const hasTycoon = (c.shareholders || []).some((s) => s.is_super_insider);
@@ -342,7 +359,9 @@ export const ScreenerTab: React.FC<ScreenerTabProps> = ({
               onChange={(e) => setValuationFilter(e.target.value as any)}
             >
               <option value="all">All Valuations</option>
-              <option value="undervalued">💎 Undervalued (PBV &lt; 1.0)</option>
+              <option value="dca_prime">⭐ Layak Tabung (DCA Score ≥ 70)</option>
+              <option value="sector_value">🏦 Sektor Undervalued (Justified Model)</option>
+              <option value="undervalued">💎 Clean Undervalued (No Traps)</option>
               <option value="pe15">📊 Value P/E (P/E &lt; 15)</option>
               <option value="profitable">🚀 High Profit (ROE ≥ 15%)</option>
               <option value="dividend">💰 High Yield (Yield ≥ 4%)</option>
@@ -351,10 +370,27 @@ export const ScreenerTab: React.FC<ScreenerTabProps> = ({
         </div>
 
         {/* Quick Filter Badges Row */}
-        <div className="filter-pills-row">
+        <div className="filter-pills-row" style={{ flexWrap: 'wrap', gap: '0.4rem' }}>
           <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600, marginRight: '0.25rem' }}>
             Quick Filters:
           </span>
+
+          <button
+            className={`filter-pill green ${dcaOnly ? 'active' : ''}`}
+            onClick={() => setDcaOnly(!dcaOnly)}
+            style={{ fontWeight: 700 }}
+          >
+            <Sparkles size={14} /> ⭐ Layak Tabung (DCA)
+          </button>
+
+          <button
+            className={`filter-pill ${noTrapsOnly ? 'active' : ''}`}
+            onClick={() => setNoTrapsOnly(!noTrapsOnly)}
+            style={{ background: noTrapsOnly ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)', border: noTrapsOnly ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid rgba(239, 68, 68, 0.4)' }}
+            title="Saring otomatis saham dengan indikasi laba semu/penjualan aset sesaat"
+          >
+            <ShieldCheck size={14} /> 🛡️ Anti-Trap: {noTrapsOnly ? 'ON' : 'OFF'}
+          </button>
 
           <button
             className={`filter-pill ${blueChipOnly ? 'active' : ''}`}
@@ -367,14 +403,14 @@ export const ScreenerTab: React.FC<ScreenerTabProps> = ({
             className={`filter-pill gold ${tycoonOnly ? 'active' : ''}`}
             onClick={() => setTycoonOnly(!tycoonOnly)}
           >
-            <Crown size={14} /> Tycoon Stakes (Super-Insiders)
+            <Crown size={14} /> Tycoon Stakes
           </button>
 
           <button
             className={`filter-pill purple ${conglomOnly ? 'active' : ''}`}
             onClick={() => setConglomOnly(!conglomOnly)}
           >
-            <Network size={14} /> Conglomerate Groups
+            <Network size={14} /> Conglomerates
           </button>
 
           <button
@@ -472,6 +508,21 @@ export const ScreenerTab: React.FC<ScreenerTabProps> = ({
                         <span className="ticker-badge">{c.code}</span>
                         {c.is_blue_chip && <span className="tag-bc" title="Blue Chip Component">BC</span>}
                         {hasTycoon && <span className="tag-tycoon" title="Tycoon Stakes Owned">👑</span>}
+                        {c.is_value_trap && (
+                          <span style={{ background: 'rgba(239, 68, 68, 0.25)', color: '#f87171', border: '1px solid rgba(239, 68, 68, 0.4)', padding: '1px 5px', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 800, marginLeft: '4px' }} title="Peringatan Forensik: Indikasi laba semu/penjualan aset sesaat">
+                            ⚠️ TRAP
+                          </span>
+                        )}
+                        {c.dca_verdict === 'PRIME_DCA' && (
+                          <span style={{ background: 'rgba(16, 185, 129, 0.25)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.4)', padding: '1px 5px', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 800, marginLeft: '4px' }} title="Layak Tabung (DCA Prime Compounder)">
+                            💎 DCA
+                          </span>
+                        )}
+                        {c.valuation_status === 'SECTOR_UNDERVALUED' && (
+                          <span style={{ background: 'rgba(56, 189, 248, 0.25)', color: '#38bdf8', border: '1px solid rgba(56, 189, 248, 0.4)', padding: '1px 5px', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 800, marginLeft: '4px' }} title="Sektor Undervalued: Justified Model">
+                            🏦 VALUE
+                          </span>
+                        )}
                       </td>
                       <td className="company-name-cell">
                         <div style={{ maxWidth: '240px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>

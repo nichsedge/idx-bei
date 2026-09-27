@@ -73,6 +73,51 @@ export const CompanyDrawer: React.FC<CompanyDrawerProps> = ({
         </div>
       </div>
 
+      {/* AI Forensic & DCA Intelligence Card */}
+      <div style={{
+        marginTop: '1rem',
+        padding: '1rem',
+        borderRadius: '12px',
+        background: company.is_value_trap ? 'rgba(239, 68, 68, 0.12)' : 'rgba(56, 189, 248, 0.08)',
+        border: `1px solid ${company.is_value_trap ? 'rgba(239, 68, 68, 0.4)' : 'rgba(56, 189, 248, 0.25)'}`,
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+          <span style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.5px', color: company.is_value_trap ? '#f87171' : '#38bdf8' }}>
+            🧠 AI Forensic & DCA Verdict
+          </span>
+          <span style={{
+            fontSize: '0.75rem',
+            fontWeight: 800,
+            padding: '2px 8px',
+            borderRadius: '6px',
+            background: company.is_value_trap ? 'rgba(239, 68, 68, 0.25)' : (company.compounder_score && company.compounder_score >= 70 ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.1)'),
+            color: company.is_value_trap ? '#fca5a5' : (company.compounder_score && company.compounder_score >= 70 ? '#6ee7b7' : '#cbd5e1')
+          }}>
+            {company.dca_rating || (company.is_value_trap ? '🚨 Value Trap' : 'Neutral')}
+          </span>
+        </div>
+
+        {company.justified_pbv && (
+          <div style={{ fontSize: '0.78rem', color: '#93c5fd', marginBottom: '0.4rem', fontWeight: 600 }}>
+            🏦 Sector Model: Justified PBV <strong>{company.justified_pbv}x</strong> vs Pasar <strong>{company.price_bv?.toFixed(2) || '-'}x</strong>
+          </div>
+        )}
+
+        <p style={{ margin: 0, fontSize: '0.82rem', lineHeight: 1.45, color: company.is_value_trap ? '#fca5a5' : '#cbd5e1' }}>
+          {company.ai_thesis || (company.is_value_trap 
+            ? 'Peringatan Forensik: Indikasi laba semu atau pos luar biasa non-operasional. Hindari untuk tabungan jangka panjang.' 
+            : 'Perusahaan memiliki profil operasional stabil.')}
+        </p>
+
+        {company.forensic_reasons && company.forensic_reasons.length > 0 && (
+          <div style={{ marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '3px' }}>
+            {company.forensic_reasons.map((r, i) => (
+              <span key={i} style={{ fontSize: '0.72rem', color: '#f87171' }}>• {r}</span>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* SMSS Score Breakdown */}
       <div className="score-breakdown">
         <h3 style={{ fontSize: '0.95rem', fontWeight: 600, marginBottom: '0.75rem', display: 'flex', justifyContent: 'space-between' }}>
