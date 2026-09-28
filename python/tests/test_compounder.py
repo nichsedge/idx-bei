@@ -103,3 +103,22 @@ def test_enrich_company_intellect():
     assert enriched["compounder_score"] >= 70.0
     assert "ai_thesis" in enriched
     assert len(enriched["intellect_badges"]) > 0
+
+
+def test_cli_compounder_parser():
+    from idx.cli import build_parser
+
+    parser = build_parser()
+    args = parser.parse_args(["compounder", "--top", "15"])
+    assert args.command == "compounder"
+    assert args.top == 15
+    assert args.ticker is None
+    assert args.show_traps is False
+
+    args_ticker = parser.parse_args(["compounder", "BBRI"])
+    assert args_ticker.command == "compounder"
+    assert args_ticker.ticker == "BBRI"
+
+    args_traps = parser.parse_args(["compounder", "--show-traps"])
+    assert args_traps.command == "compounder"
+    assert args_traps.show_traps is True

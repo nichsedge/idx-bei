@@ -285,17 +285,19 @@ def build_parser():
     )
 
     # 14. Forensic Compounder Screener
-    p_comp = sub.add_parser(
+    p_compounder = sub.add_parser(
         "compounder", help="Screen long-term DCA compounders with forensic anti-trap protection"
     )
-    p_comp.add_argument("ticker", nargs="?", default=None, help="Specific ticker to analyze")
-    p_comp.add_argument(
+    p_compounder.add_argument("ticker", nargs="?", default=None, help="Specific ticker to analyze")
+    p_compounder.add_argument(
         "--min-score", type=float, default=65.0, help="Minimum Compounder Score (default: 65.0)"
     )
-    p_comp.add_argument(
+    p_compounder.add_argument(
         "--top", type=int, default=15, help="Number of top compounders to display (default: 15)"
     )
-    p_comp.add_argument("--show-traps", action="store_true", help="Display identified value traps")
+    p_compounder.add_argument(
+        "--show-traps", action="store_true", help="Display identified value traps"
+    )
 
     # 14. Ingestion Status & Backfill Recommendation
     sub.add_parser(
