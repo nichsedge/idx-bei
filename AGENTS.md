@@ -17,6 +17,8 @@ This repository is organized as a unified Python quantitative data pipeline, MCP
   - `signals.py`: 8 decision-support screens (Sector Rotation & Market Regime, Composite Alpha, Foreign Flow, Bandarmology Broker Dominance, Audit Risk, Dilution Watch, Sharia Value, Pasar Nego).
   - `cli.py`: unified CLI entrypoint for `idx` command.
 - `python/tests/`: automated pytest suite (181 passing unit tests, >=85% coverage).
+- `notebooks/`: interactive research walkthrough scripts (quant data pipeline and Neo4j graph walkthroughs).
+- `docs/`: empirical API verification specs, decision guides, and documentation.
 - `data/`: local datasets (partitioned time-series, Parquet exports, daily briefings, dynamic USD/IDR rate cache, and KSEI ownership CSVs).
 - `frontend/`: Modern React 19 + TypeScript + Vite single-page application (SPA) with TradingView Lightweight Charts v5 (candlesticks, EMA-20/50, Bollinger Bands, Foreign Flow sub-panel), Vis.js relationship graphs, Bandarmology & Stealth Accumulation radar, Dividend Decision & Trap Radar, Data Ingestion & Backfill Horizon Status page, Interactive Strategy Backtester, Lucide icons, and live WebSocket streaming.
 - `dashboard/`: Vanilla HTML/CSS/JS reference dashboard.

@@ -33,8 +33,7 @@ python/
 │       ├── signals.py              # 7 decision-support screens & stealth accumulation model
 │       └── cli.py                  # Unified CLI implementation (idx entrypoint)
 ├── pyproject.toml                  # Package Configuration (src-layout)
-├── API_VERIFICATION_SPEC.md        # Empirical API Verification Specification
-└── tests/                          # Pytest Suite (150 passing unit tests)
+└── tests/                          # Pytest Suite (181 passing unit tests)
 ```
 
 ---
@@ -145,4 +144,4 @@ uv run pytest tests/ -v
 
 ## 📈 Quantitative Endpoint Reference
 
-For detailed empirical specs, headers, and payload structures, see [API_VERIFICATION_SPEC.md](API_VERIFICATION_SPEC.md).
+For detailed empirical specs, headers, and payload structures, see [API_VERIFICATION_SPEC.md](../docs/API_VERIFICATION_SPEC.md).

@@ -20,8 +20,8 @@ uv sync
 ```
 
 ### 📓 Interactive Quantitative Walkthrough
-For a self-contained, zero-boilerplate exploration of the data pipeline, foreign flow, Bandarmology, and vectorized backtesting, open the interactive notebook:
-- **[notebooks/idx_quantitative_walkthrough.ipynb](notebooks/idx_quantitative_walkthrough.ipynb)**
+For a self-contained, zero-boilerplate exploration of the data pipeline, foreign flow, Bandarmology, and vectorized backtesting, open the interactive walkthrough script:
+- **[notebooks/idx_quantitative_walkthrough.py](notebooks/idx_quantitative_walkthrough.py)**
 
 ### 🐳 1-Click Docker Launch
 Launch the complete stack (Unified Web Dashboard, REST API, WebSocket server, and Neo4j graph database) with a single command:
@@ -213,10 +213,10 @@ idx-bei/
 │   │   ├── api.py                 # FastAPI REST microservice & WebSocket broadcast server
 │   │   ├── signals.py             # 8 decision-support screens & stealth accumulation model
 │   │   └── cli.py                 # CLI implementation
-│   ├── tests/                     # Pytest suite (175+ passing unit tests, >=85% coverage)
-│   ├── neo4j.ipynb                # Graph analysis notebook
+│   ├── tests/                     # Pytest suite (181 passing unit tests, >=85% coverage)
 │   └── pyproject.toml             # Package config (uv/setuptools)
-├── notebooks/                     # Interactive Jupyter research walkthrough notebooks
+├── notebooks/                     # Interactive research walkthrough scripts (quant & neo4j)
+├── docs/                          # Empirical API specs, architecture, and decision guides
 ├── data/                          # Generated datasets (gitignored)
 │   ├── timeseries/                # Historical OHLCV, broker, index partitions
 │   ├── parquet/                   # Columnar exports (daily and monthly compacted)
@@ -286,7 +286,7 @@ uv run idx graph --ingest
 | `GetNewsSearch` | Market news & headlines | 🟢 |
 | `GetAllAnnouncement` | Company disclosures & PDF filings | 🟢 |
 
-See [API_VERIFICATION_SPEC.md](python/API_VERIFICATION_SPEC.md) for full endpoint documentation.
+See [API_VERIFICATION_SPEC.md](docs/API_VERIFICATION_SPEC.md) for full endpoint documentation.
 
 ## License
 
