@@ -112,3 +112,28 @@ class TestMigrateJson:
         result = ts.migrate_json("broker_summary", base_dir=base_dir)
         assert result["migrated_dates"] == 0
         assert result["source"] is None
+
+
+class TestIngestJsonPartitions:
+    def test_converts_json_partitions_to_parquet(self, base_dir):
+        # Simulate Termux idx-sync writing date=YYYY-MM-DD.json
+        ts_dir = ts.dataset_dir("stock_summary", base_dir)
+        os.makedirs(ts_dir, exist_ok=True)
+        json_file = os.path.join(ts_dir, "date=2026-04-01.json")
+        records = [
+            {"Date": "2026-04-01T00:00:00", "StockCode": "BBCA", "Close": 9000},
+            {"Date": "2026-04-01T00:00:00", "StockCode": "BBRI", "Close": 4500},
+        ]
+        with open(json_file, "w", encoding="utf-8") as f:
+            json.dump(records, f)
+
+        converted = ts.ingest_json_partitions("stock_summary", base_dir=base_dir)
+        assert converted == 1
+        assert not os.path.exists(json_file)
+        assert "2026-04-01" in ts.existing_dates("stock_summary", base_dir)
+
+        # Verify data read matches
+        df = ts.read_dataset("stock_summary", base_dir=base_dir)
+        assert len(df) == 2
+        assert set(df["StockCode"]) == {"BBCA", "BBRI"}
+

@@ -221,6 +221,45 @@ def migrate_json(dataset, base_dir=None, keep_backup=True):
     return result
 
 
+def ingest_json_partitions(dataset, base_dir=None):
+    """Converts date=*.json partition files (e.g. ingested via Termux idx-sync) to Parquet.
+
+    Returns:
+        Number of converted partitions.
+    """
+    pattern = os.path.join(dataset_dir(dataset, base_dir), "date=*.json")
+    converted = 0
+    have = existing_dates(dataset, base_dir)
+
+    for json_path in sorted(glob.glob(pattern)):
+        basename = os.path.basename(json_path)
+        date_iso = basename[len("date=") : -len(".json")]
+
+        try:
+            with open(json_path, encoding="utf-8") as f:
+                records = json.load(f)
+            if isinstance(records, list) and records:
+                if date_iso not in have:
+                    write_partition(dataset, date_iso, records, base_dir)
+                    log.info("Converted Termux JSON partition %s to Parquet (%d records)", date_iso, len(records))
+                os.remove(json_path)
+                converted += 1
+            else:
+                log.warning("Invalid JSON records in %s, removing empty file", json_path)
+                os.remove(json_path)
+        except Exception as exc:
+            log.warning("Could not convert %s: %s", json_path, exc)
+
+    return converted
+
+
 def migrate_all(base_dir=None):
-    """Runs migration for all known datasets. Returns per-dataset results."""
-    return {ds: migrate_json(ds, base_dir) for ds in DATASETS}
+    """Runs legacy migration and converts any Termux JSON partitions. Returns per-dataset results."""
+    results = {}
+    for ds in DATASETS:
+        res = migrate_json(ds, base_dir)
+        converted_json = ingest_json_partitions(ds, base_dir)
+        res["termux_json_converted"] = converted_json
+        results[ds] = res
+    return results
+

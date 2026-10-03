@@ -16,7 +16,8 @@ This repository is organized as a unified Python quantitative data pipeline, MCP
   - `api.py`: high-performance async FastAPI REST & WebSocket microservice with in-memory TTL query caching.
   - `signals.py`: 8 decision-support screens (Sector Rotation & Market Regime, Composite Alpha, Foreign Flow, Bandarmology Broker Dominance, Audit Risk, Dilution Watch, Sharia Value, Pasar Nego).
   - `cli.py`: unified CLI entrypoint for `idx` command.
-- `python/tests/`: automated pytest suite (181 passing unit tests, >=85% coverage).
+- `tools/idx-sync/`: lightweight standalone Go ingestion binary (`idx-sync`) with uTLS Cloudflare bypass for native Android Termux and embedded environments.
+- `python/tests/`: automated pytest suite (182 passing unit tests, >=85% coverage).
 - `notebooks/`: interactive research walkthrough scripts (quant data pipeline and Neo4j graph walkthroughs).
 - `docs/`: empirical API verification specs, decision guides, and documentation.
 - `data/`: local datasets (partitioned time-series, Parquet exports, daily briefings, dynamic USD/IDR rate cache, and KSEI ownership CSVs).
@@ -52,6 +53,8 @@ Run all commands from the repository root using modern `uv`:
 - `uv run idx drift --latest`: track month-over-month KSEI shareholder and tycoon position changes.
 - `uv run idx drift --ingest <path_or_url>`: ingest, clean, standardize, and compute drift deltas from KSEI shareholder reports.
 - `cd frontend && bun install && bun run build`: compile modern React 19 / TypeScript SPA to `frontend/dist`.
+- `cd tools/idx-sync && go build -o ../../bin/idx-sync .`: build native Go standalone Termux ingestion binary.
+- `cd tools/idx-sync && CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o ../../bin/idx-sync-android-arm64 .`: cross-compile static ARM64 binary for Android Termux.
 - `uv run idx serve --port 8000`: start unified Web Dashboard (serves `frontend/dist` with fallback to `dashboard/`), FastAPI REST API & WebSocket server.
 - `uv run idx dashboard --port 8000`: start unified Web Dashboard, FastAPI REST API & WebSocket server.
 - `uv run idx mcp`: start Model Context Protocol (MCP) server for AI assistants.

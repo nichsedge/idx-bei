@@ -255,6 +255,37 @@ uv run idx graph --ingest
 # URL: http://localhost:7474 (user: neo4j, password: password)
 ```
 
+## 📱 Termux & Android Scheduling (Standalone / Embedded)
+
+For running daily scheduled ingestion directly on Android without heavy C++ compilation errors (`duckdb`, `pyarrow`, `curl_cffi`):
+
+### Option 1: Standalone Go Syncer (`tools/idx-sync`) — Zero Python Dependencies
+Built with pure-Go uTLS Chrome/Safari fingerprint impersonation to bypass Cloudflare WAF natively:
+
+```bash
+# Build natively inside Termux
+pkg install golang git
+cd tools/idx-sync && go build -o ../../bin/idx-sync .
+
+# Run daily sync (OHLCV, Broker summary, Index summary, USD/IDR rate)
+./bin/idx-sync -data-dir ./data
+
+# Or schedule with Termux cronie (16:45 WIB):
+# 45 16 * * 1-5 /data/data/com.termux/files/home/idx-bei/scripts/termux_schedule.sh >> /data/data/com.termux/files/home/idx-sync.log 2>&1
+```
+*Note: JSON partitions produced by `idx-sync` are automatically converted to snappy `.parquet` whenever `uv run idx compact` or `timeseries.migrate_all()` is executed on your workstation.*
+
+### Option 2: PRoot Distro (Debian / Ubuntu) — Full Python Stack on Android
+If you need the full analytical suite (DuckDB, Parquet, 8-screen signals) on Android, run inside PRoot where standard `manylinux_aarch64` wheels install instantly:
+
+```bash
+pkg install proot-distro cronie
+proot-distro install debian
+proot-distro login debian -- bash -c "cd ~/idx-bei && uv run idx daily"
+```
+
+---
+
 ## Tech Stack
 
 | Layer | Tools |

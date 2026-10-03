@@ -57,3 +57,5 @@ Thumbs.db
 # --- Project Specific ---
 .claude/
 CLAUDE.md
+bin/
+tools/idx-sync/idx-sync
