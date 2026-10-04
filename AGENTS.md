@@ -3,7 +3,16 @@
 ## Project Structure & Module Organization
 This repository is organized as a unified Python quantitative data pipeline, MCP server, and decision-support engine.
 
-- `python/src/idx/`: core package (`src-layout`)
+- `cmd/`: unified native Go CLI entrypoints:
+  - `cmd/idx/`: unified CLI toolkit (`idx serve`, `idx sync`, `idx status`, `idx compounder`, `idx stock`).
+  - `cmd/idx-server/`: high-performance standalone REST & WebSocket server on port 8000.
+  - `cmd/idx-sync/`: standalone uTLS market ingestion runner.
+- `pkg/`: modular pure Go engine packages (zero CGO):
+  - `pkg/models/`: Go structs for companies, stocks, parquet rows, and dashboard payloads.
+  - `pkg/engine/`: pure Go Parquet time-series reader, vectorized technical indicators (RSI, EMA, Bollinger Bands, ATR), and forensic compounder scoring.
+  - `pkg/api/`: Go 1.22+ `http.ServeMux` REST & WebSocket streaming server with static SPA/dashboard hosting.
+  - `pkg/ingest/`: uTLS Cloudflare bypass ingestion client.
+- `python/src/idx/`: Python quant data pipeline, MCP server, and decision-support engine.
   - `core/`: HTTP client (`curl_cffi` sync & `AsyncIDXClient`), schema validation, DuckDB query layer, KSEI ownership & drift engine.
   - `scrapers/`: domain scrapers (company profiles, financial ratios, corporate actions, members, news, announcements, async backfillers).
   - `pipelines/`: daily ingestion, time-series partitioning, incremental Parquet columnar exports.
@@ -13,10 +22,9 @@ This repository is organized as a unified Python quantitative data pipeline, MCP
   - `ingestion.py`: dataset inventory inspection, dynamic calendar gap detection with holiday caching, 4-tier quantitative backfill recommendations, and async background task runner.
   - `backtest.py`: vectorized strategy simulator, volatility parity position sizing, drawdown calculation, Sharpe/Sortino ratios, and benchmark alpha.
   - `graph.py`: Neo4j UBO tree resolution, circular cross-holding detection, and board centrality.
-  - `api.py`: high-performance async FastAPI REST & WebSocket microservice with in-memory TTL query caching.
+  - `api.py`: Python FastAPI REST & WebSocket microservice.
   - `signals.py`: 8 decision-support screens (Sector Rotation & Market Regime, Composite Alpha, Foreign Flow, Bandarmology Broker Dominance, Audit Risk, Dilution Watch, Sharia Value, Pasar Nego).
-  - `cli.py`: unified CLI entrypoint for `idx` command.
-- `tools/idx-sync/`: lightweight standalone Go ingestion binary (`idx-sync`) with uTLS Cloudflare bypass for native Android Termux and embedded environments.
+  - `cli.py`: unified Python CLI entrypoint for `idx` command.
 - `python/tests/`: automated pytest suite (182 passing unit tests, >=85% coverage).
 - `notebooks/`: interactive research walkthrough scripts (quant data pipeline and Neo4j graph walkthroughs).
 - `docs/`: empirical API verification specs, decision guides, and documentation.
@@ -53,10 +61,14 @@ Run all commands from the repository root using modern `uv`:
 - `uv run idx drift --latest`: track month-over-month KSEI shareholder and tycoon position changes.
 - `uv run idx drift --ingest <path_or_url>`: ingest, clean, standardize, and compute drift deltas from KSEI shareholder reports.
 - `cd frontend && bun install && bun run build`: compile modern React 19 / TypeScript SPA to `frontend/dist`.
-- `cd tools/idx-sync && go build -o ../../bin/idx-sync .`: build native Go standalone Termux ingestion binary.
-- `cd tools/idx-sync && CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o ../../bin/idx-sync-android-arm64 .`: cross-compile static ARM64 binary for Android Termux.
-- `uv run idx serve --port 8000`: start unified Web Dashboard (serves `frontend/dist` with fallback to `dashboard/`), FastAPI REST API & WebSocket server.
-- `uv run idx dashboard --port 8000`: start unified Web Dashboard, FastAPI REST API & WebSocket server.
+- `make build` / `make install`: build and install native Go binaries (`idx`, `idx-server`, `idx-sync`) to `bin/`, `~/go/bin/`, and `~/.local/bin/`.
+- `make build-arm64`: cross-compile static ARM64 binaries for Android Termux (`bin/idx-android-arm64`, `bin/idx-server-android-arm64`, `bin/idx-sync-android-arm64`).
+- `make test`: execute Go automated test suite across packages (`pkg/api`, `pkg/engine`).
+- `idx serve [--port 8000]`: start native Go REST & WebSocket server serving dashboard and Parquet queries.
+- `idx status`: inspect local time-series dataset inventory and partitions via native Go.
+- `idx compounder [--top 15] [TICKER]`: institutional DCA compounder screening via native Go.
+- `idx stock <TICKER> [LIMIT]`: inspect Parquet stock history and technical indicators (RSI, EMA, Bollinger Bands, ATR) via native Go.
+- `idx sync [--date YYYYMMDD]`: ingest market close data via standalone uTLS.
 - `uv run idx mcp`: start Model Context Protocol (MCP) server for AI assistants.
 - `uv run pytest python/tests`: run full 171-test automated pytest suite with >=85% coverage enforcement.
 - `uv run mypy python/src/idx`: run Mypy static type checker.

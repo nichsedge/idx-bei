@@ -37,7 +37,7 @@ fi
 
 if [ ! -f "$BIN_PATH" ]; then
     echo "ERROR: idx-sync binary not found in $REPO_DIR/bin." >&2
-    echo "Build with: cd $REPO_DIR/tools/idx-sync && go build -o ../../bin/idx-sync ." >&2
+    echo "Build with: cd $REPO_DIR && make build (or make build-arm64)" >&2
     exit 1
 fi
 

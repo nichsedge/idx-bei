@@ -1,9 +1,8 @@
-package main
+package ingest
 
 import (
 	"bytes"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -19,17 +18,17 @@ import (
 )
 
 const (
-	defaultBaseURL = "https://www.idx.co.id/primary"
-	defaultOpenFX  = "https://open.er-api.com/v6/latest/USD"
+	DefaultBaseURL = "https://www.idx.co.id/primary"
+	DefaultOpenFX  = "https://open.er-api.com/v6/latest/USD"
 )
 
 type EndpointConfig struct {
-	Name     string
-	Path     string
-	DataKey  string
+	Name    string
+	Path    string
+	DataKey string
 }
 
-var endpoints = []EndpointConfig{
+var Endpoints = []EndpointConfig{
 	{Name: "stock_summary", Path: "/TradingSummary/GetStockSummary", DataKey: "data"},
 	{Name: "broker_summary", Path: "/TradingSummary/GetBrokerSummary", DataKey: "data"},
 	{Name: "index_summary", Path: "/TradingSummary/GetIndexSummary", DataKey: "data"},
@@ -43,33 +42,44 @@ type SyncSummary struct {
 	Errors     []string       `json:"errors,omitempty"`
 }
 
-func main() {
-	now := time.Now()
-	defaultDate := now.Format("20060102")
+type SyncOptions struct {
+	Date       string
+	DataDir    string
+	WebhookURL string
+	Delay      float64
+	Retries    int
+}
 
-	dateFlag := flag.String("date", defaultDate, "Target date in YYYYMMDD format (e.g. 20260401)")
-	dataDirFlag := flag.String("data-dir", "data", "Base data directory (e.g. ./data)")
-	webhookFlag := flag.String("webhook", "", "Optional Discord/Slack webhook URL for alerts")
-	delayFlag := flag.Float64("delay", 1.0, "Delay in seconds between requests")
-	retriesFlag := flag.Int("retries", 3, "Max retry attempts per endpoint")
-	flag.Parse()
-
-	date := *dateFlag
+// RunDailySync runs the full uTLS ingestion for the target date.
+func RunDailySync(opts SyncOptions) (*SyncSummary, error) {
+	if opts.DataDir == "" {
+		opts.DataDir = "data"
+	}
+	if opts.Delay <= 0 {
+		opts.Delay = 1.0
+	}
+	if opts.Retries <= 0 {
+		opts.Retries = 3
+	}
+	date := opts.Date
+	if date == "" {
+		date = time.Now().Format("20060102")
+	}
 	if len(date) != 8 {
-		log.Fatalf("Invalid date format: %q. Expected YYYYMMDD.", date)
+		return nil, fmt.Errorf("invalid date format: %q, expected YYYYMMDD", date)
 	}
 	dateISO := fmt.Sprintf("%s-%s-%s", date[0:4], date[4:6], date[6:8])
 
-	log.Printf("== IDX-BEI Standalone Termux Sync ==")
+	log.Printf("== IDX-BEI Standalone Go Sync ==")
 	log.Printf("Target Date: %s (%s)", date, dateISO)
-	log.Printf("Data Dir:    %s", *dataDirFlag)
+	log.Printf("Data Dir:    %s", opts.DataDir)
 
-	client, err := createTLSClient()
+	client, err := CreateTLSClient()
 	if err != nil {
-		log.Fatalf("Failed to initialize TLS client: %v", err)
+		return nil, fmt.Errorf("failed to initialize TLS client: %w", err)
 	}
 
-	summary := SyncSummary{
+	summary := &SyncSummary{
 		Date:      dateISO,
 		Timestamp: time.Now().UTC().Format(time.RFC3339),
 		Results:   make(map[string]int),
@@ -77,11 +87,11 @@ func main() {
 	}
 
 	// 1. Ingest trading summary endpoints
-	for _, ep := range endpoints {
+	for _, ep := range Endpoints {
 		log.Printf("[%s] Fetching trading summary for %s...", ep.Name, date)
-		url := fmt.Sprintf("%s%s?date=%s&start=0&length=9999", defaultBaseURL, ep.Path, date)
+		url := fmt.Sprintf("%s%s?date=%s&start=0&length=9999", DefaultBaseURL, ep.Path, date)
 
-		records, err := fetchWithRetry(client, url, *retriesFlag, time.Duration(*delayFlag*float64(time.Second)))
+		records, err := FetchWithRetry(client, url, opts.Retries, time.Duration(opts.Delay*float64(time.Second)))
 		if err != nil {
 			msg := fmt.Sprintf("%s: fetch error: %v", ep.Name, err)
 			log.Printf("ERROR: %s", msg)
@@ -98,7 +108,7 @@ func main() {
 		}
 
 		// Save JSON partition: data/timeseries/<dataset>/date=YYYY-MM-DD.json
-		tsDir := filepath.Join(*dataDirFlag, "timeseries", ep.Name)
+		tsDir := filepath.Join(opts.DataDir, "timeseries", ep.Name)
 		if err := os.MkdirAll(tsDir, 0755); err != nil {
 			log.Printf("ERROR creating directory %s: %v", tsDir, err)
 			summary.Errors = append(summary.Errors, fmt.Sprintf("%s: mkdir error: %v", ep.Name, err))
@@ -106,57 +116,44 @@ func main() {
 		}
 
 		partitionFile := filepath.Join(tsDir, fmt.Sprintf("date=%s.json", dateISO))
-		if err := writeJSONAtomic(partitionFile, records); err != nil {
+		if err := WriteJSONAtomic(partitionFile, records); err != nil {
 			log.Printf("ERROR writing partition %s: %v", partitionFile, err)
 			summary.Errors = append(summary.Errors, fmt.Sprintf("%s: write error: %v", ep.Name, err))
 			continue
 		}
 
 		log.Printf("[%s] Wrote %d records to %s", ep.Name, count, partitionFile)
-		time.Sleep(time.Duration(*delayFlag * float64(time.Second)))
+		time.Sleep(time.Duration(opts.Delay * float64(time.Second)))
 	}
 
 	// 2. Fetch USD/IDR exchange rate
-	rate, err := fetchUSDIDRRate()
+	rate, err := FetchUSDIDRRate()
 	if err != nil {
 		log.Printf("WARN: Failed to refresh USD/IDR exchange rate: %v", err)
 	} else {
 		summary.UsdIdrRate = rate
-		rateFile := filepath.Join(*dataDirFlag, "usd_idr_rate.json")
+		rateFile := filepath.Join(opts.DataDir, "usd_idr_rate.json")
 		ratePayload := map[string]any{
 			"rate":      rate,
 			"timestamp": time.Now().Unix(),
 			"source":    "open.er-api.com (go-idx-sync)",
 		}
-		if err := writeJSONAtomic(rateFile, ratePayload); err != nil {
+		if err := WriteJSONAtomic(rateFile, ratePayload); err != nil {
 			log.Printf("WARN: Failed to save %s: %v", rateFile, err)
 		} else {
 			log.Printf("USD/IDR rate updated: %.2f -> %s", rate, rateFile)
 		}
 	}
 
-	// 3. Optional Discord Webhook Alert
-	if *webhookFlag != "" {
-		if err := sendDiscordWebhook(*webhookFlag, summary); err != nil {
-			log.Printf("WARN: Discord webhook delivery failed: %v", err)
-		} else {
-			log.Printf("Discord notification sent.")
-		}
+	// 3. Optional Webhook
+	if opts.WebhookURL != "" {
+		_ = SendDiscordWebhook(opts.WebhookURL, *summary)
 	}
 
-	log.Printf("== Daily Ingestion Complete ==")
-	for ep, count := range summary.Results {
-		log.Printf("  • %-15s : %d records", ep, count)
-	}
-	if len(summary.Errors) > 0 {
-		log.Printf("Warnings/Errors encountered: %d", len(summary.Errors))
-		for _, e := range summary.Errors {
-			log.Printf("  - %s", e)
-		}
-	}
+	return summary, nil
 }
 
-func createTLSClientWithProfile(p profiles.ClientProfile) (tls_client.HttpClient, error) {
+func CreateTLSClientWithProfile(p profiles.ClientProfile) (tls_client.HttpClient, error) {
 	jar := tls_client.NewCookieJar()
 	options := []tls_client.HttpClientOption{
 		tls_client.WithTimeoutSeconds(30),
@@ -166,11 +163,11 @@ func createTLSClientWithProfile(p profiles.ClientProfile) (tls_client.HttpClient
 	return tls_client.NewHttpClient(tls_client.NewNoopLogger(), options...)
 }
 
-func createTLSClient() (tls_client.HttpClient, error) {
-	return createTLSClientWithProfile(profiles.Safari_16_0)
+func CreateTLSClient() (tls_client.HttpClient, error) {
+	return CreateTLSClientWithProfile(profiles.Safari_16_0)
 }
 
-func fetchWithRetry(client tls_client.HttpClient, url string, maxRetries int, delay time.Duration) ([]map[string]any, error) {
+func FetchWithRetry(client tls_client.HttpClient, url string, maxRetries int, delay time.Duration) ([]map[string]any, error) {
 	clientProfiles := []profiles.ClientProfile{
 		profiles.Chrome_120,
 		profiles.Chrome_124,
@@ -219,12 +216,12 @@ func fetchWithRetry(client tls_client.HttpClient, url string, maxRetries int, de
 
 		if resp.StatusCode == 403 || resp.StatusCode == 429 || resp.StatusCode >= 500 {
 			nextProfile := clientProfiles[attempt%len(clientProfiles)]
-			newClient, err := createTLSClientWithProfile(nextProfile)
+			newClient, err := CreateTLSClientWithProfile(nextProfile)
 			if err == nil {
 				currentClient = newClient
 			}
 			backoff := time.Duration(float64(attempt+1)*2.0+rand.Float64()) * time.Second
-			log.Printf("HTTP %d for %s (rotating TLS profile to %s, retrying in %v...)", resp.StatusCode, url, nextProfile.GetClientHelloStr(), backoff)
+			log.Printf("HTTP %d for %s (rotating TLS profile, retrying in %v...)", resp.StatusCode, url, backoff)
 			time.Sleep(backoff)
 			lastErr = fmt.Errorf("HTTP %d", resp.StatusCode)
 			continue
@@ -236,9 +233,9 @@ func fetchWithRetry(client tls_client.HttpClient, url string, maxRetries int, de
 	return nil, fmt.Errorf("max retries exceeded: %w", lastErr)
 }
 
-func fetchUSDIDRRate() (float64, error) {
+func FetchUSDIDRRate() (float64, error) {
 	client := &http.Client{Timeout: 10 * time.Second}
-	req, err := http.NewRequest("GET", defaultOpenFX, nil)
+	req, err := http.NewRequest("GET", DefaultOpenFX, nil)
 	if err != nil {
 		return 0, err
 	}
@@ -268,7 +265,7 @@ func fetchUSDIDRRate() (float64, error) {
 	return rate, nil
 }
 
-func writeJSONAtomic(path string, data any) error {
+func WriteJSONAtomic(path string, data any) error {
 	dir := filepath.Dir(path)
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		return err
@@ -296,20 +293,11 @@ func writeJSONAtomic(path string, data any) error {
 	return os.Rename(tmpPath, path)
 }
 
-func sendDiscordWebhook(webhookURL string, summary SyncSummary) error {
+func SendDiscordWebhook(webhookURL string, summary SyncSummary) error {
 	fields := []map[string]any{
-		{
-			"name":   "Date",
-			"value":  summary.Date,
-			"inline": true,
-		},
-		{
-			"name":   "USD/IDR",
-			"value":  fmt.Sprintf("Rp %.2f", summary.UsdIdrRate),
-			"inline": true,
-		},
+		{"name": "Trading Date", "value": summary.Date, "inline": true},
+		{"name": "USD/IDR Rate", "value": fmt.Sprintf("Rp %.2f", summary.UsdIdrRate), "inline": true},
 	}
-
 	for ep, count := range summary.Results {
 		fields = append(fields, map[string]any{
 			"name":   ep,
@@ -317,37 +305,25 @@ func sendDiscordWebhook(webhookURL string, summary SyncSummary) error {
 			"inline": true,
 		})
 	}
-
-	statusColor := 0x00FF00 // Green
-	if len(summary.Errors) > 0 {
-		statusColor = 0xFFA500 // Orange
-	}
-
 	payload := map[string]any{
-		"username": "IDX-BEI Termux Bot",
+		"username": "IDX-BEI Ingestion Bot",
 		"embeds": []map[string]any{
 			{
-				"title":       "📊 Daily IDX Ingestion Report (Termux)",
-				"description": fmt.Sprintf("Daily trading data ingested successfully at %s", summary.Timestamp),
-				"color":       statusColor,
+				"title":       "IDX-BEI Daily Ingestion Complete",
+				"color":       3066993,
 				"fields":      fields,
+				"timestamp":   summary.Timestamp,
 			},
 		},
 	}
-
-	body, err := json.Marshal(payload)
+	jsonBytes, err := json.Marshal(payload)
 	if err != nil {
 		return err
 	}
-
-	resp, err := http.Post(webhookURL, "application/json", bytes.NewBuffer(body))
+	resp, err := http.Post(webhookURL, "application/json", bytes.NewBuffer(jsonBytes))
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
-
-	if resp.StatusCode >= 400 {
-		return fmt.Errorf("webhook responded with HTTP %d", resp.StatusCode)
-	}
 	return nil
 }
