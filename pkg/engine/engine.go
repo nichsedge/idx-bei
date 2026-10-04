@@ -3,13 +3,13 @@ package engine
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"math"
 	"os"
 	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/nichsedge/idx-bei/pkg/models"
 	"github.com/parquet-go/parquet-go"
@@ -19,6 +19,10 @@ var (
 	alphaCacheLock sync.RWMutex
 	alphaCache     *models.NetworkAlphaData
 	alphaCacheMtime int64
+
+	stockCacheLock sync.RWMutex
+	stockCache     map[string][]models.ParquetStockRow
+	stockCacheTime time.Time
 )
 
 // LoadDashboardData loads and caches data/network_alpha_data.json.
@@ -173,11 +177,16 @@ func GetPeers(dataDir, ticker string) ([]models.Company, error) {
 	return peers, nil
 }
 
-// LoadStockParquetRows reads historical stock summary rows for a specific ticker.
-func LoadStockParquetRows(dataDir, ticker string) ([]models.ParquetStockRow, error) {
-	stockDir := filepath.Join(dataDir, "timeseries", "stock_summary")
-	ticker = strings.ToUpper(ticker)
+// LoadAllStockParquetMap reads all stock summary parquet files once and partitions by stock code.
+func LoadAllStockParquetMap(dataDir string) (map[string][]models.ParquetStockRow, error) {
+	stockCacheLock.RLock()
+	if stockCache != nil && time.Since(stockCacheTime) < 5*time.Minute {
+		defer stockCacheLock.RUnlock()
+		return stockCache, nil
+	}
+	stockCacheLock.RUnlock()
 
+	stockDir := filepath.Join(dataDir, "timeseries", "stock_summary")
 	var files []string
 	_ = filepath.Walk(stockDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil || info.IsDir() {
@@ -188,11 +197,9 @@ func LoadStockParquetRows(dataDir, ticker string) ([]models.ParquetStockRow, err
 		}
 		return nil
 	})
-
 	sort.Strings(files)
 
-	var allRows []models.ParquetStockRow
-
+	allMap := make(map[string][]models.ParquetStockRow)
 	for _, fPath := range files {
 		f, err := os.Open(fPath)
 		if err != nil {
@@ -203,7 +210,6 @@ func LoadStockParquetRows(dataDir, ticker string) ([]models.ParquetStockRow, err
 			f.Close()
 			continue
 		}
-
 		pr, err := parquet.OpenFile(f, stat.Size())
 		if err != nil {
 			f.Close()
@@ -211,29 +217,42 @@ func LoadStockParquetRows(dataDir, ticker string) ([]models.ParquetStockRow, err
 		}
 
 		reader := parquet.NewGenericReader[models.ParquetStockRow](pr)
-		rows := make([]models.ParquetStockRow, 256)
+		rows := make([]models.ParquetStockRow, 1024)
 		for {
 			n, err := reader.Read(rows)
 			for i := 0; i < n; i++ {
-				if rows[i].StockCode == ticker {
-					allRows = append(allRows, rows[i])
-				}
+				code := rows[i].StockCode
+				allMap[code] = append(allMap[code], rows[i])
 			}
 			if err != nil {
-				if err == io.EOF {
-					break
-				}
 				break
 			}
 		}
 		f.Close()
 	}
 
-	sort.Slice(allRows, func(i, j int) bool {
-		return allRows[i].Date < allRows[j].Date
-	})
+	for k := range allMap {
+		sort.Slice(allMap[k], func(i, j int) bool {
+			return allMap[k][i].Date < allMap[k][j].Date
+		})
+	}
 
-	return allRows, nil
+	stockCacheLock.Lock()
+	stockCache = allMap
+	stockCacheTime = time.Now()
+	stockCacheLock.Unlock()
+
+	return allMap, nil
+}
+
+// LoadStockParquetRows reads historical stock summary rows for a specific ticker.
+func LoadStockParquetRows(dataDir, ticker string) ([]models.ParquetStockRow, error) {
+	allMap, err := LoadAllStockParquetMap(dataDir)
+	if err != nil {
+		return nil, err
+	}
+	ticker = strings.ToUpper(ticker)
+	return allMap[ticker], nil
 }
 
 // GetStockData returns OHLCV records with computed technical indicators (RSI14, EMA20/50/200, Bollinger Bands, ATR14).

@@ -4,12 +4,13 @@
 This repository is organized as a unified Python quantitative data pipeline, MCP server, and decision-support engine.
 
 - `cmd/`: unified native Go CLI entrypoints:
-  - `cmd/idx/`: unified CLI toolkit (`idx serve`, `idx sync`, `idx status`, `idx compounder`, `idx stock`).
+  - `cmd/idx/`: unified CLI toolkit (`idx serve`, `idx sync`, `idx status`, `idx compounder`, `idx stock`, `idx dividend`, `idx signals`, `idx bandarmology`, `idx backtest`, `idx mcp`).
   - `cmd/idx-server/`: high-performance standalone REST & WebSocket server on port 8000.
   - `cmd/idx-sync/`: standalone uTLS market ingestion runner.
 - `pkg/`: modular pure Go engine packages (zero CGO):
   - `pkg/models/`: Go structs for companies, stocks, parquet rows, and dashboard payloads.
-  - `pkg/engine/`: pure Go Parquet time-series reader, vectorized technical indicators (RSI, EMA, Bollinger Bands, ATR), and forensic compounder scoring.
+  - `pkg/engine/`: pure Go Parquet time-series reader, cached in-memory partition indexer, vectorized technical indicators (RSI, EMA, Bollinger Bands, ATR), forensic compounder scoring, dividend decision & trap risk engine, signals & stealth accumulation scanner, and strategy backtester.
+  - `pkg/mcp/`: high-performance stdio Model Context Protocol (MCP) server for AI assistants (Antigravity, Claude, Cursor).
   - `pkg/api/`: Go 1.22+ `http.ServeMux` REST & WebSocket streaming server with static SPA/dashboard hosting.
   - `pkg/ingest/`: uTLS Cloudflare bypass ingestion client.
 - `python/src/idx/`: Python quant data pipeline, MCP server, and decision-support engine.

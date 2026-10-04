@@ -56,29 +56,47 @@ uv run idx parquet
 uv run idx compact
 ```
 
-### Forensic Quality & DCA Compounder Screener
+### Forensic Quality & DCA Compounder Screener (Native Go)
 
 ```bash
 # Screen top long-term DCA compounders with forensic anti-trap protection
-uv run idx compounder --top 15
+idx compounder --top 15
 
 # Analyze specific ticker for forensic quality, Justified PBV, and DCA suitability
-uv run idx compounder BMRI
-uv run idx compounder LPKR
+idx compounder BMRI
+idx compounder BBCA
 
 # Inspect identified accounting value traps (one-off earnings distortions)
-uv run idx compounder --show-traps
+idx compounder --show-traps
 ```
 
-### Quantitative Backtesting & Strategy Simulator
+### Quantitative Dividend Decision & Trap Radar (Native Go)
+
+```bash
+# Analyze specific ticker for dividend yield, DPR, and Ex-Date trap risk
+idx dividend BBCA
+idx dividend PTBA
+
+# Screen top dividend opportunities across the entire market
+idx dividend --screen --min-yield 8.0
+```
+
+### Market Signals & Stealth Institutional Accumulation (Native Go)
+
+```bash
+# Daily foreign flow accumulation & stealth accumulation briefing
+idx signals
+
+# Scan for stealth accumulation (quiet foreign buying during consolidation)
+idx bandarmology --stealth
+```
+
+### Quantitative Backtesting & Strategy Simulator (Native Go)
 
 ```bash
 # Backtest strategy holding returns, Sharpe ratios, and max drawdowns
-uv run idx backtest --strategy foreign_flow --holding 20 --top 10
-uv run idx backtest --strategy composite_alpha --holding 20 --stop-loss 7.0 --take-profit 15.0
-
-# Simulate Dividend Arbitrage (Naive Hold vs Pre-Cum Exit vs Post-Ex Rebuy)
-uv run idx backtest --strategy dividend_arbitrage
+idx backtest --strategy foreign_flow --holding 20 --top 10
+idx backtest --strategy composite_alpha --holding 20 --stop-loss 7.0 --take-profit 15.0
 ```
 
 ### Knowledge Graph & Ultimate Beneficial Ownership (UBO)
