@@ -29,9 +29,30 @@ type Company struct {
 	DCAVerdict      string   `json:"dca_verdict,omitempty"`
 	ValuationStatus string   `json:"valuation_status,omitempty"`
 	ForensicFlags   []string `json:"forensic_flags,omitempty"`
-	BoardMembers    any      `json:"board_members,omitempty"`
-	Shareholders    any      `json:"shareholders,omitempty"`
-	Subsidiaries    any      `json:"subsidiaries,omitempty"`
+	BoardMembers    []BoardMember `json:"board_members,omitempty"`
+	Shareholders    []Shareholder `json:"shareholders,omitempty"`
+	Subsidiaries    []Subsidiary  `json:"subsidiaries,omitempty"`
+}
+
+// Shareholder represents an equity holder in an IDX company.
+type Shareholder struct {
+	Name         string  `json:"name"`
+	Percentage   float64 `json:"percentage"`
+	IsController bool    `json:"is_controller"`
+}
+
+// Subsidiary represents an operating subsidiary owned by an IDX company.
+type Subsidiary struct {
+	Name        string  `json:"name"`
+	Percentage  float64 `json:"percentage"`
+	BidangUsaha string  `json:"bidang_usaha"`
+}
+
+// BoardMember represents an executive director or commissioner.
+type BoardMember struct {
+	Name  string `json:"name"`
+	Role  string `json:"role"`
+	Title string `json:"title"`
 }
 
 // NetworkAlphaData wraps data/network_alpha_data.json.
