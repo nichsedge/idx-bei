@@ -68,19 +68,32 @@ async def root_redirect():
 
 
 _TTL_CACHE: dict[str, tuple[float, Any]] = {}
+_MAX_CACHE_ENTRIES = 500
 
 
 def get_from_cache(key: str, ttl_seconds: float = 60.0) -> Any | None:
+    now = time.time()
     if key in _TTL_CACHE:
         timestamp, value = _TTL_CACHE[key]
-        if time.time() - timestamp < ttl_seconds:
+        if now - timestamp < ttl_seconds:
             return value
         del _TTL_CACHE[key]
     return None
 
 
 def set_in_cache(key: str, value: Any) -> None:
-    _TTL_CACHE[key] = (time.time(), value)
+    now = time.time()
+    if len(_TTL_CACHE) >= _MAX_CACHE_ENTRIES:
+        expired = [k for k, (t, _) in _TTL_CACHE.items() if now - t >= 60.0]
+        for k in expired:
+            del _TTL_CACHE[k]
+        if len(_TTL_CACHE) >= _MAX_CACHE_ENTRIES:
+            oldest_keys = sorted(_TTL_CACHE.keys(), key=lambda k: _TTL_CACHE[k][0])[
+                : _MAX_CACHE_ENTRIES // 5
+            ]
+            for k in oldest_keys:
+                del _TTL_CACHE[k]
+    _TTL_CACHE[key] = (now, value)
 
 
 class SQLQueryRequest(BaseModel):
@@ -186,10 +199,17 @@ async def get_signals(
 
 @app.get("/api/stock/{ticker}", tags=["Market Data"])
 async def get_stock_data(ticker: str, limit: int = 120):
+    import re
+
     import numpy as np
     import pandas as pd
 
-    ticker = ticker.upper()
+    ticker = ticker.upper().strip()
+    if not re.match(r"^[A-Z0-9_\-\.]{1,30}$", ticker):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid ticker format.",
+        )
     df = query_dataset("stock_summary", where=f"StockCode = '{ticker}'")
     if len(df) == 0:
         raise HTTPException(status_code=404, detail=f"Ticker '{ticker}' not found.")
@@ -236,11 +256,18 @@ async def get_stock_data(ticker: str, limit: int = 120):
 
 @app.get("/api/stock/{ticker}/blocks", tags=["Market Data"])
 async def get_stock_blocks(ticker: str):
+    import re
+
     import pandas as pd
 
     from idx.signals import INSTITUTIONAL_BROKERS, RETAIL_BROKERS
 
-    ticker = ticker.upper()
+    ticker = ticker.upper().strip()
+    if not re.match(r"^[A-Z0-9_\-\.]{1,30}$", ticker):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid ticker format.",
+        )
     df = query_dataset("stock_summary", where=f"StockCode = '{ticker}'")
     if len(df) == 0:
         raise HTTPException(status_code=404, detail=f"Ticker '{ticker}' not found.")
@@ -423,14 +450,37 @@ async def get_broker_flow(date: str | None = None, top_k: int = 10):
 async def get_peers(ticker: str):
     import pandas as pd
 
-    ticker = ticker.upper()
+    ticker = ticker.upper().strip()
     ratios_path = os.path.join(DATA_DIR, "parquet", "financial_ratios.parquet")
     if not os.path.exists(ratios_path):
         raise HTTPException(status_code=404, detail="Financial ratios parquet not found.")
 
     df = pd.read_parquet(ratios_path)
     latest = df.sort_values("fsDate").groupby("code").last().reset_index()
-    return latest.to_dict("records")
+
+    target_match = latest[latest["code"] == ticker]
+    if len(target_match) == 0:
+        raise HTTPException(status_code=404, detail=f"Ticker '{ticker}' not found.")
+
+    target = target_match.iloc[0]
+    sector = target.get("sector")
+    industry = target.get("industry")
+    subsector = target.get("subSector")
+
+    # Filter peers by same sector or industry
+    cond = latest["code"] != ticker
+    if sector and pd.notna(sector):
+        cond &= latest["sector"] == sector
+    elif industry and pd.notna(industry):
+        cond &= latest["industry"] == industry
+    elif subsector and pd.notna(subsector):
+        cond &= latest["subSector"] == subsector
+
+    peers_df = latest[cond]
+    if len(peers_df) == 0:
+        peers_df = latest[latest["code"] != ticker].head(20)
+
+    return peers_df.to_dict("records")
 
 
 @app.get("/api/dividend/{ticker}", tags=["Dividends"])
@@ -483,7 +533,19 @@ async def get_cross():
 @app.post("/api/query/sql", tags=["Analytics"])
 async def execute_sql(req: SQLQueryRequest):
     sql = req.sql.strip()
-    disallowed = ["insert ", "update ", "delete ", "drop ", "create ", "alter ", "truncate "]
+    disallowed = [
+        "insert ",
+        "update ",
+        "delete ",
+        "drop ",
+        "create ",
+        "alter ",
+        "truncate ",
+        "copy ",
+        "attach ",
+        "load ",
+        "install ",
+    ]
     if any(word in sql.lower() for word in disallowed):
         raise HTTPException(status_code=400, detail="Only read-only SELECT queries are allowed.")
 
@@ -501,6 +563,9 @@ async def execute_sql(req: SQLQueryRequest):
         p_file = os.path.join(DATA_DIR, "parquet", f"{name}.parquet")
         if os.path.exists(p_file):
             con.execute(f"CREATE OR REPLACE VIEW {name} AS SELECT * FROM read_parquet('{p_file}')")
+
+    # Block external filesystem and network access in user queries
+    con.execute("SET enable_external_access = false;")
 
     try:
         res_df = con.execute(sql).fetchdf()

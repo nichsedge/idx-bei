@@ -4,11 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"math"
 	"net/http"
 	"os"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -335,15 +337,12 @@ func NewRouter(cfg ServerConfig) http.Handler {
 			ExitReason string  `json:"ExitReason"`
 		}
 
-		trades := make([]BacktestTradeDTO, len(summary.TopTrades))
-		equityCurve := make([]EquityPointDTO, 0, len(summary.TopTrades)+1)
-		currentVal := 1.0
-		equityCurve = append(equityCurve, EquityPointDTO{
-			Time:  time.Now().AddDate(0, -6, 0).Format("2006-01-02"),
-			Value: currentVal,
-		})
-
-		for i, t := range summary.TopTrades {
+		tradeSource := summary.TopTrades
+		if len(tradeSource) == 0 {
+			tradeSource = summary.AllTrades
+		}
+		trades := make([]BacktestTradeDTO, len(tradeSource))
+		for i, t := range tradeSource {
 			trades[i] = BacktestTradeDTO{
 				EntryDate:  t.EntryDate,
 				ExitDate:   t.ExitDate,
@@ -354,13 +353,66 @@ func NewRouter(cfg ServerConfig) http.Handler {
 				Return:     t.ReturnPct / 100.0,
 				ExitReason: t.ExitReason,
 			}
-			currentVal *= (1.0 + (t.ReturnPct / 100.0))
-			if t.ExitDate != "" {
+		}
+
+		equityCurve := make([]EquityPointDTO, 0)
+		sourceTrades := summary.AllTrades
+		if len(sourceTrades) == 0 {
+			sourceTrades = summary.TopTrades
+		}
+
+		if len(sourceTrades) > 0 {
+			type dateAgg struct {
+				sumRet float64
+				count  int
+			}
+			dateOrder := make([]string, 0)
+			dateMap := make(map[string]*dateAgg)
+
+			for _, t := range sourceTrades {
+				d := t.ExitDate
+				if d == "" {
+					d = t.EntryDate
+				}
+				if d == "" {
+					continue
+				}
+				if agg, exists := dateMap[d]; exists {
+					agg.sumRet += t.ReturnPct
+					agg.count++
+				} else {
+					dateMap[d] = &dateAgg{sumRet: t.ReturnPct, count: 1}
+					dateOrder = append(dateOrder, d)
+				}
+			}
+			sort.Strings(dateOrder)
+
+			runningVal := 100.0
+			firstEntry := sourceTrades[0].EntryDate
+			if firstEntry == "" && len(dateOrder) > 0 {
+				firstEntry = dateOrder[0]
+			}
+			if firstEntry != "" {
 				equityCurve = append(equityCurve, EquityPointDTO{
-					Time:  t.ExitDate,
-					Value: math.Round(currentVal*1000) / 1000,
+					Time:  firstEntry,
+					Value: 100.0,
 				})
 			}
+
+			for _, d := range dateOrder {
+				agg := dateMap[d]
+				periodAvg := agg.sumRet / float64(agg.count)
+				runningVal *= (1.0 + (periodAvg / 100.0))
+				equityCurve = append(equityCurve, EquityPointDTO{
+					Time:  d,
+					Value: math.Round(runningVal*100) / 100,
+				})
+			}
+		} else {
+			equityCurve = append(equityCurve, EquityPointDTO{
+				Time:  time.Now().Format("2006-01-02"),
+				Value: 100.0,
+			})
 		}
 
 		resp := map[string]any{
@@ -419,7 +471,7 @@ func NewRouter(cfg ServerConfig) http.Handler {
 		totalTurnover := 0.0
 
 		for i, rec := range records {
-			flowB := rec.NetForeignFlow20d / 1e9
+			flowB := (rec.NetForeignFlow20d * rec.ClosePrice) / 1e9
 			turnB := rec.Turnover20d / 1e9
 			totalSmartMoney += flowB
 			totalTurnover += turnB
@@ -635,7 +687,7 @@ func NewRouter(cfg ServerConfig) http.Handler {
 			for _, sub := range c.Subsidiaries {
 				upperSub := strings.ToUpper(sub.Name)
 				for otherCode := range codeMap {
-					if strings.Contains(upperSub, otherCode) && otherCode != c.Code {
+					if isWholeWordMatch(upperSub, otherCode) && otherCode != c.Code {
 						holdings = append(holdings, CrossHolding{
 							SourceTicker: c.Code,
 							TargetTicker: otherCode,
@@ -735,7 +787,7 @@ func NewRouter(cfg ServerConfig) http.Handler {
 
 	// Broadcast endpoint
 	mux.HandleFunc("POST /api/broadcast", func(w http.ResponseWriter, r *http.Request) {
-		body, err := os.ReadFile(r.URL.Path)
+		body, err := io.ReadAll(io.LimitReader(r.Body, 1<<20))
 		if err == nil && len(body) > 0 {
 			hub.Broadcast(r.Context(), body)
 		}
@@ -743,6 +795,28 @@ func NewRouter(cfg ServerConfig) http.Handler {
 	})
 
 	return corsMiddleware(mux)
+}
+
+func isWholeWordMatch(text, word string) bool {
+	idx := strings.Index(text, word)
+	for idx != -1 {
+		startOk := idx == 0 || !isAlphaNum(text[idx-1])
+		endPos := idx + len(word)
+		endOk := endPos == len(text) || !isAlphaNum(text[endPos])
+		if startOk && endOk {
+			return true
+		}
+		next := strings.Index(text[idx+1:], word)
+		if next == -1 {
+			break
+		}
+		idx += 1 + next
+	}
+	return false
+}
+
+func isAlphaNum(b byte) bool {
+	return (b >= 'A' && b <= 'Z') || (b >= 'a' && b <= 'z') || (b >= '0' && b <= '9')
 }
 
 func corsMiddleware(next http.Handler) http.Handler {
@@ -772,3 +846,4 @@ func min(a, b int) int {
 	}
 	return b
 }
+

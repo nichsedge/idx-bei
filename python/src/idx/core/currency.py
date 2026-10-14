@@ -49,32 +49,11 @@ def _save_cached_rate(rate: float, source: str) -> None:
 
 
 def fetch_live_usd_idr_rate() -> float | None:
-    """Attempts to fetch live USD/IDR exchange rate from Yahoo Finance or public feeds."""
-    # Attempt 1: Yahoo Finance via yfinance if available
+    """Attempts to fetch live USD/IDR exchange rate from open exchange rate APIs."""
+    import urllib.request
+
+    # Feed 1: Open Exchange Rates API (open.er-api.com)
     try:
-        import yfinance as yf
-
-        ticker = yf.Ticker("USDIDR=X")
-        fast_info = getattr(ticker, "fast_info", None)
-        if fast_info and getattr(fast_info, "last_price", None):
-            price = float(fast_info.last_price)
-            if 10000.0 <= price <= 30000.0:
-                log.info("Fetched USD/IDR rate from Yahoo Finance fast_info: %.2f", price)
-                return price
-
-        hist = ticker.history(period="5d")
-        if not hist.empty and "Close" in hist.columns:
-            price = float(hist["Close"].iloc[-1])
-            if 10000.0 <= price <= 30000.0:
-                log.info("Fetched USD/IDR rate from Yahoo Finance history: %.2f", price)
-                return price
-    except Exception as exc:
-        log.debug("Yahoo Finance rate fetch failed: %s", exc)
-
-    # Attempt 2: Bank Indonesia or open exchange rate endpoint via urllib
-    try:
-        import urllib.request
-
         url = "https://open.er-api.com/v6/latest/USD"
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
         with urllib.request.urlopen(req, timeout=5) as resp:
@@ -83,10 +62,25 @@ def fetch_live_usd_idr_rate() -> float | None:
             if "IDR" in rates:
                 price = float(rates["IDR"])
                 if 10000.0 <= price <= 30000.0:
-                    log.info("Fetched USD/IDR rate from open exchange API: %.2f", price)
+                    log.info("Fetched USD/IDR rate from open.er-api.com: %.2f", price)
                     return price
     except Exception as exc:
-        log.debug("Open exchange API fetch failed: %s", exc)
+        log.debug("open.er-api.com rate fetch failed: %s", exc)
+
+    # Feed 2: Frankfurter ECB / Open Currency API fallback
+    try:
+        url = "https://api.frankfurter.dev/v1/latest?base=USD&symbols=IDR"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            data = json.loads(resp.read().decode())
+            rates = data.get("rates", {})
+            if "IDR" in rates:
+                price = float(rates["IDR"])
+                if 10000.0 <= price <= 30000.0:
+                    log.info("Fetched USD/IDR rate from frankfurter API: %.2f", price)
+                    return price
+    except Exception as exc:
+        log.debug("Frankfurter API fetch failed: %s", exc)
 
     return None
 

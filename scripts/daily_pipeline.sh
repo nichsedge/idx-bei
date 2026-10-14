@@ -20,5 +20,5 @@ if ls data/briefings/briefing_$(date +%F).md >/dev/null 2>&1; then
 else
   echo "WARN: today's briefing missing" >&2
 fi
-ls -la data/network_alpha_data.js data/network_alpha_data.json 2>/dev/null || true
+ls -la data/network_alpha_data.json 2>/dev/null || true
 echo "== $(date -Is) done =="

@@ -242,7 +242,8 @@ def analyze_stock_dividend(
     turnover_20d = (
         float(recent_sessions["Value"].sum()) if "Value" in recent_sessions.columns else 1.0
     )
-    nff_share_pct = (nff_20d / turnover_20d * 100.0) if turnover_20d > 0 else 0.0
+    nff_val_20d = nff_20d * current_price
+    nff_share_pct = (nff_val_20d / turnover_20d * 100.0) if turnover_20d > 0 else 0.0
 
     # 4. Dates & Schedule
     cum_date = latest_div.get("TanggalCum", "")[:10]
@@ -288,7 +289,7 @@ def analyze_stock_dividend(
     elif nff_20d < 0:
         trap_score += 10.0
         risk_factors.append(
-            f"Foreign outflow: Net selling of Rp{abs(nff_20d) / 1e9:.1f}B over {window_days}d"
+            f"Foreign outflow: Net selling of Rp{abs(nff_20d) * current_price / 1e9:.1f}B over {window_days}d"
         )
     elif nff_20d > 0:
         trap_score -= 5.0  # Smart money accumulation bonus

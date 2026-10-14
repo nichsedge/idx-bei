@@ -30,6 +30,7 @@ type BacktestSummary struct {
 	MaxDrawdownPct float64         `json:"max_drawdown_pct"`
 	SharpeRatio    float64         `json:"sharpe_ratio"`
 	TopTrades      []BacktestTrade `json:"top_trades"`
+	AllTrades      []BacktestTrade `json:"all_trades,omitempty"`
 }
 
 // RunStrategyBacktest simulates systematic strategy performance across historical partitions.
@@ -171,27 +172,59 @@ func RunStrategyBacktest(
 	totalTrades := len(allTrades)
 	winning := 0
 	sumReturn := 0.0
-	cumReturn := 1.0
 
 	var returns []float64
-	peak := 1.0
-	maxDD := 0.0
+
+	// Sort all trades chronologically by ExitDate
+	sort.Slice(allTrades, func(i, j int) bool {
+		if allTrades[i].ExitDate == allTrades[j].ExitDate {
+			return allTrades[i].StockCode < allTrades[j].StockCode
+		}
+		return allTrades[i].ExitDate < allTrades[j].ExitDate
+	})
+
+	type dateGroup struct {
+		Date   string
+		SumRet float64
+		Count  int
+	}
+	var dateGroups []dateGroup
+	dateMap := make(map[string]int)
 
 	for _, t := range allTrades {
 		if t.ReturnPct > 0 {
 			winning++
 		}
 		sumReturn += t.ReturnPct
-		tradeFactor := 1.0 + (t.ReturnPct / 100.0)
-		cumReturn *= tradeFactor
-		if cumReturn > peak {
-			peak = cumReturn
+		returns = append(returns, t.ReturnPct)
+
+		d := t.ExitDate
+		if d == "" {
+			d = t.EntryDate
 		}
-		dd := (peak - cumReturn) / peak * 100.0
+		if idx, exists := dateMap[d]; exists {
+			dateGroups[idx].SumRet += t.ReturnPct
+			dateGroups[idx].Count++
+		} else {
+			dateMap[d] = len(dateGroups)
+			dateGroups = append(dateGroups, dateGroup{Date: d, SumRet: t.ReturnPct, Count: 1})
+		}
+	}
+
+	runningVal := 100.0
+	peak := 100.0
+	maxDD := 0.0
+
+	for _, g := range dateGroups {
+		periodAvg := g.SumRet / float64(g.Count)
+		runningVal *= (1.0 + (periodAvg / 100.0))
+		if runningVal > peak {
+			peak = runningVal
+		}
+		dd := (peak - runningVal) / peak * 100.0
 		if dd > maxDD {
 			maxDD = dd
 		}
-		returns = append(returns, t.ReturnPct)
 	}
 
 	avgReturn := sumReturn / float64(totalTrades)
@@ -209,13 +242,14 @@ func RunStrategyBacktest(
 		sharpe = (avgReturn / stdDev) * math.Sqrt(252.0/float64(holdingDays))
 	}
 
-	sort.Slice(allTrades, func(i, j int) bool {
-		return allTrades[i].ReturnPct > allTrades[j].ReturnPct
+	// Prepare top performing trades copy
+	topTrades := make([]BacktestTrade, len(allTrades))
+	copy(topTrades, allTrades)
+	sort.Slice(topTrades, func(i, j int) bool {
+		return topTrades[i].ReturnPct > topTrades[j].ReturnPct
 	})
-
-	topTrades := allTrades
-	if len(topTrades) > 5 {
-		topTrades = topTrades[:5]
+	if len(topTrades) > 10 {
+		topTrades = topTrades[:10]
 	}
 
 	return &BacktestSummary{
@@ -226,9 +260,10 @@ func RunStrategyBacktest(
 		LosingTrades:   totalTrades - winning,
 		WinRatePct:     winRate,
 		AvgReturnPct:   avgReturn,
-		CumulativeRet:  (cumReturn - 1.0) * 100.0,
+		CumulativeRet:  runningVal - 100.0,
 		MaxDrawdownPct: maxDD,
 		SharpeRatio:    sharpe,
 		TopTrades:      topTrades,
+		AllTrades:      allTrades,
 	}, nil
 }

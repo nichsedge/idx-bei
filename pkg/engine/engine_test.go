@@ -36,3 +36,38 @@ func TestGetStockData(t *testing.T) {
 		t.Logf("BBCA latest EMA20: %.2f", *latest.EMA20)
 	}
 }
+
+func TestRunStrategyBacktest(t *testing.T) {
+	dataDir := filepath.Join("..", "..", "data")
+	summary, err := engine.RunStrategyBacktest(dataDir, "foreign_flow", 15, 5, 5.0, 15.0)
+	if err != nil {
+		t.Fatalf("failed to run strategy backtest: %v", err)
+	}
+	if summary.HoldingDays != 15 {
+		t.Errorf("expected holding days 15, got %d", summary.HoldingDays)
+	}
+	if len(summary.AllTrades) > 0 {
+		// Verify trades are sorted chronologically by ExitDate
+		for i := 1; i < len(summary.AllTrades); i++ {
+			if summary.AllTrades[i].ExitDate < summary.AllTrades[i-1].ExitDate {
+				t.Fatalf("AllTrades out of chronological order at %d: %s < %s",
+					i, summary.AllTrades[i].ExitDate, summary.AllTrades[i-1].ExitDate)
+			}
+		}
+	}
+}
+
+func TestAnalyzeDividend(t *testing.T) {
+	dataDir := filepath.Join("..", "..", "data")
+	dec, err := engine.AnalyzeDividend(dataDir, "BBCA")
+	if err != nil {
+		t.Fatalf("failed to analyze BBCA dividend: %v", err)
+	}
+	if dec.Ticker != "BBCA" {
+		t.Errorf("expected ticker BBCA, got %s", dec.Ticker)
+	}
+	if !dec.HasDividend {
+		t.Errorf("expected BBCA to have dividend data")
+	}
+}
+

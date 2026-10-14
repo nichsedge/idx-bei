@@ -234,7 +234,7 @@ func AnalyzeDividend(dataDir, ticker string) (*DividendDecision, error) {
 		riskFactors = append(riskFactors, "Smart Money Divergence: Foreigners net selling into pre-cum price run-up")
 	} else if nff20d < 0 {
 		trapScore += 10.0
-		riskFactors = append(riskFactors, fmt.Sprintf("Foreign outflow: Net selling of Rp %.1fB over 20d", -nff20d/1e9))
+		riskFactors = append(riskFactors, fmt.Sprintf("Foreign outflow: Net selling of Rp %.1fB over 20d", (-nff20d*currentPrice)/1e9))
 	} else if nff20d > 0 {
 		trapScore -= 5.0
 	}

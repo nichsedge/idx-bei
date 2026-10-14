@@ -71,7 +71,7 @@ Run all commands from the repository root using modern `uv`:
 - `idx stock <TICKER> [LIMIT]`: inspect Parquet stock history and technical indicators (RSI, EMA, Bollinger Bands, ATR) via native Go.
 - `idx sync [--date YYYYMMDD]`: ingest market close data via standalone uTLS.
 - `uv run idx mcp`: start Model Context Protocol (MCP) server for AI assistants.
-- `uv run pytest python/tests`: run full 171-test automated pytest suite with >=85% coverage enforcement.
+- `uv run pytest python/tests`: run full 182-test automated pytest suite with >=85% coverage enforcement.
 - `uv run mypy python/src/idx`: run Mypy static type checker.
 - `uv run ruff check python/src python/tests`: run Ruff linter.
 - `uv run ruff format python/src python/tests`: format Python codebase.

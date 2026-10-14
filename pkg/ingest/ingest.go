@@ -10,11 +10,14 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"time"
 
 	fhttp "github.com/bogdanfinn/fhttp"
 	tls_client "github.com/bogdanfinn/tls-client"
 	"github.com/bogdanfinn/tls-client/profiles"
+	"github.com/nichsedge/idx-bei/pkg/models"
+	"github.com/parquet-go/parquet-go"
 )
 
 const (
@@ -120,6 +123,20 @@ func RunDailySync(opts SyncOptions) (*SyncSummary, error) {
 			log.Printf("ERROR writing partition %s: %v", partitionFile, err)
 			summary.Errors = append(summary.Errors, fmt.Sprintf("%s: write error: %v", ep.Name, err))
 			continue
+		}
+
+		if ep.Name == "stock_summary" {
+			stockRows := make([]models.ParquetStockRow, len(records))
+			for i, rec := range records {
+				stockRows[i] = mapToStockRow(rec, dateISO)
+			}
+			parquetFile := filepath.Join(tsDir, fmt.Sprintf("date=%s.parquet", dateISO))
+			if err := parquet.WriteFile(parquetFile, stockRows); err != nil {
+				log.Printf("ERROR writing parquet partition %s: %v", parquetFile, err)
+				summary.Errors = append(summary.Errors, fmt.Sprintf("%s: parquet error: %v", ep.Name, err))
+			} else {
+				log.Printf("[%s] Wrote %d parquet records to %s", ep.Name, count, parquetFile)
+			}
 		}
 
 		log.Printf("[%s] Wrote %d records to %s", ep.Name, count, partitionFile)
@@ -327,3 +344,56 @@ func SendDiscordWebhook(webhookURL string, summary SyncSummary) error {
 	defer resp.Body.Close()
 	return nil
 }
+
+func mapToStockRow(r map[string]any, date string) models.ParquetStockRow {
+	getFloat := func(k string) float64 {
+		if v, ok := r[k]; ok && v != nil {
+			switch val := v.(type) {
+			case float64:
+				return val
+			case int:
+				return float64(val)
+			case int64:
+				return float64(val)
+			case string:
+				f, _ := strconv.ParseFloat(val, 64)
+				return f
+			}
+		}
+		return 0
+	}
+	getString := func(k string) string {
+		if v, ok := r[k]; ok && v != nil {
+			if s, ok := v.(string); ok {
+				return s
+			}
+		}
+		return ""
+	}
+
+	d := getString("Date")
+	if d == "" {
+		d = date
+	}
+
+	return models.ParquetStockRow{
+		Date:                d,
+		StockCode:           getString("StockCode"),
+		StockName:           getString("StockName"),
+		Previous:            getFloat("Previous"),
+		OpenPrice:           getFloat("OpenPrice"),
+		High:                getFloat("High"),
+		Low:                 getFloat("Low"),
+		Close:               getFloat("Close"),
+		Change:              getFloat("Change"),
+		Volume:              getFloat("Volume"),
+		Value:               getFloat("Value"),
+		Frequency:           getFloat("Frequency"),
+		ForeignSell:         getFloat("ForeignSell"),
+		ForeignBuy:          getFloat("ForeignBuy"),
+		NonRegularVolume:    getFloat("NonRegularVolume"),
+		NonRegularValue:     getFloat("NonRegularValue"),
+		NonRegularFrequency: getFloat("NonRegularFrequency"),
+	}
+}
+

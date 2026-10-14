@@ -150,3 +150,22 @@ func TestGraphEndpoints(t *testing.T) {
 		t.Fatalf("expected status 200 for cross-holdings, got %d: %s", wCross.Code, wCross.Body.String())
 	}
 }
+
+func TestBroadcastEndpoint(t *testing.T) {
+	router := newTestRouter()
+
+	payload := []byte(`{"type":"ingestion_complete","records":100}`)
+	req := httptest.NewRequest("POST", "/api/broadcast", bytes.NewReader(payload))
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+
+	router.ServeHTTP(w, req)
+
+	if w.Code != http.StatusOK {
+		t.Fatalf("expected status 200 for broadcast, got %d: %s", w.Code, w.Body.String())
+	}
+	if !strings.Contains(w.Body.String(), "broadcasted") {
+		t.Fatalf("expected response to contain broadcasted, got: %s", w.Body.String())
+	}
+}
+

@@ -7,8 +7,9 @@ license = { text = "MIT" }
 requires-python = ">=3.13"
 dependencies = [
     "neo4j>=5.28.1",
+    "numpy>=2.0.0",
+    "pandas>=2.2.0",
     "tqdm>=4.67.1",
-    "yfinance>=0.2.59",
     "curl_cffi>=0.15.0",
     "python-dotenv>=1.0.1",
     "pyarrow>=18.0.0",
