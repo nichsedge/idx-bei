@@ -170,6 +170,30 @@ func RunDailySync(opts SyncOptions) (*SyncSummary, error) {
 	return summary, nil
 }
 
+type ProfileConfig struct {
+	Name      string
+	Profile   profiles.ClientProfile
+	UserAgent string
+}
+
+var ClientProfiles = []ProfileConfig{
+	{
+		Name:      "Chrome_152",
+		Profile:   profiles.Chrome_152,
+		UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+	},
+	{
+		Name:      "Firefox_148",
+		Profile:   profiles.Firefox_148,
+		UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0",
+	},
+	{
+		Name:      "Chrome_150",
+		Profile:   profiles.Chrome_150,
+		UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+	},
+}
+
 func CreateTLSClientWithProfile(p profiles.ClientProfile) (tls_client.HttpClient, error) {
 	jar := tls_client.NewCookieJar()
 	options := []tls_client.HttpClientOption{
@@ -181,25 +205,21 @@ func CreateTLSClientWithProfile(p profiles.ClientProfile) (tls_client.HttpClient
 }
 
 func CreateTLSClient() (tls_client.HttpClient, error) {
-	return CreateTLSClientWithProfile(profiles.Safari_16_0)
+	return CreateTLSClientWithProfile(ClientProfiles[0].Profile)
 }
 
 func FetchWithRetry(client tls_client.HttpClient, url string, maxRetries int, delay time.Duration) ([]map[string]any, error) {
-	clientProfiles := []profiles.ClientProfile{
-		profiles.Chrome_120,
-		profiles.Chrome_124,
-		profiles.Safari_16_0,
-	}
-
 	var lastErr error
 	currentClient := client
+	currentUA := ClientProfiles[0].UserAgent
+
 	for attempt := 0; attempt <= maxRetries; attempt++ {
 		req, err := fhttp.NewRequest("GET", url, nil)
 		if err != nil {
 			return nil, err
 		}
 
-		req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
+		req.Header.Set("User-Agent", currentUA)
 		req.Header.Set("Accept", "application/json, text/plain, */*")
 		req.Header.Set("Accept-Language", "en-US,en;q=0.9")
 		req.Header.Set("Referer", "https://www.idx.co.id/")
@@ -232,13 +252,14 @@ func FetchWithRetry(client tls_client.HttpClient, url string, maxRetries int, de
 		}
 
 		if resp.StatusCode == 403 || resp.StatusCode == 429 || resp.StatusCode >= 500 {
-			nextProfile := clientProfiles[attempt%len(clientProfiles)]
-			newClient, err := CreateTLSClientWithProfile(nextProfile)
+			cfg := ClientProfiles[attempt%len(ClientProfiles)]
+			newClient, err := CreateTLSClientWithProfile(cfg.Profile)
 			if err == nil {
 				currentClient = newClient
+				currentUA = cfg.UserAgent
 			}
 			backoff := time.Duration(float64(attempt+1)*2.0+rand.Float64()) * time.Second
-			log.Printf("HTTP %d for %s (rotating TLS profile, retrying in %v...)", resp.StatusCode, url, backoff)
+			log.Printf("HTTP %d for %s (rotating TLS profile to %s, retrying in %v...)", resp.StatusCode, url, cfg.Name, backoff)
 			time.Sleep(backoff)
 			lastErr = fmt.Errorf("HTTP %d", resp.StatusCode)
 			continue
