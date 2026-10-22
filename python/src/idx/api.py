@@ -501,6 +501,32 @@ async def screen_dividends(min_yield: float = 3.0, year: str = "2026", limit: in
     return df.to_dict("records")
 
 
+@app.get("/api/deals", tags=["Deals"])
+async def get_deals():
+    from idx.deals import list_deals, load_deals
+
+    return list_deals(load_deals())
+
+
+@app.get("/api/rights-issues", tags=["Deals"])
+async def get_rights_issues():
+    from idx.deals import FLAG_LABELS, build_capital_raises, load_corporate_actions
+
+    cached = get_from_cache("rights_issues", ttl_seconds=300)
+    if cached is not None:
+        return cached
+    res = {"flag_labels": FLAG_LABELS, "raises": build_capital_raises(load_corporate_actions())}
+    set_in_cache("rights_issues", res)
+    return res
+
+
+@app.get("/api/corporate-actions/{ticker}", tags=["Deals"])
+async def get_ticker_corporate_actions(ticker: str):
+    from idx.deals import load_corporate_actions, ticker_corporate_actions
+
+    return ticker_corporate_actions(load_corporate_actions(), ticker)
+
+
 @app.get("/api/drift", tags=["Ownership"])
 async def get_drift():
     return get_latest_shareholder_drift()

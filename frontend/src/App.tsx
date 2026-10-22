@@ -12,6 +12,8 @@ const ChartTab = lazy(() => import('./components/ChartTab').then(m => ({ default
 const PowerMapTab = lazy(() => import('./components/PowerMapTab').then(m => ({ default: m.PowerMapTab })));
 const BacktesterTab = lazy(() => import('./components/BacktesterTab').then(m => ({ default: m.BacktesterTab })));
 const IngestionTab = lazy(() => import('./components/IngestionTab').then(m => ({ default: m.IngestionTab })));
+const DealsTab = lazy(() => import('./components/DealsTab').then(m => ({ default: m.DealsTab })));
+const RightsIssueTab = lazy(() => import('./components/RightsIssueTab').then(m => ({ default: m.RightsIssueTab })));
 const InvestorMemoModal = lazy(() => import('./components/InvestorMemoModal').then(m => ({ default: m.InvestorMemoModal })));
 const WatchlistDrawer = lazy(() => import('./components/WatchlistDrawer').then(m => ({ default: m.WatchlistDrawer })));
 
@@ -45,7 +47,7 @@ function parseRouteFromUrl(): { tab: TabType; ticker: string } {
   if (hash) {
     const [hashPath, hashQuery] = hash.split('?');
     if (hashPath) {
-      if (['opportunities', 'terminal', 'power_map', 'simulator', 'ingestion'].includes(hashPath)) {
+      if (['opportunities', 'terminal', 'power_map', 'simulator', 'deals', 'rights', 'ingestion'].includes(hashPath)) {
         tabParam = hashPath as TabType;
       } else if (/^[A-Za-z0-9]{4,5}$/.test(hashPath)) {
         tabParam = 'terminal';
@@ -60,7 +62,7 @@ function parseRouteFromUrl(): { tab: TabType; ticker: string } {
     }
   }
 
-  const validTabs: TabType[] = ['opportunities', 'terminal', 'power_map', 'simulator', 'ingestion'];
+  const validTabs: TabType[] = ['opportunities', 'terminal', 'power_map', 'simulator', 'deals', 'rights', 'ingestion'];
   const tab = tabParam && validTabs.includes(tabParam) ? tabParam : 'opportunities';
   const ticker = (tickerParam || 'BBCA').toUpperCase();
 
@@ -86,6 +88,10 @@ function syncRouteToUrl(tab: TabType, ticker: string, replace = false) {
     document.title = 'Strategy Simulator • IDX Smart Money';
   } else if (tab === 'ingestion') {
     document.title = 'Data Ingestion & Backfill • IDX Smart Money';
+  } else if (tab === 'deals') {
+    document.title = 'Deal Tracker • IDX Smart Money';
+  } else if (tab === 'rights') {
+    document.title = 'Rights Issue Tracker • IDX Smart Money';
   }
 
   if (window.location.hash !== newHash) {
@@ -256,6 +262,21 @@ export const App: React.FC = () => {
             {/* 4. Strategy Simulator (Vectorized Backtester) */}
             {activeTab === 'simulator' && (
               <BacktesterTab
+                onSelectStock={handleSelectStock}
+              />
+            )}
+
+            {/* Acquisition & Backdoor Listing Tracker */}
+            {activeTab === 'deals' && (
+              <DealsTab
+                onSelectStock={handleSelectStock}
+                onOpenRights={() => handleSelectTab('rights')}
+              />
+            )}
+
+            {/* Rights Issue & Private Placement Tracker */}
+            {activeTab === 'rights' && (
+              <RightsIssueTab
                 onSelectStock={handleSelectStock}
               />
             )}

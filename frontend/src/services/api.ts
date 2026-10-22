@@ -1,4 +1,28 @@
-import type { DashboardData } from '../types';
+import type { CorporateActionItem, DashboardData, DealsResponse, RightsIssuesResponse } from '../types';
+
+export async function fetchDeals(): Promise<DealsResponse> {
+  const resp = await fetch('/api/deals');
+  if (!resp.ok) {
+    throw new Error('Failed to fetch deals');
+  }
+  return await resp.json();
+}
+
+export async function fetchRightsIssues(): Promise<RightsIssuesResponse> {
+  const resp = await fetch('/api/rights-issues');
+  if (!resp.ok) {
+    throw new Error('Failed to fetch rights issues');
+  }
+  return await resp.json();
+}
+
+export async function fetchCorporateActions(ticker: string): Promise<CorporateActionItem[]> {
+  const resp = await fetch(`/api/corporate-actions/${ticker.toUpperCase()}`);
+  if (!resp.ok) {
+    throw new Error(`Failed to fetch corporate actions for ${ticker}`);
+  }
+  return await resp.json();
+}
 
 export async function fetchDashboardData(): Promise<DashboardData> {
   // Check if loaded via window script tag fallback (supports uppercase and camelCase)

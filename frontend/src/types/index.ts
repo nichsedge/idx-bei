@@ -3,7 +3,9 @@ export type TabType =
   | 'terminal'
   | 'power_map'
   | 'simulator'
-  | 'ingestion';
+  | 'ingestion'
+  | 'deals'
+  | 'rights';
 
 export interface DatasetTimeseriesMeta {
   total_dates: number;
@@ -371,4 +373,114 @@ export interface LiveAlert {
   title: string;
   message: string;
   timestamp: string;
+}
+
+// --- Corporate actions & rights issues (Python API: idx/deals.py) ---
+export interface CorporateActionItem {
+  category: string;
+  listing_date: string;
+  shares: number;
+  shares_after: number;
+}
+
+export type CapitalRaiseType = 'rights_issue' | 'private_placement';
+
+export interface CapitalRaise {
+  id: number;
+  ticker: string;
+  type: CapitalRaiseType;
+  listing_date: string; // first listing of the new shares
+  last_listing_date: string; // last batch, when IDX lists the issue in several batches
+  tranches: number;
+  new_shares: number;
+  shares_after: number;
+  shares_before: number;
+  dilution_pct: number; // new ÷ after
+  size_vs_old_pct: number; // new ÷ before
+  raises_in_36m: number; // rights issues + private placements by this ticker in the 36 months up to this one
+  flags: string[];
+}
+
+export interface RightsIssuesResponse {
+  flag_labels: Record<string, string>;
+  raises: CapitalRaise[];
+}
+
+// --- Deal tracker (data/deals.json, plan §3.1–3.5 / §6) ---
+export type DealStage =
+  | 'rumour'
+  | 'negotiation'
+  | 'takeover'
+  | 'tender_offer'
+  | 'free_float'
+  | 'business_change'
+  | 'asset_injection'
+  | 'aftermath';
+
+export type DealType = 'acquisition' | 'backdoor_candidate' | 'tender_offer' | 'merger' | 'going_private';
+export type DealStatus = 'active' | 'completed' | 'cancelled' | 'lapsed';
+export type ReviewStatus = 'auto' | 'approved' | 'pending';
+
+export interface DealEvent {
+  stage: DealStage;
+  event_type: string;
+  event_date: string;
+  title: string;
+  source_url?: string;
+  source_type: 'official' | 'news' | 'rumour';
+  stake_pct?: number;
+  shares?: number;
+  price?: number;
+  value?: number;
+  tender_price?: number;
+  tender_start?: string;
+  tender_end?: string;
+  notes?: string;
+  confidence?: number;
+  review_status?: ReviewStatus;
+}
+
+export interface BackdoorSignals {
+  control_change?: boolean;
+  different_sector?: boolean;
+  shell_like_target?: boolean;
+  business_change_plan?: boolean;
+  large_capital_injection?: boolean;
+  jumbo_ng_trades?: boolean;
+  price_spike?: boolean;
+}
+
+export interface Deal {
+  id: string;
+  target_ticker: string;
+  target_name?: string;
+  deal_type: DealType;
+  status: DealStatus;
+  current_stage: DealStage;
+  acquirer?: string;
+  acquirer_group?: string;
+  sellers?: string[];
+  advisors?: string[];
+  pre_announcement_price?: number;
+  first_signal_at?: string;
+  announced_at?: string;
+  completed_at?: string;
+  signals?: BackdoorSignals;
+  events: DealEvent[];
+  // Added by the API
+  backdoor: BackdoorScore;
+  tender_premium_pct: number | null;
+  last_event_date: string;
+  pending_review: number;
+}
+
+export interface BackdoorScore {
+  score: number;
+  label: string;
+  signals: { key: keyof BackdoorSignals; label: string; weight: number; fired: boolean }[];
+}
+
+export interface DealsResponse {
+  updated_at: string | null;
+  deals: Deal[];
 }
