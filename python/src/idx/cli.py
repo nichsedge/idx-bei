@@ -97,6 +97,19 @@ def build_parser():
         "--no-download", action="store_true", help="Store items only, skip PDF downloads"
     )
 
+    p_dossier = sub.add_parser(
+        "dossier",
+        help="Compact evidence digest of a ticker's filings (deal terms, ownership changes)",
+    )
+    p_dossier.add_argument("ticker", help="Stock code, e.g. KDTN")
+    p_dossier.add_argument(
+        "--from", dest="date_from", default="2025-01-01", metavar="DATE", help="Start date"
+    )
+    p_dossier.add_argument(
+        "--max-chars", type=int, default=20000, help="Size budget for the digest (chars)"
+    )
+    p_dossier.add_argument("--no-fetch", action="store_true", help="Use stored announcements only")
+    p_dossier.add_argument("--no-ocr", action="store_true", help="Skip OCR of scanned PDFs")
 
     # 3. Backfill
     p_backfill = sub.add_parser("backfill", help="Historical OHLCV backfill over a date range")
@@ -396,6 +409,20 @@ def main(argv=None):
             failed += res.status == "failed"
         if failed:
             raise SystemExit(1)
+    elif cmd == "dossier":
+        import idx.pipelines.dossier as dossier_mod
+        from idx.pipelines.dossier import build_dossier
+
+        dossier_mod.OCR_ENABLED = not args.no_ocr
+
+        print(
+            build_dossier(
+                args.ticker,
+                date_from=args.date_from,
+                max_chars=args.max_chars,
+                fetch=not args.no_fetch,
+            )
+        )
     elif cmd == "backfill":
         print(
             f"=== Historical Backfill: {args.start} → {args.end} (type={args.type}, concurrency={args.concurrency}, delay={args.delay}s) ==="

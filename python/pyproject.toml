@@ -16,6 +16,9 @@ dependencies = [
     "duckdb>=1.5.5",
     "fastapi>=0.115.0",
     "uvicorn>=0.30.0",
+    "pypdf>=5.0",
+    "pytesseract>=0.3.13",
+    "pypdfium2>=4.30",
 ]
 
 [project.scripts]

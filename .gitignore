@@ -45,6 +45,7 @@ data/ownership/
 data/briefings/
 data/usd_idr_rate.json
 data/announcements/
+data/dossiers/
 
 # --- Logs & OS ---
 *.log

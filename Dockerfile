@@ -11,6 +11,11 @@ RUN bun run build
 # Stage 2: Unified Python 3.13 Runtime with uv
 FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 
+# OCR for scanned IDX filings (idx dossier): Tesseract with Indonesian + English language data
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-ind tesseract-ocr-eng \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # Configure uv and Python runtime
