@@ -6,6 +6,7 @@ import asyncio
 import json
 import os
 import time
+from datetime import datetime
 from typing import Any
 
 from fastapi import FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect
@@ -506,6 +507,40 @@ async def get_deals():
     from idx.deals import list_deals, load_deals
 
     return list_deals(load_deals())
+
+
+@app.get("/api/system/worker", tags=["Ingestion & Data Pipeline"])
+async def get_worker_status(runs: int = Query(20, ge=0, le=200)):
+    """Scheduled worker status (per job) and its most recent runs."""
+    from idx import worker
+
+    state = worker.load_state()
+    recent: list[dict] = []
+    if runs and os.path.exists(worker.RUNS_FILE):
+        with open(worker.RUNS_FILE, encoding="utf-8") as f:
+            lines = f.readlines()[-runs:]
+        recent = [json.loads(line) for line in reversed(lines) if line.strip()]
+    updated = state.get("updated_at") or state.get("started_at")
+    stale = True
+    if updated:
+        age = worker.now_wib() - datetime.fromisoformat(updated)
+        stale = age.total_seconds() > 2 * 3600  # announcements run at least hourly
+    return {**state, "recent_runs": recent, "stale": stale}
+
+
+@app.get("/api/momentum/board", tags=["Deals"])
+async def get_momentum_board(top: int = Query(30, ge=1, le=200)):
+    """Price-momentum ranking of deal-tracker tickers and the latest screen's top candidates."""
+    from idx.deals import list_deals, load_deals
+    from idx.momentum import load_board
+
+    cache_key = f"momentum_board_{top}"
+    cached = get_from_cache(cache_key, ttl_seconds=600)
+    if cached is not None:
+        return cached
+    res = await asyncio.to_thread(load_board, list_deals(load_deals())["deals"], top)
+    set_in_cache(cache_key, res)
+    return res
 
 
 @app.get("/api/rights-issues", tags=["Deals"])

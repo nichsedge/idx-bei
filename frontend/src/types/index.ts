@@ -5,7 +5,8 @@ export type TabType =
   | 'simulator'
   | 'ingestion'
   | 'deals'
-  | 'rights';
+  | 'rights'
+  | 'momentum';
 
 export interface DatasetTimeseriesMeta {
   total_dates: number;
@@ -399,6 +400,70 @@ export interface CapitalRaise {
   size_vs_old_pct: number; // new ÷ before
   raises_in_36m: number; // rights issues + private placements by this ticker in the 36 months up to this one
   flags: string[];
+}
+
+// --- Scheduled worker (Python: idx/worker.py) ---
+export interface WorkerJobState {
+  status?: 'ok' | 'failed';
+  last_run?: string;
+  last_ok?: string;
+  duration_s?: number;
+  message?: string;
+  schedule?: string;
+  consecutive_failures?: number;
+  alert?: boolean;
+}
+
+export interface WorkerStatus {
+  started_at?: string;
+  updated_at?: string;
+  stale: boolean;
+  schedules?: Record<string, string>;
+  jobs: Record<string, WorkerJobState>;
+  recent_runs: (WorkerJobState & { job: string })[];
+}
+
+// --- Momentum rank board (Python API: idx/momentum.py) ---
+export interface MomentumRow {
+  code: string;
+  no_price?: boolean;
+  score?: number;
+  market_rank?: number;
+  close?: number;
+  r1M?: number | null;
+  r3M?: number | null;
+  r6M?: number | null;
+  r12M?: number | null;
+  xs3M?: number | null;
+  from_high?: number;
+  above_ma20?: boolean;
+  above_ma50?: boolean;
+  value_20_60?: number | null;
+  avg_value_20d?: number;
+  adj_warning?: boolean;
+  context?: string;
+  deal_score?: number | null;
+  screen_score?: number;
+  last_signal?: string;
+}
+
+export interface MomentumGroup {
+  key: string;
+  title: string;
+  rows: MomentumRow[];
+}
+
+export interface MomentumBoard {
+  market: {
+    as_of: string | null;
+    first_date: string | null;
+    trading_days: number;
+    universe: number;
+    ihsg: Record<string, number | null>;
+  } | null;
+  screen_period: string | null;
+  groups: MomentumGroup[];
+  error?: string;
 }
 
 export interface RightsIssuesResponse {

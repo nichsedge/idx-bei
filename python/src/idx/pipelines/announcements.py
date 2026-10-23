@@ -23,6 +23,7 @@ Two modes:
 The cursor only advances when a run completes, so a failed run never leaves a gap.
 """
 
+import gzip
 import hashlib
 import json
 import os
@@ -146,13 +147,29 @@ class AnnouncementStore:
     # --- rows ---
 
     def iter_months(self, newest_first=False):
-        """Rows per month file. Order inside a month is collection order, not publish order."""
+        """Rows per month. Order inside a month is collection order, not publish order.
+
+        A month is ``YYYY-MM.jsonl`` and/or ``YYYY-MM.jsonl.gz`` (closed months compressed by ``idx cleanup``;
+        late items for a compressed month land in a new plain file until the next cleanup merges them).
+        """
         if not os.path.isdir(self.items_dir):
             return
-        for name in sorted(os.listdir(self.items_dir), reverse=newest_first):
-            if name.endswith(".jsonl"):
-                with open(os.path.join(self.items_dir, name), encoding="utf-8") as f:
-                    yield [json.loads(line) for line in f if line.strip()]
+        months = sorted(
+            {
+                n.split(".")[0]
+                for n in os.listdir(self.items_dir)
+                if n.endswith((".jsonl", ".jsonl.gz"))
+            },
+            reverse=newest_first,
+        )
+        for month in months:
+            rows = []
+            for name, opener in ((f"{month}.jsonl.gz", gzip.open), (f"{month}.jsonl", open)):
+                path = os.path.join(self.items_dir, name)
+                if os.path.exists(path):
+                    with opener(path, "rt", encoding="utf-8") as f:
+                        rows += [json.loads(line) for line in f if line.strip()]
+            yield rows
 
     def iter_rows(self):
         for rows in self.iter_months():

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, CandlestickChart, Network, PlayCircle, Database, Star, Bell, Handshake, Layers } from 'lucide-react';
+import { Compass, CandlestickChart, Network, PlayCircle, Database, Star, Bell, Handshake, Layers, TrendingUp } from 'lucide-react';
 import type { TabType } from '../types';
 
 interface HeaderProps {
@@ -28,6 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'simulator', label: 'Strategy Simulator', icon: PlayCircle },
     { id: 'deals', label: 'Deal Tracker', icon: Handshake },
     { id: 'rights', label: 'Rights Issues', icon: Layers },
+    { id: 'momentum', label: 'Momentum', icon: TrendingUp },
     { id: 'ingestion', label: 'Data Ingestion', icon: Database },
   ];
 

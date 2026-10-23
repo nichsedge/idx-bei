@@ -1,4 +1,27 @@
-import type { CorporateActionItem, DashboardData, DealsResponse, RightsIssuesResponse } from '../types';
+import type {
+  CorporateActionItem,
+  DashboardData,
+  DealsResponse,
+  MomentumBoard,
+  RightsIssuesResponse,
+  WorkerStatus,
+} from '../types';
+
+export async function fetchWorkerStatus(runs = 10): Promise<WorkerStatus> {
+  const resp = await fetch(`/api/system/worker?runs=${runs}`);
+  if (!resp.ok) {
+    throw new Error('Failed to fetch worker status');
+  }
+  return await resp.json();
+}
+
+export async function fetchMomentumBoard(top = 30): Promise<MomentumBoard> {
+  const resp = await fetch(`/api/momentum/board?top=${top}`);
+  if (!resp.ok) {
+    throw new Error('Failed to fetch momentum board');
+  }
+  return await resp.json();
+}
 
 export async function fetchDeals(): Promise<DealsResponse> {
   const resp = await fetch('/api/deals');

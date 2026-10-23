@@ -13,6 +13,7 @@ import {
   Play,
 } from 'lucide-react';
 import { fetchIngestionStatus, triggerIngestion } from '../services/api';
+import { WorkerStatusCard } from './WorkerStatusCard';
 import type { IngestionStatusResponse, BackfillTier } from '../types';
 
 interface IngestionTabProps {
@@ -181,6 +182,7 @@ export const IngestionTab: React.FC<IngestionTabProps> = ({ lastLiveEvent }) => 
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '1400px', margin: '0 auto' }}>
+      <WorkerStatusCard />
       {/* Top Banner: Ingestion Health & Executive Summary */}
       <div
         style={{

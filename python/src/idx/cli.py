@@ -122,6 +122,32 @@ def build_parser():
         "--no-fetch", action="store_true", help="Screen stored filings only (skip update)"
     )
 
+    p_worker = sub.add_parser(
+        "worker",
+        help="Scheduled worker: announcements, prices, screen and dossiers (Asia/Jakarta time)",
+    )
+    p_worker.add_argument(
+        "--once",
+        nargs="+",
+        metavar="JOB",
+        help="Run these jobs now and exit (announcements, prices, screen, dossiers, cleanup)",
+    )
+    p_worker.add_argument("--status", action="store_true", help="Print job status and exit")
+
+    p_cleanup = sub.add_parser(
+        "cleanup",
+        help="Compress closed months, prune old PDFs/outputs, trim logs (dry run unless --apply)",
+    )
+    p_cleanup.add_argument(
+        "--apply", action="store_true", help="Make the changes (default: dry run)"
+    )
+    p_cleanup.add_argument("--pdf-days", type=int, default=90, help="Keep PDFs younger than this")
+    p_cleanup.add_argument(
+        "--keep", type=int, default=7, help="Digests/screens kept per ticker/kind"
+    )
+    p_cleanup.add_argument("--log-lines", type=int, default=5000, help="Lines kept per run log")
+    p_cleanup.add_argument("--list", action="store_true", help="List every action")
+
     # 3. Backfill
     p_backfill = sub.add_parser("backfill", help="Historical OHLCV backfill over a date range")
     p_backfill.add_argument("--start", required=True, metavar="YYYYMMDD", help="Start date")
@@ -420,6 +446,36 @@ def main(argv=None):
             failed += res.status == "failed"
         if failed:
             raise SystemExit(1)
+    elif cmd == "cleanup":
+        from idx.pipelines.cleanup import run_cleanup
+
+        rep = run_cleanup(
+            apply=args.apply,
+            pdf_days=args.pdf_days,
+            keep_outputs=args.keep,
+            log_lines=args.log_lines,
+        )
+        shown = rep.actions if args.list else rep.actions[:15]
+        for a in shown:
+            print("  " + a)
+        if len(rep.actions) > len(shown):
+            print(f"  ... {len(rep.actions) - len(shown)} more (use --list)")
+        print(rep.summary())
+    elif cmd == "worker":
+        from idx import worker
+
+        if args.status or args.once:
+            state = worker.run_once(args.once) if args.once else worker.load_state()
+            for name, e in state.get("jobs", {}).items():
+                flag = " ALERT" if e.get("alert") else ""
+                print(
+                    f"{name:14} {e.get('status', '-'):7}{flag} last run {e.get('last_run', '-')} "
+                    f"({e.get('duration_s', '-')}s): {e.get('message', '')}"
+                )
+            if args.once and any(state["jobs"][n].get("status") == "failed" for n in args.once):
+                raise SystemExit(1)
+        else:
+            worker.run_forever()
     elif cmd == "screen":
         from idx.pipelines.screen import build_screen
 
