@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import time
+from typing import Any
 
 LOG_FORMAT = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 
@@ -66,7 +67,7 @@ def save_json(file_path, data):
         _log.error("Error saving %s: %s", file_path, exc)
 
 
-SCHEMAS = {
+SCHEMAS: dict[str, dict[str, Any]] = {
     "company_profiles_list": {
         "required_keys": {"draw", "recordsTotal", "recordsFiltered", "data"},
         "data_item_keys": {"KodeEmiten", "NamaEmiten", "Sektor", "SubSektor"},
@@ -128,7 +129,9 @@ SCHEMAS = {
         "data_item_keys": {"KodeEmiten", "JenisTindakan", "TanggalPencatatan"},
     },
     "all_announcement": {
-        "required_keys": {"Items", "ItemCount", "PageSize", "PageNumber"},
+        "required_keys": {"Items", "ItemCount", "PageCount", "PageSize", "PageNumber"},
+        "items_key": "Items",
+        "data_item_keys": {"Id", "Code", "Title", "PublishDate", "Attachments"},
     },
 }
 
@@ -150,8 +153,9 @@ def validate_schema(data, schema_name, *, strict=False):
         warnings.append(f"Missing top-level keys: {missing_top}")
 
     expected_item_keys = schema.get("data_item_keys")
-    if expected_item_keys and isinstance(data.get("data"), list) and data["data"]:
-        first_item = data["data"][0]
+    items = data.get(schema.get("items_key", "data"))
+    if expected_item_keys and isinstance(items, list) and items:
+        first_item = items[0]
         if isinstance(first_item, dict):
             missing_item = expected_item_keys - set(first_item.keys())
             if missing_item:

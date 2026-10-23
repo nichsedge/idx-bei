@@ -1,0 +1,119 @@
+{
+  "Items": [
+    {
+      "Id": "20261022115833-122/LBB/X/2026_id-id",
+      "ItemID": null,
+      "AnnouncementNo": "122/LBB/X/2026",
+      "PublishDate": "2026-10-22T11:58:33",
+      "Title": "Pengumuman Negosiasi sehubungan dengan Rencana Pengambilalihan PT Lovina Beach Brewery Tbk",
+      "AnnouncementType": "",
+      "Code": "STRK                                                                                                ",
+      "FormID": null,
+      "JmsxGroupId": "f-32168630-0",
+      "Jenis": "STOCK",
+      "Attachments": [
+        {
+          "PDFFilename": "cc3ee88a0b_45690de7ce.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/cc3ee88a0b_45690de7ce.pdf",
+          "IsAttachment": 0,
+          "OriginalFilename": "20261022_STRK_Laporan Informasi dan Fakta Material_32168630.pdf"
+        },
+        {
+          "PDFFilename": "e5c1203bf8_4fb3a2b790.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/e5c1203bf8_4fb3a2b790.pdf",
+          "IsAttachment": 1,
+          "OriginalFilename": "20261022_STRK_Laporan Informasi dan Fakta Material_32168630_lamp1.pdf"
+        },
+        {
+          "PDFFilename": "ec05a1a4f2_f81feb9088.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/ec05a1a4f2_f81feb9088.pdf",
+          "IsAttachment": 1,
+          "OriginalFilename": "20261022_STRK_Laporan Informasi dan Fakta Material_32168630_lamp2.pdf"
+        }
+      ],
+      "PdfPath": "[{\"PDFFilename\":\"cc3ee88a0b_45690de7ce.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/cc3ee88a0b_45690de7ce.pdf\",\"IsAttachment\":\"0\",\"OriginalFilename\":\"20261022_STRK_Laporan Informasi dan Fakta Material_32168630.pdf\"},{\"PDFFilename\":\"e5c1203bf8_4fb3a2b790.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/e5c1203bf8_4fb3a2b790.pdf\",\"IsAttachment\":\"1\",\"OriginalFilename\":\"20261022_STRK_Laporan Informasi dan Fakta Material_32168630_lamp1.pdf\"},{\"PDFFilename\":\"ec05a1a4f2_f81feb9088.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/ec05a1a4f2_f81feb9088.pdf\",\"IsAttachment\":\"1\",\"OriginalFilename\":\"20261022_STRK_Laporan Informasi dan Fakta Material_32168630_lamp2.pdf\"}]",
+      "Perihal": null,
+      "Lang": null,
+      "KodeDivisi": null,
+      "Divisi": null,
+      "JenisEmiten": null,
+      "IsHidden": false
+    },
+    {
+      "Id": "20261006105709-024/INPS-OJK/X/2026_id-id",
+      "ItemID": null,
+      "AnnouncementNo": "024/INPS-OJK/X/2026",
+      "PublishDate": "2026-10-06T10:57:09",
+      "Title": "Pengambilalihan 180 saham atau 90% saham PT Tri Satria Indah Motor oleh Perseroan",
+      "AnnouncementType": "",
+      "Code": "INPS                                                                                                ",
+      "FormID": null,
+      "JmsxGroupId": "f-32163577-0",
+      "Jenis": "STOCK",
+      "Attachments": [
+        {
+          "PDFFilename": "93bd095436_42eabbcbd9.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/93bd095436_42eabbcbd9.pdf",
+          "IsAttachment": 0,
+          "OriginalFilename": "20261006_INPS_Laporan Informasi dan Fakta Material_32163577.pdf"
+        },
+        {
+          "PDFFilename": "84b277725a_093be55774.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/84b277725a_093be55774.pdf",
+          "IsAttachment": 1,
+          "OriginalFilename": "20261006_INPS_Laporan Informasi dan Fakta Material_32163577_lamp1.pdf"
+        },
+        {
+          "PDFFilename": "a7204a909c_539fbeecbb.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/a7204a909c_539fbeecbb.pdf",
+          "IsAttachment": 1,
+          "OriginalFilename": "20261006_INPS_Laporan Informasi dan Fakta Material_32163577_lamp2.pdf"
+        }
+      ],
+      "PdfPath": "[{\"PDFFilename\":\"84b277725a_093be55774.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/84b277725a_093be55774.pdf\",\"IsAttachment\":\"1\",\"OriginalFilename\":\"20261006_INPS_Laporan Informasi dan Fakta Material_32163577_lamp1.pdf\"},{\"PDFFilename\":\"93bd095436_42eabbcbd9.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/93bd095436_42eabbcbd9.pdf\",\"IsAttachment\":\"0\",\"OriginalFilename\":\"20261006_INPS_Laporan Informasi dan Fakta Material_32163577.pdf\"},{\"PDFFilename\":\"a7204a909c_539fbeecbb.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/a7204a909c_539fbeecbb.pdf\",\"IsAttachment\":\"1\",\"OriginalFilename\":\"20261006_INPS_Laporan Informasi dan Fakta Material_32163577_lamp2.pdf\"}]",
+      "Perihal": null,
+      "Lang": null,
+      "KodeDivisi": null,
+      "Divisi": null,
+      "JenisEmiten": null,
+      "IsHidden": false
+    },
+    {
+      "Id": "20261002220408-067/KIJA-CS/X/2026_id-id",
+      "ItemID": null,
+      "AnnouncementNo": "067/KIJA-CS/X/2026",
+      "PublishDate": "2026-10-02T22:04:08",
+      "Title": "Pengambilalihan 51% Saham PT Kawasan Industri Seafer oleh PT Indocargomas Persada, Entitas Anak Perseroan",
+      "AnnouncementType": "",
+      "Code": "KIJA                                                                                                ",
+      "FormID": null,
+      "JmsxGroupId": "f-32162539-0",
+      "Jenis": "STOCK",
+      "Attachments": [
+        {
+          "PDFFilename": "31e6ac7d86_71d067108c.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/31e6ac7d86_71d067108c.pdf",
+          "IsAttachment": 0,
+          "OriginalFilename": "20261001_KIJA_Laporan Informasi dan Fakta Material_32162539.pdf"
+        },
+        {
+          "PDFFilename": "04404fb927_b349c1eef2.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/04404fb927_b349c1eef2.pdf",
+          "IsAttachment": 1,
+          "OriginalFilename": "20261001_KIJA_Laporan Informasi dan Fakta Material_32162539_lamp1.pdf"
+        }
+      ],
+      "PdfPath": "[{\"PDFFilename\":\"04404fb927_b349c1eef2.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/04404fb927_b349c1eef2.pdf\",\"IsAttachment\":\"1\",\"OriginalFilename\":\"20261001_KIJA_Laporan Informasi dan Fakta Material_32162539_lamp1.pdf\"},{\"PDFFilename\":\"31e6ac7d86_71d067108c.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202610/31e6ac7d86_71d067108c.pdf\",\"IsAttachment\":\"0\",\"OriginalFilename\":\"20261001_KIJA_Laporan Informasi dan Fakta Material_32162539.pdf\"}]",
+      "Perihal": null,
+      "Lang": null,
+      "KodeDivisi": null,
+      "Divisi": null,
+      "JenisEmiten": null,
+      "IsHidden": false
+    }
+  ],
+  "ItemCount": 258,
+  "PageSize": 3,
+  "PageNumber": 1,
+  "PageCount": 86
+}
