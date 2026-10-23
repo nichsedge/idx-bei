@@ -111,6 +111,17 @@ def build_parser():
     p_dossier.add_argument("--no-fetch", action="store_true", help="Use stored announcements only")
     p_dossier.add_argument("--no-ocr", action="store_true", help="Skip OCR of scanned PDFs")
 
+    p_screen = sub.add_parser(
+        "screen",
+        help="Rank all tickers for M&A / backdoor and capital-raising signals in filing titles",
+    )
+    p_screen.add_argument("--from", dest="date_from", default="2025-01-01", metavar="DATE")
+    p_screen.add_argument("--to", dest="date_to", default=None, metavar="DATE")
+    p_screen.add_argument("--top", type=int, default=40, help="Rows per list")
+    p_screen.add_argument(
+        "--no-fetch", action="store_true", help="Screen stored filings only (skip update)"
+    )
+
     # 3. Backfill
     p_backfill = sub.add_parser("backfill", help="Historical OHLCV backfill over a date range")
     p_backfill.add_argument("--start", required=True, metavar="YYYYMMDD", help="Start date")
@@ -409,6 +420,17 @@ def main(argv=None):
             failed += res.status == "failed"
         if failed:
             raise SystemExit(1)
+    elif cmd == "screen":
+        from idx.pipelines.screen import build_screen
+
+        print(
+            build_screen(
+                date_from=args.date_from,
+                date_to=args.date_to,
+                top=args.top,
+                fetch=not args.no_fetch,
+            )
+        )
     elif cmd == "dossier":
         import idx.pipelines.dossier as dossier_mod
         from idx.pipelines.dossier import build_dossier
