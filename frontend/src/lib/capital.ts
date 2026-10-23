@@ -163,6 +163,8 @@ export const STAGE_LABELS: Record<DealStage, string> = {
 
 export const fmtInt = (n: number) => Math.round(n).toLocaleString('id-ID');
 export const fmtRp = (n: number) => 'Rp' + Math.round(n).toLocaleString('id-ID');
+/** Per-share price: keeps fractions (deals below Rp50 are often priced like Rp23,5). */
+export const fmtPrice = (n: number) => 'Rp' + n.toLocaleString('id-ID', { maximumFractionDigits: 2 });
 export const fmtPct = (n: number, digits = 1) => n.toFixed(digits) + '%';
 export function fmtShares(n: number): string {
   if (n >= 1e9) return (n / 1e9).toFixed(2) + ' B';

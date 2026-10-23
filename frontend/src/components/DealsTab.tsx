@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Handshake, ExternalLink, ArrowRight, Loader2, Info, Calculator, ShieldAlert } from 'lucide-react';
 import type { CorporateActionItem, Deal, DealsResponse, DealStage, DealStatus, DealType } from '../types';
 import { fetchCorporateActions, fetchDeals, fetchStockData } from '../services/api';
-import { STAGE_LABELS, STAGE_ORDER, fmtInt, fmtPct, fmtRp, fmtShares, tenderReturn } from '../lib/capital';
+import { STAGE_LABELS, STAGE_ORDER, fmtInt, fmtPct, fmtPrice, fmtRp, fmtShares, tenderReturn } from '../lib/capital';
 
 interface DealsTabProps {
   onSelectStock: (ticker: string) => void;
@@ -267,8 +267,8 @@ const DealDetail: React.FC<{
           {[
             { l: 'Stake acquired', v: controlEvent?.stake_pct != null ? fmtPct(controlEvent.stake_pct, 2) : '—' },
             { l: 'Shares acquired', v: controlEvent?.shares ? fmtShares(controlEvent.shares) : '—' },
-            { l: 'Acquisition price', v: controlEvent?.price ? fmtRp(controlEvent.price) : '—' },
-            { l: 'Tender price', v: tenderEvent?.tender_price ? fmtRp(tenderEvent.tender_price) : '—' },
+            { l: 'Acquisition price', v: controlEvent?.price ? fmtPrice(controlEvent.price) : '—' },
+            { l: 'Tender price', v: tenderEvent?.tender_price ? fmtPrice(tenderEvent.tender_price) : '—' },
             { l: 'TO premium vs pre-ann.', v: premium != null ? fmtPct(premium) : '—' },
             { l: 'TO vs acquisition price', v: tenderEvent?.tender_price && controlEvent?.price ? fmtPct((tenderEvent.tender_price / controlEvent.price - 1) * 100) : '—' },
           ].map((x) => (
