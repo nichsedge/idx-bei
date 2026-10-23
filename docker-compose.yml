@@ -1,31 +1,58 @@
+# IDX toolkit — Docker template. Copy .env.example to .env and adjust; every setting has a default.
+# Start:   docker compose up -d --build          (dashboard + scheduled worker)
+# Graph:   docker compose --profile graph up -d  (also starts Neo4j for the UBO / network features)
+# Details: docs/DOCKER.md
+
+x-app: &app
+  image: ${IDX_IMAGE:-idx-bei-app}
+  build:
+    context: .
+    dockerfile: Dockerfile
+  volumes:
+    # Runtime data (filings, prices, PDFs, deals) lives on the host, never inside the image.
+    - ${IDX_DATA_DIR:-./data}:/app/data
+  restart: unless-stopped
+
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    <<: *app
     container_name: idx-toolkit-app
     ports:
-      - "8000:8000"
+      - "${APP_PORT:-8000}:8000"
     environment:
-      - NEO4J_URI=bolt://neo4j:7687
-      - NEO4J_USER=neo4j
-      - NEO4J_PASSWORD=password
-    volumes:
-      - ./data:/app/data
-    restart: unless-stopped
-    depends_on:
-      - neo4j
+      - NEO4J_URI=${NEO4J_URI:-bolt://neo4j:7687}
+      - NEO4J_USER=${NEO4J_USER:-neo4j}
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD:-password}
+
+  # Scheduled jobs in Asia/Jakarta time on IDX trading days: announcements every 10 min, prices 18:30,
+  # screen 19:00, deal dossiers 20:00, cleanup Sundays 03:00.
+  # Status: dashboard → Data Ingestion, GET /api/system/worker, or `docker compose exec worker uv run idx worker --status`.
+  worker:
+    <<: *app
+    container_name: idx-toolkit-worker
+    command: ["uv", "run", "idx", "worker"]
+    environment:
+      - PYTHONUNBUFFERED=1
+      - WORKER_ANN_MINUTES=${WORKER_ANN_MINUTES:-10}
+      - WORKER_ANN_OFF_MINUTES=${WORKER_ANN_OFF_MINUTES:-60}
+      - WORKER_PRICES_AT=${WORKER_PRICES_AT:-18:30}
+      - WORKER_SCREEN_AT=${WORKER_SCREEN_AT:-19:00}
+      - WORKER_DOSSIERS_AT=${WORKER_DOSSIERS_AT:-20:00}
+      - WORKER_CLEANUP_AT=${WORKER_CLEANUP_AT:-03:00}
+      - WORKER_SCREEN_FROM=${WORKER_SCREEN_FROM:-2025-01-01}
+      - WORKER_DOSSIER_FROM=${WORKER_DOSSIER_FROM:-2025-01-01}
 
   neo4j:
-    image: neo4j:latest
+    image: ${NEO4J_IMAGE:-neo4j:latest}
+    profiles: ["graph"]
     container_name: idx-neo4j
     volumes:
-      - ./neo4j_data/logs:/logs
-      - ./neo4j_data/config:/config
-      - ./neo4j_data/data:/data
-      - ./neo4j_data/plugins:/plugins
+      - ${NEO4J_DATA_DIR:-./neo4j_data}/logs:/logs
+      - ${NEO4J_DATA_DIR:-./neo4j_data}/config:/config
+      - ${NEO4J_DATA_DIR:-./neo4j_data}/data:/data
+      - ${NEO4J_DATA_DIR:-./neo4j_data}/plugins:/plugins
     environment:
-      - NEO4J_AUTH=neo4j/password
+      - NEO4J_AUTH=${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-password}
     ports:
       - "7474:7474"
       - "7687:7687"

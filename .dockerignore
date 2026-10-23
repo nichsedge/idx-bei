@@ -1,0 +1,14 @@
+# Runtime data is mounted as a volume (./data:/app/data); never send it to the build.
+data/
+neo4j_data/
+.git/
+**/__pycache__/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+.venv/
+python/.venv/
+frontend/node_modules/
+frontend/dist/
+bin/
+graphify-out/

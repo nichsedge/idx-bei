@@ -24,12 +24,13 @@ For a self-contained, zero-boilerplate exploration of the data pipeline, foreign
 - **[notebooks/idx_quantitative_walkthrough.py](notebooks/idx_quantitative_walkthrough.py)**
 
 ### 🐳 1-Click Docker Launch
-Launch the complete stack (Unified Web Dashboard, REST API, WebSocket server, and Neo4j graph database) with a single command:
+Launch the dashboard, REST API and the scheduled worker (announcements, prices, M&A screen, deal dossiers, weekly cleanup) with a single command; add the `graph` profile for Neo4j:
 ```bash
-docker compose up -d
-# Dashboard & REST API: http://localhost:8000
-# Neo4j Graph Browser:   http://localhost:7474
+cp .env.example .env                    # optional: data folder, port, worker schedules
+docker compose up -d --build            # Dashboard & REST API: http://localhost:8000
+docker compose --profile graph up -d    # + Neo4j Graph Browser: http://localhost:7474
 ```
+Configuration, first data load, worker operations and troubleshooting: **[docs/DOCKER.md](docs/DOCKER.md)**.
 
 ### Scrape & Pipeline Commands
 
