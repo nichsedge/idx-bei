@@ -1,0 +1,119 @@
+{
+  "Items": [
+    {
+      "Id": "20260916190559-S.2026.237/MBI/DIRCOMPLIANCE_id-id",
+      "ItemID": null,
+      "AnnouncementNo": "S.2026.237/MBI/DIRCOMPLIANCE",
+      "PublishDate": "2026-09-16T19:05:59",
+      "Title": "Penyampaian Pengumuman pada Surat Kabar tentang Pengumuman Pasca Pengambilalihan Saham dalam PT Asuransi Etiqa Internasional Indonesia oleh PT Bank Maybank Indonesia Tbk.",
+      "AnnouncementType": "",
+      "Code": "BNII                                                                                                ",
+      "FormID": null,
+      "JmsxGroupId": "f-32149206-0",
+      "Jenis": "STOCK",
+      "Attachments": [
+        {
+          "PDFFilename": "9ce35427a1_71c2e4a74a.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/9ce35427a1_71c2e4a74a.pdf",
+          "IsAttachment": 0,
+          "OriginalFilename": "20260916_BNII_Laporan Informasi dan Fakta Material_32149206.pdf"
+        },
+        {
+          "PDFFilename": "56053165c3_22f99be835.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/56053165c3_22f99be835.pdf",
+          "IsAttachment": 1,
+          "OriginalFilename": "20260916_BNII_Laporan Informasi dan Fakta Material_32149206_lamp2.pdf"
+        },
+        {
+          "PDFFilename": "9e00d4fe13_7e346be6f1.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/9e00d4fe13_7e346be6f1.pdf",
+          "IsAttachment": 1,
+          "OriginalFilename": "20260916_BNII_Laporan Informasi dan Fakta Material_32149206_lamp1.pdf"
+        }
+      ],
+      "PdfPath": "[{\"PDFFilename\":\"56053165c3_22f99be835.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/56053165c3_22f99be835.pdf\",\"IsAttachment\":\"1\",\"OriginalFilename\":\"20260916_BNII_Laporan Informasi dan Fakta Material_32149206_lamp2.pdf\"},{\"PDFFilename\":\"9ce35427a1_71c2e4a74a.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/9ce35427a1_71c2e4a74a.pdf\",\"IsAttachment\":\"0\",\"OriginalFilename\":\"20260916_BNII_Laporan Informasi dan Fakta Material_32149206.pdf\"},{\"PDFFilename\":\"9e00d4fe13_7e346be6f1.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/9e00d4fe13_7e346be6f1.pdf\",\"IsAttachment\":\"1\",\"OriginalFilename\":\"20260916_BNII_Laporan Informasi dan Fakta Material_32149206_lamp1.pdf\"}]",
+      "Perihal": null,
+      "Lang": null,
+      "KodeDivisi": null,
+      "Divisi": null,
+      "JenisEmiten": null,
+      "IsHidden": false
+    },
+    {
+      "Id": "20260916111439-01.202/AG/Spem/IIA/IX/2026_id-id",
+      "ItemID": null,
+      "AnnouncementNo": "01.202/AG/Spem/IIA/IX/2026",
+      "PublishDate": "2026-09-16T11:14:39",
+      "Title": "Negosiasi Rencana Pengambilalihan PT Idea Indonesia Akademi Tbk",
+      "AnnouncementType": "",
+      "Code": "IDEA                                                                                                ",
+      "FormID": null,
+      "JmsxGroupId": "f-32148872-0",
+      "Jenis": "STOCK",
+      "Attachments": [
+        {
+          "PDFFilename": "63c379c4d8_9cc64b14ff.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/63c379c4d8_9cc64b14ff.pdf",
+          "IsAttachment": 0,
+          "OriginalFilename": "20260916_IDEA_Laporan Informasi dan Fakta Material_32148872.pdf"
+        },
+        {
+          "PDFFilename": "65ee18c50d_20b30597ef.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/65ee18c50d_20b30597ef.pdf",
+          "IsAttachment": 1,
+          "OriginalFilename": "20260916_IDEA_Laporan Informasi dan Fakta Material_32148872_lamp2.pdf"
+        },
+        {
+          "PDFFilename": "b7ea41acee_4205b08897.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/b7ea41acee_4205b08897.pdf",
+          "IsAttachment": 1,
+          "OriginalFilename": "20260916_IDEA_Laporan Informasi dan Fakta Material_32148872_lamp1.pdf"
+        }
+      ],
+      "PdfPath": "[{\"PDFFilename\":\"63c379c4d8_9cc64b14ff.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/63c379c4d8_9cc64b14ff.pdf\",\"IsAttachment\":\"0\",\"OriginalFilename\":\"20260916_IDEA_Laporan Informasi dan Fakta Material_32148872.pdf\"},{\"PDFFilename\":\"65ee18c50d_20b30597ef.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/65ee18c50d_20b30597ef.pdf\",\"IsAttachment\":\"1\",\"OriginalFilename\":\"20260916_IDEA_Laporan Informasi dan Fakta Material_32148872_lamp2.pdf\"},{\"PDFFilename\":\"b7ea41acee_4205b08897.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/b7ea41acee_4205b08897.pdf\",\"IsAttachment\":\"1\",\"OriginalFilename\":\"20260916_IDEA_Laporan Informasi dan Fakta Material_32148872_lamp1.pdf\"}]",
+      "Perihal": null,
+      "Lang": null,
+      "KodeDivisi": null,
+      "Divisi": null,
+      "JenisEmiten": null,
+      "IsHidden": false
+    },
+    {
+      "Id": "20260908173929-041S/Dir-NexAI/IX/2026_id-id",
+      "ItemID": null,
+      "AnnouncementNo": "041S/Dir-NexAI/IX/2026",
+      "PublishDate": "2026-09-08T17:39:29",
+      "Title": "Penandatanganan Akta Pengambilalihan Saham, Akta Pengalihan Aset, dan Akta Pengalihan dan Pengambilalihan Kewajiban.",
+      "AnnouncementType": "",
+      "Code": "MGLV                                                                                                ",
+      "FormID": null,
+      "JmsxGroupId": "f-32146335-0",
+      "Jenis": "STOCK",
+      "Attachments": [
+        {
+          "PDFFilename": "eaf69faa9f_108e74fb65.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/eaf69faa9f_108e74fb65.pdf",
+          "IsAttachment": 0,
+          "OriginalFilename": "20260908_MGLV_Laporan Informasi dan Fakta Material_32146335.pdf"
+        },
+        {
+          "PDFFilename": "8af84425da_b63b7ef135.pdf",
+          "FullSavePath": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/8af84425da_b63b7ef135.pdf",
+          "IsAttachment": 1,
+          "OriginalFilename": "20260908_MGLV_Laporan Informasi dan Fakta Material_32146335_lamp1.pdf"
+        }
+      ],
+      "PdfPath": "[{\"PDFFilename\":\"8af84425da_b63b7ef135.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/8af84425da_b63b7ef135.pdf\",\"IsAttachment\":\"1\",\"OriginalFilename\":\"20260908_MGLV_Laporan Informasi dan Fakta Material_32146335_lamp1.pdf\"},{\"PDFFilename\":\"eaf69faa9f_108e74fb65.pdf\",\"FullSavePath\":\"https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202609/eaf69faa9f_108e74fb65.pdf\",\"IsAttachment\":\"0\",\"OriginalFilename\":\"20260908_MGLV_Laporan Informasi dan Fakta Material_32146335.pdf\"}]",
+      "Perihal": null,
+      "Lang": null,
+      "KodeDivisi": null,
+      "Divisi": null,
+      "JenisEmiten": null,
+      "IsHidden": false
+    }
+  ],
+  "ItemCount": 258,
+  "PageSize": 3,
+  "PageNumber": 2,
+  "PageCount": 86
+}

@@ -416,36 +416,25 @@ def handle_tool_call(name, args):
             return peers[cols].to_json(orient="records", indent=2)
 
         elif name == "idx_search_announcements":
+            from idx.pipelines.announcements import normalise, search
+
             query = (args.get("query") or "").lower()
             ticker = (args.get("ticker") or "").upper()
             limit = args.get("limit", 15)
 
-            ann_path = os.path.join(DATA_DIR, "announcements.json")
-            results = []
-            if os.path.exists(ann_path):
-                raw = load_json(ann_path)
-                items = (
-                    raw.get("data", [])
-                    if isinstance(raw, dict)
-                    else (raw if isinstance(raw, list) else [])
-                )
-                for item in items:
-                    t = (item.get("KodeEmiten") or item.get("StockCode") or "").upper()
-                    title = (item.get("JudulPengumuman") or item.get("Title") or "").lower()
-                    if ticker and ticker not in t:
-                        continue
-                    if query and query not in title:
-                        continue
-                    results.append(item)
-                    if len(results) >= limit:
-                        break
+            # Stored announcements first (`idx announcements`), then a live query.
+            results = search(query=query, ticker=ticker, limit=limit)
 
             if not results:
                 from idx.scrapers.news import fetch_all_announcements
 
                 data = fetch_all_announcements(keywords=query or ticker)
-                if data and "data" in data:
-                    results = data["data"][:limit]
+                for item in (data or {}).get("Items") or []:
+                    row = normalise(item, fetched_at=None)
+                    row.pop("raw")
+                    if ticker and row["ticker"] != ticker:
+                        continue
+                    results.append(row)
 
             return json.dumps(results[:limit], indent=2, default=str)
 

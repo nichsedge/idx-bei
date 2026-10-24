@@ -44,6 +44,9 @@ data/*.bak
 data/ownership/
 data/briefings/
 data/usd_idr_rate.json
+data/announcements/
+data/dossiers/
+data/screens/
 
 # --- Logs & OS ---
 *.log
