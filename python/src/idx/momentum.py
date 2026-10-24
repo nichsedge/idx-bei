@@ -3,14 +3,16 @@ Price momentum rank board for deal and screen candidates.
 
 Momentum is measured against the whole IDX market from the stored daily stock summary:
 
-- returns over 1M / 3M / 6M / 12M (21 / 63 / 126 / 250 trading days), unadjusted closes;
+- returns over 1M / 3M / 6M / 12M (21 / 63 / 126 / 250 trading days) on closes adjusted for
+  splits and rights issues (idx.core.adjust);
 - 3M excess return vs the IHSG (COMPOSITE index);
 - distance from the high of the stored window, position vs the 20/50-day averages;
 - traded-value attention: 20-day vs 60-day average value;
 - score = percentile among all stocks, 20% 1M + 40% 3M + 40% 6M (3M stands in when 6M is missing).
 
-Prices are not adjusted for corporate actions. A single-day move beyond IDX's widest auto-rejection
-band (35%) is almost always an ex-date or split, so such tickers are flagged ``adj_warning``.
+``last_adjustment`` is the most recent ex-date (and factor) applied to a stock. A single-day move
+beyond IDX's widest auto-rejection band (35%) left after adjustment is not explained by the data
+(e.g. a gap in the history), so such tickers are flagged ``adj_warning``.
 """
 
 import glob
@@ -20,12 +22,16 @@ from typing import Any
 
 import pandas as pd
 
+from idx.core.adjust import adjusted_closes, adjustment_events
 from idx.core.timeseries import read_dataset
 from idx.core.utils import DATA_DIR
 
 WINDOWS = {"1M": 21, "3M": 63, "6M": 126, "12M": 250}
 WEIGHTS = {"1M": 0.2, "3M": 0.4, "6M": 0.4}
-MAX_DAILY_MOVE = 0.35  # beyond IDX auto-rejection limits → likely unadjusted corporate action
+# beyond IDX auto-rejection limits (35% for Rp50-200) even after adjustment → unexplained;
+# the margin keeps exact +35% limit-up days (162/120) out despite float rounding
+MAX_DAILY_MOVE = 0.355
+MIN_FLAG_PRICE = 50  # below Rp50 one tick is >2% and Rp1 → 2 is +100%: limits don't apply
 MIN_HISTORY = 30
 STALE_DAYS = 10  # last price older than this vs the market → suspended / not trading
 SCREENS_DIR = os.path.join(DATA_DIR, "screens")
@@ -41,14 +47,16 @@ def compute_momentum(
 ) -> tuple[pd.DataFrame, dict]:
     """Momentum metrics for every stock.
 
-    prices: columns StockCode, Date, Close, Value (one row per stock per day).
+    prices: columns StockCode, Date, Close, Value, Previous (one row per stock per day; without
+            Previous the closes are used unadjusted).
     index:  columns IndexCode, Date, Close (optional; IHSG = COMPOSITE).
     Returns (metrics indexed by stock code, market summary).
     """
     df = prices[["StockCode", "Date", "Close", "Value"]].copy()
     df["Date"] = pd.to_datetime(df["Date"].astype(str).str[:10])
     df = df[df["Close"] > 0]
-    px = df.pivot_table(index="Date", columns="StockCode", values="Close").sort_index()
+    px = adjusted_closes(prices)
+    events = adjustment_events(prices).sort_values("Date").groupby("StockCode").last()
     val = df.pivot_table(index="Date", columns="StockCode", values="Value").sort_index().fillna(0)
     last = px.index.max()
 
@@ -70,11 +78,19 @@ def compute_momentum(
         r3, ihsg3 = r["3M"], ihsg_ret.get("3M")
         v = val[code]
         v20, v60 = v.tail(20).mean(), v.tail(60).mean()
-        daily = s.pct_change().dropna()
+        daily = s.pct_change()[s.shift(1) >= MIN_FLAG_PRICE].dropna()
         rows.append(
             {
                 "code": code,
                 "close": float(s.iloc[-1]),
+                "last_adjustment": (
+                    {
+                        "date": events.loc[code, "Date"].date().isoformat(),
+                        "factor": round(float(events.loc[code, "factor"]), 6),
+                    }
+                    if code in events.index
+                    else None
+                ),
                 **{f"r{k}": x for k, x in r.items()},
                 "xs3M": r3 - ihsg3 if r3 is not None and ihsg3 is not None else None,
                 "from_high": float(s.iloc[-1] / s.max() - 1),

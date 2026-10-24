@@ -27,6 +27,14 @@ def _prices():
             {"StockCode": "FLAT", "Date": d, "Close": 500.0, "Value": 1e9},
             # one-day 60% drop (an unadjusted rights-issue ex-date) on day 230
             {"StockCode": "RITE", "Date": d, "Close": 400.0 if i < 230 else 160.0, "Value": 1e9},
+            # 1:5 split on day 240: IDX sets Previous to the adjusted reference price
+            {
+                "StockCode": "SPLT",
+                "Date": d,
+                "Close": 1000.0 if i < 240 else 200.0,
+                "Previous": 200.0 if i == 240 else (1000.0 if i < 240 else 200.0),
+                "Value": 1e9,
+            },
         ]
         if i < 100:  # stopped trading long ago → excluded
             rows.append({"StockCode": "GONE", "Date": d, "Close": 50.0, "Value": 1e8})
@@ -41,8 +49,8 @@ def test_compute_momentum_metrics_and_ranks():
     prices, index = _prices()
     m, market = compute_momentum(prices, index)
 
-    assert set(m.index) == {"UPUP", "DOWN", "FLAT", "RITE"}  # GONE is stale
-    assert market["universe"] == 4 and market["trading_days"] == 260
+    assert set(m.index) == {"UPUP", "DOWN", "FLAT", "RITE", "SPLT"}  # GONE is stale
+    assert market["universe"] == 5 and market["trading_days"] == 260
     assert round(m.loc["UPUP", "r1M"], 4) == round(1.01**21 - 1, 4)
     assert m.loc["FLAT", "r3M"] == 0
     assert round(m.loc["UPUP", "xs3M"], 4) == round((1.01**63 - 1) - (0.999**63 - 1), 4)
@@ -52,6 +60,14 @@ def test_compute_momentum_metrics_and_ranks():
         round(m.loc["UPUP", "value_20_60"], 2) == 1.8
     )  # last 20d at 3e9 vs 60d (20×3e9 + 40×1e9)/60
     assert m.loc["RITE", "adj_warning"] and not m.loc["UPUP", "adj_warning"]
+    # the split is adjusted away: flat price, no warning, ex-date reported
+    assert m.loc["SPLT", "r3M"] == 0 and m.loc["SPLT", "from_high"] == 0
+    assert not m.loc["SPLT", "adj_warning"]
+    assert m.loc["SPLT", "last_adjustment"] == {
+        "date": prices["Date"].unique()[240].date().isoformat(),
+        "factor": 0.2,
+    }
+    assert m.loc["RITE", "last_adjustment"] is None
     assert m.loc["UPUP", "market_rank"] == 1 and m["score"].idxmax() == "UPUP"
     assert m.loc["DOWN", "score"] < m.loc["FLAT", "score"]
 

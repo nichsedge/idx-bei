@@ -182,9 +182,17 @@ export const MomentumTab: React.FC<MomentumTabProps> = ({ onSelectStock }) => {
                     >
                       {r.code}
                     </button>
+                    {r.last_adjustment && (
+                      <span
+                        title={`Prices before the ex-date ${r.last_adjustment.date} are adjusted by ${r.last_adjustment.factor} (split, reverse split or rights issue, from IDX's reference price).`}
+                        style={{ marginLeft: 6, color: 'var(--text-secondary)', fontSize: '0.7rem', fontWeight: 700 }}
+                      >
+                        ADJ
+                      </span>
+                    )}
                     {r.adj_warning && (
                       <span
-                        title="A one-day move beyond 35% (IDX auto-rejection limit): likely an unadjusted rights issue, split or reverse split. Returns may be distorted."
+                        title="A one-day move beyond 35% (IDX auto-rejection limit) that the corporate-action adjustment does not explain. Returns may be distorted."
                         style={{ marginLeft: 6, color: '#fb923c', fontSize: '0.7rem', fontWeight: 700 }}
                       >
                         ADJ?
@@ -261,8 +269,8 @@ export const MomentumTab: React.FC<MomentumTabProps> = ({ onSelectStock }) => {
       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
         <Info size={14} style={{ flexShrink: 0, marginTop: '2px' }} />
         <span>
-          Score = percentile among all IDX stocks: 20% 1M + 40% 3M + 40% 6M return. Closes are not adjusted for corporate actions; rows marked
-          ADJ? had a one-day move beyond 35%. Value 20/60d above 1.5× means rising trading interest. Screen candidates come from the latest
+          Score = percentile among all IDX stocks: 20% 1M + 40% 3M + 40% 6M return. Closes are adjusted for splits and rights issues using IDX's
+          ex-date reference price (ADJ shows the latest ex-date); ADJ? marks a one-day move beyond 35% that the adjustment does not explain. Value 20/60d above 1.5× means rising trading interest. Screen candidates come from the latest
           `idx screen` run{board.screen_period ? ` (${board.screen_period})` : ''}. Momentum describes past prices, not a forecast or advice.
         </span>
       </div>

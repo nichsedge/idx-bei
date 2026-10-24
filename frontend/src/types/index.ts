@@ -441,6 +441,7 @@ export interface MomentumRow {
   value_20_60?: number | null;
   avg_value_20d?: number;
   adj_warning?: boolean;
+  last_adjustment?: { date: string; factor: number } | null;
   context?: string;
   deal_score?: number | null;
   screen_score?: number;
