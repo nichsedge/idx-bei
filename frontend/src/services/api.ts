@@ -4,6 +4,7 @@ import type {
   DealsResponse,
   MomentumBoard,
   RightsIssuesResponse,
+  RightsPipelineResponse,
   WorkerStatus,
 } from '../types';
 
@@ -27,6 +28,14 @@ export async function fetchDeals(): Promise<DealsResponse> {
   const resp = await fetch('/api/deals');
   if (!resp.ok) {
     throw new Error('Failed to fetch deals');
+  }
+  return await resp.json();
+}
+
+export async function fetchRightsPipeline(): Promise<RightsPipelineResponse> {
+  const resp = await fetch('/api/rights-pipeline');
+  if (!resp.ok) {
+    throw new Error('Failed to fetch tracked capital raises');
   }
   return await resp.json();
 }

@@ -1,8 +1,10 @@
 """
 Acquisition, backdoor-listing and rights-issue tracker.
 
-- Deals come from ``data/deals.json`` (written by the deal pipeline, or by hand until it exists).
-- Rights issues and private placements come from ``data/corporateActions.json`` (``idx corporate``).
+- Deals (acquisitions, backdoor listings, tender offers) come from ``data/deals.json``.
+- Tracked capital raises (planned, ongoing and recent rights issues / placements, with terms and
+  events) come from ``data/rights.json``; ``linked_deal`` points to a deal when the raise is part of one.
+- Listed rights issues and private placements come from ``data/corporateActions.json`` (``idx corporate``).
 
 IDX listing records can cover a single batch of exercised rights and the feed misses some issues,
 so listed sizes understate the real issue. Full terms need prospectus extraction.
@@ -16,7 +18,9 @@ from typing import Any
 from idx.core.utils import DATA_DIR, load_json
 
 DEALS_FILE = os.path.join(DATA_DIR, "deals.json")
+RIGHTS_FILE = os.path.join(DATA_DIR, "rights.json")
 CORPORATE_ACTIONS_FILE = os.path.join(DATA_DIR, "corporateActions.json")
+OPEN_STATUSES = {"active", "watch"}
 
 # ---------- Rights issues & private placements ----------
 
@@ -186,3 +190,45 @@ def list_deals(deals_file: dict[str, Any]) -> dict[str, Any]:
 
 def load_deals() -> dict[str, Any]:
     return load_json(DEALS_FILE, default={"updated_at": None, "deals": []})
+
+
+# ---------- Tracked capital raises (rights.json) ----------
+
+
+def enrich_raise(item: dict[str, Any]) -> dict[str, Any]:
+    """Adds rights per old share, the theoretical ex-rights price and review counters."""
+    t = item.get("terms") or {}
+    old, new, px, cum = (
+        t.get(k) for k in ("ratio_old", "ratio_new", "exercise_price", "cum_price")
+    )
+    events = item.get("events", [])
+    dates = [e.get("event_date", "") for e in events] + [item.get("announced_at") or ""]
+    return {
+        **item,
+        "new_per_old": new / old if old and new else None,
+        "terp": (old * cum + new * px) / (old + new) if old and new and px and cum else None,
+        "last_event_date": max(dates),
+        "pending_review": sum(1 for e in events if e.get("review_status") == "pending"),
+    }
+
+
+def list_rights(rights_file: dict[str, Any]) -> dict[str, Any]:
+    items = [enrich_raise(r) for r in rights_file.get("rights", [])]
+    items.sort(key=lambda r: r["last_event_date"], reverse=True)
+    return {"updated_at": rights_file.get("updated_at"), "rights": items}
+
+
+def load_rights() -> dict[str, Any]:
+    return load_json(RIGHTS_FILE, default={"updated_at": None, "rights": []})
+
+
+def tracked_tickers(deals_file: dict[str, Any], rights_file: dict[str, Any]) -> list[str]:
+    """Tickers of open deals and open (active / watch) capital raises."""
+    return sorted(
+        {
+            d["target_ticker"]
+            for d in deals_file.get("deals", [])
+            if d.get("status") in OPEN_STATUSES
+        }
+        | {r["ticker"] for r in rights_file.get("rights", []) if r.get("status") in OPEN_STATUSES}
+    )

@@ -161,12 +161,10 @@ def job_screen(now: datetime) -> str:
 
 
 def job_dossiers(now: datetime) -> str:
-    from idx.deals import load_deals
+    from idx.deals import load_deals, load_rights, tracked_tickers
     from idx.pipelines.dossier import build_dossier
 
-    tickers = sorted(
-        {d["target_ticker"] for d in load_deals().get("deals", []) if d.get("status") == "active"}
-    )
+    tickers = tracked_tickers(load_deals(), load_rights())
     done, failed = [], []
     for t in tickers:
         try:

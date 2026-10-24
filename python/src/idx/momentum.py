@@ -141,8 +141,9 @@ def build_board(
     deals: list[dict],
     screen: dict | None,
     top: int = 30,
+    rights: list[dict] | None = None,
 ) -> dict:
-    """Rank board groups: deal-tracker tickers and the screen's top M&A / capital candidates."""
+    """Rank board groups: deal- and rights-tracker tickers and the screen's top M&A / capital candidates."""
 
     def row(code: str, context: dict) -> dict:
         if metrics.empty or code not in metrics.index:
@@ -164,6 +165,15 @@ def build_board(
         for d in deals
     ]
     groups.append({"key": "deals", "title": "Deal tracker", "rows": deal_rows})
+    if rights:
+        rights_rows = [
+            row(
+                r["ticker"],
+                {"context": f"{r.get('type', '')} · {r.get('stage', '')} · {r.get('status', '')}"},
+            )
+            for r in rights
+        ]
+        groups.append({"key": "rights", "title": "Rights tracker", "rows": rights_rows})
 
     if screen:
         cands = screen.get("candidates", [])
@@ -201,7 +211,7 @@ def build_board(
     }
 
 
-def load_board(deals: list[dict], top: int = 30) -> dict:
+def load_board(deals: list[dict], top: int = 30, rights: list[dict] | None = None) -> dict:
     prices = read_dataset("stock_summary")
     if prices.empty:
         return {
@@ -211,4 +221,4 @@ def load_board(deals: list[dict], top: int = 30) -> dict:
             "error": "no price data; run `idx backfill`",
         }
     metrics, market = compute_momentum(prices, read_dataset("index_summary"))
-    return build_board(metrics, market, deals, latest_screen(), top=top)
+    return build_board(metrics, market, deals, latest_screen(), top=top, rights=rights)

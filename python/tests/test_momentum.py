@@ -112,10 +112,13 @@ def test_build_board_groups_and_json_safe():
             },
         ],
     }
-    board = build_board(m, market, deals, screen, top=10)
+    rights = [{"ticker": "DOWN", "type": "rights_issue", "stage": "plan", "status": "watch"}]
+    board = build_board(m, market, deals, screen, top=10, rights=rights)
     json.dumps(board)  # numpy types converted
 
     groups = {g["key"]: g for g in board["groups"]}
+    assert [r["code"] for r in groups["rights"]["rows"]] == ["DOWN"]
+    assert groups["rights"]["rows"][0]["context"] == "rights_issue · plan · watch"
     assert [r["code"] for r in groups["deals"]["rows"]] == [
         "DOWN",
         "GONE",
@@ -131,7 +134,7 @@ def test_momentum_endpoint(monkeypatch):
     _TTL_CACHE.pop("momentum_board_5", None)
     calls = []
 
-    def fake_load_board(deals, top):
+    def fake_load_board(deals, top, rights=None):
         calls.append(top)
         return {"market": {"as_of": "2026-10-22"}, "screen_period": None, "groups": []}
 

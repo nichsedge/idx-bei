@@ -7,7 +7,14 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 
 from idx.api import _TTL_CACHE, app
-from idx.deals import backdoor_score, build_capital_raises, list_deals, ticker_corporate_actions
+from idx.deals import (
+    backdoor_score,
+    build_capital_raises,
+    list_deals,
+    list_rights,
+    ticker_corporate_actions,
+    tracked_tickers,
+)
 
 
 def _row(id_, ticker, date_, added, after, kind="hmetd"):
@@ -160,16 +167,60 @@ def test_list_deals_enriches_and_sorts():
     assert res["deals"][1]["tender_premium_pct"] is None
 
 
+def test_list_rights_terms_and_tracked_tickers():
+    rights_file = {
+        "updated_at": "2026-10-23",
+        "rights": [
+            {
+                "id": "FORU-RI-I",
+                "ticker": "FORU",
+                "status": "completed",
+                "terms": {
+                    "ratio_old": 100,
+                    "ratio_new": 46235,
+                    "exercise_price": 126,
+                    "cum_price": 2560,
+                },
+                "events": [{"event_date": "2026-09-14", "review_status": "pending"}],
+            },
+            {
+                "id": "YELO-W",
+                "ticker": "YELO",
+                "status": "watch",
+                "announced_at": "2026-10-02",
+                "events": [],
+            },
+        ],
+    }
+    res = list_rights(rights_file)
+    assert [r["id"] for r in res["rights"]] == ["YELO-W", "FORU-RI-I"]
+    foru = res["rights"][1]
+    assert foru["new_per_old"] == 462.35
+    assert round(foru["terp"], 2) == round((100 * 2560 + 46235 * 126) / 46335, 2)  # ~131.25
+    assert foru["pending_review"] == 1
+    assert res["rights"][0]["terp"] is None and res["rights"][0]["last_event_date"] == "2026-10-02"
+
+    deals_file = {
+        "deals": [
+            {"target_ticker": "NAYZ", "status": "active"},
+            {"target_ticker": "OLD", "status": "completed"},
+        ]
+    }
+    assert tracked_tickers(deals_file, rights_file) == ["NAYZ", "YELO"]
+
+
 def test_api_endpoints():
     client = TestClient(app)
     _TTL_CACHE.pop("rights_issues", None)
     with (
         patch("idx.deals.load_corporate_actions", return_value=ACTIONS),
         patch("idx.deals.load_deals", return_value={"updated_at": "x", "deals": []}),
+        patch("idx.deals.load_rights", return_value={"updated_at": "y", "rights": []}),
     ):
         rights = client.get("/api/rights-issues").json()
         assert len(rights["raises"]) == 4
         assert "SERIAL" in rights["flag_labels"]
         assert client.get("/api/corporate-actions/DDDD").json()[0]["category"] == "tanpaHmetd"
         assert client.get("/api/deals").json() == {"updated_at": "x", "deals": []}
+        assert client.get("/api/rights-pipeline").json() == {"updated_at": "y", "rights": []}
     _TTL_CACHE.pop("rights_issues", None)

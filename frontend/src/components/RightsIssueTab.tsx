@@ -9,6 +9,7 @@ import {
   fmtShares,
   holderScenarios,
 } from '../lib/capital';
+import { TrackedRaisesPanel } from './TrackedRaisesPanel';
 
 interface RightsIssueTabProps {
   onSelectStock: (ticker: string) => void;
@@ -160,6 +161,8 @@ export const RightsIssueTab: React.FC<RightsIssueTabProps> = ({ onSelectStock })
           Latest listing in data: <strong style={{ color: '#e2e8f0' }}>{kpis.latest}</strong>
         </span>
       </div>
+
+      <TrackedRaisesPanel panelStyle={panel} onSelectStock={onSelectStock} />
 
       {/* KPI tiles */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.75rem' }}>

@@ -5,7 +5,7 @@ Dry run by default: reports what would change and the space freed; ``apply=True`
 
 1. Compress closed months of announcement rows (``items/YYYY-MM.jsonl`` → ``.jsonl.gz``, raw IDX items kept).
    The current month (WIB) stays plain for appends; late rows for a compressed month are merged in.
-2. Delete attachment PDFs older than ``pdf_days`` that no ticker in ``data/deals.json`` uses, but only when their
+2. Delete attachment PDFs older than ``pdf_days`` that no ticker in ``data/deals.json`` or ``data/rights.json`` uses, but only when their
    text is already cached (``.txt``, or ``.ocr.txt`` for scans) — digests keep working and any PDF can be
    re-downloaded from IDX. The attachment index is left as is.
 3. Keep the newest ``keep_outputs`` digests per ticker (``data/dossiers``) and screens (``data/screens``).
@@ -92,10 +92,16 @@ def compress_months(store: AnnouncementStore, current_month: str, report: Report
 
 
 def _deal_tickers(deals_file: str) -> set[str]:
-    if not os.path.exists(deals_file):
-        return set()
-    with open(deals_file, encoding="utf-8") as f:
-        return {d["target_ticker"].upper() for d in json.load(f).get("deals", [])}
+    """Tickers in deals.json and in the rights.json beside it (tracked capital raises)."""
+    out: set[str] = set()
+    for path, key, ticker_field in (
+        (deals_file, "deals", "target_ticker"),
+        (os.path.join(os.path.dirname(deals_file), "rights.json"), "rights", "ticker"),
+    ):
+        if os.path.exists(path):
+            with open(path, encoding="utf-8") as f:
+                out |= {d[ticker_field].upper() for d in json.load(f).get(key, [])}
+    return out
 
 
 def _text_cached(pdf_path: str) -> bool:

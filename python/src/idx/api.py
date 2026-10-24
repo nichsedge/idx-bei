@@ -509,6 +509,14 @@ async def get_deals():
     return list_deals(load_deals())
 
 
+@app.get("/api/rights-pipeline", tags=["Deals"])
+async def get_rights_pipeline():
+    """Tracked capital raises (data/rights.json): planned, ongoing and recent rights issues / placements."""
+    from idx.deals import list_rights, load_rights
+
+    return list_rights(load_rights())
+
+
 @app.get("/api/system/worker", tags=["Ingestion & Data Pipeline"])
 async def get_worker_status(runs: int = Query(20, ge=0, le=200)):
     """Scheduled worker status (per job) and its most recent runs."""
@@ -530,15 +538,17 @@ async def get_worker_status(runs: int = Query(20, ge=0, le=200)):
 
 @app.get("/api/momentum/board", tags=["Deals"])
 async def get_momentum_board(top: int = Query(30, ge=1, le=200)):
-    """Price-momentum ranking of deal-tracker tickers and the latest screen's top candidates."""
-    from idx.deals import list_deals, load_deals
+    """Price-momentum ranking of deal / rights-tracker tickers and the latest screen's top candidates."""
+    from idx.deals import list_deals, list_rights, load_deals, load_rights
     from idx.momentum import load_board
 
     cache_key = f"momentum_board_{top}"
     cached = get_from_cache(cache_key, ttl_seconds=600)
     if cached is not None:
         return cached
-    res = await asyncio.to_thread(load_board, list_deals(load_deals())["deals"], top)
+    res = await asyncio.to_thread(
+        load_board, list_deals(load_deals())["deals"], top, list_rights(load_rights())["rights"]
+    )
     set_in_cache(cache_key, res)
     return res
 

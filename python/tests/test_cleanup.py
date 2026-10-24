@@ -35,6 +35,7 @@ def _setup(tmp_path):
     )
     store.add(_row(3, "BBBB", "2026-10-20T10:00:00", ["u-new"]))
     store.add(_row(4, "AAAA", "2026-09-12T10:00:00", ["u-shared-deal"]))
+    store.add(_row(5, "CCCC", "2026-09-13T10:00:00", ["u-old-rights"]))
 
     def pdf(url, fetched, text=None, ocr=None, path=None):
         rec = store.save_attachment(url, f"%PDF {url}".encode(), "application/pdf", fetched)
@@ -52,6 +53,7 @@ def _setup(tmp_path):
     long_text = "Nilai transaksi sebesar Rp113.500.000.000 untuk pengalihan aset dan usaha."
     old = "2026-06-01T10:00:00+07:00"
     pdf("u-old-deal", old, text=long_text)  # deal ticker → kept
+    pdf("u-old-rights", old, text=long_text)  # rights-tracker ticker → kept
     pdf("u-old", old, text=long_text)  # old, text cached → removed
     pdf("u-old-scan", old, text="", ocr=long_text)  # old scan with OCR text → removed
     pdf("u-old-notext", old)  # old, no text cached → kept
@@ -63,6 +65,9 @@ def _setup(tmp_path):
 
     (data / "deals.json").write_text(
         json.dumps({"deals": [{"target_ticker": "AAAA"}]}), encoding="utf-8"
+    )
+    (data / "rights.json").write_text(
+        json.dumps({"rights": [{"ticker": "CCCC"}]}), encoding="utf-8"
     )
 
     dossiers = data / "dossiers"
@@ -122,7 +127,11 @@ def test_apply_compresses_prunes_and_trims(tmp_path):
 
     assert not exists("u-old") and not exists("u-old-scan")
     assert (
-        exists("u-old-deal") and exists("u-old-notext") and exists("u-new") and exists("u-shared")
+        exists("u-old-deal")
+        and exists("u-old-rights")
+        and exists("u-old-notext")
+        and exists("u-new")
+        and exists("u-shared")
     )
     # text stays cached for digests
     assert os.path.exists(
@@ -150,7 +159,7 @@ def test_late_rows_for_compressed_month_are_merged(tmp_path):
 
     run_cleanup(apply=True, data_dir=str(data), now=NOW)
     assert sorted(os.listdir(store.items_dir)) == ["2026-09.jsonl.gz", "2026-10.jsonl"]
-    assert len(list(AnnouncementStore(store.base_dir).iter_rows())) == 5
+    assert len(list(AnnouncementStore(store.base_dir).iter_rows())) == 6
 
 
 def test_weekly_schedule():

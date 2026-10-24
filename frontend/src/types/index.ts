@@ -550,3 +550,48 @@ export interface DealsResponse {
   updated_at: string | null;
   deals: Deal[];
 }
+
+// Tracked capital raises (data/rights.json)
+export type RaiseStage = 'plan' | 'egm' | 'registration' | 'effective' | 'trading' | 'listed';
+export type RaiseStatus = 'watch' | 'active' | 'completed' | 'cancelled';
+
+export interface RaiseEvent extends Omit<DealEvent, 'stage'> {
+  stage: RaiseStage;
+}
+
+export interface TrackedRaise {
+  id: string;
+  ticker: string;
+  name?: string;
+  type: CapitalRaiseType;
+  status: RaiseStatus;
+  stage: RaiseStage;
+  linked_deal?: string | null;
+  announced_at?: string;
+  terms?: {
+    ratio_old?: number;
+    ratio_new?: number;
+    exercise_price?: number;
+    max_new_shares?: number;
+    max_value?: number;
+    cum_price?: number;
+    standby_buyer?: string | null;
+    in_kind?: string;
+    par_value?: number;
+    shares_before?: number;
+    authorised_after?: number;
+  };
+  key_dates?: Record<string, string>;
+  notes?: string;
+  events: RaiseEvent[];
+  // Added by the API
+  new_per_old: number | null;
+  terp: number | null;
+  last_event_date: string;
+  pending_review: number;
+}
+
+export interface RightsPipelineResponse {
+  updated_at: string | null;
+  rights: TrackedRaise[];
+}
