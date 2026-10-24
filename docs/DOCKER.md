@@ -52,7 +52,7 @@ All times are Asia/Jakarta (WIB); weekends and IDX holidays (`idx/ingestion.py`,
 | `announcements` | every 10 min 06:00–23:00 on trading days, hourly otherwise | Incremental collection of all filings (titles only); flagged ALERT after 3 failures in a row |
 | `prices` | 18:30 trading days | Stock / broker / index summary for the day |
 | `screen` | 19:00 trading days | Rebuild the M&A / capital-raising screen (feeds the Momentum tab) |
-| `dossiers` | 20:00 trading days | Refresh digests of active deals in `data/deals.json` (new PDFs + OCR only) |
+| `dossiers` | 20:00 trading days | Refresh digests of open entries in `data/deals.json` and `data/rights.json` (new PDFs + OCR only; both files stay local, not in git) |
 | `cleanup` | Sundays 03:00 | Compress closed months, prune PDFs > 90 days not used by a deal, keep 7 digests/screens, trim logs |
 
 Daily jobs only count as done once they succeed at or after their scheduled time, and a worker that starts late catches up on the day's missed jobs until 23:00.

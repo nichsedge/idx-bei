@@ -48,6 +48,9 @@ data/announcements/
 data/dossiers/
 data/screens/
 data/worker/
+# Personal tracker data (kept local)
+data/deals.json
+data/rights.json
 
 # --- Logs & OS ---
 *.log
