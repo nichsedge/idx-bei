@@ -133,8 +133,11 @@ def analyze_stock_dividend(
         or comp_info.get("Search", {}).get("NamaEmiten", ticker)
     )
 
-    # Stock price series
-    stock_rows = stock_df[stock_df["StockCode"] == ticker].sort_values("Date")
+    # Stock price series (empty before the first sync, so there may be no columns yet)
+    if "StockCode" in stock_df.columns:
+        stock_rows = stock_df[stock_df["StockCode"] == ticker].sort_values("Date")
+    else:
+        stock_rows = stock_df.iloc[0:0]
     if len(stock_rows) == 0:
         return {
             "ticker": ticker,
@@ -148,7 +151,11 @@ def analyze_stock_dividend(
     listed_shares = float(last_session.get("ListedShares", 0.0))
 
     # Fundamentals
-    ratio_rows = ratios_df[ratios_df["code"] == ticker]
+    ratio_rows = (
+        ratios_df[ratios_df["code"] == ticker]
+        if "code" in ratios_df.columns
+        else ratios_df.iloc[0:0]
+    )
     last_ratio = ratio_rows.iloc[-1] if len(ratio_rows) > 0 else None
 
     eps = (

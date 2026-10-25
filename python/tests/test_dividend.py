@@ -20,6 +20,11 @@ from idx.dividend import (
 
 class TestDividendEngine(unittest.TestCase):
     def setUp(self):
+        # Never fetch a live USD/IDR rate (or write data/usd_idr_rate.json) from tests.
+        usd_patcher = patch("idx.dividend.get_usd_idr_rate", return_value=16000.0)
+        usd_patcher.start()
+        self.addCleanup(usd_patcher.stop)
+
         # Mock company details dictionary
         self.mock_details = {
             "GOOD": {
@@ -183,6 +188,7 @@ class TestDividendEngine(unittest.TestCase):
         client = TestClient(app)
         with (
             patch("idx.dividend.load_json", return_value=self.mock_details),
+            patch("idx.dividend.os.path.exists", return_value=True),
             patch("pandas.read_parquet", side_effect=[self.mock_stock_df, self.mock_ratios_df]),
         ):
             resp = client.get("/api/dividend/GOOD")
@@ -194,12 +200,35 @@ class TestDividendEngine(unittest.TestCase):
     def test_screen_upcoming_dividends(self):
         with (
             patch("idx.dividend.load_json", return_value=self.mock_details),
+            patch("idx.dividend.os.path.exists", return_value=True),
             patch("pandas.read_parquet", side_effect=[self.mock_stock_df, self.mock_ratios_df] * 5),
         ):
             df = screen_upcoming_dividends(min_yield=2.0, year_filter="2026")
             self.assertGreaterEqual(len(df), 1)
             self.assertIn("Ticker", df.columns)
             self.assertIn("Yield%", df.columns)
+
+    def test_missing_parquet_returns_message_instead_of_crashing(self):
+        # Before the first sync there are no parquet exports, so both frames are empty.
+        res = analyze_stock_dividend(
+            "GOOD",
+            details_dict=self.mock_details,
+            stock_df=pd.DataFrame(),
+            ratios_df=pd.DataFrame(),
+            usd_rate=16000.0,
+        )
+        self.assertTrue(res["has_dividend"])
+        self.assertIn("Historical price data not found", res["message"])
+
+    def test_missing_ratios_parquet_still_analyzes(self):
+        res = analyze_stock_dividend(
+            "GOOD",
+            details_dict=self.mock_details,
+            stock_df=self.mock_stock_df,
+            ratios_df=pd.DataFrame(),
+            usd_rate=16000.0,
+        )
+        self.assertEqual(res["dps_idr"], 150.0)
 
     def test_dps_usd_and_idr_conversions(self):
         details = {

@@ -23,6 +23,12 @@ class FakeClient:
         return result
 
 
+@pytest.fixture(autouse=True)
+def no_live_usd_rate(monkeypatch):
+    """ingest_daily refreshes the USD/IDR rate; keep that off the network and out of data/."""
+    monkeypatch.setattr("idx.core.currency.get_usd_idr_rate", lambda **kwargs: 16000.0)
+
+
 @pytest.fixture
 def ts_dir(tmp_path, monkeypatch):
     """Redirect the timeseries store to a temp dir."""

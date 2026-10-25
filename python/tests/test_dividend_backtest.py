@@ -3,6 +3,7 @@ Unit tests for the dividend arbitrage backtest strategy simulator.
 """
 
 import unittest
+from unittest.mock import patch
 
 import pandas as pd
 
@@ -11,6 +12,11 @@ from idx.backtest import run_backtest, simulate_dividend_arbitrage
 
 class TestDividendArbitrageBacktest(unittest.TestCase):
     def setUp(self):
+        # Never fetch a live USD/IDR rate (or write data/usd_idr_rate.json) from tests.
+        usd_patcher = patch("idx.backtest.get_usd_idr_rate", return_value=16000.0)
+        usd_patcher.start()
+        self.addCleanup(usd_patcher.stop)
+
         dates = pd.date_range("2026-06-01", periods=30, freq="B")
         self.mock_stock_df = pd.DataFrame(
             [

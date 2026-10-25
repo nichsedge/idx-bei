@@ -217,17 +217,45 @@ class TestAPI(unittest.TestCase):
         self.assertIsInstance(data, list)
 
     def test_stock_blocks_endpoint(self):
-        # Existing ticker (e.g. BBCA)
-        resp = self.client.get("/api/stock/BBCA/blocks")
-        if resp.status_code == 200:
+        import pandas as pd
+
+        with (
+            patch("idx.api.query_dataset") as mock_query,
+            patch("os.path.exists", return_value=False),
+        ):
+            mock_query.return_value = pd.DataFrame(
+                [
+                    {
+                        "StockCode": "BBCA",
+                        "Date": "2026-08-01",
+                        "Close": 10000,
+                        "VWAP": 9950,
+                        "NonRegularValue": 5_000_000_000,
+                        "NonRegularVolume": 500_000,
+                        "NonRegularFrequency": 3,
+                    }
+                ]
+            )
+            resp = self.client.get("/api/stock/BBCA/blocks")
+            self.assertEqual(resp.status_code, 200)
             data = resp.json()
             self.assertEqual(data["ticker"], "BBCA")
             self.assertIn("blocks", data)
             self.assertIn("non_regular_value_rp", data)
             self.assertIn("smart_accumulation_ratio", data)
-        # Non-existent ticker 404
-        resp_404 = self.client.get("/api/stock/INVALID_ZZZZ/blocks")
-        self.assertEqual(resp_404.status_code, 404)
+
+            # Non-existent ticker 404
+            mock_query.return_value = pd.DataFrame()
+            resp_404 = self.client.get("/api/stock/INVALID_ZZZZ/blocks")
+            self.assertEqual(resp_404.status_code, 404)
+
+    def test_stock_endpoints_404_before_first_sync(self):
+        # With no stock_summary partitions on disk, query_dataset raises
+        # FileNotFoundError. That should be a 404, not a 500.
+        missing = FileNotFoundError("No partitions found for dataset 'stock_summary'")
+        with patch("idx.api.query_dataset", side_effect=missing):
+            self.assertEqual(self.client.get("/api/stock/BBCA").status_code, 404)
+            self.assertEqual(self.client.get("/api/stock/BBCA/blocks").status_code, 404)
 
 
 if __name__ == "__main__":
