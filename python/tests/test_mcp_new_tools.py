@@ -96,7 +96,12 @@ class TestMCPNewTools(unittest.TestCase):
         mock_tech.return_value = pd.DataFrame(
             [{"StockCode": "BBCA", "Date": "2026-08-01", "RSI14": 58.5, "TrendRegime": "BULLISH"}]
         )
-        res = handle_tool_call("idx_get_technical_signals", {"ticker": "BBCA"})
+        stock_df = pd.DataFrame([{"StockCode": "BBCA", "Date": "2026-08-01", "Close": 10000}])
+        with (
+            patch("os.path.exists", return_value=False),
+            patch("idx.core.timeseries.read_dataset", return_value=stock_df),
+        ):
+            res = handle_tool_call("idx_get_technical_signals", {"ticker": "BBCA"})
         data = json.loads(res)
         self.assertEqual(data["StockCode"], "BBCA")
         self.assertEqual(data["RSI14"], 58.5)

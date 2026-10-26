@@ -30,10 +30,14 @@ class TestParquetPipeline(unittest.TestCase):
         self.temp_dir.cleanup()
 
     def test_export_stock_timeseries_empty_graceful(self):
+        import pandas as pd
+
         out_file = os.path.join(self.parquet_dir, "stock_summary.parquet")
-        res = export_stock_timeseries(output=out_file)
-        # Should handle gracefully without raising error
-        self.assertIsNotNone(res)
+        with patch("idx.core.timeseries.read_dataset", return_value=pd.DataFrame()):
+            res = export_stock_timeseries(output=out_file)
+        # No partitions: returns None without raising and writes nothing
+        self.assertIsNone(res)
+        self.assertFalse(os.path.exists(out_file))
 
     def test_export_financial_ratios(self):
         json_file = os.path.join(self.temp_dir.name, "financial_ratio.json")

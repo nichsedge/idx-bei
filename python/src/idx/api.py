@@ -197,6 +197,22 @@ async def get_signals(
         raise HTTPException(status_code=500, detail=str(e)) from e
 
 
+def _query_stock_rows(ticker: str):
+    """Rows of stock_summary for one ticker, or 404 if there are none.
+
+    Before the first sync there are no stock_summary partitions at all and
+    query_dataset raises FileNotFoundError; that is still "not found" for the
+    caller, not a server error.
+    """
+    try:
+        df = query_dataset("stock_summary", where=f"StockCode = '{ticker}'")
+    except FileNotFoundError:
+        df = None
+    if df is None or len(df) == 0:
+        raise HTTPException(status_code=404, detail=f"Ticker '{ticker}' not found.")
+    return df
+
+
 @app.get("/api/stock/{ticker}", tags=["Market Data"])
 async def get_stock_data(ticker: str, limit: int = 120):
     import re
@@ -210,9 +226,7 @@ async def get_stock_data(ticker: str, limit: int = 120):
             status_code=400,
             detail="Invalid ticker format.",
         )
-    df = query_dataset("stock_summary", where=f"StockCode = '{ticker}'")
-    if len(df) == 0:
-        raise HTTPException(status_code=404, detail=f"Ticker '{ticker}' not found.")
+    df = _query_stock_rows(ticker)
 
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
     df = df.sort_values("Date").reset_index(drop=True)
@@ -268,9 +282,7 @@ async def get_stock_blocks(ticker: str):
             status_code=400,
             detail="Invalid ticker format.",
         )
-    df = query_dataset("stock_summary", where=f"StockCode = '{ticker}'")
-    if len(df) == 0:
-        raise HTTPException(status_code=404, detail=f"Ticker '{ticker}' not found.")
+    df = _query_stock_rows(ticker)
 
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
     df = df.sort_values("Date").reset_index(drop=True)

@@ -87,7 +87,10 @@ class TestIngestionStatus(unittest.TestCase):
         self.assertIn("gaps", data)
         self.assertIn("recommendations", data)
 
-    def test_api_trigger_ingestion_and_jobs_list(self):
+    # The endpoint schedules a real daily ingest as a background task. Mock it so
+    # the test does not call the IDX API or write partitions into data/.
+    @patch("idx.pipelines.daily.ingest_daily", return_value={"status": "ok"})
+    def test_api_trigger_ingestion_and_jobs_list(self, mock_ingest):
         resp = self.client.post(
             "/api/system/trigger-ingestion",
             json={"job_type": "daily", "date": "20260908"},
