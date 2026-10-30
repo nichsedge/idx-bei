@@ -1,6 +1,8 @@
 package ingest
 
 import (
+	"net/http"
+	"net/http/httptest"
 	"testing"
 )
 
@@ -53,5 +55,36 @@ func TestEndpointsConfig(t *testing.T) {
 		if !names[expected] {
 			t.Errorf("expected endpoint %s not found", expected)
 		}
+	}
+}
+
+func TestFetchUSDIDRRateFallsBack(t *testing.T) {
+	failing := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusServiceUnavailable)
+	}))
+	defer failing.Close()
+	working := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_, _ = w.Write([]byte(`{"result":"success","base_code":"USD","rates":{"IDR":16250.5}}`))
+	}))
+	defer working.Close()
+
+	orig := usdIDRSources
+	defer func() { usdIDRSources = orig }()
+
+	usdIDRSources = []string{failing.URL, working.URL}
+	rate, source, err := FetchUSDIDRRate()
+	if err != nil {
+		t.Fatalf("expected fallback to succeed, got %v", err)
+	}
+	if rate != 16250.5 {
+		t.Errorf("expected 16250.5, got %f", rate)
+	}
+	if source != sourceHost(working.URL) {
+		t.Errorf("expected source %s, got %s", sourceHost(working.URL), source)
+	}
+
+	usdIDRSources = []string{failing.URL, failing.URL}
+	if _, _, err := FetchUSDIDRRate(); err == nil {
+		t.Error("expected error when all sources fail")
 	}
 }

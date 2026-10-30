@@ -3,11 +3,13 @@ package ingest
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
 	"math/rand"
 	"net/http"
+	neturl "net/url"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -23,7 +25,13 @@ import (
 const (
 	DefaultBaseURL = "https://www.idx.co.id/primary"
 	DefaultOpenFX  = "https://open.er-api.com/v6/latest/USD"
+	// FallbackOpenFX is tried when DefaultOpenFX fails. Same JSON shape
+	// (ECB reference rates, keyless). Exchange rates by AllRatesToday — https://allratestoday.com
+	FallbackOpenFX = "https://allratestoday.com/api/open/latest/USD"
 )
+
+// usdIDRSources is the ordered list of feeds tried by FetchUSDIDRRate.
+var usdIDRSources = []string{DefaultOpenFX, FallbackOpenFX}
 
 type EndpointConfig struct {
 	Name    string
@@ -144,7 +152,7 @@ func RunDailySync(opts SyncOptions) (*SyncSummary, error) {
 	}
 
 	// 2. Fetch USD/IDR exchange rate
-	rate, err := FetchUSDIDRRate()
+	rate, source, err := FetchUSDIDRRate()
 	if err != nil {
 		log.Printf("WARN: Failed to refresh USD/IDR exchange rate: %v", err)
 	} else {
@@ -153,7 +161,7 @@ func RunDailySync(opts SyncOptions) (*SyncSummary, error) {
 		ratePayload := map[string]any{
 			"rate":      rate,
 			"timestamp": time.Now().Unix(),
-			"source":    "open.er-api.com (go-idx-sync)",
+			"source":    source + " (go-idx-sync)",
 		}
 		if err := WriteJSONAtomic(rateFile, ratePayload); err != nil {
 			log.Printf("WARN: Failed to save %s: %v", rateFile, err)
@@ -271,9 +279,30 @@ func FetchWithRetry(client tls_client.HttpClient, url string, maxRetries int, de
 	return nil, fmt.Errorf("max retries exceeded: %w", lastErr)
 }
 
-func FetchUSDIDRRate() (float64, error) {
+// FetchUSDIDRRate returns the USD/IDR rate and the host it came from,
+// trying each feed in usdIDRSources in order.
+func FetchUSDIDRRate() (float64, string, error) {
+	var errs []error
+	for _, url := range usdIDRSources {
+		rate, err := fetchUSDIDRFrom(url)
+		if err == nil {
+			return rate, sourceHost(url), nil
+		}
+		errs = append(errs, fmt.Errorf("%s: %w", sourceHost(url), err))
+	}
+	return 0, "", errors.Join(errs...)
+}
+
+func sourceHost(rawURL string) string {
+	if u, err := neturl.Parse(rawURL); err == nil && u.Host != "" {
+		return u.Host
+	}
+	return rawURL
+}
+
+func fetchUSDIDRFrom(url string) (float64, error) {
 	client := &http.Client{Timeout: 10 * time.Second}
-	req, err := http.NewRequest("GET", DefaultOpenFX, nil)
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return 0, err
 	}
