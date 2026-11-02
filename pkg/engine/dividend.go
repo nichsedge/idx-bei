@@ -3,6 +3,7 @@ package engine
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"os"
 	"path/filepath"
 	"sort"
@@ -345,4 +346,86 @@ func ScreenDividends(dataDir string, minYield float64, limit int) ([]DividendDec
 	}
 
 	return results, nil
+}
+
+// SovereignRunwaySummary summarizes multi-regime Indonesian dividend compounding.
+type SovereignRunwaySummary struct {
+	StartingCapitalIDR     float64 `json:"starting_capital_idr"`
+	MonthlyLivingExpenseIDR float64 `json:"monthly_living_expense_idr"`
+	WeightedYieldPct       float64 `json:"weighted_yield_pct"`
+	WeightedCAGRPct        float64 `json:"weighted_cagr_pct"`
+	FinalValueUUCiptaKerja float64 `json:"final_value_uu_cipta_kerja"`
+	FinalValueStandard10Pct float64 `json:"final_value_standard_10pct"`
+	FinalValueForeign20Pct float64 `json:"final_value_foreign_20pct"`
+	TaxSavedUUCiptaKerja   float64 `json:"tax_saved_uu_cipta_kerja"`
+	WealthGapIDR           float64 `json:"wealth_gap_idr"`
+	YearsToFreedomUU       int     `json:"years_to_freedom_uu"`
+	YearsToFreedomStandard int     `json:"years_to_freedom_standard"`
+}
+
+// SimulateSovereignRunway computes multi-regime dividend compounding and tax drag.
+func SimulateSovereignRunway(startingCapital, monthlyExpense, inflationPct float64, projectionYears int) SovereignRunwaySummary {
+	if startingCapital <= 0 {
+		startingCapital = 1_000_000_000.0
+	}
+	if monthlyExpense <= 0 {
+		monthlyExpense = 15_000_000.0
+	}
+	if projectionYears < 1 {
+		projectionYears = 20
+	}
+
+	weightedYield := 5.69
+	weightedCAGR := 7.74
+	capAppreciation := 4.5
+
+	portUU := startingCapital
+	portStd := startingCapital
+	portFor := startingCapital
+
+	var cumTaxStd float64
+	freedomUU := 0
+	freedomStd := 0
+
+	for yr := 1; yr <= projectionYears; yr++ {
+		annualExp := (monthlyExpense * 12.0) * math.Pow(1.0+inflationPct/100.0, float64(yr-1))
+		effYield := math.Min(25.0, weightedYield*math.Pow(1.0+weightedCAGR/100.0, float64(yr-1)))
+
+		// 1. UU Cipta Kerja (0% Tax)
+		grossDivUU := portUU * (effYield / 100.0)
+		netDivUU := grossDivUU
+		if netDivUU >= annualExp && freedomUU == 0 {
+			freedomUU = yr
+		}
+		portUU = (portUU + netDivUU) * (1.0 + capAppreciation/100.0)
+
+		// 2. Standard 10% Tax Drag
+		grossDivStd := portStd * (effYield / 100.0)
+		taxStd := grossDivStd * 0.10
+		cumTaxStd += taxStd
+		netDivStd := grossDivStd - taxStd
+		if netDivStd >= annualExp && freedomStd == 0 {
+			freedomStd = yr
+		}
+		portStd = (portStd + netDivStd) * (1.0 + capAppreciation/100.0)
+
+		// 3. Foreign 20% Tax Drag
+		grossDivFor := portFor * (effYield / 100.0)
+		netDivFor := grossDivFor * 0.80
+		portFor = (portFor + netDivFor) * (1.0 + capAppreciation/100.0)
+	}
+
+	return SovereignRunwaySummary{
+		StartingCapitalIDR:     startingCapital,
+		MonthlyLivingExpenseIDR: monthlyExpense,
+		WeightedYieldPct:       weightedYield,
+		WeightedCAGRPct:        weightedCAGR,
+		FinalValueUUCiptaKerja: portUU,
+		FinalValueStandard10Pct: portStd,
+		FinalValueForeign20Pct: portFor,
+		TaxSavedUUCiptaKerja:   cumTaxStd,
+		WealthGapIDR:           portUU - portStd,
+		YearsToFreedomUU:       freedomUU,
+		YearsToFreedomStandard: freedomStd,
+	}
 }

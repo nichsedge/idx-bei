@@ -70,7 +70,7 @@ idx compounder BBCA
 idx compounder --show-traps
 ```
 
-### Quantitative Dividend Decision & Trap Radar (Native Go)
+### Quantitative Dividend Decision & Sovereign Runway (Native Go)
 
 ```bash
 # Analyze specific ticker for dividend yield, DPR, and Ex-Date trap risk
@@ -79,9 +79,12 @@ idx dividend PTBA
 
 # Screen top dividend opportunities across the entire market
 idx dividend --screen --min-yield 8.0
+
+# Simulate Indonesian Sovereign Runway & UU Cipta Kerja 0% tax drag vs 10% drag
+idx dividend --simulator --capital 1000000000 --expense 15000000 --years 20
 ```
 
-### Market Signals & Stealth Institutional Accumulation (Native Go)
+### Market Signals & Bandar Flow Anomaly Notifier (Native Go)
 
 ```bash
 # Daily foreign flow accumulation & stealth accumulation briefing
@@ -89,6 +92,9 @@ idx signals
 
 # Scan for stealth accumulation (quiet foreign buying during consolidation)
 idx bandarmology --stealth
+
+# Scan and flag 3σ volume & institutional absorption outliers
+idx notify --threshold 3.0 --top 10
 ```
 
 ### Quantitative Backtesting & Strategy Simulator (Native Go)
@@ -152,9 +158,9 @@ Runs eight quantitative decision-support screens over Parquet exports:
 - **Sharia Value Screen** — sharia-flagged, PER < 12, ROE ≥ 12%, DER ≤ 2
 - **Pasar Nego Crossing Radar** — stealth off-market block crossings (value > Rp25B, nego share > 75%)
 
-### Dividend Decision Engine & Trap Radar
+### Dividend Decision Engine, Sovereign Runway & Tax Drag Simulator
 
-Resolve whether to **BUY**, **HOLD**, or **SELL BEFORE CUM DATE** when a stock announces a dividend:
+Resolve whether to **BUY**, **HOLD**, or **SELL BEFORE CUM DATE** and simulate long-term dividend independence under Indonesian tax law (UU Cipta Kerja / PMK-18/PMK.03/2021):
 
 ```bash
 # Deep-dive dividend decision analysis for a specific stock (auto USD/IDR conversion)
@@ -163,9 +169,30 @@ uv run idx dividend PTBA
 
 # Screen high-yield dividend opportunities and rank by Dividend Trap Risk
 uv run idx dividend --screen --min-yield 4.0 --limit 20
+
+# Simulate Indonesian Sovereign Runway & UU Cipta Kerja 0% tax drag vs 10% uninvested drag
+uv run idx dividend --simulator --capital 1000000000 --expense 15000000 --years 20 --cows BBCA,BBRI,ASII,ADRO
 ```
 
 Read the full tactical strategy guide in [docs/DIVIDEND_DECISION_GUIDE.md](docs/DIVIDEND_DECISION_GUIDE.md).
+
+### Bandar / Institutional Flow Anomaly Notifier (3σ Telegram Alerts)
+
+Monitor sudden institutional volume spikes and absorption patterns without staring at broker tables all day:
+
+```bash
+# One-shot scan of latest market session for 3σ volume/flow outliers
+uv run idx notify --threshold 3.0
+
+# Start continuous background daemon sending alerts to private Telegram channel
+uv run idx notify --daemon --interval 60 --threshold 3.0
+
+# Dry-run mode (logs and saves formatted alerts to data/anomaly_alerts.json)
+uv run idx notify --daemon --dry-run
+
+# Test Telegram webhook credentials (TELEGRAM_BOT_TOKEN & TELEGRAM_CHAT_ID)
+uv run idx notify --test
+```
 
 ### Interactive Modern Dashboard, REST API & AI Assistant (MCP)
 

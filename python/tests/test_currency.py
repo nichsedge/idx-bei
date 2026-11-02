@@ -84,4 +84,3 @@ class TestCurrencyEngine(unittest.TestCase):
 
         rate = fetch_live_usd_idr_rate()
         self.assertEqual(rate, 16350.0)
-

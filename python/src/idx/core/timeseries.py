@@ -241,7 +241,11 @@ def ingest_json_partitions(dataset, base_dir=None):
             if isinstance(records, list) and records:
                 if date_iso not in have:
                     write_partition(dataset, date_iso, records, base_dir)
-                    log.info("Converted Termux JSON partition %s to Parquet (%d records)", date_iso, len(records))
+                    log.info(
+                        "Converted Termux JSON partition %s to Parquet (%d records)",
+                        date_iso,
+                        len(records),
+                    )
                 os.remove(json_path)
                 converted += 1
             else:
@@ -262,4 +266,3 @@ def migrate_all(base_dir=None):
         res["termux_json_converted"] = converted_json
         results[ds] = res
     return results
-

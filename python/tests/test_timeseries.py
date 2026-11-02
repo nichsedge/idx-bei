@@ -136,4 +136,3 @@ class TestIngestJsonPartitions:
         df = ts.read_dataset("stock_summary", base_dir=base_dir)
         assert len(df) == 2
         assert set(df["StockCode"]) == {"BBCA", "BBRI"}
-

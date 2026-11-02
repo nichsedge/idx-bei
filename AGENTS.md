@@ -4,12 +4,12 @@
 This repository is organized as a unified Python quantitative data pipeline, MCP server, and decision-support engine.
 
 - `cmd/`: unified native Go CLI entrypoints:
-  - `cmd/idx/`: unified CLI toolkit (`idx serve`, `idx sync`, `idx status`, `idx compounder`, `idx stock`, `idx dividend`, `idx signals`, `idx bandarmology`, `idx backtest`, `idx mcp`).
+  - `cmd/idx/`: unified CLI toolkit (`idx serve`, `idx sync`, `idx status`, `idx compounder`, `idx stock`, `idx dividend`, `idx signals`, `idx bandarmology`, `idx notify`, `idx backtest`, `idx mcp`).
   - `cmd/idx-server/`: high-performance standalone REST & WebSocket server on port 8000.
   - `cmd/idx-sync/`: standalone uTLS market ingestion runner.
 - `pkg/`: modular pure Go engine packages (zero CGO):
   - `pkg/models/`: Go structs for companies, stocks, parquet rows, and dashboard payloads.
-  - `pkg/engine/`: pure Go Parquet time-series reader, cached in-memory partition indexer, vectorized technical indicators (RSI, EMA, Bollinger Bands, ATR), forensic compounder scoring, dividend decision & trap risk engine, signals & stealth accumulation scanner, and strategy backtester.
+  - `pkg/engine/`: pure Go Parquet time-series reader, cached in-memory partition indexer, vectorized technical indicators (RSI, EMA, Bollinger Bands, ATR), forensic compounder scoring, dividend decision & trap risk engine, sovereign runway compounding simulator, signals & stealth accumulation scanner, 3σ bandar anomaly detector, and strategy backtester.
   - `pkg/mcp/`: high-performance stdio Model Context Protocol (MCP) server for AI assistants (Antigravity, Claude, Cursor).
   - `pkg/api/`: Go 1.22+ `http.ServeMux` REST & WebSocket streaming server with static SPA/dashboard hosting.
   - `pkg/ingest/`: uTLS Cloudflare bypass ingestion client.
@@ -20,6 +20,8 @@ This repository is organized as a unified Python quantitative data pipeline, MCP
   - `mcp/`: Model Context Protocol stdio server with 14 quantitative tools for AI assistants.
   - `compounder.py`: Forensic accounting, anti-value-trap engine, sector-aware Justified PBV valuation, and DCA Compounder scoring (0–100).
   - `dividend.py`: Dividend decision engine, Dividend Trap Risk scoring (0–100), and Buy/Hold/Sell analyzer.
+  - `dividend_simulator.py`: Indonesian Sovereign Runway & UU Cipta Kerja (PMK-18/PMK.03/2021) Tax Drag simulator modeling 0% reinvested vs 10% uninvested vs 20% foreign tax drag across IDX cash cows.
+  - `bandar_notifier.py`: Real-time 3σ institutional flow anomaly engine & background daemon with private Telegram webhook dispatch.
   - `ingestion.py`: dataset inventory inspection, dynamic calendar gap detection with holiday caching, 4-tier quantitative backfill recommendations, and async background task runner.
   - `backtest.py`: vectorized strategy simulator, volatility parity position sizing, drawdown calculation, Sharpe/Sortino ratios, and benchmark alpha.
   - `graph.py`: Neo4j UBO tree resolution, circular cross-holding detection, and board centrality.
@@ -51,9 +53,14 @@ Run all commands from the repository root using modern `uv`:
 - `uv run idx compounder --show-traps`: inspect all identified accounting value traps (one-off earnings distortions).
 - `uv run idx dividend BBCA`: analyze dividend decision and trap risk for a specific stock.
 - `uv run idx dividend --screen --min-yield 4.0`: screen and rank dividend opportunities across the market.
+- `uv run idx dividend --simulator --capital 1000000000 --expense 15000000`: simulate Indonesian Sovereign Runway & UU Cipta Kerja 0% tax drag vs 10% drag across IDX cash cows.
+- `uv run idx notify [--threshold 3.0]`: scan and flag sudden 3σ institutional absorption & flow anomalies.
+- `uv run idx notify --daemon [--interval 60] [--dry-run]`: run background anomaly monitoring daemon with private Telegram webhook dispatch.
+- `uv run idx notify --test`: test Telegram bot connectivity and diagnostic message.
 - `uv run idx signals`: generate 8-screen daily decision-support briefing (`data/briefings/`).
 - `uv run idx bandarmology`: inspect Top-N broker concentration ratios and retail vs institutional flow.
 - `uv run idx bandarmology --stealth`: scan for stealth institutional accumulation vs retail traps across top stocks.
+- `uv run idx bandarmology --anomalies`: scan 3σ institutional absorption and volume anomalies.
 - `uv run idx backtest --strategy foreign_flow --holding 20`: simulate strategy performance & calculate Sharpe/Drawdown.
 - `uv run idx backtest --strategy dividend_arbitrage`: simulate and compare Strategy A (Naive Hold), B (Pre-Cum Exit), and C (Post-Ex Rebuy).
 - `uv run idx graph --ubo BBCA`: resolve multi-hop Ultimate Beneficial Ownership (UBO) hierarchy.

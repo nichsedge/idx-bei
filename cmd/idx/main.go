@@ -29,8 +29,10 @@ func usage() {
 	fmt.Println("  idx stock <TICKER>            Inspect technical indicators & OHLCV for ticker")
 	fmt.Println("  idx dividend <TICKER>         Analyze dividend decision & Ex-Date trap risk")
 	fmt.Println("  idx dividend --screen         Rank all dividend opportunities by net yield")
+	fmt.Println("  idx dividend --simulator      Simulate Indonesian Sovereign Runway & UU Cipta Kerja tax drag")
 	fmt.Println("  idx signals                   Display daily foreign flow & stealth accumulation")
 	fmt.Println("  idx bandarmology [--stealth]  Inspect broker flows & stealth institutional buying")
+	fmt.Println("  idx notify [--threshold 3.0]  Scan & flag 3σ volume spikes and institutional absorption")
 	fmt.Println("  idx backtest [--strategy ...] Run vectorized strategy performance simulation")
 	fmt.Println("  idx mcp                       Start Model Context Protocol (MCP) stdio server")
 	fmt.Println()
@@ -215,9 +217,38 @@ func main() {
 	case "dividend":
 		fs := flag.NewFlagSet("dividend", flag.ExitOnError)
 		screen := fs.Bool("screen", false, "Screen and rank all dividend opportunities")
+		simulator := fs.Bool("simulator", false, "Simulate Indonesian Sovereign Runway & UU Cipta Kerja tax drag")
+		capital := fs.Float64("capital", 1_000_000_000.0, "Starting capital in IDR")
+		expense := fs.Float64("expense", 15_000_000.0, "Monthly living expense in IDR")
+		years := fs.Int("years", 20, "Projection horizon in years")
 		minYield := fs.Float64("min-yield", 4.0, "Minimum dividend yield percentage")
 		limit := fs.Int("limit", 15, "Limit number of results")
 		fs.Parse(args)
+
+		if *simulator {
+			sim := engine.SimulateSovereignRunway(*capital, *expense, 4.0, *years)
+			fmt.Println("================================================================================")
+			fmt.Println("       INDONESIAN SOVEREIGN RUNWAY & UU CIPTA KERJA TAX DRAG SIMULATOR (Go)     ")
+			fmt.Println("================================================================================")
+			fmt.Printf(" Initial Capital    : Rp %s\n", engine.FormatIDRBillion(sim.StartingCapitalIDR))
+			fmt.Printf(" Monthly Living Exp : Rp %.0f (Annual: Rp %.0f)\n", sim.MonthlyLivingExpenseIDR, sim.MonthlyLivingExpenseIDR*12.0)
+			fmt.Printf(" Portfolio Yield    : %.2f%% (Weighted CAGR: %.2f%%)\n", sim.WeightedYieldPct, sim.WeightedCAGRPct)
+			fmt.Println("--------------------------------------------------------------------------------")
+			fmt.Printf(" [UU Cipta Kerja Exemption (0%% Tax)]\n")
+			fmt.Printf("   • Final Portfolio Value  : %s\n", engine.FormatIDRBillion(sim.FinalValueUUCiptaKerja))
+			fmt.Printf("   • Sovereign Freedom Date : Year %d\n\n", sim.YearsToFreedomUU)
+			fmt.Printf(" [Unreinvested Standard (10%% Tax Drag)]\n")
+			fmt.Printf("   • Final Portfolio Value  : %s\n", engine.FormatIDRBillion(sim.FinalValueStandard10Pct))
+			fmt.Printf("   • Total Direct Tax Paid  : %s\n", engine.FormatIDRBillion(sim.TaxSavedUUCiptaKerja))
+			fmt.Printf("   • Sovereign Freedom Date : Year %d\n\n", sim.YearsToFreedomStandard)
+			fmt.Printf(" [Foreign Investor (20%% Withholding)]\n")
+			fmt.Printf("   • Final Portfolio Value  : %s\n\n", engine.FormatIDRBillion(sim.FinalValueForeign20Pct))
+			fmt.Println("================================================================================")
+			fmt.Printf(" TAX DRAG WEALTH GAP: Reinvesting under UU Cipta Kerja saves %s in direct taxes\n and compounds an additional %s into your portfolio runway!\n",
+				engine.FormatIDRBillion(sim.TaxSavedUUCiptaKerja), engine.FormatIDRBillion(sim.WealthGapIDR))
+			fmt.Println("================================================================================")
+			return
+		}
 
 		if *screen {
 			res, err := engine.ScreenDividends(dataDir, *minYield, *limit)
@@ -335,6 +366,27 @@ func main() {
 				fmt.Printf("%-6s %-28s %-10.0f %+9.1f%% %-14s %-10.1f %-10s\n",
 					s.StockCode, name, s.ClosePrice, s.PriceChange20dPct, engine.FormatIDRBillion(s.NetForeignFlow20d), s.CompounderScore, s.DCAVerdict)
 			}
+		}
+
+	case "notify":
+		fs := flag.NewFlagSet("notify", flag.ExitOnError)
+		threshold := fs.Float64("threshold", 3.0, "Statistical anomaly cutoff (Z-score)")
+		topN := fs.Int("top", 15, "Number of alerts to show")
+		fs.Parse(args)
+
+		alerts, err := engine.DetectBandarAnomalies(dataDir, *threshold, *topN)
+		if err != nil {
+			log.Fatalf("Bandar anomaly scan error: %v", err)
+		}
+		fmt.Printf("\n=== Bandar & Institutional Flow Anomaly Notifier (Threshold: %.1fσ) ===\n", *threshold)
+		fmt.Printf("Total 3σ Statistical Outliers Detected: %d\n\n", len(alerts))
+		for i, a := range alerts {
+			fmt.Printf("%2d. %-5s | Z=%5.2fσ | %-26s | Price: Rp %.0f (%+.2f%%)\n",
+				i+1, a.StockCode, a.ZComposite, a.AnomalyType, a.ClosePrice, a.PriceChangePct)
+			fmt.Printf("    Turnover: %s | NFF: %s | Foreign Buy: %.1f%%\n",
+				engine.FormatIDRBillion(a.TurnoverRp), engine.FormatIDRBillion(a.NetForeignFlowRp), a.ForeignBuyRatioPct)
+			fmt.Printf("    Wyckoff : %s\n", a.WyckoffPhase)
+			fmt.Printf("    Playbook: %s\n\n", a.Playbook)
 		}
 
 	case "backtest":

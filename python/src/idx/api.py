@@ -121,6 +121,21 @@ class TriggerIngestionRequest(BaseModel):
     concurrency: int = 8
 
 
+class DividendSimulatorRequest(BaseModel):
+    starting_capital: float = 1_000_000_000.0
+    monthly_living_expense: float = 15_000_000.0
+    expense_inflation_pct: float = 4.0
+    projection_years: int = 20
+    portfolio_weights: dict[str, float] | None = None
+    custom_yield_pct: float | None = None
+    custom_dividend_cagr_pct: float | None = None
+
+
+class TelegramTestRequest(BaseModel):
+    bot_token: str | None = None
+    chat_id: str | None = None
+
+
 @app.get("/health", tags=["System"])
 async def health():
     return {"status": "ok", "service": "idx-bei-api", "version": "0.2.0"}
@@ -513,6 +528,65 @@ async def screen_dividends(min_yield: float = 3.0, year: str = "2026", limit: in
     return df.to_dict("records")
 
 
+@app.get("/api/dividend-simulator/cash-cows", tags=["Dividends"])
+async def get_simulator_cash_cows():
+    """Returns curated Indonesian dividend cash cow profiles (BBCA, BBRI, ASII, ADRO, etc.)."""
+    from idx.dividend_simulator import get_cash_cow_profiles
+
+    return get_cash_cow_profiles()
+
+
+@app.get("/api/dividend-simulator/statutory-deadlines", tags=["Dividends"])
+async def get_statutory_deadlines(receipt_date: str | None = None):
+    """Returns statutory reinvestment & reporting deadlines under UU Cipta Kerja (PMK-18/2021)."""
+    from idx.dividend_simulator import calculate_statutory_deadlines
+
+    return calculate_statutory_deadlines(receipt_date)
+
+
+@app.post("/api/dividend-simulator/simulate", tags=["Dividends"])
+async def simulate_dividend_runway_post(req: DividendSimulatorRequest):
+    """Simulates dividend compounding & sovereign runway under 3 Indonesian tax regimes."""
+    from idx.dividend_simulator import simulate_sovereign_runway
+
+    return simulate_sovereign_runway(
+        starting_capital=req.starting_capital,
+        monthly_living_expense=req.monthly_living_expense,
+        expense_inflation_pct=req.expense_inflation_pct,
+        projection_years=req.projection_years,
+        portfolio_weights=req.portfolio_weights,
+        custom_yield_pct=req.custom_yield_pct,
+        custom_dividend_cagr_pct=req.custom_dividend_cagr_pct,
+    )
+
+
+@app.get("/api/dividend-simulator/simulate", tags=["Dividends"])
+async def simulate_dividend_runway_get(
+    capital: float = 1_000_000_000.0,
+    monthly_expense: float = 15_000_000.0,
+    inflation: float = 4.0,
+    years: int = 20,
+    tickers: str | None = None,
+):
+    """GET convenience endpoint for Sovereign Runway simulator."""
+    from idx.dividend_simulator import simulate_sovereign_runway
+
+    weights = None
+    if tickers:
+        t_list = [t.strip().upper() for t in tickers.split(",") if t.strip()]
+        if t_list:
+            w = 1.0 / len(t_list)
+            weights = {t: w for t in t_list}
+
+    return simulate_sovereign_runway(
+        starting_capital=capital,
+        monthly_living_expense=monthly_expense,
+        expense_inflation_pct=inflation,
+        projection_years=years,
+        portfolio_weights=weights,
+    )
+
+
 @app.get("/api/drift", tags=["Ownership"])
 async def get_drift():
     return get_latest_shareholder_drift()
@@ -622,6 +696,43 @@ async def get_stealth_accumulation(
     }
     set_in_cache(cache_key, result)
     return result
+
+
+@app.get("/api/bandar/anomalies", tags=["Bandarmology"])
+async def get_bandar_anomalies(
+    date: str | None = None,
+    threshold: float = 3.0,
+    lookback: int = 20,
+    min_turnover_rp: float = 2_000_000_000.0,
+):
+    """Detects 3σ volume and flow anomalies (institutional absorption vs retail distribution)."""
+    from idx.bandar_notifier import detect_bandar_anomalies
+
+    anomalies = detect_bandar_anomalies(
+        lookback_sessions=lookback,
+        sigma_threshold=threshold,
+        min_turnover_rp=min_turnover_rp,
+        on_date=date,
+    )
+    return [a.to_dict() for a in anomalies]
+
+
+@app.post("/api/bandar/notify-test", tags=["Bandarmology"])
+async def trigger_bandar_telegram_test_post(req: TelegramTestRequest):
+    """Sends a diagnostic test alert to verify Telegram bot credentials."""
+    from idx.bandar_notifier import test_telegram_connection
+
+    return test_telegram_connection(bot_token=req.bot_token, chat_id=req.chat_id)
+
+
+@app.get("/api/bandar/notify-test", tags=["Bandarmology"])
+async def trigger_bandar_telegram_test_get(
+    bot_token: str | None = None, chat_id: str | None = None
+):
+    """GET convenience endpoint to test Telegram alert connectivity."""
+    from idx.bandar_notifier import test_telegram_connection
+
+    return test_telegram_connection(bot_token=bot_token, chat_id=chat_id)
 
 
 @app.post("/api/backtest", tags=["Backtesting"])

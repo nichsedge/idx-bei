@@ -372,3 +372,124 @@ export interface LiveAlert {
   message: string;
   timestamp: string;
 }
+
+export interface BandarAnomalyAlertItem {
+  ticker: string;
+  company_name: string;
+  date: string;
+  timestamp: string;
+  price: number;
+  price_change_pct: number;
+  volume: number;
+  turnover_rp: number;
+  turnover_rp_b: number;
+  net_foreign_flow_rp: number;
+  net_foreign_flow_rp_b: number;
+  foreign_buy_ratio_pct: number;
+  z_vol: number;
+  z_val: number;
+  z_nff: number;
+  z_composite: number;
+  anomaly_type: 'INSTITUTIONAL_ABSORPTION' | 'INSTITUTIONAL_MARKUP' | 'RETAIL_TRAP_DISTRIBUTION' | 'INSTITUTIONAL_DUMP' | string;
+  wyckoff_phase: string;
+  smart_money_delta: number;
+  headline: string;
+  playbook: string;
+  telegram_delivered?: boolean;
+}
+
+export interface CashCowProfile {
+  ticker: string;
+  name: string;
+  sector: string;
+  subsector: string;
+  current_price: number;
+  dps_idr: number;
+  dividend_yield_pct: number;
+  historical_dpr_pct: number;
+  dividend_cagr_pct: number;
+  payout_frequency: string;
+  roe_pct: number;
+  per: number;
+  pbv: number;
+  moat: string;
+  sovereign_tier: string;
+}
+
+export interface SovereignRunwayScheduleItem {
+  simulation_year: number;
+  calendar_year: number;
+  portfolio_value_start_idr: number;
+  portfolio_value_end_idr: number;
+  gross_dividend_idr: number;
+  tax_paid_idr: number;
+  net_dividend_idr: number;
+  annual_living_expense_idr: number;
+  monthly_living_expense_idr: number;
+  coverage_ratio: number;
+  sovereign_independent: boolean;
+  runway_months: number;
+  cum_tax_paid_idr: number;
+  cum_net_dividend_idr: number;
+}
+
+export interface SovereignRunwayRegime {
+  name: string;
+  tax_rate_pct: number;
+  description: string;
+  final_portfolio_value_idr: number;
+  total_gross_dividend_idr: number;
+  total_tax_paid_idr: number;
+  total_net_dividend_idr: number;
+  final_annual_net_dividend_idr: number;
+  final_coverage_ratio: number;
+  year_sovereign_freedom_reached: number | null;
+  schedule: SovereignRunwayScheduleItem[];
+}
+
+export interface StatutoryCalendarMilestone {
+  report_period: string;
+  submission_deadline: string;
+  requirement: string;
+}
+
+export interface StatutoryCalendarResponse {
+  tax_year_received: number;
+  receipt_date: string;
+  reinvestment_deadline: string;
+  holding_release_date: string;
+  statutory_holding_years: number;
+  annual_reporting_deadlines: StatutoryCalendarMilestone[];
+  governing_regulations: string[];
+  qualified_instruments: Array<{ category: string; instruments: string; pmk_basis: string }>;
+}
+
+export interface SovereignRunwayResponse {
+  parameters: {
+    starting_capital_idr: number;
+    monthly_living_expense_idr: number;
+    annual_living_expense_initial_idr: number;
+    expense_inflation_pct: number;
+    projection_years: number;
+    weighted_initial_yield_pct: number;
+    weighted_dividend_cagr_pct: number;
+    assumed_capital_growth_pct: number;
+    portfolio_weights: Record<string, number>;
+    cash_cow_profiles: CashCowProfile[];
+  };
+  regimes: {
+    uu_cipta_kerja_0pct: SovereignRunwayRegime;
+    standard_tax_drag_10pct: SovereignRunwayRegime;
+    foreign_tax_drag_20pct: SovereignRunwayRegime;
+  };
+  comparison: {
+    tax_drag_wealth_gap_idr: number;
+    total_tax_saved_via_uu_cipta_kerja_idr: number;
+    wealth_multiplier: number;
+    time_to_freedom_uu_cipta_kerja_years: number | null;
+    time_to_freedom_standard_10pct_years: number | null;
+    years_saved_by_reinvestment: number | null;
+    verdict: string;
+  };
+  statutory_calendar: StatutoryCalendarResponse;
+}

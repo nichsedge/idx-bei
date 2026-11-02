@@ -44,6 +44,7 @@ data/*.bak
 data/ownership/
 data/briefings/
 data/usd_idr_rate.json
+data/anomaly_alerts.json
 data/announcements/
 data/dossiers/
 data/screens/

@@ -198,3 +198,149 @@ func FormatIDRBillion(val float64) string {
 	}
 	return fmt.Sprintf("Rp %.2f B", val/1e9)
 }
+
+// BandarAnomalyAlert represents an intraday or session volume/flow anomaly crossing 3σ.
+type BandarAnomalyAlert struct {
+	StockCode          string  `json:"stock_code"`
+	CompanyName        string  `json:"company_name"`
+	ClosePrice         float64 `json:"close_price"`
+	PriceChangePct     float64 `json:"price_change_pct"`
+	Volume             float64 `json:"volume"`
+	TurnoverRp         float64 `json:"turnover_rp"`
+	NetForeignFlowRp   float64 `json:"net_foreign_flow_rp"`
+	ForeignBuyRatioPct float64 `json:"foreign_buy_ratio_pct"`
+	ZScoreVolume       float64 `json:"z_score_volume"`
+	ZScoreNFF          float64 `json:"z_score_nff"`
+	ZComposite         float64 `json:"z_composite"`
+	AnomalyType        string  `json:"anomaly_type"`
+	WyckoffPhase       string  `json:"wyckoff_phase"`
+	Playbook           string  `json:"playbook"`
+}
+
+// DetectBandarAnomalies scans local stock time-series data for statistical volume/flow outliers.
+func DetectBandarAnomalies(dataDir string, threshold float64, topN int) ([]BandarAnomalyAlert, error) {
+	dash, err := LoadDashboardData(dataDir)
+	if err != nil {
+		return nil, err
+	}
+
+	var alerts []BandarAnomalyAlert
+
+	for _, c := range dash.Companies {
+		records, latest, err := GetStockData(dataDir, c.Code, 25)
+		if err != nil || len(records) < 15 || latest == nil {
+			continue
+		}
+
+		lastIdx := len(records) - 1
+		prev := records[lastIdx-1]
+		if prev.Close <= 0 || latest.Close <= 0 {
+			continue
+		}
+
+		priceChgPct := (latest.Close - prev.Close) / prev.Close * 100.0
+
+		// Baseline 20 sessions (or available)
+		lookback := 20
+		if len(records)-1 < lookback {
+			lookback = len(records) - 1
+		}
+		startIdx := lastIdx - lookback
+
+		var sumVol, sumVolSq, sumVal, sumNff, sumNffSq float64
+		count := float64(lookback)
+
+		for i := startIdx; i < lastIdx; i++ {
+			r := records[i]
+			sumVol += r.Volume
+			sumVolSq += r.Volume * r.Volume
+			sumVal += r.Value
+			sumNff += r.NetForeignFlow
+			sumNffSq += r.NetForeignFlow * r.NetForeignFlow
+		}
+
+		meanVol := sumVol / count
+		varianceVol := (sumVolSq / count) - (meanVol * meanVol)
+		stdVol := math.Sqrt(math.Max(0, varianceVol))
+		if stdVol <= 0 {
+			stdVol = meanVol*0.3 + 1000.0
+		}
+		stdVol = math.Max(stdVol, math.Max(meanVol*0.1, 10000.0))
+
+		meanNff := sumNff / count
+		varianceNff := (sumNffSq / count) - (meanNff * meanNff)
+		stdNff := math.Sqrt(math.Max(0, varianceNff))
+		if stdNff <= 0 {
+			stdNff = math.Abs(meanNff)*0.4 + 1e8
+		}
+		stdNff = math.Max(stdNff, 1e8)
+
+		zVol := (latest.Volume - meanVol) / stdVol
+		zNff := (latest.NetForeignFlow - meanNff) / stdNff
+
+		// Clamp
+		zVol = math.Max(-25.0, math.Min(25.0, zVol))
+		zNff = math.Max(-25.0, math.Min(25.0, zNff))
+		zComp := math.Max(zVol, zNff)
+
+		if zComp < threshold && zVol < threshold && zNff < threshold {
+			continue
+		}
+
+		fbRatio := 0.0
+		if latest.Volume > 0 && latest.ForeignBuy > 0 {
+			fbRatio = (latest.ForeignBuy / latest.Volume) * 100.0
+		}
+
+		anomalyType := "NEUTRAL"
+		wyckoff := "Phase B — Building Cause"
+		playbook := "Monitor orderbook depth."
+
+		if (zVol >= threshold || zNff >= 2.0) && fbRatio >= 55.0 && math.Abs(priceChgPct) <= 1.5 {
+			anomalyType = "INSTITUTIONAL_ABSORPTION"
+			wyckoff = "Phase C — Silent Absorption / Spring Accumulation"
+			playbook = fmt.Sprintf("Smart money absorbed %.1f%% of total volume with flat price. Supply being dried up.", fbRatio)
+		} else if (zVol >= threshold || zNff >= 2.0) && fbRatio >= 60.0 && priceChgPct > 1.5 {
+			anomalyType = "INSTITUTIONAL_MARKUP"
+			wyckoff = "Phase D — Markup Breakout / Sign of Strength"
+			playbook = fmt.Sprintf("Aggressive institutional buy aggression lifting ask prices (+%.1f%%). Momentum continuation.", priceChgPct)
+		} else if zVol >= threshold && (fbRatio < 25.0 || zNff <= -1.5) && priceChgPct > 0.5 {
+			anomalyType = "RETAIL_TRAP_DISTRIBUTION"
+			wyckoff = "Phase B/C — Upthrust After Distribution (UTAD) / Retail Trap"
+			playbook = "Price pushed up while smart hands net distribute. Retail trap risk."
+		} else if zNff <= -threshold || (zVol >= threshold && zNff <= -2.0) {
+			anomalyType = "INSTITUTIONAL_DUMP"
+			wyckoff = "Phase E — Markdown / Liquidation"
+			playbook = "Heavy institutional dumping. Do not catch falling knife."
+		} else {
+			continue
+		}
+
+		alerts = append(alerts, BandarAnomalyAlert{
+			StockCode:          c.Code,
+			CompanyName:        c.Name,
+			ClosePrice:         latest.Close,
+			PriceChangePct:     priceChgPct,
+			Volume:             latest.Volume,
+			TurnoverRp:         latest.Value,
+			NetForeignFlowRp:   latest.NetForeignFlow,
+			ForeignBuyRatioPct: fbRatio,
+			ZScoreVolume:       zVol,
+			ZScoreNFF:          zNff,
+			ZComposite:         zComp,
+			AnomalyType:        anomalyType,
+			WyckoffPhase:       wyckoff,
+			Playbook:           playbook,
+		})
+	}
+
+	sort.Slice(alerts, func(i, j int) bool {
+		return alerts[i].ZComposite > alerts[j].ZComposite
+	})
+
+	if topN > 0 && len(alerts) > topN {
+		alerts = alerts[:topN]
+	}
+
+	return alerts, nil
+}

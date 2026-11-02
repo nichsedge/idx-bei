@@ -222,6 +222,11 @@ def build_parser():
         default=1.0,
         help="Minimum daily turnover threshold in billion IDR (default: 1.0)",
     )
+    p_bandar.add_argument(
+        "--anomalies",
+        action="store_true",
+        help="Detect 3σ institutional flow & absorption anomalies",
+    )
 
     # 7. Backtest
     p_bt = sub.add_parser("backtest", help="Vectorized backtesting of quantitative screens")
@@ -329,6 +334,71 @@ def build_parser():
     p_div.add_argument("--year", default="2026", help="Filter by cum date year (default: 2026)")
     p_div.add_argument(
         "--limit", type=int, default=25, help="Max results for screener (default: 25)"
+    )
+    p_div.add_argument(
+        "--simulator",
+        action="store_true",
+        help="Run Indonesian Sovereign Runway & UU Cipta Kerja Tax Drag simulator",
+    )
+    p_div.add_argument(
+        "--capital",
+        type=float,
+        default=1_000_000_000.0,
+        help="Initial capital in IDR for runway simulation (default: 1,000,000,000)",
+    )
+    p_div.add_argument(
+        "--expense",
+        type=float,
+        default=15_000_000.0,
+        help="Monthly living expense in IDR for runway simulation (default: 15,000,000)",
+    )
+    p_div.add_argument(
+        "--years",
+        type=int,
+        default=20,
+        help="Projection horizon in years (default: 20)",
+    )
+    p_div.add_argument(
+        "--cows",
+        default="BBCA,BBRI,BMRI,ASII,ADRO",
+        help="Comma-separated cash cow tickers (default: BBCA,BBRI,BMRI,ASII,ADRO)",
+    )
+
+    # 14. Bandar & Flow Anomaly Notifier (3σ Telegram Alerts)
+    p_notify = sub.add_parser(
+        "notify",
+        help="Bandar & institutional flow anomaly notifier with 3σ Telegram alerts",
+    )
+    p_notify.add_argument(
+        "--daemon", action="store_true", help="Run as continuous background monitoring daemon"
+    )
+    p_notify.add_argument(
+        "--interval",
+        type=int,
+        default=60,
+        help="Daemon polling interval in seconds (default: 60)",
+    )
+    p_notify.add_argument(
+        "--threshold",
+        type=float,
+        default=3.0,
+        help="Statistical anomaly threshold in standard deviations (default: 3.0)",
+    )
+    p_notify.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Simulate alerts without dispatching actual Telegram HTTP requests",
+    )
+    p_notify.add_argument(
+        "--test",
+        action="store_true",
+        help="Send diagnostic verification ping to configured Telegram bot",
+    )
+    p_notify.add_argument(
+        "--date", default=None, metavar="YYYY-MM-DD", help="Date filter (default: latest)"
+    )
+    p_notify.add_argument(
+        "--limit", type=int, default=15, help="Max anomalies to display (default: 15)"
     )
 
     # 14. Forensic Compounder Screener
@@ -535,6 +605,20 @@ def main(argv=None):
                 print("\nFlagged Stocks / Anomalies:")
                 with pd.option_context("display.max_columns", None, "display.width", 150):
                     print(stealth["anomalies_df"].head(20).to_string(index=False))
+
+        if getattr(args, "anomalies", False):
+            from idx.bandar_notifier import detect_bandar_anomalies
+
+            print("\n=== Scanning 3σ Institutional Flow Anomalies ===")
+            anomalies = detect_bandar_anomalies(
+                on_date=args.date,
+                min_turnover_rp=getattr(args, "min_turnover", 1.0) * 1e9,
+            )
+            print(f"Total 3σ Statistical Outliers Detected: {len(anomalies)}")
+            for a in anomalies[:15]:
+                print(
+                    f"  • {a.ticker:<5} | Z={a.z_composite:5.2f}σ | {a.anomaly_type:<26} | Price: Rp{a.price:,.0f} ({a.price_change_pct:+.2f}%) | NFF: Rp{a.net_foreign_flow_rp / 1e9:+6.1f}B"
+                )
 
     elif cmd == "parquet":
         print("=== Exporting All Datasets to Parquet ===")
@@ -745,6 +829,60 @@ def main(argv=None):
         run_server(host=args.host, port=args.port)
 
     elif cmd == "dividend":
+        if getattr(args, "simulator", False):
+            from idx.dividend_simulator import simulate_sovereign_runway
+
+            cows_list = [c.strip().upper() for c in args.cows.split(",") if c.strip()]
+            weights = {c: 1.0 / len(cows_list) for c in cows_list} if cows_list else None
+
+            print("=" * 80)
+            print("       INDONESIAN SOVEREIGN RUNWAY & UU CIPTA KERJA TAX DRAG SIMULATOR         ")
+            print("=" * 80)
+            res = simulate_sovereign_runway(
+                starting_capital=args.capital,
+                monthly_living_expense=args.expense,
+                projection_years=args.years,
+                portfolio_weights=weights,
+            )
+
+            p = res["parameters"]
+            c = res["comparison"]
+            print(f" Initial Capital    : Rp {p['starting_capital_idr']:,.0f}")
+            print(
+                f" Monthly Living Exp : Rp {p['monthly_living_expense_idr']:,.0f} (Annual: Rp {p['annual_living_expense_initial_idr']:,.0f})"
+            )
+            print(
+                f" Portfolio Yield    : {p['weighted_initial_yield_pct']:.2f}% (Weighted CAGR: {p['weighted_dividend_cagr_pct']:.2f}%)"
+            )
+            print(f" Selected Cash Cows : {', '.join(p['portfolio_weights'].keys())}")
+            print("-" * 80)
+
+            for _r_key, r_data in res["regimes"].items():
+                freedom_str = (
+                    f"Year {r_data['year_sovereign_freedom_reached']}"
+                    if r_data["year_sovereign_freedom_reached"]
+                    else "Not reached within window"
+                )
+                print(f" [{r_data['name']}]")
+                print(
+                    f"   • Final Portfolio Value  : Rp {r_data['final_portfolio_value_idr']:,.0f}"
+                )
+                print(
+                    f"   • Final Annual Net Div   : Rp {r_data['final_annual_net_dividend_idr']:,.0f} (Coverage: {r_data['final_coverage_ratio']:.2f}x)"
+                )
+                print(f"   • Total Direct Tax Paid  : Rp {r_data['total_tax_paid_idr']:,.0f}")
+                print(f"   • Sovereign Freedom Date : {freedom_str}")
+                print()
+
+            print("=" * 80)
+            print(f" TAX DRAG VERDICT: {c['verdict']}")
+            if c.get("years_saved_by_reinvestment") is not None:
+                print(
+                    f" Time Saved to Freedom: Reinvesting under UU Cipta Kerja saves {c['years_saved_by_reinvestment']} full year(s)!"
+                )
+            print("=" * 80)
+            return
+
         from idx.dividend import (
             analyze_stock_dividend,
             format_dividend_report,
@@ -766,6 +904,59 @@ def main(argv=None):
         else:
             analysis = analyze_stock_dividend(args.ticker)
             print(format_dividend_report(analysis))
+
+    elif cmd == "notify":
+        import asyncio
+
+        from idx.bandar_notifier import (
+            BandarAnomalyDaemon,
+            detect_bandar_anomalies,
+            test_telegram_connection,
+        )
+
+        if args.test:
+            print("=== Testing Telegram Webhook & Bot Telemetry ===")
+            test_res = test_telegram_connection()
+            if test_res.get("ok"):
+                print(f"✓ Success! Test alert delivered to Telegram chat {test_res.get('chat_id')}")
+            else:
+                print(
+                    f"✗ Delivery failed: {test_res.get('error', 'Check TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID')}"
+                )
+            return
+
+        if args.daemon:
+            daemon = BandarAnomalyDaemon(
+                poll_interval_seconds=args.interval,
+                sigma_threshold=args.threshold,
+                dry_run=args.dry_run,
+            )
+            print(
+                f"=== Starting Bandar Anomaly Notifier Daemon (Threshold: {args.threshold}σ, Interval: {args.interval}s, Dry-run: {args.dry_run}) ==="
+            )
+            asyncio.run(daemon.run_loop())
+            return
+
+        print(
+            f"=== Bandar & Institutional Flow Anomaly Scan (Threshold: {args.threshold}σ, Date: {args.date or 'Latest'}) ==="
+        )
+        anomalies = detect_bandar_anomalies(
+            sigma_threshold=args.threshold,
+            on_date=args.date,
+        )
+        print(f"Total 3σ Statistical Outliers Detected: {len(anomalies)}\n")
+
+        for i, a in enumerate(anomalies[: args.limit], 1):
+            sign = "+" if a.price_change_pct >= 0 else ""
+            print(
+                f"{i:>2}. {a.ticker:<5} | Z={a.z_composite:5.2f}σ | {a.anomaly_type:<26} | Price: Rp{a.price:,.0f} ({sign}{a.price_change_pct:.2f}%)"
+            )
+            print(
+                f"    Turnover: Rp{a.turnover_rp / 1e9:,.1f}B | NFF: Rp{a.net_foreign_flow_rp / 1e9:+,.1f}B | Foreign Buy: {a.foreign_buy_ratio_pct:.1f}%"
+            )
+            print(f"    Wyckoff : {a.wyckoff_phase}")
+            print(f"    Playbook: {a.playbook}")
+            print()
 
     elif cmd == "status":
         from idx.ingestion import get_full_ingestion_status

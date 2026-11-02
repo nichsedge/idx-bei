@@ -177,5 +177,68 @@ export async function triggerIngestion(params: {
   return await resp.json();
 }
 
+export async function fetchSovereignRunwaySimulation(params: {
+  starting_capital?: number;
+  monthly_living_expense?: number;
+  expense_inflation_pct?: number;
+  projection_years?: number;
+  portfolio_weights?: Record<string, number>;
+  custom_yield_pct?: number;
+  custom_dividend_cagr_pct?: number;
+}): Promise<any> {
+  const resp = await fetch('/api/dividend-simulator/simulate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  });
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({ detail: 'Failed to run sovereign runway simulation' }));
+    throw new Error(err.detail || 'Simulation failed');
+  }
+  return await resp.json();
+}
+
+export async function fetchCashCows(): Promise<any[]> {
+  const resp = await fetch('/api/dividend-simulator/cash-cows');
+  if (!resp.ok) {
+    throw new Error('Failed to fetch cash cows');
+  }
+  return await resp.json();
+}
+
+export async function fetchStatutoryTaxCalendar(receiptDate?: string): Promise<any> {
+  const url = receiptDate
+    ? `/api/dividend-simulator/statutory-deadlines?receipt_date=${receiptDate}`
+    : '/api/dividend-simulator/statutory-deadlines';
+  const resp = await fetch(url);
+  if (!resp.ok) {
+    throw new Error('Failed to fetch statutory tax calendar');
+  }
+  return await resp.json();
+}
+
+export async function fetchBandarAnomalies(threshold = 3.0, date?: string): Promise<any[]> {
+  const url = date
+    ? `/api/bandar/anomalies?threshold=${threshold}&date=${date}`
+    : `/api/bandar/anomalies?threshold=${threshold}`;
+  const resp = await fetch(url);
+  if (!resp.ok) {
+    throw new Error('Failed to fetch bandar anomalies');
+  }
+  return await resp.json();
+}
+
+export async function testBandarTelegramAlert(botToken?: string, chatId?: string): Promise<any> {
+  const resp = await fetch('/api/bandar/notify-test', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ bot_token: botToken, chat_id: chatId }),
+  });
+  if (!resp.ok) {
+    throw new Error('Failed to trigger Telegram alert test');
+  }
+  return await resp.json();
+}
+
 
 
