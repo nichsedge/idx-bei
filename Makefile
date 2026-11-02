@@ -10,9 +10,9 @@ build:
 
 build-arm64:
 	@mkdir -p bin
-	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 GOTOOLCHAIN=local go build -ldflags="-s -w" -o bin/idx-android-arm64 ./cmd/idx
-	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 GOTOOLCHAIN=local go build -ldflags="-s -w" -o bin/idx-server-android-arm64 ./cmd/idx-server
-	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 GOTOOLCHAIN=local go build -ldflags="-s -w" -o bin/idx-sync-android-arm64 ./cmd/idx-sync
+	CGO_ENABLED=0 GOOS=android GOARCH=arm64 GOTOOLCHAIN=local go build -ldflags="-s -w" -o bin/idx ./cmd/idx
+	CGO_ENABLED=0 GOOS=android GOARCH=arm64 GOTOOLCHAIN=local go build -ldflags="-s -w" -o bin/idx-server ./cmd/idx-server
+	CGO_ENABLED=0 GOOS=android GOARCH=arm64 GOTOOLCHAIN=local go build -ldflags="-s -w" -o bin/idx-sync ./cmd/idx-sync
 
 install: build
 	GOTOOLCHAIN=local go install ./cmd/...

@@ -13,6 +13,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 
 	fhttp "github.com/bogdanfinn/fhttp"
@@ -171,6 +172,10 @@ func RunDailySync(opts SyncOptions) (*SyncSummary, error) {
 	// 3. Optional Webhook
 	if opts.WebhookURL != "" {
 		_ = SendDiscordWebhook(opts.WebhookURL, *summary)
+	}
+
+	if len(summary.Errors) > 0 {
+		return summary, fmt.Errorf("ingestion encountered %d error(s): %s", len(summary.Errors), strings.Join(summary.Errors, "; "))
 	}
 
 	return summary, nil

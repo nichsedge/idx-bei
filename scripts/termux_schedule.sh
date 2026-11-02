@@ -30,14 +30,18 @@ handle_error() {
 trap handle_error ERR
 
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-BIN_PATH="$REPO_DIR/bin/idx-sync-android-arm64"
+BIN_PATH="$REPO_DIR/bin/idx-sync"
 if [ ! -f "$BIN_PATH" ]; then
-    BIN_PATH="$REPO_DIR/bin/idx-sync"
+    if command -v idx-sync >/dev/null 2>&1; then
+        BIN_PATH="$(command -v idx-sync)"
+    elif [ -f "$HOME/go/bin/idx-sync" ]; then
+        BIN_PATH="$HOME/go/bin/idx-sync"
+    fi
 fi
 
 if [ ! -f "$BIN_PATH" ]; then
-    echo "ERROR: idx-sync binary not found in $REPO_DIR/bin." >&2
-    echo "Build with: cd $REPO_DIR && make build (or make build-arm64)" >&2
+    echo "ERROR: idx-sync binary not found in $REPO_DIR/bin or PATH." >&2
+    echo "Build with: cd $REPO_DIR && make build" >&2
     exit 1
 fi
 
