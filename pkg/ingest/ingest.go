@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	fhttp "github.com/bogdanfinn/fhttp"
@@ -97,16 +98,22 @@ func RunDailySync(opts SyncOptions) (*SyncSummary, error) {
 	}
 
 	// 1. Ingest trading summary endpoints
+	currentClient := client
+	currentUA := GetActiveProfile().UserAgent
 	for _, ep := range Endpoints {
 		log.Printf("[%s] Fetching trading summary for %s...", ep.Name, date)
 		url := fmt.Sprintf("%s%s?date=%s&start=0&length=9999", DefaultBaseURL, ep.Path, date)
 
-		records, err := FetchWithRetry(client, url, opts.Retries, time.Duration(opts.Delay*float64(time.Second)))
+		records, newClient, newUA, err := FetchWithRetryEx(currentClient, currentUA, url, opts.Retries, time.Duration(opts.Delay*float64(time.Second)))
 		if err != nil {
 			msg := fmt.Sprintf("%s: fetch error: %v", ep.Name, err)
 			log.Printf("ERROR: %s", msg)
 			summary.Errors = append(summary.Errors, msg)
 			continue
+		}
+		if newClient != nil {
+			currentClient = newClient
+			currentUA = newUA
 		}
 
 		count := len(records)
@@ -189,9 +196,9 @@ type ProfileConfig struct {
 
 var ClientProfiles = []ProfileConfig{
 	{
-		Name:      "Chrome_152",
-		Profile:   profiles.Chrome_152,
-		UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+		Name:      "Chrome_150",
+		Profile:   profiles.Chrome_150,
+		UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
 	},
 	{
 		Name:      "Firefox_148",
@@ -199,10 +206,27 @@ var ClientProfiles = []ProfileConfig{
 		UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0",
 	},
 	{
-		Name:      "Chrome_150",
-		Profile:   profiles.Chrome_150,
-		UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+		Name:      "Chrome_152",
+		Profile:   profiles.Chrome_152,
+		UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
 	},
+}
+
+var (
+	activeProfileMu  sync.RWMutex
+	activeProfileIdx = 0
+)
+
+func GetActiveProfile() ProfileConfig {
+	activeProfileMu.RLock()
+	defer activeProfileMu.RUnlock()
+	return ClientProfiles[activeProfileIdx]
+}
+
+func SetActiveProfileIdx(idx int) {
+	activeProfileMu.Lock()
+	defer activeProfileMu.Unlock()
+	activeProfileIdx = idx % len(ClientProfiles)
 }
 
 func CreateTLSClientWithProfile(p profiles.ClientProfile) (tls_client.HttpClient, error) {
@@ -216,18 +240,33 @@ func CreateTLSClientWithProfile(p profiles.ClientProfile) (tls_client.HttpClient
 }
 
 func CreateTLSClient() (tls_client.HttpClient, error) {
-	return CreateTLSClientWithProfile(ClientProfiles[0].Profile)
+	return CreateTLSClientWithProfile(GetActiveProfile().Profile)
 }
 
 func FetchWithRetry(client tls_client.HttpClient, url string, maxRetries int, delay time.Duration) ([]map[string]any, error) {
+	records, _, _, err := FetchWithRetryEx(client, GetActiveProfile().UserAgent, url, maxRetries, delay)
+	return records, err
+}
+
+func FetchWithRetryEx(client tls_client.HttpClient, initialUA string, url string, maxRetries int, delay time.Duration) ([]map[string]any, tls_client.HttpClient, string, error) {
 	var lastErr error
 	currentClient := client
-	currentUA := ClientProfiles[0].UserAgent
+	currentUA := initialUA
+	if currentUA == "" {
+		currentUA = GetActiveProfile().UserAgent
+	}
+	activeIdx := 0
+	for i, p := range ClientProfiles {
+		if p.UserAgent == currentUA {
+			activeIdx = i
+			break
+		}
+	}
 
 	for attempt := 0; attempt <= maxRetries; attempt++ {
 		req, err := fhttp.NewRequest("GET", url, nil)
 		if err != nil {
-			return nil, err
+			return nil, currentClient, currentUA, err
 		}
 
 		req.Header.Set("User-Agent", currentUA)
@@ -257,17 +296,20 @@ func FetchWithRetry(client tls_client.HttpClient, url string, maxRetries int, de
 				Data []map[string]any `json:"data"`
 			}
 			if err := json.Unmarshal(bodyBytes, &parsed); err != nil {
-				return nil, fmt.Errorf("failed to parse JSON response: %w", err)
+				return nil, currentClient, currentUA, fmt.Errorf("failed to parse JSON response: %w", err)
 			}
-			return parsed.Data, nil
+			SetActiveProfileIdx(activeIdx)
+			return parsed.Data, currentClient, currentUA, nil
 		}
 
 		if resp.StatusCode == 403 || resp.StatusCode == 429 || resp.StatusCode >= 500 {
-			cfg := ClientProfiles[attempt%len(ClientProfiles)]
+			nextIdx := (activeIdx + attempt + 1) % len(ClientProfiles)
+			cfg := ClientProfiles[nextIdx]
 			newClient, err := CreateTLSClientWithProfile(cfg.Profile)
 			if err == nil {
 				currentClient = newClient
 				currentUA = cfg.UserAgent
+				activeIdx = nextIdx
 			}
 			backoff := time.Duration(float64(attempt+1)*2.0+rand.Float64()) * time.Second
 			log.Printf("HTTP %d for %s (rotating TLS profile to %s, retrying in %v...)", resp.StatusCode, url, cfg.Name, backoff)
@@ -276,10 +318,10 @@ func FetchWithRetry(client tls_client.HttpClient, url string, maxRetries int, de
 			continue
 		}
 
-		return nil, fmt.Errorf("unhandled HTTP %d from %s", resp.StatusCode, url)
+		return nil, currentClient, currentUA, fmt.Errorf("unhandled HTTP %d from %s", resp.StatusCode, url)
 	}
 
-	return nil, fmt.Errorf("max retries exceeded: %w", lastErr)
+	return nil, currentClient, currentUA, fmt.Errorf("max retries exceeded: %w", lastErr)
 }
 
 func FetchUSDIDRRate() (float64, string, error) {

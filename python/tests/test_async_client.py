@@ -146,6 +146,22 @@ class TestSyncIDXClient(unittest.TestCase):
         self.assertEqual(mock_get.call_count, 2)
         self.assertEqual(mock_get.call_args_list[0].kwargs.get("impersonate"), "chrome")
         self.assertEqual(mock_get.call_args_list[1].kwargs.get("impersonate"), "chrome124")
+        self.assertEqual(client.active_impersonate, "chrome124")
+
+    @patch("curl_cffi.requests.get")
+    def test_sync_sticky_impersonate_and_context(self, mock_get):
+        from idx.core.client import IDXClient
+
+        mock_resp = MagicMock(status_code=200)
+        mock_resp.json.return_value = {"ok": True}
+        mock_get.return_value = mock_resp
+
+        with IDXClient(delay_seconds=0.0) as client:
+            self.assertEqual(client.active_impersonate, "chrome120")
+            client.get("/test/default_sticky")
+            self.assertEqual(mock_get.call_args.kwargs.get("impersonate"), "chrome120")
+
+        self.assertIsNone(client._session)
 
 
 if __name__ == "__main__":

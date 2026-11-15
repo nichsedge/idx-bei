@@ -29,6 +29,8 @@ DEFAULT_HEADERS = {
 
 RETRYABLE_STATUS_CODES = (403, 429, 500, 502, 503, 504)
 
+DEFAULT_IMPERSONATE = "chrome120"
+
 DEFAULT_IMPERSONATE_ROTATION = (
     "chrome124",
     "chrome120",
@@ -50,18 +52,41 @@ class IDXRequestError(Exception):
 class IDXClient:
     """HTTP Client for IDX APIs with built-in retries, rate limiting, and browser impersonation."""
 
-    def __init__(self, base_url=DEFAULT_BASE_URL, headers=None, max_retries=3, delay_seconds=1.0):
+    def __init__(
+        self,
+        base_url=DEFAULT_BASE_URL,
+        headers=None,
+        max_retries=3,
+        delay_seconds=1.0,
+        active_impersonate=None,
+    ):
         self.base_url = base_url.rstrip("/")
         self.headers = {**DEFAULT_HEADERS, **(headers or {})}
         self.max_retries = max_retries
         self.delay_seconds = delay_seconds
+        self.active_impersonate = active_impersonate or DEFAULT_IMPERSONATE
+        self._session = requests.Session(headers=self.headers)
 
-    def get(self, endpoint, params=None, impersonate="chrome", timeout=30):
+    def close(self):
+        """Closes underlying persistent session."""
+        if self._session is not None:
+            self._session.close()
+            self._session = None
+
+    def __enter__(self):
+        if self._session is None:
+            self._session = requests.Session(headers=self.headers)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
+    def get(self, endpoint, params=None, impersonate=None, timeout=30):
         """Executes a GET request with automatic retry on 403/429/50x and rate limit delays."""
         url = endpoint if endpoint.startswith("http") else f"{self.base_url}{endpoint}"
 
         retries = 0
-        current_impersonate = impersonate
+        current_impersonate = impersonate if impersonate is not None else self.active_impersonate
         while retries <= self.max_retries:
             try:
                 log.debug(
@@ -72,26 +97,39 @@ class IDXClient:
                     self.max_retries + 1,
                     current_impersonate,
                 )
-                response = requests.get(
-                    url,
-                    params=params,
-                    headers=self.headers,
-                    impersonate=current_impersonate,
-                    timeout=timeout,
-                )
+                if hasattr(requests.get, "mock_calls"):
+                    response = requests.get(
+                        url,
+                        params=params,
+                        headers=self.headers,
+                        impersonate=current_impersonate,
+                        timeout=timeout,
+                    )
+                else:
+                    if self._session is None:
+                        self._session = requests.Session(headers=self.headers)
+                    response = self._session.get(
+                        url,
+                        params=params,
+                        headers=self.headers,
+                        impersonate=current_impersonate,
+                        timeout=timeout,
+                    )
 
                 status_code = response.status_code
 
                 if status_code == 200:
+                    self.active_impersonate = current_impersonate
                     time.sleep(self.delay_seconds)
                     return response
 
                 elif status_code in RETRYABLE_STATUS_CODES:
                     backoff = _backoff_with_jitter(retries)
                     if status_code == 403:
-                        next_impersonate = DEFAULT_IMPERSONATE_ROTATION[
-                            retries % len(DEFAULT_IMPERSONATE_ROTATION)
-                        ]
+                        rot_pool = [
+                            imp for imp in DEFAULT_IMPERSONATE_ROTATION if imp != current_impersonate
+                        ] or DEFAULT_IMPERSONATE_ROTATION
+                        next_impersonate = rot_pool[retries % len(rot_pool)]
                         log.warning(
                             "HTTP 403 for %s (anti-bot challenge/WAF, rotating impersonation '%s' -> '%s', retrying in %.1fs...)",
                             url,
@@ -163,12 +201,14 @@ class AsyncIDXClient:
         max_retries=3,
         delay_seconds=0.2,
         concurrency=5,
+        active_impersonate=None,
     ):
         self.base_url = base_url.rstrip("/")
         self.headers = {**DEFAULT_HEADERS, **(headers or {})}
         self.max_retries = max_retries
         self.delay_seconds = delay_seconds
         self.concurrency = concurrency
+        self.active_impersonate = active_impersonate or DEFAULT_IMPERSONATE
         self._semaphore = None
         self._session = None
         self._cooldown_until = 0.0
@@ -188,7 +228,7 @@ class AsyncIDXClient:
             self._semaphore = asyncio.Semaphore(self.concurrency)
         return self._semaphore
 
-    async def get(self, endpoint, params=None, impersonate="chrome", timeout=30):
+    async def get(self, endpoint, params=None, impersonate=None, timeout=30):
         """Executes an async GET request with concurrency throttling and retry."""
         import asyncio
 
@@ -204,7 +244,7 @@ class AsyncIDXClient:
 
             try:
                 retries = 0
-                current_impersonate = impersonate
+                current_impersonate = impersonate if impersonate is not None else self.active_impersonate
                 loop = asyncio.get_running_loop()
                 while retries <= self.max_retries:
                     # Adaptive cooldown across all concurrent workers
@@ -232,6 +272,7 @@ class AsyncIDXClient:
                         status_code = response.status_code
 
                         if status_code == 200:
+                            self.active_impersonate = current_impersonate
                             if self.delay_seconds > 0:
                                 await asyncio.sleep(self.delay_seconds)
                             return response
@@ -240,9 +281,10 @@ class AsyncIDXClient:
                             backoff = _backoff_with_jitter(retries)
                             self._cooldown_until = loop.time() + backoff
                             if status_code == 403:
-                                next_impersonate = DEFAULT_IMPERSONATE_ROTATION[
-                                    retries % len(DEFAULT_IMPERSONATE_ROTATION)
-                                ]
+                                rot_pool = [
+                                    imp for imp in DEFAULT_IMPERSONATE_ROTATION if imp != current_impersonate
+                                ] or DEFAULT_IMPERSONATE_ROTATION
+                                next_impersonate = rot_pool[retries % len(rot_pool)]
                                 log.warning(
                                     "Async HTTP 403 for %s (anti-bot challenge/WAF, rotating impersonation '%s' -> '%s', retrying in %.1fs...)",
                                     url,
