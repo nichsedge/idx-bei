@@ -11,8 +11,10 @@ Usage:
 
 import glob
 import os
+import re
 
 import duckdb
+import pandas as pd
 
 from idx.core import timeseries as ts
 from idx.core.utils import get_logger
@@ -22,7 +24,8 @@ log = get_logger("idx.core.query")
 
 def sql(query):
     """Runs arbitrary SQL against DuckDB. Returns a pandas DataFrame."""
-    return duckdb.sql(query).df()
+    res = duckdb.sql(query)
+    return res.df() if res is not None else pd.DataFrame()
 
 
 def _dataset_glob(dataset, base_dir=None):
@@ -56,6 +59,14 @@ def query_dataset(
         pandas DataFrame of matching rows.
     """
     pattern = _dataset_glob(dataset, base_dir)
+
+    # Sanitize and validate basic inputs
+    if start and not re.match(r"^\d{4}-?\d{2}-?\d{2}$", str(start)):
+        raise ValueError(f"Invalid start date format: {start}")
+    if end and not re.match(r"^\d{4}-?\d{2}-?\d{2}$", str(end)):
+        raise ValueError(f"Invalid end date format: {end}")
+    if columns != "*" and any(c in columns for c in (";", "--", "/*")):
+        raise ValueError(f"Invalid character in column specification: {columns}")
 
     conds = []
     if start:

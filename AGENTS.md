@@ -28,7 +28,7 @@ This repository is organized as a unified Python quantitative data pipeline, MCP
   - `api.py`: Python FastAPI REST & WebSocket microservice.
   - `signals.py`: 8 decision-support screens (Sector Rotation & Market Regime, Composite Alpha, Foreign Flow, Bandarmology Broker Dominance, Audit Risk, Dilution Watch, Sharia Value, Pasar Nego).
   - `cli.py`: unified Python CLI entrypoint for `idx` command.
-- `python/tests/`: automated pytest suite (182 passing unit tests, >=85% coverage).
+- `python/tests/`: automated pytest suite (224 passing unit tests, >=85% coverage).
 - `notebooks/`: interactive research walkthrough scripts (quant data pipeline and Neo4j graph walkthroughs).
 - `docs/`: empirical API verification specs, decision guides, and documentation.
 - `data/`: local datasets (partitioned time-series, Parquet exports, daily briefings, dynamic USD/IDR rate cache, and KSEI ownership CSVs).
@@ -78,7 +78,8 @@ Run all commands from the repository root using modern `uv`:
 - `idx stock <TICKER> [LIMIT]`: inspect Parquet stock history and technical indicators (RSI, EMA, Bollinger Bands, ATR) via native Go.
 - `idx sync [--date YYYYMMDD]`: ingest market close data via standalone uTLS.
 - `uv run idx mcp`: start Model Context Protocol (MCP) server for AI assistants.
-- `uv run pytest python/tests`: run full 182-test automated pytest suite with >=85% coverage enforcement.
+- `uv run pytest python/tests`: run full 224-test automated pytest suite with >=85% coverage enforcement.
+- `make test`: execute Go automated test suite across packages (`pkg/api`, `pkg/engine`, `pkg/ingest`, `pkg/mcp`).
 - `uv run mypy python/src/idx`: run Mypy static type checker.
 - `uv run ruff check python/src python/tests`: run Ruff linter.
 - `uv run ruff format python/src python/tests`: format Python codebase.

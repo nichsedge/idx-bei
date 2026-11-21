@@ -55,7 +55,12 @@ def fetch_corporate_actions(ca_types=None, client=None):
         params = {"caType": ca_type, "dateFrom": "", "dateTo": "", "start": 0, "length": 9999}
         data = client.get_json(endpoint, params=params)
 
-        if data and isinstance(data.get("data"), list):
+        if data is None:
+            raise RuntimeError(
+                f"Failed to fetch corporate action category '{ca_type}' (API error/blocked)"
+            )
+
+        if isinstance(data.get("data"), list):
             records = data["data"]
             all_ca_data[ca_type] = {"count": len(records), "data": records}
             total_records += len(records)

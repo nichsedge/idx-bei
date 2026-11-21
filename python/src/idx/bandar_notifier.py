@@ -469,6 +469,20 @@ class BandarAnomalyDaemon:
         self.is_running = False
         self._sent_alerts_cache: dict[str, float] = {}  # ticker -> timestamp
         self._recent_alerts: list[dict[str, Any]] = []
+        self._seed_cache_from_disk()
+
+    def _seed_cache_from_disk(self) -> None:
+        """Seeds sent alerts cooldown cache from historical disk log."""
+        cached = self.load_cached_alerts()
+        for alert in cached:
+            ticker = alert.get("ticker")
+            ts_str = alert.get("timestamp")
+            if ticker and ts_str and ticker not in self._sent_alerts_cache:
+                try:
+                    dt = datetime.datetime.fromisoformat(ts_str)
+                    self._sent_alerts_cache[ticker] = dt.timestamp()
+                except Exception:
+                    pass
 
     def load_cached_alerts(self) -> list[dict[str, Any]]:
         """Loads historical alert log from disk."""

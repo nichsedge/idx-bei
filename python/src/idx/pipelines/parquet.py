@@ -31,6 +31,14 @@ def _ensure_parquet_dir():
     os.makedirs(PARQUET_DIR, exist_ok=True)
 
 
+def _atomic_write_table(table, output_path, compression="snappy"):
+    """Writes a pyarrow Table to a temporary file, then renames atomically."""
+    _ensure_parquet_dir()
+    tmp_path = output_path + ".tmp"
+    pq.write_table(table, tmp_path, compression=compression)
+    os.replace(tmp_path, output_path)
+
+
 def _load_json(filepath):
     """Loads a JSON file, returns list or dict."""
     if not os.path.exists(filepath):
@@ -159,14 +167,14 @@ def export_stock_timeseries(output=None, incremental=False):
 
     if existing_df is not None:
         df = pd.concat([existing_df, df], ignore_index=True)
-        df.drop_duplicates(subset=["Date", "StockCode"], keep="last", inplace=True)
+        df = df.drop_duplicates(subset=["Date", "StockCode"], keep="last")
 
     # Sort for optimal compression and query patterns
-    df.sort_values(["Date", "StockCode"], inplace=True, ignore_index=True)
+    df = df.sort_values(["Date", "StockCode"], ignore_index=True)
 
-    # Write Parquet with snappy compression
+    # Write Parquet with snappy compression atomically
     table = pa.Table.from_pandas(df, preserve_index=False)
-    pq.write_table(table, output, compression="snappy")
+    _atomic_write_table(table, output, compression="snappy")
 
     size_mb = os.path.getsize(output) / (1024 * 1024)
     log.info(
@@ -233,13 +241,13 @@ def export_broker_timeseries(output=None, incremental=False):
             else ("IDBrokerSummary" if "IDBrokerSummary" in df.columns else None)
         )
         if id_col:
-            df.drop_duplicates(subset=["Date", id_col], keep="last", inplace=True)
+            df = df.drop_duplicates(subset=["Date", id_col], keep="last")
 
     sort_col = "IDFirm" if "IDFirm" in df.columns else "Date"
-    df.sort_values(["Date", sort_col], inplace=True, ignore_index=True)
+    df = df.sort_values(["Date", sort_col], ignore_index=True)
 
     table = pa.Table.from_pandas(df, preserve_index=False)
-    pq.write_table(table, output, compression="snappy")
+    _atomic_write_table(table, output, compression="snappy")
 
     size_mb = os.path.getsize(output) / (1024 * 1024)
     log.info(
@@ -316,13 +324,13 @@ def export_index_timeseries(output=None, incremental=False):
         df = pd.concat([existing_df, df], ignore_index=True)
         idx_col = "IndexCode" if "IndexCode" in df.columns else "IndexName"
         if idx_col in df.columns:
-            df.drop_duplicates(subset=["Date", idx_col], keep="last", inplace=True)
+            df = df.drop_duplicates(subset=["Date", idx_col], keep="last")
 
     sort_col = "IndexCode" if "IndexCode" in df.columns else "Date"
-    df.sort_values(["Date", sort_col], inplace=True, ignore_index=True)
+    df = df.sort_values(["Date", sort_col], ignore_index=True)
 
     table = pa.Table.from_pandas(df, preserve_index=False)
-    pq.write_table(table, output, compression="snappy")
+    _atomic_write_table(table, output, compression="snappy")
 
     size_mb = os.path.getsize(output) / (1024 * 1024)
     log.info(
@@ -391,10 +399,10 @@ def export_financial_ratios(source=None, output=None):
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    df.sort_values(["code"], inplace=True, ignore_index=True)
+    df = df.sort_values(["code"], ignore_index=True)
 
     table = pa.Table.from_pandas(df, preserve_index=False)
-    pq.write_table(table, output, compression="snappy")
+    _atomic_write_table(table, output, compression="snappy")
 
     size_mb = os.path.getsize(output) / (1024 * 1024)
     log.info(
@@ -437,10 +445,10 @@ def export_corporate_actions(source=None, output=None):
     if "TanggalPencatatan" in df.columns:
         df["TanggalPencatatan"] = pd.to_datetime(df["TanggalPencatatan"], errors="coerce")
 
-    df.sort_values(["TanggalPencatatan", "KodeEmiten"], inplace=True, ignore_index=True)
+    df = df.sort_values(["TanggalPencatatan", "KodeEmiten"], ignore_index=True)
 
     table = pa.Table.from_pandas(df, preserve_index=False)
-    pq.write_table(table, output, compression="snappy")
+    _atomic_write_table(table, output, compression="snappy")
 
     size_mb = os.path.getsize(output) / (1024 * 1024)
     log.info(
@@ -558,7 +566,7 @@ def compact_partitions(dataset=None, freq="month", base_dir=None, remove_source=
                 if c in df.columns
             ]
             if sort_cols:
-                df.sort_values(sort_cols, inplace=True, ignore_index=True)
+                df = df.sort_values(sort_cols, ignore_index=True)
 
             compacted_table = pa.Table.from_pandas(df, preserve_index=False)
             tmp_out = out_file + ".tmp"

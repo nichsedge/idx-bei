@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/nichsedge/idx-bei/pkg/api"
 	"github.com/nichsedge/idx-bei/pkg/engine"
@@ -70,7 +71,13 @@ func main() {
 		fmt.Printf("  • Data Dir:       %s\n", cfg.DataDir)
 
 		router := api.NewRouter(cfg)
-		if err := http.ListenAndServe(addr, router); err != nil {
+		srv := &http.Server{
+			Addr:              addr,
+			Handler:           router,
+			ReadHeaderTimeout: 5 * time.Second,
+			IdleTimeout:       120 * time.Second,
+		}
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Server failed: %v", err)
 		}
 
@@ -92,19 +99,15 @@ func main() {
 		fmt.Printf("✓ Ingestion complete for %s\n", summary.Date)
 
 	case "status":
-		tsDir := filepath.Join(dataDir, "timeseries")
 		datasets := []string{"stock_summary", "broker_summary", "index_summary"}
 		fmt.Println("=== IDX-BEI Dataset Inventory ===")
 		for _, ds := range datasets {
-			pDir := filepath.Join(tsDir, ds)
-			entries, _ := os.ReadDir(pDir)
-			dates := 0
-			for _, e := range entries {
-				if strings.HasPrefix(e.Name(), "date=") {
-					dates++
-				}
+			files, dates := engine.GetDatasetPartitionInfo(dataDir, ds)
+			if len(dates) > 0 {
+				fmt.Printf("  • %-16s: %d partitions (%s -> %s)\n", ds, files, dates[0], dates[len(dates)-1])
+			} else {
+				fmt.Printf("  • %-16s: %d partitions\n", ds, files)
 			}
-			fmt.Printf("  • %-16s: %d partitions\n", ds, dates)
 		}
 		if rate, err := os.ReadFile(filepath.Join(dataDir, "usd_idr_rate.json")); err == nil {
 			var r struct {

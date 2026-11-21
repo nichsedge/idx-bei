@@ -145,9 +145,15 @@ func RunDailySync(opts SyncOptions) (*SyncSummary, error) {
 				stockRows[i] = mapToStockRow(rec, dateISO)
 			}
 			parquetFile := filepath.Join(tsDir, fmt.Sprintf("date=%s.parquet", dateISO))
-			if err := parquet.WriteFile(parquetFile, stockRows); err != nil {
+			tmpParquet := parquetFile + ".tmp"
+			if err := parquet.WriteFile(tmpParquet, stockRows); err != nil {
+				_ = os.Remove(tmpParquet)
 				log.Printf("ERROR writing parquet partition %s: %v", parquetFile, err)
 				summary.Errors = append(summary.Errors, fmt.Sprintf("%s: parquet error: %v", ep.Name, err))
+			} else if err := os.Rename(tmpParquet, parquetFile); err != nil {
+				_ = os.Remove(tmpParquet)
+				log.Printf("ERROR renaming parquet partition %s: %v", parquetFile, err)
+				summary.Errors = append(summary.Errors, fmt.Sprintf("%s: parquet rename error: %v", ep.Name, err))
 			} else {
 				log.Printf("[%s] Wrote %d parquet records to %s", ep.Name, count, parquetFile)
 			}

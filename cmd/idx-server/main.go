@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/nichsedge/idx-bei/pkg/api"
 )
@@ -47,7 +48,13 @@ func main() {
 	log.Printf("  • Data Dir:       %s", cfg.DataDir)
 
 	router := api.NewRouter(cfg)
-	if err := http.ListenAndServe(addr, router); err != nil {
+	srv := &http.Server{
+		Addr:              addr,
+		Handler:           router,
+		ReadHeaderTimeout: 5 * time.Second,
+		IdleTimeout:       120 * time.Second,
+	}
+	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatalf("Server failed: %v", err)
 	}
 }

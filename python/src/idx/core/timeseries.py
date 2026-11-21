@@ -136,7 +136,7 @@ def read_dataset(dataset, start=None, end=None, base_dir=None):
         df["_d_str"] = df["Date"].astype(str).str[:10]
         selected_set = set(selected)
         df = df[df["_d_str"].isin(selected_set)].copy()
-        df.drop(columns=["_d_str"], inplace=True)
+        df = df.drop(columns=["_d_str"])
 
     sort_cols = [
         c
@@ -144,9 +144,8 @@ def read_dataset(dataset, start=None, end=None, base_dir=None):
         if c in df.columns
     ]
     if sort_cols:
-        df.sort_values(
+        df = df.sort_values(
             sort_cols,
-            inplace=True,
             ignore_index=True,
         )
     return df

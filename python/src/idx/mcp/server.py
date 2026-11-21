@@ -11,6 +11,7 @@ Provides tools for AI assistants (Antigravity, Claude, Cursor, etc.) to query:
 
 import json
 import os
+import re
 import sys
 
 import pandas as pd
@@ -298,6 +299,8 @@ def handle_tool_call(name, args):
 
         elif name == "idx_query_stock":
             ticker = args.get("ticker", "").strip().upper()
+            if not re.match(r"^[A-Z0-9_\-\.]{1,10}$", ticker):
+                return f"Invalid ticker symbol: '{ticker}'."
             limit = args.get("limit", 20)
             df = query_dataset("stock_summary", where=f"StockCode = '{ticker}'", limit=limit)
             if len(df) == 0:
@@ -306,6 +309,8 @@ def handle_tool_call(name, args):
 
         elif name == "idx_get_company_profile":
             ticker = args.get("ticker", "").strip().upper()
+            if not re.match(r"^[A-Z0-9_\-\.]{1,10}$", ticker):
+                return f"Invalid ticker symbol: '{ticker}'."
             details_path = os.path.join(DATA_DIR, "companyDetailsByKodeEmiten.json")
             if os.path.exists(details_path):
                 details = load_json(details_path)
@@ -315,6 +320,8 @@ def handle_tool_call(name, args):
 
         elif name == "idx_analyze_dividend":
             ticker = args.get("ticker", "").strip().upper()
+            if not re.match(r"^[A-Z0-9_\-\.]{1,10}$", ticker):
+                return f"Invalid ticker symbol: '{ticker}'."
             from idx.dividend import analyze_stock_dividend
 
             res = analyze_stock_dividend(ticker)

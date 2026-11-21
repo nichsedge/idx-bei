@@ -178,6 +178,38 @@ func GetPeers(dataDir, ticker string) ([]models.Company, error) {
 	return peers, nil
 }
 
+// GetDatasetPartitionInfo scans daily and compacted partitions for a dataset and returns total partition files and distinct dates.
+func GetDatasetPartitionInfo(dataDir, ds string) (int, []string) {
+	dsDir := filepath.Join(dataDir, "timeseries", ds)
+	dateSet := make(map[string]struct{})
+	totalFiles := 0
+
+	_ = filepath.Walk(dsDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil || info.IsDir() {
+			return nil
+		}
+		name := info.Name()
+		if strings.HasSuffix(name, ".parquet") || strings.HasSuffix(name, ".json") {
+			totalFiles++
+			if strings.HasPrefix(name, "date=") {
+				d := strings.TrimPrefix(name, "date=")
+				d = strings.TrimSuffix(d, ".parquet")
+				d = strings.TrimSuffix(d, ".json")
+				dateSet[d] = struct{}{}
+			}
+		}
+		return nil
+	})
+
+	distinctDates := make([]string, 0, len(dateSet))
+	for d := range dateSet {
+		distinctDates = append(distinctDates, d)
+	}
+	sort.Strings(distinctDates)
+
+	return totalFiles, distinctDates
+}
+
 // LoadAllStockParquetMap reads all stock summary parquet files once and partitions by stock code.
 func LoadAllStockParquetMap(dataDir string) (map[string][]models.ParquetStockRow, error) {
 	stockCacheLock.RLock()

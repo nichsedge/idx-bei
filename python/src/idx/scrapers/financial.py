@@ -71,7 +71,12 @@ def fetch_financial_ratios(year=2024, quarter=4, client=None, page_size=100):
         params = {**base_params, "pageNumber": page_number}
         data = client.get_json(endpoint, params=params)
 
-        if data and data.get("data") and len(data["data"]) > 0:
+        if data is None:
+            raise RuntimeError(
+                f"Failed to fetch financial ratios page {page_number} for year {year} Q{quarter} (API error/blocked)"
+            )
+
+        if data.get("data") and len(data["data"]) > 0:
             records = data["data"]
             all_records.extend(records)
             log.info(

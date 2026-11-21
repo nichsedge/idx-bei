@@ -9,6 +9,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/nichsedge/idx-bei/pkg/models"
 )
@@ -89,17 +90,37 @@ type DividendDecision struct {
 	PaymentDate        string   `json:"payment_date"`
 }
 
+var (
+	usdRateMu     sync.RWMutex
+	cachedUSDRate float64
+	usdRateTime   time.Time
+)
+
 func getUSDIDRRate(dataDir string) float64 {
+	usdRateMu.RLock()
+	if cachedUSDRate > 0 && time.Since(usdRateTime) < 1*time.Minute {
+		defer usdRateMu.RUnlock()
+		return cachedUSDRate
+	}
+	usdRateMu.RUnlock()
+
+	rate := 16250.0
 	rateFile := filepath.Join(dataDir, "usd_idr_rate.json")
 	if data, err := os.ReadFile(rateFile); err == nil {
 		var r struct {
 			Rate float64 `json:"rate"`
 		}
 		if err := json.Unmarshal(data, &r); err == nil && r.Rate > 0 {
-			return r.Rate
+			rate = r.Rate
 		}
 	}
-	return 16250.0
+
+	usdRateMu.Lock()
+	cachedUSDRate = rate
+	usdRateTime = time.Now()
+	usdRateMu.Unlock()
+
+	return rate
 }
 
 // AnalyzeDividend performs deep quantitative dividend risk analysis for a ticker.

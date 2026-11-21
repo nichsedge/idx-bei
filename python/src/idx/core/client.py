@@ -65,7 +65,7 @@ class IDXClient:
         self.max_retries = max_retries
         self.delay_seconds = delay_seconds
         self.active_impersonate = active_impersonate or DEFAULT_IMPERSONATE
-        self._session = requests.Session(headers=self.headers)
+        self._session: requests.Session | None = requests.Session(headers=self.headers)
 
     def close(self):
         """Closes underlying persistent session."""
@@ -127,7 +127,9 @@ class IDXClient:
                     backoff = _backoff_with_jitter(retries)
                     if status_code == 403:
                         rot_pool = [
-                            imp for imp in DEFAULT_IMPERSONATE_ROTATION if imp != current_impersonate
+                            imp
+                            for imp in DEFAULT_IMPERSONATE_ROTATION
+                            if imp != current_impersonate
                         ] or DEFAULT_IMPERSONATE_ROTATION
                         next_impersonate = rot_pool[retries % len(rot_pool)]
                         log.warning(
@@ -244,7 +246,9 @@ class AsyncIDXClient:
 
             try:
                 retries = 0
-                current_impersonate = impersonate if impersonate is not None else self.active_impersonate
+                current_impersonate = (
+                    impersonate if impersonate is not None else self.active_impersonate
+                )
                 loop = asyncio.get_running_loop()
                 while retries <= self.max_retries:
                     # Adaptive cooldown across all concurrent workers
@@ -282,7 +286,9 @@ class AsyncIDXClient:
                             self._cooldown_until = loop.time() + backoff
                             if status_code == 403:
                                 rot_pool = [
-                                    imp for imp in DEFAULT_IMPERSONATE_ROTATION if imp != current_impersonate
+                                    imp
+                                    for imp in DEFAULT_IMPERSONATE_ROTATION
+                                    if imp != current_impersonate
                                 ] or DEFAULT_IMPERSONATE_ROTATION
                                 next_impersonate = rot_pool[retries % len(rot_pool)]
                                 log.warning(

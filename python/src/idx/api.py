@@ -653,9 +653,11 @@ async def execute_sql(req: SQLQueryRequest):
     # Block external filesystem and network access in user queries
     con.execute("SET enable_external_access = false;")
 
+    safe_limit = max(1, min(req.limit or 50, 1000))
     try:
-        res_df = con.execute(sql).fetchdf()
-        return res_df.head(req.limit).to_dict(orient="records")
+        clean_sql = sql.rstrip("; \t\n")
+        res_df = con.execute(f"SELECT * FROM ({clean_sql}) LIMIT {safe_limit}").fetchdf()
+        return res_df.to_dict(orient="records")
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
 
