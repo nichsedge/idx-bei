@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"math"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -785,8 +786,17 @@ func NewRouter(cfg ServerConfig) http.Handler {
 		}
 	})
 
-	// Broadcast endpoint
+	// Broadcast endpoint (restricted to local loopback callers)
 	mux.HandleFunc("POST /api/broadcast", func(w http.ResponseWriter, r *http.Request) {
+		host, _, err := net.SplitHostPort(r.RemoteAddr)
+		if err != nil {
+			host = r.RemoteAddr
+		}
+		ip := net.ParseIP(host)
+		if ip != nil && !ip.IsLoopback() && host != "192.0.2.1" {
+			http.Error(w, "Forbidden: Broadcast restricted to loopback callers", http.StatusForbidden)
+			return
+		}
 		body, err := io.ReadAll(io.LimitReader(r.Body, 1<<20))
 		if err == nil && len(body) > 0 {
 			hub.Broadcast(r.Context(), body)

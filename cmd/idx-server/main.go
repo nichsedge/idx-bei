@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	hostFlag := flag.String("host", "0.0.0.0", "Host interface to bind to")
+	hostFlag := flag.String("host", "127.0.0.1", "Host interface to bind to")
 	portFlag := flag.Int("port", 8000, "Port to listen on")
 	dataDirFlag := flag.String("data-dir", "data", "Base data directory")
 	flag.Parse()
