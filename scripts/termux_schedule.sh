@@ -39,6 +39,19 @@ if [ ! -f "$BIN_PATH" ]; then
     fi
 fi
 
+REBUILD_NEEDED=0
+if [ ! -f "$BIN_PATH" ]; then
+    REBUILD_NEEDED=1
+elif [ -n "$(find "$REPO_DIR/cmd/idx-sync" "$REPO_DIR/pkg" "$REPO_DIR/go.mod" -newer "$BIN_PATH" -print -quit 2>/dev/null)" ]; then
+    REBUILD_NEEDED=1
+fi
+
+if [ "$REBUILD_NEEDED" -eq 1 ] && command -v go >/dev/null 2>&1; then
+    echo "🔨 [$(date -Iseconds)] Source newer than binary, rebuilding idx-sync..."
+    (cd "$REPO_DIR" && GOTOOLCHAIN=local go build -o "$REPO_DIR/bin/idx-sync" ./cmd/idx-sync)
+    BIN_PATH="$REPO_DIR/bin/idx-sync"
+fi
+
 if [ ! -f "$BIN_PATH" ]; then
     echo "ERROR: idx-sync binary not found in $REPO_DIR/bin or PATH." >&2
     echo "Build with: cd $REPO_DIR && make build" >&2
